@@ -2,17 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class StateBase(ABC):
-    def __init__(self, game, max_framerate):
-        self.__game = game
-        self.__max_framerate = max_framerate
+    def __init__(self, game):
+        self._game = game
 
     @property
     def game(self):
-        return self.__game
-
-    @property
-    def max_framerate(self):
-        return self.__max_framerate
+        return self._game
 
     @abstractmethod
     def on_state_enter(self):
