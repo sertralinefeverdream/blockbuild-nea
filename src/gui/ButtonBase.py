@@ -3,22 +3,23 @@ import pygame
 
 
 class ButtonBase(ABC):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0), is_toggle=False, is_enabled=True, is_visible=True):
+    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
         self._surface = surface
         self._pos_x = pos_x
         self._pos_y = pos_y
         self._size_x = size_x
         self._size_y = size_y
         self._click_func = click_func
+        self._held_func = held_func
         self._hover_colour = hover_colour
         self._button_colour = button_colour
         self._current_colour = self._button_colour
         self._outline_colour = outline_colour
         self._outline_thickness = outline_thickness
-        self._state = 0
-        self._is_toggle = is_toggle
         self._is_enabled = is_enabled
         self._is_visible = is_visible
+        self._is_hovering = False
+        self._is_pressed = False
         self._rect = pygame.Rect((self._pos_x, self._pos_y), (self._size_x, self._size_y))
 
     @property

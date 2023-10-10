@@ -7,6 +7,7 @@ class Game:
         self.__state_stack = state_stack
         self.__window = window
         self.__clock = clock
+        self.__framerate = framerate
         self.__states = {}
         self.__previous_state = None
         self.__current_state = None
@@ -43,7 +44,7 @@ class Game:
                     if event.type == pygame.QUIT:
                         self.__running = False
 
-                self.__clock.tick(60)
+                self.__clock.tick(self.__framerate)
                 self.__current_state.loop()
                 pygame.display.update()
             else:
