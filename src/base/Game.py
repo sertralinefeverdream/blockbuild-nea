@@ -37,9 +37,9 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
-        self.__current_state = self.__state_stack.peek()
         while self.__running:
             if not self.__state_stack.empty():
+                self.__current_state = self.__state_stack.peek()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.__running = False
@@ -60,10 +60,10 @@ class Game:
         self.__states[state_id] = state
 
     def push_state(self, state_id):
-        if state_id.lower() in self.__states.keys():
-            self.__state_stack.push(self.__states[state_id.lower()])
+        self.__state_stack.push(self.__states[state_id.lower()])
 
     def pop_state(self):
         self.__previous_state = self.__state_stack.pop()
+        return self.__previous_state
 
 

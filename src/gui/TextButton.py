@@ -59,18 +59,15 @@ class TextButton(ButtonBase):
             raise TypeError
 
     def on_hover_enter(self):
-        print("Entered!")
         self._current_colour = self._hover_colour
 
     def on_hover_leave(self):
-        print("Left")
         self._current_colour = self._button_colour
 
     def on_mouse_click(self):
-        print("Clicked!")
+        self._click_func()
 
     def on_mouse_hold(self):
-        print("Held!")
         if self._held_func is not None:
             self._held_func()
 

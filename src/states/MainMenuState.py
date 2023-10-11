@@ -5,7 +5,10 @@ from src.gui.TextButton import TextButton
 class MainMenuState(StateBase):
     def __init__(self, game):
         super().__init__(game)
-        self._gui = {"test_button": TextButton(self.game.window, 600.0, 400.0, 150.0, 75.0, click_func=self.foo, held_func=self.foo, outline_colour=(0, 0, 0), button_colour=(255, 0, 0))}
+        self._gui = {
+            "options_button":TextButton(self._game.window, 300.0, 400.0, 150.0, 75.0, text="Options", click_func=self.options_button_func, outline_colour=(0, 0, 0), button_colour=(255, 0, 0)),
+            "exit_button":TextButton(self._game.window, 600.0, 400.0, 150.0, 75.0, text="Exit!", click_func=self.exit_button_func, outline_colour=(0, 0, 0), button_colour=(255, 0, 0))
+        }
 
     def on_state_enter(self):
         print("Entered state!")
@@ -14,11 +17,14 @@ class MainMenuState(StateBase):
         print("Left state")
 
     def loop(self):
-        self.game.window.fill((255, 255, 255))
+        self._game.window.fill((255, 255, 255))
         for component in self._gui.values():  # Iterates through all guis in dict and updates and draws them
             component.update()
             if component.is_visible:
                 component.draw()
 
-    def foo(self):
-        pass
+    def options_button_func(self):
+        self._game.push_state("options_menu")
+
+    def exit_button_func(self):
+        self._game.pop_state()

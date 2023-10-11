@@ -1,6 +1,6 @@
 import pygame
 import config
-from states import MainMenuState, StateStack
+from states import MainMenuState, StateStack, OptionsMenuState
 from base import Game
 
 
@@ -12,6 +12,7 @@ def main():
     pygame.display.set_caption(config.window_caption)
     game = Game.Game(state_stack, window, clock, config.framerate) # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState.MainMenuState(game))
+    game.add_to_states("options_menu", OptionsMenuState.OptionsMenuState(game))
     game.game_loop()
 
 

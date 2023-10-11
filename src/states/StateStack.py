@@ -8,6 +8,7 @@ class StateStack:
         return len(self.__stack) == 0
 
     def push(self, state):
+        print("Pushed!")
         self.__stack.append(state)
         state.on_state_enter()
 
