@@ -8,9 +8,9 @@ def main():
     pygame.init()
     state_stack = StateStack.StateStack() # Holds different "states" which have their own game loops.
     clock = pygame.time.Clock()
-    window = pygame.display.set_mode((config.window_size_x, config.window_size_y))
-    pygame.display.set_caption(config.window_caption)
-    game = Game.Game(state_stack, window, clock, config.framerate) # Game class handles overall running of game
+    window = pygame.display.set_mode((config.config["window_size_x"], config.config["window_size_y"]))
+    pygame.display.set_caption(config.config["window_caption"])
+    game = Game.Game(state_stack, window, clock, config.config["framerate"], config.config) # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState.MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState.OptionsMenuState(game))
     game.game_loop()

@@ -20,5 +20,5 @@ class OptionsMenuState(StateBase):
             if component.is_visible:
                 component.draw()
 
-    def foo(self):
+    def foo(self, button):
         self._game.pop_state()

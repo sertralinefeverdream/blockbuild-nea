@@ -3,8 +3,9 @@ import pygame
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, framerate):
+    def __init__(self, state_stack, window, clock, framerate, config):
         self.__state_stack = state_stack
+        self.__config = config
         self.__window = window
         self.__clock = clock
         self.__framerate = framerate
@@ -18,6 +19,10 @@ class Game:
     def state_stack(self):
       return self.__state_stack
     '''
+
+    @property
+    def config(self):
+        return self.__config
 
     @property
     def window(self):

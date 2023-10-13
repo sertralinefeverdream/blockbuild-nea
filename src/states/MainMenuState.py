@@ -1,13 +1,14 @@
 from src.states.StateBase import StateBase
 from src.gui.TextButton import TextButton
+import random
 
 
 class MainMenuState(StateBase):
     def __init__(self, game):
         super().__init__(game)
         self._gui = {
-            "options_button":TextButton(self._game.window, 300.0, 400.0, 150.0, 75.0, text="Options", click_func=self.options_button_func, outline_colour=(0, 0, 0), button_colour=(255, 0, 0)),
-            "exit_button":TextButton(self._game.window, 600.0, 400.0, 150.0, 75.0, text="Exit!", click_func=self.exit_button_func, outline_colour=(0, 0, 0), button_colour=(255, 0, 0))
+            "options_button":TextButton(self._game.window, 300.0, 400.0, 150.0, 75.0, text="Options", held_func=self.options_button_hold, click_func=self.options_button_click, outline_colour=(0, 0, 0), button_colour=(255, 0, 0)),
+            "exit_button":TextButton(self._game.window, 600.0, 400.0, 150.0, 75.0, text="Exit!", click_func=self.exit_button_click, outline_colour=(0, 0, 0), button_colour=(255, 0, 0))
         }
 
     def on_state_enter(self):
@@ -23,8 +24,11 @@ class MainMenuState(StateBase):
             if component.is_visible:
                 component.draw()
 
-    def options_button_func(self):
+    def options_button_click(self, button):
         self._game.push_state("options_menu")
 
-    def exit_button_func(self):
+    def options_button_hold(self, button):
+        button.text_colour = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+    def exit_button_click(self):
         self._game.pop_state()

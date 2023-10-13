@@ -16,6 +16,8 @@ class TextButton(ButtonBase):
         self._offset_y = offset_y
         self.__ticks = 0
 
+        self.update_font()
+
     @property
     def font_size(self):
         return self._font_size
@@ -23,6 +25,7 @@ class TextButton(ButtonBase):
     @font_size.setter
     def font_size(self, value):
         self._font_size = value
+        self.update_font()
 
     @property
     def font_name(self):
@@ -31,6 +34,7 @@ class TextButton(ButtonBase):
     @font_name.setter
     def font_name(self, value):
         self._font_size = value
+        self.update_font()
 
     @property
     def text(self):
@@ -39,6 +43,7 @@ class TextButton(ButtonBase):
     @text.setter
     def text(self, value):
         self._text = value
+        self.update_font()
 
     @property
     def text_colour(self):
@@ -47,6 +52,7 @@ class TextButton(ButtonBase):
     @text_colour.setter
     def text_colour(self, value):
         self._text_colour = value
+        self.update_font()
 
     @property
     def offset(self):
@@ -56,6 +62,7 @@ class TextButton(ButtonBase):
     def offset(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2 and type(value[0]) is float and type(value[1]) is float:
             self._offset_x, self._offset_y = value
+            self.update_font()
         else:
             raise TypeError
 
@@ -66,21 +73,23 @@ class TextButton(ButtonBase):
         self._current_colour = self._button_colour
 
     def on_mouse_click(self):
-        self._click_func()
+        self._click_func(self)
 
     def on_mouse_hold(self):
         if self._held_func is not None:
-            self._held_func()
+            self._held_func(self)
+
+    def update_font(self):
+        self._font = pygame.freetype.SysFont(self._font_name, self._font_size)
+        self._font.size = (self._size_x/3, self._size_y/3)
+        print("updated font")
 
     def draw(self):
         pygame.draw.rect(self._surface, self._current_colour, self._rect)
         pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-        self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text)
+        self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text, self._text_colour)
 
     def update(self):
-        self._font = pygame.freetype.SysFont(self._font_name, self._font_size)#Update states
-        self._font.size = (self._size_x/3, self._size_y)
-        #self._font_rect = pygame.transform.scale(self._font.render(self._text, True, self._text_colour), (self._size_x, self._size_y))
         self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
 
         mouse_pos = pygame.mouse.get_pos()
