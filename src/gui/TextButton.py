@@ -11,6 +11,7 @@ class TextButton(ButtonBase):
         self._text = text
         self._text_colour = text_colour
         self._font = pygame.freetype.SysFont(font_name, self._font_size)
+        self._font_rect = None
         self._offset_x = offset_x
         self._offset_y = offset_y
         self.__ticks = 0
@@ -74,10 +75,12 @@ class TextButton(ButtonBase):
     def draw(self):
         pygame.draw.rect(self._surface, self._current_colour, self._rect)
         pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-        self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text, self._text_colour, self._font_size)
+        self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text)
 
     def update(self):
-        self._font = pygame.freetype.SysFont(self._font_name, self._font_size) #Update states
+        self._font = pygame.freetype.SysFont(self._font_name, self._font_size)#Update states
+        self._font.size = (self._size_x/3, self._size_y)
+        #self._font_rect = pygame.transform.scale(self._font.render(self._text, True, self._text_colour), (self._size_x, self._size_y))
         self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
 
         mouse_pos = pygame.mouse.get_pos()
