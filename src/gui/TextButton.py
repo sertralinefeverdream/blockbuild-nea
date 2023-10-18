@@ -4,18 +4,15 @@ import pygame.freetype
 
 
 class TextButton(ButtonBase):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_enter_func=None, hover_leave_func=None, offset_x=0, offset_y=0, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0), hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour = (0, 0, 0), is_enabled=True, is_visible=True):
-        super().__init__(surface, pos_x, pos_y, size_x, size_y, click_func, held_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
+    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127,127,127), button_colour=(0,0,0), outline_thickness=2, outline_colour = (0, 0, 0), is_enabled=True, is_visible=True, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
+        super().__init__(surface, pos_x, pos_y, size_x, size_y, click_func, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
         self._font_size = font_size
         self._font_name = font_name
         self._text = text
         self._text_colour = text_colour
         self._font = pygame.freetype.SysFont(font_name, self._font_size)
-        self._font_rect = None
-        self._offset_x = offset_x
-        self._offset_y = offset_y
+        self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour, size=self._font_size)
         self.__ticks = 0
-
 
     @property
     def font_size(self):
@@ -24,7 +21,6 @@ class TextButton(ButtonBase):
     @font_size.setter
     def font_size(self, value):
         self._font_size = value
-        self.update_font()
 
     @property
     def font_name(self):
@@ -33,7 +29,6 @@ class TextButton(ButtonBase):
     @font_name.setter
     def font_name(self, value):
         self._font_size = value
-        self.update_font()
 
     @property
     def text(self):
@@ -42,7 +37,6 @@ class TextButton(ButtonBase):
     @text.setter
     def text(self, value):
         self._text = value
-        self.update_font()
 
     @property
     def text_colour(self):
@@ -51,11 +45,15 @@ class TextButton(ButtonBase):
     @text_colour.setter
     def text_colour(self, value):
         self._text_colour = value
-        self.update_font()
 
     @property
     def offset(self):
         return (self._offset_x, self._offset_y)
+
+    def auto_resize_font(self):
+        while self._rendered_font.get_rect().size[0] > self._size_x or self._render_font.get_rect().size[1] > self._size_y:
+            self._font_size -= 1
+            self.update_font()
 
     @offset.setter
     def offset(self, value):
@@ -80,17 +78,15 @@ class TextButton(ButtonBase):
 
     def update_font(self):
         self._font = pygame.freetype.SysFont(self._font_name, self._font_size)
-        self._font.size = (self._size_x/3, self._size_y/3)
-        print("updated font")
+        self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour)
 
     def draw(self):
-        # pygame.draw.rect(self._surface, self._current_colour, self._rect)
+        pygame.draw.rect(self._surface, self._current_colour, self._rect)
         pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-     #   self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text, self._text_colour)
-
+        self._surface.blit(self._rendered_font[0], (self._pos_x + ((self._size_x - self._rendered_font[1].size[0]) / 2), self._pos_y + ((self._size_y - self._rendered_font[1].size[1]) / 2)))
     def update(self):
-        self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
         self.update_font()
+        self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
         print(self._button_colour)
 
         mouse_pos = pygame.mouse.get_pos()
@@ -114,7 +110,7 @@ class TextButton(ButtonBase):
 
         elif not self._rect.collidepoint(mouse_pos):
             if self._is_hovering:
-                print("Returned")
+               # print("Returned")
                 self._is_hovering = False
                 self.on_hover_leave()
             if self._is_pressed:
