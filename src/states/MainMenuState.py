@@ -30,5 +30,5 @@ class MainMenuState(StateBase):
     def options_button_hold(self, button):
         button.text_colour = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-    def exit_button_click(self):
+    def exit_button_click(self, button):
         self._game.pop_state()

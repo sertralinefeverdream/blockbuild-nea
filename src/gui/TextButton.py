@@ -4,7 +4,7 @@ import pygame.freetype
 
 
 class TextButton(ButtonBase):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, offset_x=0, offset_y=0, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0), hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour = (0, 0, 0), is_enabled=True, is_visible=True):
+    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_enter_func=None, hover_leave_func=None, offset_x=0, offset_y=0, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0), hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour = (0, 0, 0), is_enabled=True, is_visible=True):
         super().__init__(surface, pos_x, pos_y, size_x, size_y, click_func, held_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
         self._font_size = font_size
         self._font_name = font_name
@@ -16,7 +16,6 @@ class TextButton(ButtonBase):
         self._offset_y = offset_y
         self.__ticks = 0
 
-        self.update_font()
 
     @property
     def font_size(self):
@@ -85,12 +84,14 @@ class TextButton(ButtonBase):
         print("updated font")
 
     def draw(self):
-        pygame.draw.rect(self._surface, self._current_colour, self._rect)
+        # pygame.draw.rect(self._surface, self._current_colour, self._rect)
         pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-        self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text, self._text_colour)
+     #   self._font.render_to(self._surface, (self._pos_x, self._pos_y), self._text, self._text_colour)
 
     def update(self):
         self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
+        self.update_font()
+        print(self._button_colour)
 
         mouse_pos = pygame.mouse.get_pos()
         left_key_pressed = pygame.mouse.get_pressed()[0]

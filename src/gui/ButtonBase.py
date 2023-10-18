@@ -3,7 +3,7 @@ import pygame
 
 
 class ButtonBase(ABC):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, hover_leave_func=None, hover_enter_func=None, held_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
+    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
         self._surface = surface
         self._pos_x = pos_x
         self._pos_y = pos_y
