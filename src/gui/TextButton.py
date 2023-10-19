@@ -51,7 +51,7 @@ class TextButton(ButtonBase):
         return (self._offset_x, self._offset_y)
 
     def auto_resize_font(self):
-        while self._rendered_font.get_rect().size[0] > self._size_x or self._render_font.get_rect().size[1] > self._size_y:
+        while self._rendered_font[1].size[0] > self._size_x or self._rendered_font[1].size[1] > self._size_y:
             self._font_size -= 1
             self.update_font()
 
@@ -86,6 +86,7 @@ class TextButton(ButtonBase):
         self._surface.blit(self._rendered_font[0], (self._pos_x + ((self._size_x - self._rendered_font[1].size[0]) / 2), self._pos_y + ((self._size_y - self._rendered_font[1].size[1]) / 2)))
     def update(self):
         self.update_font()
+        self.auto_resize_font()
         self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
         print(self._button_colour)
 
