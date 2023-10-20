@@ -4,8 +4,8 @@ import pygame.freetype
 
 
 class TextButton(ButtonBase):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127,127,127), button_colour=(0,0,0), outline_thickness=2, outline_colour = (0, 0, 0), is_enabled=True, is_visible=True, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
-        super().__init__(surface, pos_x, pos_y, size_x, size_y, click_func, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
+    def __init__(self, surface, click_func, position=(0.0, 0.0), size=(50.0, 50.0),  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127,127,127), button_colour=(0,0,0), outline_thickness=2, outline_colour=(0, 0, 0), is_enabled=True, is_visible=True, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
+        super().__init__(surface, click_func, position, size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
         self._font_size = font_size
         self._font_name = font_name
         self._text = text
@@ -46,22 +46,10 @@ class TextButton(ButtonBase):
     def text_colour(self, value):
         self._text_colour = value
 
-    @property
-    def offset(self):
-        return (self._offset_x, self._offset_y)
-
     def auto_resize_font(self):
-        while self._rendered_font[1].size[0] > self._size_x or self._rendered_font[1].size[1] > self._size_y:
+        while self._rendered_font[1].size[0] > self._size[0] or self._rendered_font[1].size[1] > self._size[1]:
             self._font_size -= 1
             self.update_font()
-
-    @offset.setter
-    def offset(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2 and type(value[0]) is float and type(value[1]) is float:
-            self._offset_x, self._offset_y = value
-            self.update_font()
-        else:
-            raise TypeError
 
     def on_hover_enter(self):
         self._current_colour = self._hover_colour
@@ -85,11 +73,11 @@ class TextButton(ButtonBase):
         if self._is_visible:
             pygame.draw.rect(self._surface, self._current_colour, self._rect)
             pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-            self._surface.blit(self._rendered_font[0], (self._pos_x + ((self._size_x - self._rendered_font[1].size[0]) / 2), self._pos_y + ((self._size_y - self._rendered_font[1].size[1]) / 2)))
+            self._surface.blit(self._rendered_font[0], (self._pos[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2), self._pos[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
     def update(self):
         self.update_font()
         self.auto_resize_font()
-        self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
+        self._rect.update(self._pos[0], self._pos[1], self._size[0], self._size_y[1])
         print(self.centre_position)
 
         mouse_pos = pygame.mouse.get_pos()

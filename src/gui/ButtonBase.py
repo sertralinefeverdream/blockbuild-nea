@@ -3,12 +3,14 @@ import pygame
 
 
 class ButtonBase(ABC):
-    def __init__(self, surface, position=(0, 0), size_x=0, size_y=0, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
+    def __init__(self, surface, click_func, position=(0.0, 0.0), size=(50.0, 50.0),  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
         self._surface = surface
-        self._pos_x = pos_x
-        self._pos_y = pos_y
-        self._size_x = size_x
-        self._size_y = size_y
+        #self._pos_x = pos_x
+        #self._pos_y = pos_y
+        self._position = position
+        self._size = size
+        #self._size_x = size_x
+        #self._size_y = size_y
         self._click_func = click_func
         self._hover_enter_func = hover_enter_func
         self._hover_leave_func = hover_leave_func
@@ -22,38 +24,39 @@ class ButtonBase(ABC):
         self._is_visible = is_visible
         self._is_hovering = False
         self._is_pressed = False
-        self._rect = pygame.Rect((self._pos_x, self._pos_y), (self._size_x, self._size_y))
+        print(self._position, self._size)
+        self._rect = pygame.Rect(self._position, self._size)
 
     @property
     def position(self):
-        return (self._pos_x, self._pos_y)
+        return self._position
 
     @position.setter
     def position(self, value):
         print(value)
         if (type(value) is tuple or type(value) is list) and len(value) == 2 and type(value[0]) is float and type(value[1]) is float:
-            self._pos_x, self._pos_y = value
+            self._position = value
         else:
             raise TypeError
 
     @property
     def centre_position(self):
-        return (self._pos_x + self._size_x/2, self._pos_y + self._size_y/2)
+        return (self._position[0] + self._size[0]/2, self._position[1] + self._size[1])
 
     @centre_position.setter
     def centre_position(self, value):
         if type(value) is tuple:
-            self._pos_x = value[0] - self._size_x/2
-            self._pos_y = value[1] - self._size_y/2
+            self._position[0] = value[0] - self._size[0]/2
+            self._position[1] = value[1] - self._size[1]/2
 
     @property
     def size(self):
-        return (self._size_x, self._size_y)
+        return self._size
 
     @size.setter
     def size(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2 and type(value[0]) is float and type(value[1]) is float:
-            self._size_x, self._size_y = value
+            self._size = value
         else:
             raise TypeError
 

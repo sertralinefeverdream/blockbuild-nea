@@ -7,8 +7,8 @@ class MainMenuState(StateBase):
     def __init__(self, game):
         super().__init__(game)
         self._gui = {
-            "options_button":TextButton(self._game.window, 300.0, 400.0, 150.0, 75.0, text="Options", click_func=self.options_button_click, outline_colour=(0, 0, 0), button_colour=(255, 0, 0)),
-            "exit_button":TextButton(self._game.window, 600.0, 400.0, 150.0, 75.0, text="Exit!", click_func=self.exit_button_click, outline_colour=(0, 0, 0), button_colour=(255, 0, 0))
+            "options_button":TextButton(self._game.window, self.options_button_click, (300.0, 400.0), (150.0, 75.0), text="Options", outline_colour=(0, 0, 0), button_colour=(255, 0, 0)),
+            "exit_button":TextButton(self._game.window, self.exit_button_click, (600.0, 400.0), (150.0, 75.0), text="Exit!", outline_colour=(0, 0, 0), button_colour=(255, 0, 0))
         }
 
     def on_state_enter(self):
