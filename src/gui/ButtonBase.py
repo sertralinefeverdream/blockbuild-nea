@@ -3,7 +3,7 @@ import pygame
 
 
 class ButtonBase(ABC):
-    def __init__(self, surface, pos_x, pos_y, size_x, size_y, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
+    def __init__(self, surface, position=(0, 0), size_x=0, size_y=0, click_func, held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 127, 127), button_colour=(0, 0, 0), outline_thickness=2, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
         self._surface = surface
         self._pos_x = pos_x
         self._pos_y = pos_y
@@ -35,6 +35,16 @@ class ButtonBase(ABC):
             self._pos_x, self._pos_y = value
         else:
             raise TypeError
+
+    @property
+    def centre_position(self):
+        return (self._pos_x + self._size_x/2, self._pos_y + self._size_y/2)
+
+    @centre_position.setter
+    def centre_position(self, value):
+        if type(value) is tuple:
+            self._pos_x = value[0] - self._size_x/2
+            self._pos_y = value[1] - self._size_y/2
 
     @property
     def size(self):

@@ -70,10 +70,11 @@ class TextButton(ButtonBase):
         self._current_colour = self._button_colour
 
     def on_mouse_click(self):
-        self._click_func(self)
+        if self.is_enabled:
+            self._click_func(self)
 
     def on_mouse_hold(self):
-        if self._held_func is not None:
+        if self._held_func is not None and self._is_enabled:
             self._held_func(self)
 
     def update_font(self):
@@ -81,14 +82,15 @@ class TextButton(ButtonBase):
         self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour)
 
     def draw(self):
-        pygame.draw.rect(self._surface, self._current_colour, self._rect)
-        pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-        self._surface.blit(self._rendered_font[0], (self._pos_x + ((self._size_x - self._rendered_font[1].size[0]) / 2), self._pos_y + ((self._size_y - self._rendered_font[1].size[1]) / 2)))
+        if self._is_visible:
+            pygame.draw.rect(self._surface, self._current_colour, self._rect)
+            pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
+            self._surface.blit(self._rendered_font[0], (self._pos_x + ((self._size_x - self._rendered_font[1].size[0]) / 2), self._pos_y + ((self._size_y - self._rendered_font[1].size[1]) / 2)))
     def update(self):
         self.update_font()
         self.auto_resize_font()
         self._rect.update(self._pos_x, self._pos_y, self._size_x, self._size_y)
-        print(self._button_colour)
+        print(self.centre_position)
 
         mouse_pos = pygame.mouse.get_pos()
         left_key_pressed = pygame.mouse.get_pressed()[0]
@@ -111,7 +113,6 @@ class TextButton(ButtonBase):
 
         elif not self._rect.collidepoint(mouse_pos):
             if self._is_hovering:
-               # print("Returned")
                 self._is_hovering = False
                 self.on_hover_leave()
             if self._is_pressed:

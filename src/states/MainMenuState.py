@@ -13,6 +13,8 @@ class MainMenuState(StateBase):
 
     def on_state_enter(self):
         print("Entered state!")
+        self._gui["options_button"].centre_position = (600, 400)
+        self._gui["exit_button"].is_visible = False
 
     def on_state_leave(self):
         print("Left state")
