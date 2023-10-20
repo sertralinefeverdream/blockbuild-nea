@@ -73,12 +73,12 @@ class TextButton(ButtonBase):
         if self._is_visible:
             pygame.draw.rect(self._surface, self._current_colour, self._rect)
             pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-            self._surface.blit(self._rendered_font[0], (self._pos[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2), self._pos[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
+            self._surface.blit(self._rendered_font[0], (self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2), self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
     def update(self):
         self.update_font()
         self.auto_resize_font()
-        self._rect.update(self._pos[0], self._pos[1], self._size[0], self._size_y[1])
-        print(self.centre_position)
+        self._rect.update(self._position, self._size)
+        #print(self.centre_position)
 
         mouse_pos = pygame.mouse.get_pos()
         left_key_pressed = pygame.mouse.get_pressed()[0]
