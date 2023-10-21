@@ -8,7 +8,9 @@ class StateStack:
         return len(self.__stack) == 0
 
     def push(self, state):
-        print("Pushed!")
+        if not self.empty():
+            self.__stack[-1].on_state_leave()
+
         self.__stack.append(state)
         state.on_state_enter()
 
@@ -17,6 +19,8 @@ class StateStack:
             temp = self.__stack[-1]
             temp.on_state_leave()
             del self.__stack[-1]
+            if not self.empty():
+                self.__stack[-1].on_state_enter()
             return temp
         else:
             return None

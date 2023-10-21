@@ -1,17 +1,18 @@
 import pygame
 import config
 from states import MainMenuState, StateStack, OptionsMenuState
-from base import Game
+from base import Game, AudioHandler
 
 
 def main():
     pygame.init()
-    state_stack = StateStack.StateStack() # Holds different "states" which have their own game loops.
+    state_stack = StateStack.StateStack()  # Holds different "states" which have their own game loops.
     clock = pygame.time.Clock()
     window = pygame.display.set_mode((config.config["window_size_x"], config.config["window_size_y"]))
+    audio_handler = AudioHandler.AudioHandler(500, False)
     pygame.display.set_caption(config.config["window_caption"])
-    game = Game.Game(state_stack, window, clock, config.config["framerate"], config.config) # Game class handles overall running of game
-    game.add_to_states("main_menu", MainMenuState.MainMenuState(game))
+    game = Game.Game(state_stack, window, clock, audio_handler, config.config["framerate"], config.config) # Game class handles overall running of game
+    game.add_to_states("main_menu", MainMenuState.MainMenuState(game, music_assets=config.config["menu_state_music_assets"], sfx_assets=config.config["menu_state_sfx_assets"]))
     game.add_to_states("options_menu", OptionsMenuState.OptionsMenuState(game))
     game.game_loop()
 
