@@ -2,10 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class StateBase(ABC):
-    def __init__(self, game, music_assets={}, sfx_assets={}):
+    def __init__(self, game):
         self._game = game
-        self._music_assets = music_assets
-        self._sfx_assets = sfx_assets
 
     @property
     def game(self):

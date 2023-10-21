@@ -3,12 +3,14 @@ import pygame
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, audiohandler, framerate, config):
+    def __init__(self, state_stack, window, clock, audiohandler, sfx_assets, music_assets, framerate, config):
         self.__state_stack = state_stack
         self.__config = config
         self.__window = window
         self.__clock = clock
         self.__audiohandler = audiohandler
+        self._sfx_assets = sfx_assets
+        self._music_assets = music_assets
         self.__framerate = framerate
         self.__states = {}
         self.__previous_state = None
@@ -19,11 +21,16 @@ class Game:
             "music_volume":"medium"
         }
 
+        self.initialise_sfx_and_music()
+
     '''
      @property
     def state_stack(self):
       return self.__state_stack
     '''
+    def initialise_sfx_and_music(self):
+        self.__audiohandler.add_sfx_from_dict(self._sfx_assets)
+        self.__audiohandler.add_music_from_dict(self._music_assets)
 
     @property
     def previous_state(self):
