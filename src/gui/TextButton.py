@@ -4,8 +4,8 @@ import pygame.freetype
 
 
 class TextButton(ButtonBase):
-    def __init__(self, surface, click_func, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id, audiohandler, position=(0.0, 0.0), size=(100.0, 100.0),  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0), is_enabled=True, is_visible=True, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
-        super().__init__(surface, click_func, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id, audiohandler, position, size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
+    def __init__(self, surface, click_func,  audiohandler, click_sfx_id="btn_click_1", hover_enter_sfx_id="btn_hover_1", hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100.0, 100.0),  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0), is_enabled=True, is_visible=True, font_name="Arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
+        super().__init__(surface, click_func, audiohandler, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id, disabled_click_sfx_id, position, size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
         self._font_size = font_size
         self._font_name = font_name
         self._text = text
@@ -76,20 +76,31 @@ class TextButton(ButtonBase):
 
     def on_hover_enter(self):
         self._current_colour = self._hover_colour
-        if self._is_enabled and self._hover_enter_func is not None:
+
+        if self._hover_enter_sfx_id is not None:
             self._audiohandler.play_sfx(self._hover_enter_sfx_id)
+
+        if self._is_enabled and self._hover_enter_func is not None:
+            print("entered")
             self._hover_enter_func()
 
     def on_hover_leave(self):
         self._current_colour = self._button_colour
-        if self._is_enabled and self._hover_leave_func is not None:
+
+        if self._hover_leave_sfx_id is not None:
             self._audiohandler.play_sfx(self._hover_leave_sfx_id)
+
+        if self._is_enabled and self._hover_leave_func is not None:
             self._hover_leave_func()
 
     def on_mouse_click(self):
         if self.is_enabled:
-            self._audiohandler.play_sfx(self._click_sfx_id)
+            if self._click_sfx_id is not None:
+                self._audiohandler.play_sfx(self._click_sfx_id)
             self._click_func(self)
+        else:
+            if self._disabled_click_sfx_id is not None:
+                self._audiohandler.play_sfx(self._disabled_click_sfx_id)
 
     def on_mouse_hold(self):
         if self._is_enabled and self._held_func is not None:

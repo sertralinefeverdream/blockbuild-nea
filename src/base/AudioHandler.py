@@ -5,9 +5,9 @@ import random
 class AudioHandler:
     def __init__(self, music_fade_time, is_shuffling):
         pygame.mixer.init()
-        self._sfx_library = {} # Dictionary of sound ids and their respective sound objects
-        self._music_library = {} # Dictionary of music ids and their respective relative file paths.
-        self._shuffle_list = [] # List of music ids that will be played at random when shuffle play is enabled.
+        self._sfx_library = {}  # Dictionary of sound ids and their respective sound objects
+        self._music_library = {}  # Dictionary of music ids and their respective relative file paths.
+        self._shuffle_list = []  # List of music ids that will be played at random when shuffle play is enabled.
         self._game_vol = 0
         self._music_vol = 0
         self._music_fade_time = music_fade_time
@@ -72,7 +72,7 @@ class AudioHandler:
         pygame.mixer.music.play(fade_ms=self._music_fade_time)
 
     def stop_music(self):
-        self._is_music_auto_play = False
+        self._is_shuffling = False
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()
 

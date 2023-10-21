@@ -7,15 +7,16 @@ class OptionsMenuState(StateBase):
     def __init__(self, game):
         super().__init__(game)
         self._gui = {
-            "exit_button":TextButton(self._game.window, self.exit_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, (300.0, 400.0), (400.0, 75.0), text="Exit!", outline_colour=(0, 0, 0), button_colour=(255, 0, 0), hover_colour=(200, 200, 200)),
-            "low_game_vol_button":TextButton(self._game.window, self.low_game_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="Low"),
-            "medium_game_vol_button":TextButton(self._game.window, self.medium_game_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="Medium"),
-            "high_game_vol_button":TextButton(self._game.window, self.high_game_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="High"),
+            "exit_button":TextButton(self._game.window, self.exit_click, self._game.audiohandler, text="Exit"),
+
+            "low_game_vol_button":TextButton(self._game.window, self.low_game_vol_click, self._game.audiohandler, text="Low"),
+            "medium_game_vol_button":TextButton(self._game.window, self.medium_game_vol_click, self._game.audiohandler, text="Medium"),
+            "high_game_vol_button":TextButton(self._game.window, self.high_game_vol_click, self._game.audiohandler, text="High"),
             "game_vol_label": TextLabel(self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
 
-            "low_music_vol_button":TextButton(self._game.window, self.low_music_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="Low"),
-            "medium_music_vol_button":TextButton(self._game.window, self.medium_music_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="Medium"),
-            "high_music_vol_button":TextButton(self._game.window, self.high_music_vol_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, text="High"),
+            "low_music_vol_button":TextButton(self._game.window, self.low_music_vol_click, self._game.audiohandler, text="Low"),
+            "medium_music_vol_button":TextButton(self._game.window, self.medium_music_vol_click, self._game.audiohandler, text="Medium"),
+            "high_music_vol_button":TextButton(self._game.window, self.high_music_vol_click, self._game.audiohandler, text="High"),
             "music_vol_label": TextLabel(self._game.window, has_box=False, has_outline=False, text="Music Volume:")
 
         }

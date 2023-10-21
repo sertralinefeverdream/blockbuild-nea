@@ -8,9 +8,9 @@ class MainMenuState(StateBase):
     def __init__(self, game):
         super().__init__(game)
         self._gui = {
-            "options_button":TextButton(self._game.window, self.options_button_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, size=(400.0, 75.0), text="Options", outline_colour=(0, 0, 0), button_colour=(255, 0, 0), hover_colour=(200, 0, 0)),
-            "exit_button":TextButton(self._game.window, self.exit_button_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, size=(400.0, 75.0), text="Exit!", outline_colour=(0, 0, 0), button_colour=(255, 0, 0), hover_colour=(200, 0, 0)),
-            "play_button":TextButton(self._game.window, self.play_button_click, "btn_click_1", "btn_click_1", "btn_click_1", self._game.audiohandler, size=(400.0, 75.0), text="Play!", outline_colour=(0, 0, 0), button_colour=(255, 0 ,0), hover_colour=(200, 0 ,0)),
+            "options_button":TextButton(self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
+            "exit_button":TextButton(self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
+            "play_button":TextButton(self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
             "logo":TextLabel(self._game.window, has_box=False, font_size=100)
         }
 
@@ -20,10 +20,21 @@ class MainMenuState(StateBase):
         if self._game.previous_state is not self._game.states["main_menu"]:
             self._game.audiohandler.shuffle_play()
 
+        self._gui["play_button"].size = (400.0, 75.0)
+        self._gui["options_button"].size = (400.0, 75.0)
+        self._gui["exit_button"].size = (400.0, 75.0)
+
+        self._gui["play_button"].font_size = 45
+        self._gui["options_button"].font_size = 45
+        self._gui["exit_button"].font_size = 45
+
         self._gui["play_button"].centre_position = (600.0, 300.0)
         self._gui["options_button"].centre_position = (600.0, 400.0)
         self._gui["exit_button"].centre_position = (600.0, 500.0)
+
         self._gui["logo"].centre_position = (600.0, 100.0)
+
+        self._gui["play_button"].is_enabled = False
 
     def on_state_leave(self):
         pass

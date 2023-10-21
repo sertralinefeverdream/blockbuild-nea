@@ -4,13 +4,14 @@ import pygame
 
 
 class ButtonBase(GUIBase):
-    def __init__(self, surface, click_func, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id, audiohandler, position=(0.0, 0.0), size=(100, 100), held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
+    def __init__(self, surface, click_func, audiohandler, click_sfx_id=None, hover_enter_sfx_id=None, hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100, 100), held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
         super().__init__(surface, position, is_visible)
         self._size = list(size)
-        self._click_func =click_func
+        self._click_func = click_func
         self._click_sfx_id = click_sfx_id
         self._hover_enter_sfx_id = hover_enter_sfx_id
         self._hover_leave_sfx_id = hover_leave_sfx_id
+        self._disabled_click_sfx_id = disabled_click_sfx_id
         self._audiohandler = audiohandler
         self._hover_enter_func = hover_enter_func
         self._hover_leave_func = hover_leave_func
