@@ -91,8 +91,7 @@ class AudioHandler:
         self._sfx_library[sfx_name].fadeout()
 
     def update_volumes(self):
+        pygame.mixer.music.set_volume(self._music_vol)
+        print(self._game_vol)
         for sfx in self._sfx_library.values():
             sfx.set_volume(self._game_vol)
-
-        pygame.mixer.music.set_volume(self._music_vol)
-

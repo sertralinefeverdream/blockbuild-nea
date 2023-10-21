@@ -117,7 +117,6 @@ class TextButton(ButtonBase):
             self._surface.blit(self._rendered_font[0], (self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2), self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
     def update(self):
         self._rect.update(self._position, self._size)
-        #print(self.centre_position)
 
         mouse_pos = pygame.mouse.get_pos()
         left_key_pressed = pygame.mouse.get_pressed()[0]

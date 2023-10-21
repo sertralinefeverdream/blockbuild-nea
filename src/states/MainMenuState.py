@@ -1,3 +1,5 @@
+import pygame.mixer
+
 from src.states.StateBase import StateBase
 from src.gui.TextButton import TextButton
 from src.gui.TextLabel import TextLabel
