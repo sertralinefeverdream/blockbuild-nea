@@ -5,7 +5,7 @@ class GUIFactory:
     def __init__(self):
         pass
 
-    def create_component(self, component_id, *args, **kwargs):
+    def create_gui(self, component_id, *args, **kwargs):
         if component_id == "TextButton":
             print("made textbutton")
             return TextButton(*args, **kwargs)

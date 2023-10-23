@@ -5,10 +5,16 @@ class StateBase(ABC):
     def __init__(self, game, GUIFactory):
         self._game = game
         self._GUIFactory = GUIFactory
+        self._gui = {}
+        self.initialise_gui()
 
     @property
     def game(self):
         return self._game
+
+    @abstractmethod
+    def initialise_gui(self):
+        pass
 
     @abstractmethod
     def on_state_enter(self):

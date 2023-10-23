@@ -6,22 +6,14 @@ import random
 class MainMenuState(StateBase):
     def __init__(self, game, GUIFactory):
         super().__init__(game, GUIFactory)
-        '''
-            self._gui = {
-            "options_button":TextButton(self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
-            "exit_button":TextButton(self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
-            "play_button":TextButton(self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
-            "logo":TextLabel(self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="OCR-A")
-        }
-        '''
 
+    def initialise_gui(self):
         self._gui = {
-            "options_button":self._GUIFactory.create_component("TextButton", self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
-            "exit_button":self._GUIFactory.create_component("TextButton", self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
-            "play_button":self._GUIFactory.create_component("TextButton", self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
-            "logo":self._GUIFactory.create_component("TextLabel", self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="OCR-A")
+            "options_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
+            "exit_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
+            "play_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
+            "logo":self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="OCR-A")
         }
-
 
     def on_state_enter(self):
       #  print("Entered state!")
