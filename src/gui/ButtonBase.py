@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from src.gui.GUIBase import GUIBase
 import pygame
 

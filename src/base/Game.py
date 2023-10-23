@@ -64,26 +64,31 @@ class Game:
     def clock(self):
         return self.__clock
 
+    def update_states_from_options(self):
+        self.__audiohandler.game_vol = 0.9 if self.__options["game_volume"] == "high" else 0.6 if self.__options["game_volume"] == "medium" else 0.3
+        self.__audiohandler.music_vol = 0.7 if self.__options["music_volume"] == "high" else 0.4 if self.__options["music_volume"] == "medium" else 0.1
+
     def game_loop(self):
         self.push_state("main_menu")
 
         while self.__running:
-            self.__audiohandler.game_vol = 0.9 if self.__options["game_volume"] == "high" else 0.6 if self.__options["game_volume"] == "medium" else 0.3
-            self.__audiohandler.music_vol = 0.7 if self.__options["music_volume"] == "high" else 0.4 if self.__options["music_volume"] == "medium" else 0.1
+            self.__current_state = self.__state_stack.peek()
+            self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
 
-            if not self.__state_stack.empty():
-                self.__current_state = self.__state_stack.peek()
+            if self.__current_state is not None:
+                self.__clock.tick(self.__framerate)
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self.__running = False
-                    if event.type == pygame.USEREVENT + 1:
+                    if event.type == pygame.USEREVENT + 1: # Event id for whenever music stops playing.
                         self.__audiohandler.on_music_end()
 
-                self.__clock.tick(self.__framerate)
-                self.__current_state.loop()
+                self.__current_state.update()
                 pygame.display.update()
             else:
                 self.__running = False
+
         self.on_game_end()
 
     def on_game_end(self):

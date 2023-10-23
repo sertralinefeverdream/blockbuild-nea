@@ -1,6 +1,11 @@
 from src.gui.TextButton import TextButton
 from src.gui.TextLabel import TextLabel
 
+'''
+This GUIFactory class has allowed me to remove any dependence of StateBase and its child classes on any of the
+GUI classes. GUIFactory instance is passed as an argument during StateBase initialisation.
+'''
+
 class GUIFactory:
     def __init__(self):
         pass
@@ -12,4 +17,4 @@ class GUIFactory:
         elif component_id == "TextLabel":
             return TextLabel(*args, **kwargs)
         else:
-            return None
+            raise Exception

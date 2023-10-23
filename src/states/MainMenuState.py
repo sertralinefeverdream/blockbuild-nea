@@ -1,6 +1,4 @@
-import pygame.mixer
 from src.states.StateBase import StateBase
-import random
 
 
 class MainMenuState(StateBase):
@@ -9,14 +7,13 @@ class MainMenuState(StateBase):
 
     def initialise_gui(self):
         self._gui = {
-            "options_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
-            "exit_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
-            "play_button":self._GUIFactory.create_gui("TextButton", self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
-            "logo":self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="OCR-A")
+            "options_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
+            "exit_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
+            "play_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
+            "logo": self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="OCR-A")
         }
 
     def on_state_enter(self):
-      #  print("Entered state!")
         self._game.audiohandler.set_shuffle_list(["main_menu"])
         if self._game.previous_state is not self._game.states["main_menu"]:
             self._game.audiohandler.shuffle_play()
@@ -39,11 +36,9 @@ class MainMenuState(StateBase):
 
     def on_state_leave(self):
         pass
-        #print("leaving!")
 
-    def loop(self):
+    def update(self):
         self._game.window.fill((255, 255, 255))
-       # print(self._game.previous_state)
         for component in self._gui.values():  # Iterates through all guis in dict and updates and draws them
             component.update()
             component.draw()

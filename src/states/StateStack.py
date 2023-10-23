@@ -1,3 +1,12 @@
+'''
+StateStack is a stack which handles which Game State (StateBase child class) instance is ran.
+Each StateBase child class has its own function which is called every frame update.
+Whatever object is at the top of the stack, its update method is called and drawn.
+When a state is pushed or popped off the stack, whatever the current state is has its
+on_state_leave method is called the state that is now on the top of the stack has its on_state_enter method
+drawn.
+This allows for behaviour to be encoded whenever a state is left or entered i.e. perhaps saving a game file, etc
+'''
 
 
 class StateStack:

@@ -25,5 +25,5 @@ class StateBase(ABC):
         pass
 
     @abstractmethod
-    def loop(self):
+    def update(self):
         pass
