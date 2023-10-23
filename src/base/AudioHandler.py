@@ -45,7 +45,6 @@ class AudioHandler:
             try:
                 if sfx_id not in self._sfx_library.keys():
                     self._sfx_library[sfx_id] = pygame.mixer.Sound(sfx_path)
-                    print(sfx_id)
             except:
                 print(f"{sfx_path} was invalid path!")
 

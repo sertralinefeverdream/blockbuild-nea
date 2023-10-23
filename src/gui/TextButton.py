@@ -81,7 +81,6 @@ class TextButton(ButtonBase):
             self._audiohandler.play_sfx(self._hover_enter_sfx_id)
 
         if self._is_enabled and self._hover_enter_func is not None:
-            print("entered")
             self._hover_enter_func()
 
     def on_hover_leave(self):

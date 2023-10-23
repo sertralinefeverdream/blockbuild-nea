@@ -1,11 +1,11 @@
 from src.states.StateBase import StateBase
-from src.gui.TextButton import TextButton
-from src.gui.TextLabel import TextLabel
 
 
 class OptionsMenuState(StateBase):
-    def __init__(self, game):
-        super().__init__(game)
+    def __init__(self, game, GUIFactory):
+        super().__init__(game, GUIFactory)
+        '''
+
         self._gui = {
             "exit_button":TextButton(self._game.window, self.exit_click, self._game.audiohandler, text="Exit"),
 
@@ -20,6 +20,22 @@ class OptionsMenuState(StateBase):
             "music_vol_label": TextLabel(self._game.window, has_box=False, has_outline=False, text="Music Volume:")
 
         }
+        '''
+        self._gui = {
+            "exit_button":self._GUIFactory.create_component("TextButton",self._game.window, self.exit_click, self._game.audiohandler, text="Exit"),
+
+            "low_game_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.low_game_vol_click, self._game.audiohandler, text="Low"),
+            "medium_game_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.medium_game_vol_click, self._game.audiohandler, text="Medium"),
+            "high_game_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.high_game_vol_click, self._game.audiohandler, text="High"),
+            "game_vol_label":self._GUIFactory.create_component("TextLabel", self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
+
+            "low_music_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.low_music_vol_click, self._game.audiohandler, text="Low"),
+            "medium_music_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.medium_music_vol_click, self._game.audiohandler, text="Medium"),
+            "high_music_vol_button":self._GUIFactory.create_component("TextButton", self._game.window, self.high_music_vol_click, self._game.audiohandler, text="High"),
+           "music_vol_label":self._GUIFactory.create_component("TextLabel", self._game.window, has_box=False, has_outline=False, text="Music Volume:")
+        }
+
+
 
     def on_state_enter(self):
         self._gui["low_game_vol_button"].size = (200.0, 75.0)

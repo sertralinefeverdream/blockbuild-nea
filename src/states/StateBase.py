@@ -2,8 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class StateBase(ABC):
-    def __init__(self, game):
+    def __init__(self, game, GUIFactory):
         self._game = game
+        self._GUIFactory = GUIFactory
 
     @property
     def game(self):
