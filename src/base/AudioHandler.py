@@ -1,3 +1,5 @@
+import warnings
+
 import pygame
 import random
 
@@ -67,13 +69,19 @@ class AudioHandler:
 
     def play_music(self, music_id):
         self._is_shuffling = False
-        pygame.mixer.music.load(self._music_library[music_id])
-        pygame.mixer.music.play(fade_ms=self._music_fade_time)
+        if music_id in self._music_library.keys():
+            pygame.mixer.music.load(self._music_library[music_id])
+            pygame.mixer.music.play(fade_ms=self._music_fade_time)
+        else:
+            raise Exception
 
     def shuffle_play(self):
         self._is_shuffling = True
-        pygame.mixer.music.load(self._music_library[random.choice(self._shuffle_list)])
-        pygame.mixer.music.play(fade_ms=self._music_fade_time)
+        if len(self._shuffle_list) != 0:
+            pygame.mixer.music.load(self._music_library[random.choice(self._shuffle_list)])
+            pygame.mixer.music.play(fade_ms=self._music_fade_time)
+        else:
+            print("Shuffle list empty!")
 
     def stop_music(self):
         self._is_shuffling = False
@@ -96,6 +104,6 @@ class AudioHandler:
 
     def update_volumes(self):
         pygame.mixer.music.set_volume(self._music_vol)
-        print(self._game_vol)
+        #print(self._game_vol)
         for sfx in self._sfx_library.values():
             sfx.set_volume(self._game_vol)

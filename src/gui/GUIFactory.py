@@ -1,5 +1,6 @@
 from src.gui.TextButton import TextButton
 from src.gui.TextLabel import TextLabel
+from src.gui.RectBox import RectBox
 
 '''
 This GUIFactory class has allowed me to remove any dependence of StateBase and its child classes on any of the
@@ -16,5 +17,7 @@ class GUIFactory:
             return TextButton(*args, **kwargs)
         elif component_id == "TextLabel":
             return TextLabel(*args, **kwargs)
+        elif component_id == "RectBox":
+            return RectBox(*args, **kwargs)
         else:
             raise Exception
