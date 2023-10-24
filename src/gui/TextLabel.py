@@ -127,7 +127,7 @@ class TextLabel(GUIBase):
             self.update_box()
             print(self._box.size)
         else:
-            print("SIZE MUST BE LARGER THAN OR EQUAL TO SIZE OF ORIGINAL")
+            print("SIZE MUST BE LARGER THAN OR EQUAL TO SIZE OF ORIGINAL OR INVALID TYPE")
 
     def update_box(self):
         self._box.update((self._position[0] - self._box_overhang[0] / 2, self._position[1] - self._box_overhang[1] / 2),(
