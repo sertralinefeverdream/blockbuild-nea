@@ -8,15 +8,15 @@ class LoadGameMenuState(StateBase):
     def initialise_gui(self):
         self._gui = [
             {
-                "top_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 1"),
+                "top_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 1:"),
                 "top_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
                 "top_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
 
-                "middle_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 2"),
+                "middle_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 2:"),
                 "middle_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
                 "middle_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
 
-                "bottom_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 3"),
+                "bottom_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 3:"),
                 "bottom_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
                 "bottom_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
                 
@@ -37,7 +37,7 @@ class LoadGameMenuState(StateBase):
 
         self._gui[0]["top_save_label"].font_size = 60
         self._gui[0]["top_save_label"].font_name = "bahnschrift"
-        self._gui[0]["top_save_label"].conform_overhang_to_size((200.0, 75.0))
+        self._gui[0]["top_save_label"].conform_overhang_to_size((250.0, 75.0))
         self._gui[0]["top_save_label"].centre_position = (412.5, 100.0)
 
         self._gui[2]["top_box"].size = (800.0, 150.0)
@@ -54,9 +54,10 @@ class LoadGameMenuState(StateBase):
 
         self._gui[0]["middle_save_label"].font_size = 60
         self._gui[0]["middle_save_label"].font_name = "bahnschrift"
-        self._gui[0]["middle_save_label"].conform_overhang_to_size((200.0, 75.0))
+        self._gui[0]["middle_save_label"].conform_overhang_to_size((250.0, 75.0))
         self._gui[0]["middle_save_label"].centre_position = (412.5, 275.0)
 
+        self._gui[2]["middle_box"].size = (800.0, 150.0)
         self._gui[2]["middle_box"].size = (800.0, 150.0)
         self._gui[2]["middle_box"].centre_position = (600.0, 275.0)
         self._gui[2]["middle_box"].box_colour = (200, 200, 200)
@@ -71,7 +72,7 @@ class LoadGameMenuState(StateBase):
 
         self._gui[0]["bottom_save_label"].font_size = 60
         self._gui[0]["bottom_save_label"].font_name = "bahnschrift"
-        self._gui[0]["bottom_save_label"].conform_overhang_to_size((200.0, 75.0))
+        self._gui[0]["bottom_save_label"].conform_overhang_to_size((250.0, 75.0))
         self._gui[0]["bottom_save_label"].centre_position = (412.5, 450.0)
 
         self._gui[2]["bottom_box"].size = (800.0, 150.0)

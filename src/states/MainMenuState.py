@@ -18,7 +18,7 @@ class MainMenuState(StateBase):
         ]
 
     def on_state_enter(self, *args):
-        self._game.audiohandler.set_shuffle_list([])
+        self._game.audiohandler.set_shuffle_list(["main_menu"])
         if self._game.previous_state is not self._game.states["main_menu"]:
             self._game.audiohandler.shuffle_play()
 
@@ -35,8 +35,6 @@ class MainMenuState(StateBase):
         self._gui[0]["exit_button"].centre_position = (600.0, 500.0)
 
         self._gui[0]["logo"].centre_position = (600.0, 100.0)
-
-        #self._gui["play_button"].is_enabled = False
 
     def on_state_leave(self, *args):
         pass

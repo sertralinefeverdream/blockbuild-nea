@@ -79,6 +79,7 @@ class RectBox(GUIBase):
     def has_box(self, value):
         if type(value) is bool:
             self._has_box = value
+            print(self._has_box)
 
     def update(self):
         self._box.update(self._position, self._size)
