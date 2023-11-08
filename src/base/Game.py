@@ -70,7 +70,6 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
-       # self.push_state("load_game_menu")
 
         while self.__running:
             self.__current_state = self.__state_stack.peek()

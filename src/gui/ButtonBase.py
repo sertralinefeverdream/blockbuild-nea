@@ -27,7 +27,6 @@ class ButtonBase(GUIBase):
         self._rect = pygame.Rect(self._position, self._size)
 
 
-
     @property
     def button_colour(self):
         return self._button_colour
