@@ -1,36 +1,36 @@
 import sys
 import pygame
 
+from .\audio
+
 
 class Game:
-    def __init__(self, state_stack, window, clock, audiohandler, sfx_assets, music_assets, framerate, config):
+    def __init__(self, state_stack, window, clock, musichandler, framerate, config):
         self.__state_stack = state_stack
         self.__config = config
         self.__window = window
+        self.__musichandler = musichandler
         self.__clock = clock
-        self.__audiohandler = audiohandler
-        self._sfx_assets = sfx_assets
-        self._music_assets = music_assets
         self.__framerate = framerate
         self.__states = {}
         self.__previous_state = None
         self.__current_state = None
         self.__running = True
         self.__options = {
-            "game_volume":"medium",
-            "music_volume":"medium"
+            "game_volume": "medium",
+            "music_volume": "medium"
         }
 
-        self.initialise_sfx_and_music()
+        self.initialise_music()
+
 
     '''
      @property
     def state_stack(self):
       return self.__state_stack
     '''
-    def initialise_sfx_and_music(self):
-        self.__audiohandler.add_sfx_from_dict(self._sfx_assets)
-        self.__audiohandler.add_music_from_dict(self._music_assets)
+    def initialise_music(self):
+        pass
 
     @property
     def previous_state(self):
@@ -41,8 +41,8 @@ class Game:
         return self.__states
 
     @property
-    def audiohandler(self):
-        return self.__audiohandler
+    def musichandler(self):
+        return self.__musichandler
 
     @property
     def config(self):
@@ -64,9 +64,13 @@ class Game:
     def clock(self):
         return self.__clock
 
-    def update_states_from_options(self):
-        self.__audiohandler.game_vol = 0.9 if self.__options["game_volume"] == "high" else 0.6 if self.__options["game_volume"] == "medium" else 0.3
-        self.__audiohandler.music_vol = 0.7 if self.__options["music_volume"] == "high" else 0.4 if self.__options["music_volume"] == "medium" else 0.1
+    def initialise_music(self):
+        self.__musichandler.add_music_from_dict(
+            {
+                "main_menu":self.__config["music_assets"]["main_menu"]
+            }
+        )
+
 
     def game_loop(self):
         self.push_state("main_menu")
@@ -74,7 +78,7 @@ class Game:
 
         while self.__running:
             self.__current_state = self.__state_stack.peek()
-            self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
+           # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
 
             if self.__current_state is not None:
                 self.__clock.tick(self.__framerate)
@@ -83,7 +87,7 @@ class Game:
                     if event.type == pygame.QUIT:
                         self.__running = False
                     if event.type == pygame.USEREVENT + 1: # Event id for whenever music stops playing.
-                        self.__audiohandler.on_music_end()
+                        self.__musichandler.on_music_end()
 
                 self.__current_state.update()
                 pygame.display.update()

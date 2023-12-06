@@ -2,10 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class GUIBase(ABC):
-    def __init__(self, surface, position=(0.0, 0.0), is_visible=True):
+    def __init__(self, game, surface, position=(0.0, 0.0), is_visible=True):
+        self._game = game
         self._surface = surface
         self._position = list(position)
         self._is_visible = is_visible
+
 
     @property
     def position(self):

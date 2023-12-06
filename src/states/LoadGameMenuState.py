@@ -2,31 +2,31 @@ from src.states.StateBase import StateBase
 
 
 class LoadGameMenuState(StateBase):
-    def __init__(self, game, GUIFactory):
-        super().__init__(game, GUIFactory)
+    def __init__(self, game, GUIFactory, AudioHandlerFactory):
+        super().__init__(game, GUIFactory, AudioHandlerFactory)
 
     def initialise_gui(self):
         self._gui = [
             {
-                "top_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 1:"),
-                "top_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
-                "top_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
+                "top_save_label": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, text="Save 1:"),
+                "top_load_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.load_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Load"),
+                "top_new_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.new_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="New"),
 
-                "middle_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 2:"),
-                "middle_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
-                "middle_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
+                "middle_save_label": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, text="Save 2:"),
+                "middle_load_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.load_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Load"),
+                "middle_new_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.new_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="New"),
 
-                "bottom_save_label": self._GUIFactory.create_gui("TextLabel", self._game.window, text="Save 3:"),
-                "bottom_load_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.load_button_func, self._game.audiohandler, text="Load"),
-                "bottom_new_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.new_button_func, self._game.audiohandler, text="New"),
+                "bottom_save_label": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, text="Save 3:"),
+                "bottom_load_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.load_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Load"),
+                "bottom_new_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.new_button_func, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="New"),
                 
-                "exit_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.exit_click, self._game.audiohandler, text="Exit")
+                "exit_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.exit_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Exit")
             },
             {},
             {
-                "top_box":self._GUIFactory.create_gui("RectBox", self._game.window),
-                "middle_box": self._GUIFactory.create_gui("RectBox", self._game.window),
-                "bottom_box": self._GUIFactory.create_gui("RectBox", self._game.window)
+                "top_box":self._GUIFactory.create_gui("RectBox", self._game, self._game.window),
+                "middle_box": self._GUIFactory.create_gui("RectBox", self._game, self._game.window),
+                "bottom_box": self._GUIFactory.create_gui("RectBox", self._game, self._game.window)
 
              }
         ]

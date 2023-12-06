@@ -2,23 +2,23 @@ from src.states.StateBase import StateBase
 
 
 class OptionsMenuState(StateBase):
-    def __init__(self, game, GUIFactory):
-        super().__init__(game, GUIFactory)
+    def __init__(self, game, GUIFactory, AudioHandlerFactory):
+        super().__init__(game, GUIFactory, AudioHandlerFactory)
 
     def initialise_gui(self):
         self._gui = [
             {
-                "exit_button": self._GUIFactory.create_gui("TextButton",self._game.window, self.exit_click, self._game.audiohandler, text="Exit"),
+                "exit_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.exit_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Exit"),
 
-                "low_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.low_game_vol_click, self._game.audiohandler, text="Low"),
-                "medium_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.medium_game_vol_click, self._game.audiohandler, text="Medium"),
-                "high_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.high_game_vol_click, self._game.audiohandler, text="High"),
-                "game_vol_label": self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
+                "low_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.low_game_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Low"),
+                "medium_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.medium_game_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Medium"),
+                "high_game_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.high_game_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="High"),
+                "game_vol_label": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
 
-                "low_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.low_music_vol_click, self._game.audiohandler, text="Low"),
-                "medium_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.medium_music_vol_click, self._game.audiohandler, text="Medium"),
-                "high_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.high_music_vol_click, self._game.audiohandler, text="High"),
-                "music_vol_label": self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, text="Music Volume:")
+                "low_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.low_music_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Low"),
+                "medium_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.medium_music_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Medium"),
+                "high_music_vol_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.high_music_vol_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="High"),
+                "music_vol_label": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Music Volume:")
             },
             {},
             {}
@@ -95,7 +95,6 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 0, 0)
 
         self._game.set_option("game_volume", "low")
-        self._game.audiohandler.update_volumes()
 
     def medium_game_vol_click(self, button):
         self._gui[0]["low_game_vol_button"].button_colour = (255, 0, 0)
@@ -108,7 +107,6 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 0, 0)
 
         self._game.set_option("game_volume", "medium")
-        self._game.audiohandler.update_volumes()
 
     def high_game_vol_click(self, button):
         self._gui[0]["low_game_vol_button"].button_colour = (255, 0, 0)
@@ -121,7 +119,6 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 127, 0)
 
         self._game.set_option("game_volume", "high")
-        self._game.audiohandler.update_volumes()
 
     def low_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 255, 0)
@@ -134,7 +131,6 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 0, 0)
 
         self._game.set_option("music_volume", "low")
-        self._game.audiohandler.update_volumes()
 
     def medium_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 0, 0)
@@ -147,7 +143,6 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 0, 0)
 
         self._game.set_option("music_volume", "medium")
-        self._game.audiohandler.update_volumes()
 
     def high_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 0, 0)
@@ -160,5 +155,4 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 127, 0)
 
         self._game.set_option("music_volume", "high")
-        self._game.audiohandler.update_volumes()
 

@@ -6,10 +6,10 @@ from src.gui.GUIBase import GUIBase
 # Important! TextLabel is position from top-right position of the rendered font. Not its bounding box.
 
 class TextLabel(GUIBase):
-    def __init__(self, surface, position=(0, 0), box_overhang=(25, 25), box_colour=(255, 0, 0),
+    def __init__(self, game, surface, position=(0, 0), box_overhang=(25, 25), box_colour=(255, 0, 0),
                  outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True, is_visible=True, font_name="calibri",
                  font_size=50, text="BlockBuild!", text_colour=(0, 0, 0)):
-        super().__init__(surface, position, is_visible)
+        super().__init__(game, surface, position, is_visible)
         self._font_size = font_size
         self._font_name = font_name
         self._text = text

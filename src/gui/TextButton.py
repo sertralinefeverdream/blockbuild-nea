@@ -4,8 +4,15 @@ import pygame.freetype
 
 
 class TextButton(ButtonBase):
-    def __init__(self, surface, click_func,  audiohandler, click_sfx_id="btn_click_1", hover_enter_sfx_id="btn_hover_1", hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100.0, 100.0),  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0), is_enabled=True, is_visible=True, font_name="arial", font_size=50, text="Hello World", text_colour=(0, 0, 0)):
-        super().__init__(surface, click_func, audiohandler, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id, disabled_click_sfx_id, position, size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
+    def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id="btn_click_1",
+                 hover_enter_sfx_id="btn_hover_1", hover_leave_sfx_id=None, disabled_click_sfx_id=None,
+                 position=(0.0, 0.0), size=(100.0, 100.0), held_func=None, hover_leave_func=None, hover_enter_func=None,
+                 hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),
+                 is_enabled=True, is_visible=True, font_name="arial", font_size=50, text="Hello World",
+                 text_colour=(0, 0, 0)):
+        super().__init__(game, surface, click_func, sfxhandler, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id,
+                         disabled_click_sfx_id, position, size, held_func, hover_leave_func, hover_enter_func,
+                         hover_colour, button_colour, outline_thickness, outline_colour, is_enabled, is_visible)
         self._font_size = font_size
         self._font_name = font_name
         self._text = text
@@ -69,6 +76,18 @@ class TextButton(ButtonBase):
             self.update_font()
             self.auto_resize_font()
 
+    def init_audio(self):
+        self._sfxhandler.add_sfx_from_dict(
+            {
+                self._click_sfx_id: self._game.config["sfx_assets"][self._click_sfx_id],
+                self._hover_enter_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
+                self._hover_leave_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id]
+            }
+        )
+
+    def add_sfx(self, sfx_id):
+        self._sfxhandler.add_sfx(sfx_id, self._game.config.sfx_assets[sfx_id])
+
     def auto_resize_font(self):
         while self._rendered_font[1].size[0] > self._size[0] or self._rendered_font[1].size[1] > self._size[1]:
             self._font_size -= 1
@@ -78,7 +97,7 @@ class TextButton(ButtonBase):
         self._current_colour = self._hover_colour
 
         if self._hover_enter_sfx_id is not None:
-            self._audiohandler.play_sfx(self._hover_enter_sfx_id)
+            self._sfxhandler.play_sfx(self._hover_enter_sfx_id)
 
         if self._is_enabled and self._hover_enter_func is not None:
             self._hover_enter_func()
@@ -87,7 +106,7 @@ class TextButton(ButtonBase):
         self._current_colour = self._button_colour
 
         if self._hover_leave_sfx_id is not None:
-            self._audiohandler.play_sfx(self._hover_leave_sfx_id)
+            self._sfxhandler.play_sfx(self._hover_leave_sfx_id)
 
         if self._is_enabled and self._hover_leave_func is not None:
             self._hover_leave_func()
@@ -95,11 +114,11 @@ class TextButton(ButtonBase):
     def on_mouse_click(self):
         if self.is_enabled:
             if self._click_sfx_id is not None:
-                self._audiohandler.play_sfx(self._click_sfx_id)
+                self._sfxhandler.play_sfx(self._click_sfx_id)
             self._click_func(self)
         else:
             if self._disabled_click_sfx_id is not None:
-                self._audiohandler.play_sfx(self._disabled_click_sfx_id)
+                self._sfxhandler.play_sfx(self._disabled_click_sfx_id)
 
     def on_mouse_hold(self):
         if self._is_enabled and self._held_func is not None:
@@ -113,7 +132,10 @@ class TextButton(ButtonBase):
         if self._is_visible:
             pygame.draw.rect(self._surface, self._current_colour, self._rect)
             pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
-            self._surface.blit(self._rendered_font[0], (self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2), self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
+            self._surface.blit(self._rendered_font[0], (
+            self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2),
+            self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
+
     def update(self):
         self._rect.update(self._position, self._size)
 
@@ -142,5 +164,3 @@ class TextButton(ButtonBase):
                 self.on_hover_leave()
             if self._is_pressed:
                 self._is_pressed = False
-
-

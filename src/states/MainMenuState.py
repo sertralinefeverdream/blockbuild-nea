@@ -2,25 +2,25 @@ from src.states.StateBase import StateBase
 
 
 class MainMenuState(StateBase):
-    def __init__(self, game, GUIFactory):
-        super().__init__(game, GUIFactory)
+    def __init__(self, game, GUIFactory, AudioHandlerFactory):
+        super().__init__(game, GUIFactory, AudioHandlerFactory)
 
     def initialise_gui(self):
         self._gui = [
             {
-            "options_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.options_button_click, self._game.audiohandler, text="Options"),
-            "exit_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.exit_button_click, self._game.audiohandler, text="Exit"),
-            "play_button": self._GUIFactory.create_gui("TextButton", self._game.window, self.play_button_click, self._game.audiohandler, text="Play"),
-            "logo": self._GUIFactory.create_gui("TextLabel", self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="bahnschrift")
+            "options_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.options_button_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Options"),
+            "exit_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.exit_button_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Exit"),
+            "play_button": self._GUIFactory.create_gui("TextButton", self._game, self._game.window, self.play_button_click, self._AudioHandlerFactory.create_handler("SfxHandler", self._game), text="Play"),
+            "logo": self._GUIFactory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, font_size=100, text="BlockBuild!", font_name="bahnschrift")
             },
             {},
             {}
         ]
 
     def on_state_enter(self, *args):
-        self._game.audiohandler.set_shuffle_list(["main_menu"])
+        self._game.musichandler.set_shuffle_list(["main_menu"])
         if self._game.previous_state is not self._game.states["main_menu"]:
-            self._game.audiohandler.shuffle_play()
+            self._game.musichandler.shuffle_play()
 
         self._gui[0]["play_button"].size = (400.0, 75.0)
         self._gui[0]["options_button"].size = (400.0, 75.0)
