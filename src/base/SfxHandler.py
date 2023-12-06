@@ -2,20 +2,18 @@ import pygame.mixer
 
 
 class SfxHandler:
-    def __init__(self, game, sound_ids):
+    def __init__(self):
         pygame.mixer.init()
-        self._game = game
-        self._sounds = {}
+        self._sfx_library = {}
 
-    def add_sound(self, sound_id):
-        sound_config = self._game.config["sfx_assets"]
-        if sound_id not in self._sounds.keys() and sound_id in sound_config.keys():
-            self._sounds[sound_id] = pygame.mixer.Sound(sound_config[sound_id])
+    def add_sfx_from_dict(self, sfx_dict):
+        for sfx_id, sfx_path in sfx_dict.items():
+            try:
+                if sfx_id not in self._sfx_library.keys():
+                    self._sfx_library[sfx_id] = pygame.mixer.Sound(sfx_path)
+            except:
+                print(f"{sfx_path} was invalid path!")
 
-    def play_sound(self, sound_id):
-        if sound_id in self._sounds.keys():
-            self._sounds[sound_id].play()
-
-    def stop_sound(self, sound_id):
-        if sound_id in self._sounds.keys():
-            self._sounds[sound_id].stop()
+    def play_sfx(self, sfx_name):
+        if sfx_name in self._sfx_library.keys():
+            self._sfx_library[sfx_name].play()
