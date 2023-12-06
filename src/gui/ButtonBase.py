@@ -85,6 +85,10 @@ class ButtonBase(GUIBase):
             raise TypeError
 
     @abstractmethod
+    def init_audio(self):
+        pass
+
+    @abstractmethod
     def on_hover_enter(self):
         pass
 
