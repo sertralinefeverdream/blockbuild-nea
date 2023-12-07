@@ -18,9 +18,9 @@ class SfxHandler:
         except:
             print(f"{sfx_path} was invalid path!")
 
-    def play_sfx(self, sfx_id, vol=None):
+    def play_sfx(self, sfx_id, vol=0.6):
         if sfx_id in self._sfx_library.keys():
-            if vol is not None and 0 <= vol <= 1:
+            if vol is not None and 0 <= vol.value <= 1:
                 self._sfx_library[sfx_id].set_volume(vol)
             self._sfx_library[sfx_id].play()
 

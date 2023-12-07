@@ -1,15 +1,14 @@
 import sys
 import pygame
-
-from .\audio
+from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, musichandler, framerate, config):
+    def __init__(self, state_stack, window, clock, music_handler, framerate, config):
         self.__state_stack = state_stack
         self.__config = config
         self.__window = window
-        self.__musichandler = musichandler
+        self.__music_handler = music_handler
         self.__clock = clock
         self.__framerate = framerate
         self.__states = {}
@@ -17,8 +16,8 @@ class Game:
         self.__current_state = None
         self.__running = True
         self.__options = {
-            "game_volume": "medium",
-            "music_volume": "medium"
+            "game_volume": Volume.MEDIUM,
+            "music_volume": Volume.MEDIUM
         }
 
         self.initialise_music()
@@ -41,8 +40,8 @@ class Game:
         return self.__states
 
     @property
-    def musichandler(self):
-        return self.__musichandler
+    def music_handler(self):
+        return self.__music_handler
 
     @property
     def config(self):
@@ -65,16 +64,15 @@ class Game:
         return self.__clock
 
     def initialise_music(self):
-        self.__musichandler.add_music_from_dict(
+        self.__music_handler.add_music_from_dict(
             {
-                "main_menu":self.__config["music_assets"]["main_menu"]
+                "main_menu": self.__config["music_assets"]["main_menu"]
             }
         )
 
 
     def game_loop(self):
         self.push_state("main_menu")
-       # self.push_state("load_game_menu")
 
         while self.__running:
             self.__current_state = self.__state_stack.peek()
@@ -87,7 +85,7 @@ class Game:
                     if event.type == pygame.QUIT:
                         self.__running = False
                     if event.type == pygame.USEREVENT + 1: # Event id for whenever music stops playing.
-                        self.__musichandler.on_music_end()
+                        self.__music_handler.on_music_end()
 
                 self.__current_state.update()
                 pygame.display.update()

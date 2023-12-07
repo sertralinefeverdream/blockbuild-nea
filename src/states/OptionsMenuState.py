@@ -1,4 +1,5 @@
 from src.states.StateBase import StateBase
+from src.audio.Volume import Volume
 
 
 class OptionsMenuState(StateBase):
@@ -57,18 +58,18 @@ class OptionsMenuState(StateBase):
         self.initialise_gui_states()
 
     def initialise_gui_states(self):
-        if self._game.get_option("game_volume") == "low":
+        if self._game.get_option("game_volume").name == "LOW":
             self.low_game_vol_click(self._gui[0]["low_game_vol_button"])
-        elif self._game.get_option("game_volume") == "medium":
+        elif self._game.get_option("game_volume").name == "MEDIUM":
             self.medium_game_vol_click(self._gui[0]["medium_game_vol_button"])
-        elif self._game.get_option("game_volume") == "high":
+        elif self._game.get_option("game_volume").name == "HIGH":
             self.high_game_vol_click(self._gui[0]["high_game_vol_button"])
 
-        if self._game.get_option("music_volume") == "low":
+        if self._game.get_option("music_volume").name == "LOW":
             self.low_music_vol_click(self._gui[0]["low_music_vol_button"])
-        elif self._game.get_option("music_volume") == "medium":
+        elif self._game.get_option("music_volume").name == "MEDIUM":
             self.medium_music_vol_click(self._gui[0]["medium_music_vol_button"])
-        elif self._game.get_option("music_volume") == "high":
+        elif self._game.get_option("music_volume").name == "HIGH":
             self.high_music_vol_click(self._gui[0]["high_music_vol_button"])
 
     def on_state_leave(self, *args):
@@ -94,7 +95,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].button_colour = (255, 0, 0)
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 0, 0)
 
-        self._game.set_option("game_volume", "low")
+        self._game.set_option("game_volume", Volume.LOW)
 
     def medium_game_vol_click(self, button):
         self._gui[0]["low_game_vol_button"].button_colour = (255, 0, 0)
@@ -106,7 +107,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].button_colour = (255, 0, 0)
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 0, 0)
 
-        self._game.set_option("game_volume", "medium")
+        self._game.set_option("game_volume", Volume.MEDIUM)
 
     def high_game_vol_click(self, button):
         self._gui[0]["low_game_vol_button"].button_colour = (255, 0, 0)
@@ -118,7 +119,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_game_vol_button"].button_colour = (255, 255, 0)
         self._gui[0]["high_game_vol_button"].hover_colour = (127, 127, 0)
 
-        self._game.set_option("game_volume", "high")
+        self._game.set_option("game_volume", Volume.HIGH)
 
     def low_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 255, 0)
@@ -130,7 +131,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].button_colour = (255, 0, 0)
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 0, 0)
 
-        self._game.set_option("music_volume", "low")
+        self._game.set_option("music_volume", Volume.LOW)
 
     def medium_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 0, 0)
@@ -142,7 +143,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].button_colour = (255, 0, 0)
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 0, 0)
 
-        self._game.set_option("music_volume", "medium")
+        self._game.set_option("music_volume", Volume.MEDIUM.)
 
     def high_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 0, 0)
@@ -154,5 +155,5 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].button_colour = (255, 255, 0)
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 127, 0)
 
-        self._game.set_option("music_volume", "high")
+        self._game.set_option("music_volume", Volume.HIGH)
 
