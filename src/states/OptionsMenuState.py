@@ -143,7 +143,7 @@ class OptionsMenuState(StateBase):
         self._gui[0]["high_music_vol_button"].button_colour = (255, 0, 0)
         self._gui[0]["high_music_vol_button"].hover_colour = (127, 0, 0)
 
-        self._game.set_option("music_volume", Volume.MEDIUM.)
+        self._game.set_option("music_volume", Volume.MEDIUM)
 
     def high_music_vol_click(self, button):
         self._gui[0]["low_music_vol_button"].button_colour = (255, 0, 0)

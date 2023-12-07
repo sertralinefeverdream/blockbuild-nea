@@ -97,6 +97,7 @@ class TextButton(ButtonBase):
         self._current_colour = self._hover_colour
 
         if self._hover_enter_sfx_id is not None:
+            #print(self._game.get_option("game_volume").value)
             self._sfxhandler.play_sfx(self._hover_enter_sfx_id, self._game.get_option("game_volume").value)
 
         if self._is_enabled and self._hover_enter_func is not None:
@@ -113,9 +114,9 @@ class TextButton(ButtonBase):
 
     def on_mouse_click(self):
         if self.is_enabled:
+            self._click_func(self)
             if self._click_sfx_id is not None:
                 self._sfxhandler.play_sfx(self._click_sfx_id, self._game.get_option("game_volume").value)
-            self._click_func(self)
         else:
             if self._disabled_click_sfx_id is not None:
                 self._sfxhandler.play_sfx(self._disabled_click_sfx_id, self._game.get_option("game_volume").value)

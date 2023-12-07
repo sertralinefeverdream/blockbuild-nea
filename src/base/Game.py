@@ -32,6 +32,10 @@ class Game:
         pass
 
     @property
+    def music_handler(self):
+        return self.__music_handler
+
+    @property
     def previous_state(self):
         return self.__previous_state
 
@@ -95,7 +99,6 @@ class Game:
         self.on_game_end()
 
     def on_game_end(self):
-       # print("Game ended")
         pygame.quit()
         sys.exit()
 
@@ -107,6 +110,11 @@ class Game:
 
     def set_option(self, option_index, value):
         self.__options[option_index] = value
+        self.update_states_from_option()
+
+    def update_states_from_option(self):
+        pygame.mixer.music.set_volume(self.__options["music_volume"].value)
+        print(self.__options["music_volume"].value)
 
     def push_state(self, state_id):
         self.__previous_state = self.__state_stack.peek()

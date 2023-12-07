@@ -3,8 +3,7 @@ import pygame
 import random
 
 '''
-Audiohandler allows me to control the behaviour of playing sounds from one centralised part of my code instead of each
-Game State having to implement their own code to play music.
+Class superseded by SfxHandler and MusicHandler
 '''
 
 
