@@ -17,6 +17,7 @@ class TextButton(ButtonBase):
         self._font_name = font_name
         self._text = text
         self._text_colour = list(text_colour)
+
         self._font = pygame.freetype.SysFont(font_name, self._font_size)
         self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour, size=self._font_size)
         self._ticks = 0
@@ -24,16 +25,6 @@ class TextButton(ButtonBase):
         self.update_font()
         self.auto_resize_font()
 
-    @property
-    def centre_position(self):
-        return (self._position[0] + self._rect.size[0] / 2, self._position[1] + self._rect.size[1])
-
-    @centre_position.setter
-    def centre_position(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position = [value[0] - (self._size[0] / 2), value[1] - (self._size[1] / 2)]
-        else:
-            raise TypeError
 
     @property
     def font_size(self):
@@ -41,9 +32,10 @@ class TextButton(ButtonBase):
 
     @font_size.setter
     def font_size(self, value):
-        self._font_size = value
-        self.update_font()
-        self.auto_resize_font()
+        if type(value) is int:
+            self._font_size = value
+            self.update_font()
+            self.auto_resize_font()
 
     @property
     def font_name(self):
@@ -51,9 +43,10 @@ class TextButton(ButtonBase):
 
     @font_name.setter
     def font_name(self, value):
-        self._font_size = value
-        self.update_font()
-        self.auto_resize_font()
+        if type(value) is str:
+            self._font_size = value
+            self.update_font()
+            self.auto_resize_font()
 
     @property
     def text(self):
@@ -61,9 +54,10 @@ class TextButton(ButtonBase):
 
     @text.setter
     def text(self, value):
-        self._text = value
-        self.update_font()
-        self.auto_resize_font()
+        if type(value) is str:
+            self._text = value
+            self.update_font()
+            self.auto_resize_font()
 
     @property
     def text_colour(self):
@@ -75,6 +69,17 @@ class TextButton(ButtonBase):
             self._text_colour = value
             self.update_font()
             self.auto_resize_font()
+
+    @property
+    def centre_position(self):
+        return (self._position[0] + self._rect.size[0] / 2, self._position[1] + self._rect.size[1])
+
+    @centre_position.setter
+    def centre_position(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 2:
+            self._position = [value[0] - (self._size[0] / 2), value[1] - (self._size[1] / 2)]
+        else:
+            raise TypeError
 
     def init_audio(self):
         self._sfxhandler.add_sfx_from_dict(
