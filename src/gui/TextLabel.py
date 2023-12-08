@@ -69,6 +69,12 @@ class TextLabel(GUIBase):
 
     @property
     def has_outline(self):
+        return self._has_outline
+
+    @has_outline.setter
+    def has_outline(self, value):
+        if type(value) is bool:
+            self._has_outline = value
 
     @property
     def outline_colour(self):
@@ -145,7 +151,7 @@ class TextLabel(GUIBase):
         else:
             raise TypeError
 
-    def conform_overhang_to_size(self, size): # Calculates overhang so that the box surrounding text conforms to a certain size
+    def conform_overhang_to_size(self, size): #Calculates overhang so that the box surrounding text conforms to a certain size
         if size[0] >= self._rendered_font[1].size[0] and size[1] >= self._rendered_font[1].size[1] and (type(size) is tuple or type(size is list)) and len(size) == 2:
             self._box_overhang[0] = (size[0] - self._rendered_font[1].size[0])
             self._box_overhang[1] = (size[1] - self._rendered_font[1].size[1])

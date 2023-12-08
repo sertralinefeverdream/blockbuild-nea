@@ -23,7 +23,9 @@ class Game:
             "music_volume": Volume.MEDIUM
         }
 
-     @property
+        self.initialise_music()
+
+    @property
     def state_stack(self):
       return self.__state_stack
 

@@ -27,7 +27,6 @@ def main():
     game.add_to_states("load_game_menu", LoadGameMenuState(game, gui_factory, audio_handler_factory))
     game.game_loop()
 
-
 if __name__ == "__main__":
     print("Hello!")
     main()
