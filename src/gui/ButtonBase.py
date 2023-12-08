@@ -2,10 +2,15 @@ from abc import abstractmethod
 from src.gui.GUIBase import GUIBase
 import pygame
 
-#Refactored
+
+# Refactored
 
 class ButtonBase(GUIBase):
-    def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id=None, hover_enter_sfx_id=None, hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100, 100), held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):
+    def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id=None, hover_enter_sfx_id=None,
+                 hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100, 100),
+                 held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0),
+                 button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0), is_enabled=True,
+                 is_visible=True):
         super().__init__(game, surface, position, is_visible)
         self._click_func = click_func
         self._sfxhandler = sfxhandler
@@ -29,7 +34,6 @@ class ButtonBase(GUIBase):
         self._rect = pygame.Rect(self._position, self._size)
 
         self.init_audio()
-
 
     @property
     def click_func(self):
@@ -203,6 +207,3 @@ class ButtonBase(GUIBase):
     @abstractmethod
     def on_mouse_hold(self):
         pass
-
-
-
