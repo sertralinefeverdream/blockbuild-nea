@@ -7,6 +7,10 @@ class SfxHandler:
         self._game = game
         self._sfx_library = {}
 
+    @property
+    def sfx_library(self):
+        return self._sfx_library
+
     def add_sfx_from_dict(self, sfx_dict):
         for sfx_id, sfx_path in sfx_dict.items():
             self.add_sfx(sfx_id, sfx_path)

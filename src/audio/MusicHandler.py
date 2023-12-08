@@ -11,6 +11,18 @@ class MusicHandler:
         self._is_shuffling = is_shuffling
         self._music_fade_time = music_fade_time
 
+    @property
+    def music_library(self):
+        return self._music_library
+
+    @property
+    def shuffle_list(self):
+        return self._shuffle_list
+
+    @property
+    def is_shuffling(self):
+        return self._shuffle_list
+
     def set_shuffle_list(self, shuffle_list):
         self._shuffle_list = shuffle_list
 

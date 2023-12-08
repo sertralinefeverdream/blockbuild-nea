@@ -20,7 +20,7 @@ class Game:
         self.__running = True
         self.__options = {
             "game_volume": Volume.MEDIUM,
-            "music_volume": Volume.MEDIUM
+            "music_volume": Volume.LOW
         }
 
         self.initialise_music()
@@ -75,6 +75,7 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
+        self.update_states_from_option()
 
         while self.__running:
             self.__current_state = self.__state_stack.peek()
