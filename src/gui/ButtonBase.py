@@ -2,6 +2,7 @@ from abc import abstractmethod
 from src.gui.GUIBase import GUIBase
 import pygame
 
+#Refactored
 
 class ButtonBase(GUIBase):
     def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id=None, hover_enter_sfx_id=None, hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100, 100), held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),  is_enabled=True, is_visible=True):

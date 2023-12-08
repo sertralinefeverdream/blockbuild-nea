@@ -2,13 +2,13 @@ import pygame.mixer
 import random
 
 
+
 class MusicHandler:
     def __init__(self, music_fade_time, is_shuffling):
         pygame.mixer.init()
         self._music_library = {}
         self._shuffle_list = []
         self._is_shuffling = is_shuffling
-        self._music_vol = 0
         self._music_fade_time = music_fade_time
 
     def set_shuffle_list(self, shuffle_list):

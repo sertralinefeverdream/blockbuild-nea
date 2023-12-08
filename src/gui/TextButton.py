@@ -2,10 +2,12 @@ from src.gui.ButtonBase import ButtonBase
 import pygame
 import pygame.freetype
 
+#Refactored
+
 
 class TextButton(ButtonBase):
     def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id="btn_click_1",
-                 hover_enter_sfx_id="btn_hover_1", hover_leave_sfx_id=None, disabled_click_sfx_id=None,
+                 hover_enter_sfx_id="btn_hover_1", hover_leave_sfx_id=None, disabled_click_sfx_id="hello",
                  position=(0.0, 0.0), size=(100.0, 100.0), held_func=None, hover_leave_func=None, hover_enter_func=None,
                  hover_colour=(127, 0, 0), button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0),
                  is_enabled=True, is_visible=True, font_name="arial", font_size=50, text="Hello World",
@@ -70,23 +72,13 @@ class TextButton(ButtonBase):
             self.update_font()
             self.auto_resize_font()
 
-    @property
-    def centre_position(self):
-        return (self._position[0] + self._rect.size[0] / 2, self._position[1] + self._rect.size[1])
-
-    @centre_position.setter
-    def centre_position(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position = [value[0] - (self._size[0] / 2), value[1] - (self._size[1] / 2)]
-        else:
-            raise TypeError
-
     def init_audio(self):
         self._sfxhandler.add_sfx_from_dict(
             {
                 self._click_sfx_id: self._game.config["sfx_assets"][self._click_sfx_id],
                 self._hover_enter_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
-                self._hover_leave_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id]
+                self._hover_leave_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
+                self._disabled_click_sfx_id: self._game.config["sfx_assets"][self.disabled_click_sfx_id]
             }
         )
 
@@ -102,7 +94,6 @@ class TextButton(ButtonBase):
         self._current_colour = self._hover_colour
 
         if self._hover_enter_sfx_id is not None:
-            #print(self._game.get_option("game_volume").value)
             self._sfxhandler.play_sfx(self._hover_enter_sfx_id, self._game.get_option("game_volume").value)
 
         if self._is_enabled and self._hover_enter_func is not None:
