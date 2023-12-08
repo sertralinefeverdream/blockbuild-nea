@@ -78,7 +78,7 @@ class TextButton(ButtonBase):
                 self._click_sfx_id: self._game.config["sfx_assets"][self._click_sfx_id],
                 self._hover_enter_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
                 self._hover_leave_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
-                self._disabled_click_sfx_id: self._game.config["sfx_assets"][self.disabled_click_sfx_id]
+                self._disabled_click_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id]
             }
         )
 
