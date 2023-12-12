@@ -5,6 +5,10 @@ class SaveFileHandler:
     def __init__(self):
             self._save_files = {}
 
+    @property
+    def save_files(self):
+        return self._save_files
+
     def add_save_file(self, save_id, path):
         save_file_path = Path(path)
         print(save_id)

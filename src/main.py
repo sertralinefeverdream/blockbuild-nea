@@ -3,6 +3,7 @@ from config import config
 from states.MainMenuState import MainMenuState
 from states.LoadGameMenuState import LoadGameMenuState
 from states.OptionsMenuState import OptionsMenuState
+from states.MainGameState import MainGameState
 
 from base.Game import Game
 from src.audio.MusicHandler import MusicHandler

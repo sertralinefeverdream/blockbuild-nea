@@ -122,9 +122,9 @@ class Game:
     def add_to_states(self, state_id, state):
         self.__states[state_id] = state
 
-    def push_state(self, state_id):
+    def push_state(self, state_id, *args):
         self.__previous_state = self.__state_stack.peek()
-        self.__state_stack.push(self.__states[state_id.lower()])
+        self.__state_stack.push(self.__states[state_id.lower()], *args)
 
     def pop_state(self):
         self.__previous_state = self.__state_stack.pop()

@@ -18,10 +18,10 @@ class StateStack:
 
     def push(self, state, *args):
         if not self.empty():
-            self.__stack[-1].on_state_leave(*args)
+            self.__stack[-1].on_state_leave()
 
         self.__stack.append(state)
-        state.on_state_enter()
+        state.on_state_enter(*args)
 
     def pop(self, *args):
         if not self.empty():
