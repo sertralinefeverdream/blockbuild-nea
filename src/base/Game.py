@@ -86,6 +86,7 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
+        self.push_state("main_game")
         self.update_states_from_option()
 
         while self.__running:

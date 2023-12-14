@@ -6,7 +6,7 @@ class AudioHandlerFactory:
         pass
 
     def create_handler(self, component_id, *args, **kwargs):
-        if component_id == "MusicHandler":
+        if component_id.lower() == "musichandler":
             return MusicHandler(*args, **kwargs)
-        elif component_id == "SfxHandler":
+        elif component_id.lower() == "sfxhandler":
             return SfxHandler(*args, **kwargs)

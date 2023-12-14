@@ -23,5 +23,14 @@ config = \
     {
         "btn_click_1": "../assets/audio/sfx/gui/btn_click_1.mp3",
         "btn_hover_1": "../assets/audio/sfx/gui/btn_hover_1.mp3"
-    }
+    },
+
+    "blocks":
+        {
+            "grass" :
+                {
+                    "behaviour": "basic",
+                    "texture": "../assets/imgs/sprites/grass.png"
+                }
+        }
 }
