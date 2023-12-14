@@ -10,9 +10,10 @@ class BlockBehaviour(ABC):
     def block(self):
         return self._block
 
+    @block.setter
+    def block(self, value):
+        self._block = value
+
     @abstractmethod
     def update(self):
         pass
-
-    def set_block(self, block):
-        self._block = block

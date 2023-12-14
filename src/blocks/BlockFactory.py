@@ -1,5 +1,4 @@
 from src.blocks.Block import Block
-from src.blocks.BlockBehaviourFactory import BlockBehaviourFactory
 
 
 class BlockFactory:
@@ -10,9 +9,8 @@ class BlockFactory:
     def create_block(self, game, block_id):
         if block_id in self._block_dict.keys():
             block_data = self._block_dict[block_id]
-            print(block_data)
             block_behaviour = self._block_behaviour_factory.create_block_behaviour(game, block_data["behaviour"])
             block = Block(game, block_behaviour, block_data["texture"])
-            block_behaviour.set_block(block)
+            block_behaviour.block = block
             return block
 

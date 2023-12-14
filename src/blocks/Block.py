@@ -5,16 +5,11 @@ class Block:
     def __init__(self, game, block_behaviour, texture):
         self._game = game
         self._block_behaviour = block_behaviour
-        self._texture = pygame.transform.scale(pygame.image.load(texture), (120, 120))
+        self._texture = pygame.transform.scale(pygame.image.load(texture), (40, 40))
 
     @property
-    def texture(self):
-        return self._texture
-
-    @texture.setter
-    def texture(self, value):
-        if type(value) is pygame.Surface:
-            self._texture = pygame.transform.scale(value, (120, 120))
+    def game(self):
+        return self._game
 
     @property
     def block_behaviour(self):
@@ -23,7 +18,16 @@ class Block:
     @block_behaviour.setter
     def block_behaviour(self, value):
         self._block_behaviour = value
+        value.set_block(self)
 
+    @property
+    def texture(self):
+        return self._texture
+
+    @texture.setter
+    def texture(self, value):
+        if type(value) is pygame.Surface:
+            self._texture = pygame.transform.scale(value, (40, 40))
 
     def update(self):
         if self._block_behaviour is not None:
