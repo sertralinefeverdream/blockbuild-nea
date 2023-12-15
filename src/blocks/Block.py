@@ -5,7 +5,7 @@ class Block:
     def __init__(self, game, block_behaviour, texture):
         self._game = game
         self._block_behaviour = block_behaviour
-        self._texture = pygame.transform.scale(pygame.image.load(texture), (40, 40))
+        self._texture = pygame.transform.scale(texture, (40, 40))
 
     @property
     def game(self):

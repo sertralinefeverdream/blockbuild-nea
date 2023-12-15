@@ -1,6 +1,8 @@
 
 class Camera:
-    def __init__(self):
+    def __init__(self, world):
+        self._world = world
+        
         self._position = [0, 0]
 
     @property
@@ -29,6 +31,9 @@ class Camera:
     def y(self, value):
         if type(value) is float or type(value) is int:
             self._position[1] = value
+
+    def get_screen_position(self, world_position):
+        return (world_position[0] - self._position[0], world_position[1] + self._position[1])
 
 
 

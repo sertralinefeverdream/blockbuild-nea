@@ -2,28 +2,28 @@ from src.states.StateBase import StateBase
 
 
 class MainMenuState(StateBase):
-    def __init__(self, game, gui_factory, audio_handler_factory):
-        super().__init__(game, gui_factory, audio_handler_factory)
+    def __init__(self, game):
+        super().__init__(game)
 
     def initialise_gui(self):
         self._gui = [
             {
-                "options_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window,
+                "options_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
                                                                self.options_button_click,
-                                                               self._audio_handler_factory.create_handler("SfxHandler",
+                                                               self._game.audio_handler_factory.create_handler("SfxHandler",
                                                                                                           self._game),
                                                                text="Options"),
-                "exit_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window,
+                "exit_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
                                                             self.exit_button_click,
-                                                            self._audio_handler_factory.create_handler("SfxHandler",
+                                                            self._game.audio_handler_factory.create_handler("SfxHandler",
                                                                                                        self._game),
                                                             text="Exit"),
-                "play_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window,
+                "play_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
                                                             self.play_button_click,
-                                                            self._audio_handler_factory.create_handler("SfxHandler",
+                                                            self._game.audio_handler_factory.create_handler("SfxHandler",
                                                                                                        self._game),
                                                             text="Play"),
-                "logo": self._gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False,
+                "logo": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False,
                                                      has_outline=False, font_size=100, text="BlockBuild!",
                                                      font_name="bahnschrift")
             },

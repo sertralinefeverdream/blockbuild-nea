@@ -3,23 +3,23 @@ from src.audio.Volume import Volume
 
 
 class OptionsMenuState(StateBase):
-    def __init__(self, game, gui_factory, audio_handler_factory):
-        super().__init__(game, gui_factory, audio_handler_factory)
+    def __init__(self, game):
+        super().__init__(game)
 
     def initialise_gui(self):
         self._gui = [
             {
-                "exit_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.exit_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="Exit"),
+                "exit_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.exit_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="Exit"),
 
-                "low_game_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.low_game_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="Low"),
-                "medium_game_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.medium_game_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="Medium"),
-                "high_game_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.high_game_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="High"),
-                "game_vol_label": self._gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
+                "low_game_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.low_game_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="Low"),
+                "medium_game_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.medium_game_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="Medium"),
+                "high_game_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.high_game_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="High"),
+                "game_vol_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Game Volume:"),
 
-                "low_music_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.low_music_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="Low"),
-                "medium_music_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.medium_music_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="Medium"),
-                "high_music_vol_button": self._gui_factory.create_gui("TextButton", self._game, self._game.window, self.high_music_vol_click, self._audio_handler_factory.create_handler("SfxHandler", self._game), text="High"),
-                "music_vol_label": self._gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Music Volume:")
+                "low_music_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.low_music_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="Low"),
+                "medium_music_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.medium_music_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="Medium"),
+                "high_music_vol_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.high_music_vol_click, self._game.audio_handler_factory.create_handler("SfxHandler", self._game), text="High"),
+                "music_vol_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False, has_outline=False, text="Music Volume:")
             },
             {},
             {}

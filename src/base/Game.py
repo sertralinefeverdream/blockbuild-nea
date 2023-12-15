@@ -6,14 +6,16 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, save_file_handler, framerate, config):
+    def __init__(self, state_stack, window, clock, music_handler, framerate, config, gui_factory, audio_handler_factory, block_factory):
         self.__state_stack = state_stack
         self.__window = window
         self.__clock = clock
         self.__music_handler = music_handler
-        self.__save_file_handler = save_file_handler
         self.__framerate = framerate
         self.__config = config
+        self._gui_factory = gui_factory
+        self._audio_handler_factory = audio_handler_factory
+        self._block_factory = block_factory
 
         self.__states = {}
         self.__previous_state = None
@@ -24,7 +26,6 @@ class Game:
             "music_volume": Volume.LOW
         }
 
-        self.initialise_save_files()
         self.initialise_music()
 
     @property
@@ -42,10 +43,6 @@ class Game:
     @property
     def music_handler(self):
         return self.__music_handler
-
-    @property
-    def save_file_handler(self):
-        return self.__save_file_handler
 
     @property
     def config(self):
@@ -71,10 +68,17 @@ class Game:
     def running(self):
         return self.__running
 
-    def initialise_save_files(self):
-        for x in self.__config["save_files"].items():
-            print(x)
-            self.__save_file_handler.add_save_file(x[0], x[1])
+    @property
+    def gui_factory(self):
+        return self._gui_factory
+
+    @property
+    def audio_handler_factory(self):
+        return self._audio_handler_factory
+
+    @property
+    def block_factory(self):
+        return self._block_factory
 
     def initialise_music(self):
         self.__music_handler.add_music_from_dict(

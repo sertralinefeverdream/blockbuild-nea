@@ -2,10 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class StateBase(ABC):
-    def __init__(self, game, gui_factory, audio_handler_factory):
+    def __init__(self, game):
         self._game = game
-        self._gui_factory = gui_factory
-        self._audio_handler_factory = audio_handler_factory
         self._gui = {}
         self.initialise_gui()
 

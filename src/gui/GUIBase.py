@@ -10,7 +10,6 @@ class GUIBase(ABC):
         self._position = list(position)
         self._is_visible = is_visible
 
-
     @property
     def position(self):
         return self._position
