@@ -1,4 +1,4 @@
-from src.blocks.BasicBehaviour import BasicBehaviour
+from src.blocks.legacy.BasicBehaviour import BasicBehaviour
 
 
 class BlockBehaviourFactory:

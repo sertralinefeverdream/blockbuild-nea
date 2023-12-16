@@ -13,12 +13,10 @@ from src.audio.AudioHandlerFactory import AudioHandlerFactory
 from gui.GUIFactory import GUIFactory
 from states.StateStack import StateStack
 
-from blocks.BlockFactory import BlockFactory
-from blocks.BlockBehaviourFactory import BlockBehaviourFactory
+from src.blocks.legacy.BlockFactory import BlockFactory
+from src.blocks.legacy.BlockBehaviourFactory import BlockBehaviourFactory
 
 from states.MainGameState import MainGameState
-
-from src.base.SaveFileHandler import SaveFileHandler
 
 
 def main():

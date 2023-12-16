@@ -21,7 +21,7 @@
 
   "blocks": {
     "grass": {
-      "behaviour": "basic",
+      "type": "basic",
       "texture": "grass"
     }
   }

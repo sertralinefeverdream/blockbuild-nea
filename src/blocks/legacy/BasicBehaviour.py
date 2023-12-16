@@ -1,4 +1,4 @@
-from src.blocks.BlockBehaviour import BlockBehaviour
+from src.blocks.legacy.BlockBehaviour import BlockBehaviour
 
 
 class BasicBehaviour(BlockBehaviour):

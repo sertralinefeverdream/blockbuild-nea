@@ -1,7 +1,7 @@
 import pygame
 
 
-class Block:
+class LegacyBlock:
     def __init__(self, game, block_behaviour, texture):
         self._game = game
         self._block_behaviour = block_behaviour
