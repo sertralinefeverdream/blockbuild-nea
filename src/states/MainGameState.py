@@ -9,8 +9,8 @@ class MainGameState(StateBase):
         print(self._region.serialize())
         self._region.load_from_serialized(
             '''{
-            "0": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
-            null, null, null, null, null, null, null, null, null, null, null, null, null, null], "1": [null, null, 
+            "0": [{"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null], "1": [{"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, 
             null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
             null, null, null, null, null, null, null, null, null, null, null], "2": [null, null, null, null, null, 
             null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
