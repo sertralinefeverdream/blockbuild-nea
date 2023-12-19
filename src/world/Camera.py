@@ -11,7 +11,7 @@ class Camera:
     @position.setter
     def position(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 3:
-            self._position = value
+            self._position = list(value)
 
     @property
     def x(self):
