@@ -1,5 +1,6 @@
 import pygame
 from abc import ABC, abstractmethod
+import json
 
 
 class BlockBase(ABC):
@@ -21,6 +22,10 @@ class BlockBase(ABC):
     @property
     def block_id(self):
         return self._block_id
+
+    @property
+    def sfx_handler(self):
+        return self._sfx_handler
 
     @property
     def texture(self):
@@ -81,5 +86,24 @@ class BlockBase(ABC):
         pass
 
     @abstractmethod
-    def draw(self):
+    def draw(self, screen_position):
         pass
+
+    @abstractmethod
+    def serialize(self):
+        pass
+
+    @abstractmethod
+    def get_state_data(self):
+        pass
+
+    # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
+    # a loottable of what will be dropped i guess lol
+
+    def serialize(self):
+        data = \
+            {
+                "block_id": f"{self._block_id}",
+                "state_data": self.get_state_data()
+            }
+        return json.dumps(data)
