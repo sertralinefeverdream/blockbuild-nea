@@ -21,8 +21,11 @@
 
   "blocks": {
     "grass": {
-      "type": "basic",
-      "texture": "grass"
+      "type": "generic",
+      "texture": "grass",
+      "break_sfx_id": "btn_click_1",
+      "place_sfx_id": "btn_click_1",
+      "footstep_sfx_id":"btn_click_1"
     }
   }
 }

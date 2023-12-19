@@ -2,7 +2,6 @@
 class Camera:
     def __init__(self, world):
         self._world = world
-        
         self._position = [0, 0]
 
     @property

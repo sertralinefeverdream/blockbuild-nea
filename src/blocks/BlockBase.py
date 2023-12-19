@@ -3,16 +3,24 @@ from abc import ABC, abstractmethod
 
 
 class BlockBase(ABC):
-    def __init__(self, game, sfx_handler, texture, break_sound_id, place_sound_id, footstep_sound_id=None):
+    def __init__(self, game, block_id, sfx_handler, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
         self._game = game
+        self._block_id = block_id
         self._sfx_handler = sfx_handler
         self._texture = pygame.transform.scale(texture, (40, 40))
+        self._break_sfx_id = break_sfx_id
+        self._place_sfx_id = place_sfx_id
+        self._footstep_sfx_id = footstep_sfx_id
 
         self.init_audio()
 
     @property
     def game(self):
         return self._game
+
+    @property
+    def block_id(self):
+        return self._block_id
 
     @property
     def texture(self):
@@ -22,6 +30,36 @@ class BlockBase(ABC):
     def texture(self, value):
         if type(value) is pygame.Surface:
             self._texture = pygame.transform.scale(self._texture, (40, 40))
+
+    @property
+    def break_sfx_id(self):
+        return self._break_sfx_id
+
+    @break_sfx_id.setter
+    def break_sfx_id(self, value):
+        if value in self._game.config["sfx_assets"].keys():
+            self._break_sfx_id = value
+            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
+
+    @property
+    def place_sfx_id(self):
+        return self._place_sfx_id
+
+    @place_sfx_id.setter
+    def place_sfx_id(self, value):
+        if value in self._game.config["sfx_assets"].keys():
+            self._place_sfx_id = value
+            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
+
+    @property
+    def footstep_sfx_id(self):
+        return self._footstep_sfx_id
+
+    @footstep_sfx_id.setter
+    def footstep_sfx_id(self, value):
+        if value in self._game.config["sfx_assets"].keys():
+            self._footstep_sfx_id = value
+            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @abstractmethod
     def init_audio(self):

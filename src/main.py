@@ -13,8 +13,7 @@ from src.audio.AudioHandlerFactory import AudioHandlerFactory
 from gui.GUIFactory import GUIFactory
 from states.StateStack import StateStack
 
-from src.blocks.legacy.BlockFactory import BlockFactory
-from src.blocks.legacy.BlockBehaviourFactory import BlockBehaviourFactory
+from src.blocks.BlockFactory import BlockFactory
 
 from states.MainGameState import MainGameState
 
@@ -32,8 +31,7 @@ def main():
 
     gui_factory = GUIFactory()
     audio_handler_factory = AudioHandlerFactory()
-    block_behaviour_factory = BlockBehaviourFactory(audio_handler_factory)
-    block_factory = BlockFactory(config["blocks"], block_behaviour_factory, Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json"))
+    block_factory = BlockFactory(config["blocks"], audio_handler_factory, Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json"))
 
     pygame.display.set_caption(config["window_caption"])
 
