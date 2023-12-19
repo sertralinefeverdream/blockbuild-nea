@@ -2,11 +2,10 @@ import json
 
 
 class Region:
-    def __init__(self, game, world=None, position=(0, 0)):
+    def __init__(self, game, position=(0, 0)):
         self._game = game
-        self._world = world
-
         self._world_position = list(position)
+
         self._screen_position = self._world_position
         self._data = \
         [
@@ -17,9 +16,12 @@ class Region:
     def game(self):
         return self._game
 
-    @property
+    '''
+     @property
     def world(self):
         return self._world
+    '''
+
 
     @property
     def position(self):
@@ -33,7 +35,8 @@ class Region:
     def update(self):
         for row in self._data:
             for block in row:
-                block.update()
+                if block is not None:
+                    block.update()
 
     def draw(self):
         for row_index, row in enumerate(self._data):
@@ -43,30 +46,27 @@ class Region:
                     y = self._screen_position[1] + row_index*40
                     block.draw((x, y))
 
-    def serialize(self):
+
+    def convert_data(self):
         data = {str(x): [None for x in range(30)] for x in range(30)}
-        print(data)
 
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if self._data[row_index][block_index] is not None:
                     print(row_index, block_index)
-                    data[str(row_index)][block_index] = self._data[row_index][block_index].serialize()
+                    data[str(row_index)][block_index] = self._data[row_index][block_index]
                 else:
                     data[str(row_index)][block_index] = None
 
-        return json.dumps(data)
+        return data
 
-        print(json.dumps(data))
-
-    def load_from_serialized(self, data):
-        loaded_data = json.loads(data)
-        for row_index, row in loaded_data.items():
+    def load_from_data(self, data):
+        for row_index, row in data.items():
             for block_index, block in enumerate(row):
                 if block is not None:
                     print(block["block_id"])
-                    self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game, block["block_id"], block["state_data"])
+                    self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game,
+                                                                                                    block["block_id"],
+                                                                                                    block["state_data"])
                 else:
                     self._data[int(row_index)][block_index] = None
-
-        print(self._data)

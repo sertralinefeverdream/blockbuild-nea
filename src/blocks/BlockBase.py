@@ -89,21 +89,22 @@ class BlockBase(ABC):
     def draw(self, screen_position):
         pass
 
-    @abstractmethod
-    def serialize(self):
-        pass
+
 
     @abstractmethod
     def get_state_data(self):
         pass
 
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
-    # a loottable of what will be dropped i guess lol
+    # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.
 
     def serialize(self):
+        return json.dumps(self.convert_data())
+
+    def convert_data(self): #Overrideable in subclasses. Must follow similar form.
         data = \
             {
                 "block_id": f"{self._block_id}",
                 "state_data": self.get_state_data()
             }
-        return json.dumps(data)
+        return data
