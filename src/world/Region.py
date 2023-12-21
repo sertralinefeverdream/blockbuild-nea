@@ -4,13 +4,12 @@ import json
 class Region:
     def __init__(self, game, position=(0, 0)):
         self._game = game
-        self._world_position = list(position)
+        self._position = list(position)
 
-        self._screen_position = self._world_position
         self._data = \
-        [
-            [None for x in range(30)] for y in range(30)
-        ]
+            [
+                [None for x in range(20)] for y in range(20)
+            ]  # Indexing for a block requires indexing y coordinate first
 
     @property
     def game(self):
@@ -22,6 +21,34 @@ class Region:
         return self._world
     '''
 
+    def is_position_in_region(self, position):
+        if self._position[0] <= position[0] < self._position[0] + 800 \
+                and self._position[1] <= position[1] < self._position[1] + 800:
+            return True
+        else:
+            return False
+
+    def get_block_indexes_from_position(self, position):
+        if (type(position) is list or type(position) is tuple) and len(position) == 2:
+            if self.is_position_in_region(position):
+                x_index = abs(position[0] - self._position[0]) // 40
+                y_index = abs(position[1] - self._position[1]) // 40
+
+                return x_index, y_index
+            else:
+                print("Block not in region!")
+
+    def get_block_at_position(self, position):
+        if (type(position) is list or type(position) is tuple) and len(position) == 2:
+            if self.is_position_in_region(position):
+                x_index, y_index = self.get_block_indexes_from_position(position)
+                return self._data[y_index][x_index]
+
+    def set_block_at_position(self, position, block_id, state_data=None):
+        if (type(position) is list or type(position) is tuple) and len(position) == 2:
+            if self.is_position_in_region(position):
+                x_index, y_index = self.get_block_indexes_from_position(position)
+                self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, block_id, state_data)
 
     @property
     def position(self):
@@ -38,18 +65,26 @@ class Region:
                 if block is not None:
                     block.update()
 
-    def draw(self):
+    def draw(self, camera):
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
-                    x = self._screen_position[0] + block_index*40
-                    y = self._screen_position[1] + row_index*40
-                    block.draw((x, y))
+                    print((self._position[0] + block_index * 40), (self._position[1] + block_index * 40))
+                    screen_position = camera.get_screen_position((
+                        (self._position[0] + block_index * 40),
+                        (self._position[1] + row_index * 40)
+                    ))
+                    print(screen_position)
+                    block.draw(screen_position)
 
+    def serialize(self):
+        return json.dumps(self.convert_data())
+
+    def load_from_serialize(self, data):
+        self.load_from_data(json.loads(data))
 
     def convert_data(self):
         data = {str(x): [None for x in range(30)] for x in range(30)}
-
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if self._data[row_index][block_index] is not None:

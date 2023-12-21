@@ -15,6 +15,10 @@ from states.StateStack import StateStack
 
 from src.blocks.BlockFactory import BlockFactory
 
+from src.world.Camera import Camera
+from src.world.RegionGenerator import RegionGenerator
+from src.world.World import World
+
 from states.MainGameState import MainGameState
 
 
@@ -28,18 +32,20 @@ def main():
         config = json.load(f)
 
     window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
+    pygame.display.set_caption(config["window_caption"])
 
     gui_factory = GUIFactory()
     audio_handler_factory = AudioHandlerFactory()
     block_factory = BlockFactory(config["blocks"], audio_handler_factory, Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json"))
 
-    pygame.display.set_caption(config["window_caption"])
+    region_generator = RegionGenerator()
+    camera = Camera()
 
     game = Game(state_stack, window, clock, audio_handler_factory.create_handler("musichandler", 250, False), config["framerate"], config, gui_factory, audio_handler_factory, block_factory) # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
-    game.add_to_states("main_game", MainGameState(game))
+    game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator)))
     game.game_loop()
 
 

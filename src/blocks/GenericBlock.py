@@ -18,6 +18,7 @@ class GenericBlock(BlockBase):
         print("Hurray!")
 
     def draw(self, screen_position):
+        print(screen_position)
         self._game.window.blit(self._texture, screen_position)
 
     def get_state_data(self):
