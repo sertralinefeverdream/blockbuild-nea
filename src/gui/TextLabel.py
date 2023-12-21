@@ -156,7 +156,6 @@ class TextLabel(GUIBase):
             self._box_overhang[0] = (size[0] - self._rendered_font[1].size[0])
             self._box_overhang[1] = (size[1] - self._rendered_font[1].size[1])
             self.update_box()
-            print(self._box.size)
         else:
             print("SIZE MUST BE LARGER THAN OR EQUAL TO SIZE OF ORIGINAL OR INVALID TYPE")
 

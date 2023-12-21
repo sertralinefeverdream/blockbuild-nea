@@ -4,7 +4,7 @@ import json
 
 class Spritesheet:
     def __init__(self, image_path, metadata_path):
-        self._image = pygame.image.load(image_path).convert_alpha()
+        self._image = pygame.image.load(image_path).convert()
 
         with open(metadata_path) as f:
             self._metadata = json.load(f)
@@ -12,7 +12,7 @@ class Spritesheet:
     def get_sprite(self, x, y, width, height):
         sprite = pygame.Surface((width, height))
         sprite.blit(self._image, (0, 0), (x, y, width, height))
-        return sprite
+        return sprite.convert()
 
     def parse_sprite(self, sprite_id):
         if sprite_id in self._metadata.keys():

@@ -6,7 +6,7 @@ class BlockFactory:
         self._audio_handler_factory = audio_handler_factory
         self._sprite_sheet = sprite_sheet
 
-    def create_block(self, game, block_id, state_data):
+    def create_block(self, game, block_id, state_data=None):
         if block_id in self._blocks_data.keys():
             block_data = self._blocks_data[block_id]
             if block_data["type"] == "generic":

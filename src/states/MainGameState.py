@@ -15,16 +15,15 @@ class MainGameState(StateBase):
         ]
 
     def on_state_enter(self):
-        for x in range(20):
-            for y in range(20):
-                if y > 15:
-                    self._world.set_block_at_position((x*40, y*40), "grass")
+        pass
 
     def on_state_leave(self):
         pass
 
     def update(self):
-        self._game.window.fill((0, 0, 0))
+        self._game.window.fill((255, 255, 255))
+        self._world.camera.x -= 100 * (self._game.clock.get_time() / 1000)
+        self._world.camera.y -= 100 * (self._game.clock.get_time() / 1000)
         self._world.update()
         self._world.draw()
 

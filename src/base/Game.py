@@ -93,12 +93,15 @@ class Game:
         self.push_state("main_game")
         self.update_states_from_option()
 
+
         while self.__running:
+            print(self.__clock.get_fps())
             self.__current_state = self.__state_stack.peek()
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
 
             if self.__current_state is not None:
                 self.__clock.tick(self.__framerate)
+                #print(self.__clock.get_fps())
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -122,7 +125,6 @@ class Game:
 
     def update_states_from_option(self):
         pygame.mixer.music.set_volume(self.__options["music_volume"].value)
-        print(self.__options["music_volume"].value)
 
     def add_to_states(self, state_id, state):
         self.__states[state_id] = state

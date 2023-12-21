@@ -89,11 +89,9 @@ class BlockBase(ABC):
     def draw(self, screen_position):
         pass
 
-
-
     @abstractmethod
     def get_state_data(self):
-        pass
+        return None
 
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
     # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.

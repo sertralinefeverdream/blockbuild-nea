@@ -69,39 +69,40 @@ class Region:
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
-                    print((self._position[0] + block_index * 40), (self._position[1] + block_index * 40))
                     screen_position = camera.get_screen_position((
                         (self._position[0] + block_index * 40),
                         (self._position[1] + row_index * 40)
                     ))
-                    print(screen_position)
-                    block.draw(screen_position)
+                    if -40 < screen_position[0] < 1200 \
+                            and -40 < screen_position[1] < 800:
+                        block.draw(screen_position)
 
     def serialize(self):
         return json.dumps(self.convert_data())
 
-    def load_from_serialize(self, data):
+    def load_from_serialized(self, data):
         self.load_from_data(json.loads(data))
 
     def convert_data(self):
-        data = {str(x): [None for x in range(30)] for x in range(30)}
+        data = {str(x): [None for x in range(20)] for x in range(20)}
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if self._data[row_index][block_index] is not None:
-                    print(row_index, block_index)
-                    data[str(row_index)][block_index] = self._data[row_index][block_index]
+                    data[str(row_index)][block_index] = self._data[row_index][block_index].convert_data()
                 else:
                     data[str(row_index)][block_index] = None
 
         return data
 
     def load_from_data(self, data):
+        # print(data)
         for row_index, row in data.items():
             for block_index, block in enumerate(row):
                 if block is not None:
-                    print(block["block_id"])
                     self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game,
                                                                                                     block["block_id"],
                                                                                                     block["state_data"])
+                # create_block is inefficient
                 else:
+                  #  print(row_index, block_index)
                     self._data[int(row_index)][block_index] = None
