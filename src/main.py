@@ -43,8 +43,8 @@ def main():
     region_generator = RegionGenerator()
     camera = Camera()
 
-    game = Game(state_stack, window, clock, audio_handler_factory.create_handler("musichandler", 250, False),
-                config["framerate"], config, gui_factory, audio_handler_factory,
+    game = Game(state_stack, window, clock, audio_handler_factory.create_handler("musichandler", 250, False), audio_handler_factory.create_handler("sfxhandler"),
+                config["framerate"], config, gui_factory, audio_handler_factory,\
                 block_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
@@ -56,16 +56,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-'''{
-    '0': 
-        {
-            '0': <src.world.Region.Region object at 0x00000205373AA260>, 
-            '-1600': <src.world.Region.Region object at 0x0000020537410CD0>
-        }, 
-    '-1600': 
-        {
-            '-1600': <src.world.Region.Region object at 0x00000205373E1F60>, 
-            '0': <src.world.Region.Region object at 0x00000205373F5930>}, '-800': {'-1600': <src.world.Region.Region object at 
-0x00000205373F5990>, '0': <src.world.Region.Region object at 0x00000205373FD330>}, '-2400': {'-1600': 
-<src.world.Region.Region object at 0x0000020537423FD0>, '0': <src.world.Region.Region object at 0x00000205374340A0>}} 
-'''

@@ -10,7 +10,7 @@ class BlockFactory:
         if block_id in self._blocks_data.keys():
             block_data = self._blocks_data[block_id]
             if block_data["type"] == "generic":
-                return GenericBlock(game, block_id, self._audio_handler_factory.create_handler("sfxhandler", game), self._sprite_sheet.parse_sprite(block_data["texture"]), block_data["break_sfx_id"], block_data["place_sfx_id"], block_data["footstep_sfx_id"])
+                return GenericBlock(game, block_id, self._sprite_sheet.parse_sprite(block_data["texture"]), block_data["break_sfx_id"], block_data["place_sfx_id"], block_data["footstep_sfx_id"])
             else:
                 raise NotImplementedError
 

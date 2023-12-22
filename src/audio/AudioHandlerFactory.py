@@ -1,6 +1,7 @@
 from src.audio.MusicHandler import MusicHandler
 from src.audio.SfxHandler import SfxHandler
 
+
 class AudioHandlerFactory:
     def __init__(self):
         pass

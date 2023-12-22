@@ -6,14 +6,13 @@ import pygame
 # Refactored
 
 class ButtonBase(GUIBase):
-    def __init__(self, game, surface, click_func, sfxhandler, click_sfx_id=None, hover_enter_sfx_id=None,
+    def __init__(self, game, surface, click_func, click_sfx_id=None, hover_enter_sfx_id=None,
                  hover_leave_sfx_id=None, disabled_click_sfx_id=None, position=(0.0, 0.0), size=(100, 100),
                  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(127, 0, 0),
                  button_colour=(255, 0, 0), outline_thickness=5, outline_colour=(0, 0, 0), is_enabled=True,
                  is_visible=True):
         super().__init__(game, surface, position, is_visible)
         self._click_func = click_func
-        self._sfxhandler = sfxhandler
         self._click_sfx_id = click_sfx_id
         self._hover_enter_sfx_id = hover_enter_sfx_id
         self._hover_leave_sfx_id = hover_leave_sfx_id
@@ -33,8 +32,6 @@ class ButtonBase(GUIBase):
         self._is_pressed = False
         self._rect = pygame.Rect(self._position, self._size)
 
-        self.init_audio()
-
     @property
     def click_func(self):
         return self._click_func
@@ -45,10 +42,6 @@ class ButtonBase(GUIBase):
             self._click_func = value
 
     @property
-    def sfxhandler(self):
-        return self._sfxhandler
-
-    @property
     def click_sfx_id(self):
         return self._click_sfx_id
 
@@ -56,7 +49,6 @@ class ButtonBase(GUIBase):
     def click_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._click_sfx_id = value
-            self._sfxhandler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def hover_enter_sfx_id(self):
@@ -66,7 +58,6 @@ class ButtonBase(GUIBase):
     def hover_enter_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._hover_enter_sfx_id = value
-            self._sfxhandler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def hover_leave_sfx_id(self):
@@ -76,7 +67,6 @@ class ButtonBase(GUIBase):
     def hover_leave_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._hover_leave_sfx_id = value
-            self._sfxhandler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def disabled_click_sfx_id(self):
@@ -86,7 +76,6 @@ class ButtonBase(GUIBase):
     def disabled_click_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._disabled_click_sfx_id = value
-            self._sfxhandler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def size(self):
@@ -187,10 +176,6 @@ class ButtonBase(GUIBase):
             self._position = [value[0] - (self._size[0] / 2), value[1] - (self._size[1] / 2)]
         else:
             raise TypeError
-
-    @abstractmethod
-    def init_audio(self):
-        pass
 
     @abstractmethod
     def on_hover_enter(self):

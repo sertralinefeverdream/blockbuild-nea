@@ -22,8 +22,8 @@ class MainGameState(StateBase):
 
     def update(self):
         self._game.window.fill((255, 255, 255))
-        self._world.camera.x -= 100 * (self._game.clock.get_time() / 1000)
-        self._world.camera.y -= 100 * (self._game.clock.get_time() / 1000)
+        self._world.camera.x += 5
+        self._world.camera.y += 5
         self._world.update()
         self._world.draw()
 

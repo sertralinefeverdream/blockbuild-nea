@@ -4,16 +4,13 @@ import json
 
 
 class BlockBase(ABC):
-    def __init__(self, game, block_id, sfx_handler, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
+    def __init__(self, game, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
         self._game = game
         self._block_id = block_id
-        self._sfx_handler = sfx_handler
         self._texture = pygame.transform.scale(texture, (40, 40))
         self._break_sfx_id = break_sfx_id
         self._place_sfx_id = place_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
-
-        self.init_audio()
 
     @property
     def game(self):
@@ -22,10 +19,6 @@ class BlockBase(ABC):
     @property
     def block_id(self):
         return self._block_id
-
-    @property
-    def sfx_handler(self):
-        return self._sfx_handler
 
     @property
     def texture(self):
@@ -44,7 +37,6 @@ class BlockBase(ABC):
     def break_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._break_sfx_id = value
-            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def place_sfx_id(self):
@@ -54,7 +46,6 @@ class BlockBase(ABC):
     def place_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._place_sfx_id = value
-            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
 
     @property
     def footstep_sfx_id(self):
@@ -64,22 +55,6 @@ class BlockBase(ABC):
     def footstep_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._footstep_sfx_id = value
-            self._sfx_handler.add_sfx(value, self._game.config["sfx_assets"][value])
-
-    @abstractmethod
-    def init_audio(self):
-        pass
-
-    ''' IMPLEMENT SIMILAR IN SUBCLASS IMPLEMENTATION OF INIT_AUDIO ^^^^^
-    self._sfxhandler.add_sfx_from_dict(
-            {
-                self._click_sfx_id: self._game.config["sfx_assets"][self._click_sfx_id],
-                self._hover_enter_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
-                self._hover_leave_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id],
-                self._disabled_click_sfx_id: self._game.config["sfx_assets"][self._hover_enter_sfx_id]
-            }
-        )
-    '''
 
     @abstractmethod
     def update(self):

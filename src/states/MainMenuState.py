@@ -9,23 +9,16 @@ class MainMenuState(StateBase):
         self._gui = [
             {
                 "options_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
-                                                               self.options_button_click,
-                                                               self._game.audio_handler_factory.create_handler("SfxHandler",
-                                                                                                          self._game),
-                                                               text="Options"),
+                                                                    self.options_button_click, text="Options"),
                 "exit_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
-                                                            self.exit_button_click,
-                                                            self._game.audio_handler_factory.create_handler("SfxHandler",
-                                                                                                       self._game),
-                                                            text="Exit"),
+                                                                 self.exit_button_click,
+                                                                 text="Exit"),
                 "play_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
-                                                            self.play_button_click,
-                                                            self._game.audio_handler_factory.create_handler("SfxHandler",
-                                                                                                       self._game),
-                                                            text="Play"),
+                                                                 self.play_button_click,
+                                                                 text="Play"),
                 "logo": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, has_box=False,
-                                                     has_outline=False, font_size=100, text="BlockBuild!",
-                                                     font_name="bahnschrift")
+                                                          has_outline=False, font_size=100, text="BlockBuild!",
+                                                          font_name="bahnschrift")
             },
             {},
             {}

@@ -6,11 +6,12 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, framerate, config, gui_factory, audio_handler_factory, block_factory):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, audio_handler_factory, block_factory):
         self.__state_stack = state_stack
         self.__window = window
         self.__clock = clock
         self.__music_handler = music_handler
+        self.__sfx_handler = sfx_handler
         self.__framerate = framerate
         self.__config = config
         self._gui_factory = gui_factory
@@ -26,7 +27,7 @@ class Game:
             "music_volume": Volume.LOW
         }
 
-        self.initialise_music()
+        self.initialise_music_and_sfx()
 
     @property
     def state_stack(self):
@@ -43,6 +44,10 @@ class Game:
     @property
     def music_handler(self):
         return self.__music_handler
+
+    @property
+    def sfx_handler(self):
+        return self.__sfx_handler
 
     @property
     def config(self):
@@ -80,19 +85,14 @@ class Game:
     def block_factory(self):
         return self._block_factory
 
-    def initialise_music(self):
-        self.__music_handler.add_music_from_dict(
-            {
-                "main_menu": self.__config["music_assets"]["main_menu"]
-            }
-        )
-
+    def initialise_music_and_sfx(self):
+        self.__music_handler.add_music_from_dict(self.__config["music_assets"])
+        self.__sfx_handler.add_sfx_from_dict(self.__config["sfx_assets"])
 
     def game_loop(self):
         self.push_state("main_menu")
         self.push_state("main_game")
         self.update_states_from_option()
-
 
         while self.__running:
             print(self.__clock.get_fps())

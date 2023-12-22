@@ -2,14 +2,17 @@ import pygame.mixer
 
 
 class SfxHandler:
-    def __init__(self, game):
+    def __init__(self):
         pygame.mixer.init()
-        self._game = game
         self._sfx_library = {}
 
     @property
     def sfx_library(self):
         return self._sfx_library
+
+    @property
+    def sfx_vol(self):
+        return self._sfx_vol
 
     def add_sfx_from_dict(self, sfx_dict):
         for sfx_id, sfx_path in sfx_dict.items():
