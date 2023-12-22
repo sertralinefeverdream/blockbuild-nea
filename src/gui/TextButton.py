@@ -2,7 +2,8 @@ from src.gui.ButtonBase import ButtonBase
 import pygame
 import pygame.freetype
 
-#Refactored
+
+# Refactored
 
 
 class TextButton(ButtonBase):
@@ -26,7 +27,6 @@ class TextButton(ButtonBase):
 
         self.update_font()
         self.auto_resize_font()
-
 
     @property
     def font_size(self):
@@ -81,7 +81,6 @@ class TextButton(ButtonBase):
         self._current_colour = self._hover_colour
 
         if self._hover_enter_sfx_id is not None:
-            # REPLACE
             self._game.sfx_handler.play_sfx(self._hover_enter_sfx_id, self._game.get_option("game_volume").value)
 
         if self._is_enabled and self._hover_enter_func is not None:
@@ -118,8 +117,8 @@ class TextButton(ButtonBase):
             pygame.draw.rect(self._surface, self._current_colour, self._rect)
             pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
             self._surface.blit(self._rendered_font[0], (
-            self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2),
-            self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
+                self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2),
+                self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))
 
     def update(self):
         self._rect.update(self._position, self._size)

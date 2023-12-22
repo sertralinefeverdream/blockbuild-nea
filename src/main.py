@@ -8,16 +8,18 @@ from states.OptionsMenuState import OptionsMenuState
 from src.sprite.Spritesheet import Spritesheet
 
 from base.Game import Game
-from src.audio.AudioHandlerFactory import AudioHandlerFactory
 
-from gui.GUIFactory import GUIFactory
+from src.factories.GUIFactory import GUIFactory
 from states.StateStack import StateStack
 
-from src.blocks.BlockFactory import BlockFactory
+from src.factories.BlockFactory import BlockFactory
 
 from src.world.Camera import Camera
 from src.world.RegionGenerator import RegionGenerator
 from src.world.World import World
+
+from src.audio.MusicHandler import MusicHandler
+from src.audio.SfxHandler import SfxHandler
 
 from states.MainGameState import MainGameState
 
@@ -35,16 +37,17 @@ def main():
     pygame.display.set_caption(config["window_caption"])
 
     gui_factory = GUIFactory()
-    audio_handler_factory = AudioHandlerFactory()
-    block_factory = BlockFactory(config["blocks"], audio_handler_factory,
+    block_factory = BlockFactory(config["blocks"],
                                  Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png",
                                              "../assets/imgs/sprites/block_textures/block_textures.json"))
 
     region_generator = RegionGenerator()
     camera = Camera()
-
-    game = Game(state_stack, window, clock, audio_handler_factory.create_handler("musichandler", 250, False), audio_handler_factory.create_handler("sfxhandler"),
-                config["framerate"], config, gui_factory, audio_handler_factory,\
+    
+    music_handler = MusicHandler(250, False)
+    sfx_handler = SfxHandler()
+    game = Game(state_stack, window, clock, music_handler, sfx_handler,
+                config["framerate"], config, gui_factory,\
                 block_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))

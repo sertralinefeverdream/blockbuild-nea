@@ -6,7 +6,7 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, audio_handler_factory, block_factory):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory):
         self.__state_stack = state_stack
         self.__window = window
         self.__clock = clock
@@ -15,7 +15,6 @@ class Game:
         self.__framerate = framerate
         self.__config = config
         self._gui_factory = gui_factory
-        self._audio_handler_factory = audio_handler_factory
         self._block_factory = block_factory
 
         self.__states = {}
@@ -78,10 +77,6 @@ class Game:
         return self._gui_factory
 
     @property
-    def audio_handler_factory(self):
-        return self._audio_handler_factory
-
-    @property
     def block_factory(self):
         return self._block_factory
 
@@ -135,7 +130,6 @@ class Game:
 
     def pop_state(self):
         self.__previous_state = self.__state_stack.pop()
-
 
     def on_game_end(self):
         pygame.quit()

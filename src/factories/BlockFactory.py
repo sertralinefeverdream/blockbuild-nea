@@ -1,9 +1,8 @@
 from src.blocks.GenericBlock import GenericBlock
 
 class BlockFactory:
-    def __init__(self, blocks_data, audio_handler_factory, sprite_sheet):
+    def __init__(self, blocks_data, sprite_sheet):
         self._blocks_data = blocks_data
-        self._audio_handler_factory = audio_handler_factory
         self._sprite_sheet = sprite_sheet
 
     def create_block(self, game, block_id, state_data=None):

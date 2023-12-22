@@ -119,15 +119,17 @@ class World:
             for y in range(6):
                 region_check_x = camera_x + (x-3)*800
                 region_check_y = camera_y + (y-3)*800
+
+                region_index_x, region_index_y = self.get_region_indexes_from_position((region_check_x, region_check_y))
+
                 region_exists = self.check_region_exists_at_position((region_check_x, region_check_y))
 
-                if region_exists:
-                    self._draw_list.append(self.get_region_indexes_from_position((region_check_x, region_check_y)))
-                else:
-                    print("REGION DONT EXIST!")
-                    region_index_x, region_index_y = self.get_region_indexes_from_position((region_check_x, region_check_y))
+                if not region_exists:
+                    # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
                     self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, (int(region_index_x), int(region_index_y)), self._default)
-                    self._draw_list.append((region_index_x, region_index_y))
+
+                self._draw_list.append((region_index_x, region_index_y))
+
 
