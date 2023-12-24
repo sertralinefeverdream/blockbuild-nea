@@ -7,21 +7,22 @@ from src.audio.Volume import Volume
 
 class Game:
     def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory):
-        self.__state_stack = state_stack
-        self.__window = window
-        self.__clock = clock
-        self.__music_handler = music_handler
-        self.__sfx_handler = sfx_handler
-        self.__framerate = framerate
-        self.__config = config
+        self._state_stack = state_stack
+        self._window = window
+        self._clock = clock
+        self._music_handler = music_handler
+        self._sfx_handler = sfx_handler
+        self._framerate = framerate
+        self._config = config
         self._gui_factory = gui_factory
         self._block_factory = block_factory
 
-        self.__states = {}
-        self.__previous_state = None
-        self.__current_state = None
-        self.__running = True
-        self.__options = {
+        self._states = {}
+        self._keys_down = []
+        self._previous_state = None
+        self._current_state = None
+        self._running = True
+        self._options = {
             "game_volume": Volume.MEDIUM,
             "music_volume": Volume.LOW
         }
@@ -30,47 +31,51 @@ class Game:
 
     @property
     def state_stack(self):
-      return self.__state_stack
+      return self._state_stack
 
     @property
     def window(self):
-        return self.__window
+        return self._window
 
     @property
     def clock(self):
-        return self.__clock
+        return self._clock
 
     @property
     def music_handler(self):
-        return self.__music_handler
+        return self._music_handler
 
     @property
     def sfx_handler(self):
-        return self.__sfx_handler
+        return self._sfx_handler
 
     @property
     def config(self):
-        return self.__config
+        return self._config
 
     @property
     def states(self):
-        return self.__states
+        return self._states
+
+    @property
+    def keys_down(self):
+        return self._keys_down
 
     @property
     def previous_state(self):
-        return self.__previous_state
+        return self._previous_state
 
     @property
     def current_state(self):
-        return self.__current_state
+        return self._current_state
 
     @property
     def previous_state(self):
-        return self.__previous_state
+        return self._previous_state
 
     @property
     def running(self):
-        return self.__running
+        return self._running
 
     @property
     def gui_factory(self):
@@ -81,55 +86,56 @@ class Game:
         return self._block_factory
 
     def initialise_music_and_sfx(self):
-        self.__music_handler.add_music_from_dict(self.__config["music_assets"])
-        self.__sfx_handler.add_sfx_from_dict(self.__config["sfx_assets"])
+        self._music_handler.add_music_from_dict(self._config["music_assets"])
+        self._sfx_handler.add_sfx_from_dict(self._config["sfx_assets"])
 
     def game_loop(self):
         self.push_state("main_menu")
         self.push_state("main_game")
         self.update_states_from_option()
 
-        while self.__running:
-            print(self.__clock.get_fps())
-            self.__current_state = self.__state_stack.peek()
+        while self._running:
+            print(self._clock.get_fps())
+            self._current_state = self._state_stack.peek()
+            self._keys_down = pygame.key.get_pressed()
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
 
-            if self.__current_state is not None:
-                self.__clock.tick(self.__framerate)
-                #print(self.__clock.get_fps())
+            if self._current_state is not None:
+                self._clock.tick(self._framerate)
+                #print(self._clock.get_fps())
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        self.__running = False
+                        self._running = False
                     if event.type == pygame.USEREVENT + 1: # Event id for whenever music stops playing.
-                        self.__music_handler.on_music_end()
+                        self._music_handler.on_music_end()
 
-                self.__current_state.update()
+                self._current_state.update()
                 pygame.display.update()
             else:
-                self.__running = False
+                self._running = False
 
         self.on_game_end()
 
     def get_option(self, option_index):
-        return self.__options[option_index]
+        return self._options[option_index]
 
     def set_option(self, option_index, value):
-        self.__options[option_index] = value
+        self._options[option_index] = value
         self.update_states_from_option()
 
     def update_states_from_option(self):
-        pygame.mixer.music.set_volume(self.__options["music_volume"].value)
+        pygame.mixer.music.set_volume(self._options["music_volume"].value)
 
     def add_to_states(self, state_id, state):
-        self.__states[state_id] = state
+        self._states[state_id] = state
 
     def push_state(self, state_id, *args):
-        self.__previous_state = self.__state_stack.peek()
-        self.__state_stack.push(self.__states[state_id.lower()], *args)
+        self._previous_state = self._state_stack.peek()
+        self._state_stack.push(self._states[state_id.lower()], *args)
 
     def pop_state(self):
-        self.__previous_state = self.__state_stack.pop()
+        self._previous_state = self._state_stack.pop()
 
     def on_game_end(self):
         pygame.quit()

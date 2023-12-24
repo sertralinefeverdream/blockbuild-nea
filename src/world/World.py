@@ -1,5 +1,5 @@
 import json
-
+import pygame
 
 class World:
     def __init__(self, game, camera, region_generator):
@@ -7,7 +7,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._draw_list = []
+        self._region_list = []
         self._update_list = []
         self._data = \
             {
@@ -32,17 +32,23 @@ class World:
         return self._region_generator
 
     def update(self):
-        self.update_draw_list()
-        '''
-                for x_index, column in self._data.items():
-            for y_index, region in column.items():
-                region.update()
-        '''
-        for x, y in self._draw_list:
+        self.update_region_list()
+
+        for x, y in self._region_list:
             self._data[x][y].update()
 
+        if self._game.keys_down[pygame.K_d]:
+            self._camera.x += 5
+        elif self._game.keys_down[pygame.K_a]:
+            self._camera.x -= 5
+
+        if self._game.keys_down[pygame.K_w]:
+            self._camera.y -= 5
+        elif self._game.keys_down[pygame.K_s]:
+            self._camera.y += 5
+
     def draw(self):
-        for x, y in self._draw_list:
+        for x, y in self._region_list:
             self._data[x][y].draw(self._camera)
 
     def get_region_indexes_from_position(self, position):
@@ -111,14 +117,14 @@ class World:
                 self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, (
                     x_index, y_index), data[str(x_index)][str(y_index)])
 
-    def update_draw_list(self): # Responsible for updating draw list and creating non-existent regions that need to be drawn
-        self._draw_list.clear()
+    def update_region_list(self): # Responsible for updating region list and creating non-existent regions that need to be drawn
+        self._region_list.clear()
         camera_x = self._camera.x
         camera_y = self._camera.y
-        for x in range(6):
+        for x in range(12):
             for y in range(6):
-                region_check_x = camera_x + (x-3)*800
-                region_check_y = camera_y + (y-3)*800
+                region_check_x = camera_x + (x-6)*800 # Check 6 regions either side
+                region_check_y = camera_y + (y-3)*800 # Check 3 regions above and below
 
                 region_index_x, region_index_y = self.get_region_indexes_from_position((region_check_x, region_check_y))
 
@@ -130,6 +136,6 @@ class World:
                         self._data[region_index_x] = {}
                     self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, (int(region_index_x), int(region_index_y)), self._default)
 
-                self._draw_list.append((region_index_x, region_index_y))
+                self._region_list.append((region_index_x, region_index_y))
 
 

@@ -16,7 +16,8 @@
 
   "sfx_assets": {
     "btn_click_1": "../assets/audio/sfx/gui/btn_click_1.mp3",
-    "btn_hover_1": "../assets/audio/sfx/gui/btn_hover_1.mp3"
+    "btn_hover_1": "../assets/audio/sfx/gui/btn_hover_1.mp3",
+    "grass_place": "../assets/audio/sfx/blocks/grass_place.mp3"
   },
 
   "blocks": {
@@ -24,7 +25,7 @@
       "type": "generic",
       "texture": "grass",
       "break_sfx_id": "btn_click_1",
-      "place_sfx_id": "btn_click_1",
+      "place_sfx_id": "grass_place",
       "footstep_sfx_id":"btn_click_1"
     }
   }

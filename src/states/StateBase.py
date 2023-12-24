@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class StateBase(ABC):
     def __init__(self, game):
         self._game = game
-        self._gui = {}
+        self._gui = []
         self.initialise_gui()
 
     @property
@@ -26,3 +26,5 @@ class StateBase(ABC):
     @abstractmethod
     def update(self):
         pass
+
+
