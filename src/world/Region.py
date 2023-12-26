@@ -11,6 +11,8 @@ class Region:
                 [None for x in range(20)] for y in range(20)
             ]  # Indexing for a block requires indexing y coordinate first
 
+        self._entity_list = []
+
     @property
     def game(self):
         return self._game
@@ -64,6 +66,15 @@ class Region:
             for block in row:
                 if block is not None:
                     block.update()
+                    if block.is_broken:
+                        del block
+
+        for entity in self._entity_list:
+            entity.update()
+            if entity.is_killed:
+                del entity
+
+
 
     def draw(self, camera):
         for row_index, row in enumerate(self._data):

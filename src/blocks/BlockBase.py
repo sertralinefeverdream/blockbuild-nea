@@ -12,6 +12,9 @@ class BlockBase(ABC):
         self._place_sfx_id = place_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
 
+        self._can_collide = False
+        self._is_broken = False # Value is checked on region update and deleted from the region if True
+
     @property
     def game(self):
         return self._game
@@ -55,6 +58,19 @@ class BlockBase(ABC):
     def footstep_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
             self._footstep_sfx_id = value
+
+    @property
+    def is_broken(self):
+        return self._is_broken
+
+    @property
+    def can_collide(self):
+        return self._can_collide
+
+    @can_collide.setter
+    def can_collide(self, value):
+        if type(value) is bool:
+            self._can_collide = value
 
     @abstractmethod
     def update(self):

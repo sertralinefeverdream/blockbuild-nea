@@ -11,14 +11,12 @@ class GenericBlock(BlockBase):
     def draw(self, screen_position):
         self._game.window.blit(self._texture, screen_position)
 
-    def on_break(self):
-        self._game.sfx_handler.play_sfx(self._break_sfx_id, 1)
-
-    def on_place(self):
-        self._game.sfx_handler.play_sfx(self._place_sfx_id, 1)
-
     def get_state_data(self):
         return None
 
+    def on_break(self):
+        self._game.sfx_handler.play_sfx(self._break_sfx_id, 1)
+        self._is_broken = True
 
-
+    def on_place(self):
+        self._game.sfx_handler.play_sfx(self._place_sfx_id, 1)

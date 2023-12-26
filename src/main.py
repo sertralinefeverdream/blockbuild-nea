@@ -8,7 +8,6 @@ from states.OptionsMenuState import OptionsMenuState
 from src.sprite.Spritesheet import Spritesheet
 
 from base.Game import Game
-from src.base.PlaceBreakHandler import PlaceBreakHandler
 
 from src.factories.GUIFactory import GUIFactory
 from states.StateStack import StateStack
@@ -52,12 +51,10 @@ def main():
                 block_factory)  # Game class handles overall running of game
     world = World(game, camera, region_generator)
 
-    place_break_handler = PlaceBreakHandler(game, world)
-
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
-    game.add_to_states("main_game", MainGameState(game, world, place_break_handler))
+    game.add_to_states("main_game", MainGameState(game, world))
     game.game_loop()
 
 
