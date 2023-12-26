@@ -2,8 +2,9 @@ import json
 
 
 class Region:
-    def __init__(self, game, position=(0, 0)):
+    def __init__(self, game, world, position=(0, 0)):
         self._game = game
+        self._world = world
         self._position = list(position)
 
         self._data = \
@@ -60,7 +61,7 @@ class Region:
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
                 x_index, y_index = self.get_block_indexes_from_position(position)
-                self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, block_id, state_data)
+                self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x_index*40, self._position[1] + y_index*40), block_id, state_data)
 
     def get_block_hitboxes(self):
         data = []
@@ -79,17 +80,18 @@ class Region:
                     else:
                         block.update()
 
-    def draw(self, camera):
+
+    def draw(self):
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
-                    screen_position = camera.get_screen_position((
+                    screen_position = self._world.camera.get_screen_position((
                         (self._position[0] + block_index * 40),
                         (self._position[1] + row_index * 40)
                     ))
                     if -40 < screen_position[0] < 1200 \
                             and -40 < screen_position[1] < 800:
-                        block.draw(screen_position)
+                        block.draw()
 
     def serialize(self):
         return json.dumps(self.convert_data())
@@ -113,7 +115,8 @@ class Region:
         for row_index, row in data.items():
             for block_index, block in enumerate(row):
                 if block is not None:
-                    self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game,
+                    self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game, self._world,
+                                                                                                    (self._position[0] + block_index*40, self._position[1] + int(row_index)*40),
                                                                                                     block["block_id"],
                                                                                                     block["state_data"])
                 # create_block is inefficient

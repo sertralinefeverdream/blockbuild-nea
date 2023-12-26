@@ -10,12 +10,11 @@ class World:
         self._player = Player(self._game, self, "Hi", (0, 0), (40, 40), None, 100)
 
         self._draw_list = []
-        self._update_list = []
         self._data = \
             {
                 '0':
                     {
-                        '0': self._region_generator.create_empty_region(self._game, (0, 0))
+                        '0': self._region_generator.create_empty_region(self._game, self, (0, 0))
                     }
             }
 
@@ -35,11 +34,7 @@ class World:
 
     def update(self):
         self.update_draw_list()
-        '''
-                for x_index, column in self._data.items():
-            for y_index, region in column.items():
-                region.update()
-        '''
+
         for x, y in self._draw_list:
             self._data[x][y].update()
             print("UPDATING")
@@ -48,7 +43,7 @@ class World:
 
     def draw(self):
         for x, y in self._draw_list:
-            self._data[x][y].draw(self._camera)
+            self._data[x][y].draw()
         self._player.draw()
 
     def get_region_indexes_from_position(self, position):
@@ -114,7 +109,7 @@ class World:
     def load_from_data(self, data):
         for x_index, column in data.items():
             for y_index, region in column.items():
-                self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, (
+                self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, self, (
                     x_index, y_index), data[str(x_index)][str(y_index)])
 
     def update_draw_list(self): # Responsible for updating draw list and creating non-existent regions that need to be drawn
@@ -134,7 +129,7 @@ class World:
                     # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
-                    self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, (int(region_index_x), int(region_index_y)), self._default)
+                    self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
 
                 self._draw_list.append((region_index_x, region_index_y))
 
