@@ -6,15 +6,23 @@ import json
 class BlockBase(ABC):
     def __init__(self, game, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
         self._game = game
+        self._position = 0
         self._block_id = block_id
         self._texture = pygame.transform.scale(texture, (40, 40))
         self._break_sfx_id = break_sfx_id
         self._place_sfx_id = place_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
 
+        self._hitbox = pygame.Rect((0, 0), (40, 40))
+        self._is_broken = False
+
     @property
     def game(self):
-        return self._game
+        return self.game
+
+    @property
+    def position(self):
+        return self._position
 
     @property
     def block_id(self):
@@ -56,6 +64,14 @@ class BlockBase(ABC):
         if value in self._game.config["sfx_assets"].keys():
             self._footstep_sfx_id = value
 
+    @property
+    def hitbox(self):
+        return self._hitbox
+
+    @property
+    def is_broken(self):
+        return self._is_broken
+
     @abstractmethod
     def update(self):
         pass
@@ -81,3 +97,7 @@ class BlockBase(ABC):
                 "state_data": self.get_state_data()
             }
         return data
+
+    def kill(self):
+        self._game.sfx_handler.play_sfx(self._break_sfx_id, 1)
+        self._is_broken = True

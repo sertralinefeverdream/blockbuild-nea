@@ -1,3 +1,4 @@
+import pygame
 from src.blocks.BlockBase import BlockBase
 
 
@@ -9,7 +10,10 @@ class GenericBlock(BlockBase):
         pass
 
     def draw(self, screen_position):
+        print("YES")
+        self._hitbox.update(screen_position, (40, 40))
         self._game.window.blit(self._texture, screen_position)
+        pygame.draw.rect(self._game.window, (0, 0, 0), self._hitbox, -1) # Draws hitbox
 
     def get_state_data(self):
         return None

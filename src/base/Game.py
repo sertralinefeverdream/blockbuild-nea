@@ -25,6 +25,7 @@ class Game:
             "game_volume": Volume.MEDIUM,
             "music_volume": Volume.LOW
         }
+        self._keys_pressed = []
 
         self.initialise_music_and_sfx()
 
@@ -80,6 +81,10 @@ class Game:
     def block_factory(self):
         return self._block_factory
 
+    @property
+    def keys_pressed(self):
+        return self._keys_pressed
+
     def initialise_music_and_sfx(self):
         self.__music_handler.add_music_from_dict(self.__config["music_assets"])
         self.__sfx_handler.add_sfx_from_dict(self.__config["sfx_assets"])
@@ -92,6 +97,7 @@ class Game:
         while self.__running:
             print(self.__clock.get_fps())
             self.__current_state = self.__state_stack.peek()
+            self._keys_pressed = pygame.key.get_pressed()
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
 
             if self.__current_state is not None:

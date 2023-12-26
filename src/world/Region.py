@@ -9,7 +9,9 @@ class Region:
         self._data = \
             [
                 [None for x in range(20)] for y in range(20)
-            ]  # Indexing for a block requires indexing y coordinate first
+            ]  # Indexing for a block requires indexing y coordinate
+
+        self._entity_list = []
 
     @property
     def game(self):
@@ -19,7 +21,17 @@ class Region:
      @property
     def world(self):
         return self._world
+        
     '''
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, value):
+        if (type(value) is list or type(value) is tuple) and len(value) == 2:
+            self._position = list(value)
 
     def is_position_in_region(self, position):
         if self._position[0] <= position[0] < self._position[0] + 800 \
@@ -50,20 +62,22 @@ class Region:
                 x_index, y_index = self.get_block_indexes_from_position(position)
                 self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, block_id, state_data)
 
-    @property
-    def position(self):
-        return self._position
-
-    @position.setter
-    def position(self, value):
-        if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._position = list(value)
+    def get_block_hitboxes(self):
+        data = []
+        for row in self._data:
+            for block in row:
+                if block is not None:
+                    data.append((block, block.hitbox))
+        return data
 
     def update(self):
         for row in self._data:
             for block in row:
                 if block is not None:
-                    block.update()
+                    if block.is_broken:
+                        del block
+                    else:
+                        block.update()
 
     def draw(self, camera):
         for row_index, row in enumerate(self._data):

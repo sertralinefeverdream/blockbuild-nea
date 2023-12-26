@@ -1,11 +1,13 @@
 import json
-
+from src.entities.Player import Player
 
 class World:
     def __init__(self, game, camera, region_generator):
         self._game = game
         self._camera = camera
         self._region_generator = region_generator
+
+        self._player = Player(self._game, self, "Hi", (0, 0), (40, 40), None, 100)
 
         self._draw_list = []
         self._update_list = []
@@ -40,10 +42,14 @@ class World:
         '''
         for x, y in self._draw_list:
             self._data[x][y].update()
+            print("UPDATING")
+
+        self._player.update()
 
     def draw(self):
         for x, y in self._draw_list:
             self._data[x][y].draw(self._camera)
+        self._player.draw()
 
     def get_region_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
