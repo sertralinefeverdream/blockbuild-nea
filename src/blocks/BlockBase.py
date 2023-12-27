@@ -14,7 +14,7 @@ class BlockBase(ABC):
         self._place_sfx_id = place_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
 
-        self._hitbox = pygame.Rect((0, 0), (40, 40))
+        self._hitbox = pygame.Rect(self._world.camera.get_screen_position(self._position), (40, 40))
         self._is_broken = False
 
     @property

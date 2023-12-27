@@ -35,7 +35,6 @@ def main():
 
     window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
     pygame.display.set_caption(config["window_caption"])
-
     gui_factory = GUIFactory()
     block_factory = BlockFactory(config["blocks"],
                                  Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png",

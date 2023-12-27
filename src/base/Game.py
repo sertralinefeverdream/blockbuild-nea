@@ -95,7 +95,6 @@ class Game:
         self.update_states_from_option()
 
         while self.__running:
-            print(self.__clock.get_fps())
             self.__current_state = self.__state_stack.peek()
             self._keys_pressed = pygame.key.get_pressed()
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.

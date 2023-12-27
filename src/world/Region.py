@@ -29,6 +29,15 @@ class Region:
     def position(self):
         return self._position
 
+    @property
+    def entity_list(self):
+        return self._entity_list
+
+    @entity_list.setter
+    def entity_list(self, value):
+        if type(value) is list:
+            self._entity_list = value
+
     @position.setter
     def position(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
@@ -80,11 +89,14 @@ class Region:
                     else:
                         block.update()
 
+        for entity in self._entity_list:
+            entity.update()
 
     def draw(self):
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
+                    '''
                     screen_position = self._world.camera.get_screen_position((
                         (self._position[0] + block_index * 40),
                         (self._position[1] + row_index * 40)
@@ -92,6 +104,12 @@ class Region:
                     if -40 < screen_position[0] < 1200 \
                             and -40 < screen_position[1] < 800:
                         block.draw()
+                    '''
+                    block.draw()
+
+
+        for entity in self._entity_list:
+            entity.draw()
 
     def serialize(self):
         return json.dumps(self.convert_data())

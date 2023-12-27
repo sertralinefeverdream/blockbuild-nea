@@ -34,6 +34,15 @@ class EntityBase:
             self._entity_id = value
 
     @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 2:
+            self._position = value
+
+    @property
     def velocity(self):
         return self._velocity
 

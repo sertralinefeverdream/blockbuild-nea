@@ -18,6 +18,8 @@ class World:
                     }
             }
 
+        self._data['0']['0'].entity_list.append(self._player)
+
         self._default = json.loads('''{"0": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "1": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "2": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "3": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "4": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "5": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "6": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "7": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "8": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "9": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "10": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "11": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "12": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "13": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "14": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "15": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "16": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "17": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "18": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "19": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}]}''')
 
     @property
@@ -34,17 +36,17 @@ class World:
 
     def update(self):
         self.update_draw_list()
+        self.reassign_entities_to_regions()
+
+        self._camera.x = self._player.position[0] - 600
+        self._camera.y = self._player.position[1] - 400
 
         for x, y in self._draw_list:
             self._data[x][y].update()
-            print("UPDATING")
-
-        self._player.update()
 
     def draw(self):
         for x, y in self._draw_list:
             self._data[x][y].draw()
-        self._player.draw()
 
     def get_region_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
@@ -111,6 +113,16 @@ class World:
             for y_index, region in column.items():
                 self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, self, (
                     x_index, y_index), data[str(x_index)][str(y_index)])
+
+    def reassign_entities_to_regions(self): # Make sure entities are being updated by the region that they actually reside in.
+        for region in [self.get_region_at_position((int(x), int(y))) for x, y in self._draw_list]:
+            for entity in region.entity_list[::]:
+                if not region.is_position_in_region(entity.position):
+                    region_index_x, region_index_y = self.get_region_indexes_from_position(entity.position)
+                    if self.check_region_exists_at_position(entity.position):
+                        self._data[region_index_x][region_index_y].entity_list.append(entity)
+                    region.entity_list.remove(entity)
+
 
     def update_draw_list(self): # Responsible for updating draw list and creating non-existent regions that need to be drawn
         self._draw_list.clear()
