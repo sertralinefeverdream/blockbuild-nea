@@ -39,7 +39,6 @@ def main():
     block_factory = BlockFactory(config["blocks"],
                                  Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png",
                                              "../assets/imgs/sprites/block_textures/block_textures.json"))
-
     region_generator = RegionGenerator()
     camera = Camera()
     

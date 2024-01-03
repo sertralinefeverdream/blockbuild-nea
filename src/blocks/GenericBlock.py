@@ -12,7 +12,6 @@ class GenericBlock(BlockBase):
 
     def draw(self):
         self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
-        pygame.draw.rect(self._game.window, (0, 0, 0), self._hitbox, -1) # Draws hitbox
 
     def get_state_data(self):
         return None

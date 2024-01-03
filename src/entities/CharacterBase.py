@@ -19,7 +19,7 @@ class CharacterBase(EntityBase):
             self._max_health = value
 
     @abstractmethod
-    def handle_collisions(self):
+    def handle_collisions(self, axis):
         pass
 
     def damage(self, value):

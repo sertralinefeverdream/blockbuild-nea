@@ -94,7 +94,7 @@ class EntityBase:
         pass
 
     def update_texture_and_sizes(self): # Call when texture or size changes
-        #self._texture = pygame.transform.scale(self._texture, self._size)
+        self._texture = pygame.transform.scale(self._texture, self._size)
         self._hitbox.update((0,0), self._size)
 
     def kill(self): # Can be overriden

@@ -38,11 +38,11 @@ class World:
         self.update_draw_list()
         self.reassign_entities_to_regions()
 
-        self._camera.x = self._player.position[0] - 600
-        self._camera.y = self._player.position[1] - 400
-
         for x, y in self._draw_list:
             self._data[x][y].update()
+
+        self._camera.x = self._player.position[0] - 600
+        self._camera.y = self._player.position[1] - 400
 
     def draw(self):
         for x, y in self._draw_list:
