@@ -14,7 +14,7 @@ class EntityBase:
         self._hitbox = pygame.Rect((0, 0), self._size)
         self._is_killed = False
 
-        self.update_texture_and_sizes()
+        #self.update_texture_and_sizes()
 
     @property
     def game(self):

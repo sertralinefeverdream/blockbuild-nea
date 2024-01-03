@@ -8,6 +8,8 @@ class CharacterBase(EntityBase):
         self._max_health = max_health
 
         self._health = self._max_health
+        self._is_jumping = False
+        self._is_falling = False
 
     @property
     def max_health(self):

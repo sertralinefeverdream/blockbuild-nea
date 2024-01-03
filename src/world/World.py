@@ -52,12 +52,6 @@ class World:
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             x_index = int((position[0] // 800)) * 800
             y_index = int((position[1] // 800)) * 800
-            '''
-            if position[0] < 0:
-                x_index = (x_index + 800) * -1
-            if position[1] < 0:
-                y_index = (y_index + 800) * -1
-            '''
 
             return str(x_index), str(y_index)
 
