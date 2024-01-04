@@ -9,7 +9,7 @@ class MainGameState(StateBase):
 
     def initialise_gui(self):
         self._gui = [
-            {},
+            {"fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default")},
             {},
             {}
         ]
@@ -24,6 +24,8 @@ class MainGameState(StateBase):
         self._game.window.fill((255, 255, 255))
         self._world.update()
         self._world.draw()
+
+        self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps())
 
         for layer in self._gui[::-1]:
             for component in layer.values():  # Iterates through all guis in dict and updates and draws them

@@ -2,33 +2,55 @@ from src.entities.CharacterBase import CharacterBase
 import pygame
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, texture, max_health):
-        super().__init__(game, world, entity_id, position, size, texture, max_health)
+    def __init__(self, game, world, entity_id, position, size, texture, max_speed, max_health):
+        super().__init__(game, world, entity_id, position, size, texture, max_speed, max_health)
 
     def update(self):
-        self._velocity[1] += 1
-        self.handle_inputs()
-        self._position[0] += self._velocity[0]
+        if self._health <= 0:
+            self.kill()
+            return
+
+        deltatime = self._game.clock.get_time() / 1000
+
+        self.handle_inputs(deltatime)
+
+        self._velocity[1] += 600 * deltatime
+
+        if abs(self._velocity[0]) > self._max_speed[0]:
+            self._velocity[0] = self._max_speed[0] if self._velocity[0] > 0 else -self._max_speed[0]
+
+        if abs(self._velocity[1]) > self._max_speed[1]:
+            self._velocity[1] = self._max_speed[1] if self._velocity[1] > 0 else - self._max_speed[1]
+
+        self._position[0] += self._velocity[0] * deltatime
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("horizontal")
-        self._position[1] += self._velocity[1]
+        self._position[1] += (self._velocity[1] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
 
-    def handle_inputs(self):
+        '''
+        self.handle_inputs()
+        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+        self.handle_collisions("horizontal")
+        self._position[1] += self._velocity[1] * deltatime
+        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+        self.handle_collisions("vertical")
+        '''
+
+    def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed
 
-        if keys_pressed[pygame.K_w]:
-            if not self._is_jumping and not self._is_falling:
-                self._velocity[1] = -18
-                self._is_jumping = True
-
         if keys_pressed[pygame.K_a]:
-            self._velocity[0] = -5
+            if self._velocity[0] > 0:
+                self._velocity[0] = 0
+            self._velocity[0] += -600 * deltatime
         elif keys_pressed[pygame.K_d]:
-            self._velocity[0] = 5
+            if self._velocity[0] < 0:
+                self._velocity[0] = 0
+            self._velocity[0] += 600 * deltatime
         else:
-            self._velocity[0] = 0
+            self.velocity[0] *= 0.1
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
@@ -41,7 +63,7 @@ class Player(CharacterBase):
                 if self._world.check_region_exists_at_position((region_check_x, region_check_y)):
                     hitboxes_to_check += self._world.get_region_at_position((region_check_x, region_check_y)).get_block_hitboxes()
                 else:
-                    pass
+                    print("Region invalid")
 
         if axis.lower() == "horizontal":
             for block, hitbox in hitboxes_to_check:
@@ -52,27 +74,19 @@ class Player(CharacterBase):
                     elif self._velocity[0] < 0:
                         self._position[0] = block.position[0] + 40
                         self._velocity[0] = 0
+                    self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+
 
         elif axis.lower() == "vertical":
-            no_collision_below = True
             for block, hitbox in hitboxes_to_check:
                 if hitbox.colliderect(self._hitbox):
                     if self._velocity[1] > 0:
                         self._position[1] = block.position[1] - self._size[1]
                         self._velocity[1] = 0
-                        if self._is_jumping:
-                            self._is_jumping = False
-                        no_collision_below = False
                     elif self._velocity[1] < 0:
                         self._position[1] = block.position[1] + 40
                         self._velocity[1] = 0
-
-            if no_collision_below:
-                self._is_falling = True
-            elif not no_collision_below:
-                self._is_falling = False
-
-        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                    self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
     def draw(self):
         #self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))

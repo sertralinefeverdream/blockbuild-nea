@@ -2,15 +2,17 @@ import pygame
 from abc import ABC, abstractmethod
 
 class EntityBase:
-    def __init__(self, game, world, entity_id, position, size, texture):
+    def __init__(self, game, world, entity_id, position, size, texture, max_speed):
         self._game = game
         self._world = world
         self._entity_id = entity_id
         self._position = list(position)
         self._size = list(size)
         self._texture = texture
+        self._max_speed = list(max_speed)
 
         self._velocity = [0, 0]
+        self._acceleration = [0, 0]
         self._hitbox = pygame.Rect((0, 0), self._size)
         self._is_killed = False
 
@@ -50,6 +52,15 @@ class EntityBase:
     def velocity(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
             self._velocity = value
+
+    @property
+    def acceleration(self):
+        return self._acceleration
+
+    @acceleration.setter
+    def acceleration(self, value):
+        if (type(value) is list or type(value) is tuple) and len(value) == 2:
+            self._acceleration = value
 
     @property
     def size(self):

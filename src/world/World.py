@@ -7,7 +7,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (40, 40), None, 100)
+        self._player = Player(self._game, self, "Hi", (0, 0), (40, 40), None, [4000, 4000], 100)
 
         self._draw_list = []
         self._data = \
@@ -135,6 +135,7 @@ class World:
                     # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
+                    print("Generating new")
                     self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
 
                 self._draw_list.append((region_index_x, region_index_y))
