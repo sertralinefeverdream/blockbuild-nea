@@ -8,7 +8,6 @@ class CharacterBase(EntityBase):
         self._max_health = max_health
 
         self._health = self._max_health
-        self._is_jumping = False # States
         self._is_in_air = False
 
     @property
@@ -30,10 +29,6 @@ class CharacterBase(EntityBase):
     def max_velocity(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
             self._max_velocity = value
-
-    @property
-    def is_jumping(self):
-        return self._is_jumping
 
     @property
     def is_in_air(self):

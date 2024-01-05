@@ -1,6 +1,7 @@
 from src.world.Region import Region
 import json
 
+
 class RegionGenerator:
     def __init__(self):
         pass

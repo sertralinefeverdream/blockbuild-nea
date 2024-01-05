@@ -34,7 +34,7 @@ class Camera:
     @x.setter
     def x(self, value):
         if type(value) is float or type(value) is int:
-            self._position[0] = value
+            self._position[0] = value // 1
 
     @property
     def y(self):
@@ -43,18 +43,18 @@ class Camera:
     @y.setter
     def y(self, value):
         if type(value) is float or type(value) is int:
-            self._position[1] = value
+            self._position[1] = value // 1
 
     def get_screen_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             offset_x = -self._position[0]
             offset_y = -self._position[1]
 
-            return position[0] + offset_x, position[1] + offset_y
+            return (position[0] + offset_x) // 1, (position[1] + offset_y) // 1
 
     def get_world_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
-            return position[0] + self._position[0], position[1] + self._position[1]
+            return (position[0] + self._position[0]) // 1, (position[1] + self._position[1]) // 1
 
 
 

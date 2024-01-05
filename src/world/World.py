@@ -7,7 +7,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (40, 40), None, [400, 400], 100)
+        self._player = Player(self._game, self, "Hi", (0, 0), (35, 35), None, [200, 4000], 100)
 
         self._draw_list = []
         self._data = \
@@ -43,8 +43,6 @@ class World:
 
         self._camera.x = self._player.position[0] - 600
         self._camera.y = self._player.position[1] - 400
-
-
 
     def draw(self):
         for x, y in self._draw_list:
