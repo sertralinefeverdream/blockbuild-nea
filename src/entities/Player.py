@@ -14,18 +14,18 @@ class Player(CharacterBase):
 
         self.handle_inputs(deltatime)
 
-        self._velocity[1] += 600 * deltatime
+        self._velocity[1] += 600 # Gravity
 
         if abs(self._velocity[0]) > self._max_speed[0]:
             self._velocity[0] = self._max_speed[0] if self._velocity[0] > 0 else -self._max_speed[0]
 
         if abs(self._velocity[1]) > self._max_speed[1]:
-            self._velocity[1] = self._max_speed[1] if self._velocity[1] > 0 else - self._max_speed[1]
+            self._velocity[1] = self._max_speed[1] if self._velocity[1] > 0 else -self._max_speed[1]
 
         self._position[0] += self._velocity[0] * deltatime
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("horizontal")
-        self._position[1] += (self._velocity[1] * deltatime)
+        self._position[1] += self._velocity[1] * deltatime
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
 
@@ -44,13 +44,13 @@ class Player(CharacterBase):
         if keys_pressed[pygame.K_a]:
             if self._velocity[0] > 0:
                 self._velocity[0] = 0
-            self._velocity[0] += -600 * deltatime
+            self._velocity[0] += -10
         elif keys_pressed[pygame.K_d]:
             if self._velocity[0] < 0:
                 self._velocity[0] = 0
-            self._velocity[0] += 600 * deltatime
+            self._velocity[0] += 10
         else:
-            self.velocity[0] *= 0.1
+            self.velocity[0] *= 1/2
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
@@ -76,7 +76,6 @@ class Player(CharacterBase):
                         self._velocity[0] = 0
                     self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
-
         elif axis.lower() == "vertical":
             for block, hitbox in hitboxes_to_check:
                 if hitbox.colliderect(self._hitbox):
@@ -90,4 +89,5 @@ class Player(CharacterBase):
 
     def draw(self):
         #self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
+        pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
         pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
