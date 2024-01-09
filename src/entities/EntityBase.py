@@ -104,6 +104,10 @@ class EntityBase:
     def draw(self, screen_position):
         pass
 
+    @property
+    def is_killed(self):
+        return self._is_killed
+
     def update_texture_and_sizes(self): # Call when texture or size changes
         self._texture = pygame.transform.scale(self._texture, self._size)
         self._hitbox.update((0,0), self._size)

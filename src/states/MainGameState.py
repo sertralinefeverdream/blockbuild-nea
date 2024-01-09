@@ -25,7 +25,7 @@ class MainGameState(StateBase):
         self._world.update()
         self._world.draw()
 
-        self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps())
+        self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
 
         for layer in self._gui[::-1]:
             for component in layer.values():  # Iterates through all guis in dict and updates and draws them

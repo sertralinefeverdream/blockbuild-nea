@@ -1,6 +1,6 @@
 from src.world.Region import Region
 import json
-
+import noise
 
 class RegionGenerator:
     def __init__(self):
@@ -18,7 +18,8 @@ class RegionGenerator:
         return self.create_region_from_data(game, world, position, json.loads(data))
 
     def create_generated_region(self, game, world, position):
-        pass
+        region = self.create_empty_region(game, world, position)
+
 
     def generate_region_terrain(self, region):
         pass

@@ -91,10 +91,8 @@ class Player(CharacterBase):
                         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
             if has_vertically_collided_below:
-                print("Is in air Changed to False")
                 self._is_in_air = False
             else:
-                print("Is in air Changed to true")
                 self._is_in_air = True
 
     def jump(self):

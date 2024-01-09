@@ -90,6 +90,10 @@ class Region:
                         block.update()
 
         for entity in self._entity_list:
+            if entity.is_killed:
+                self._entity_list.remove(entity)
+                del entity
+                continue
             entity.update()
 
     def draw(self):
@@ -109,6 +113,7 @@ class Region:
 
 
         for entity in self._entity_list:
+            print(self._entity_list)
             entity.draw()
 
     def serialize(self):
