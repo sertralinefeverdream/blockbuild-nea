@@ -136,8 +136,8 @@ class World:
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
                     print("Generating new")
-                    self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
-
+                    #self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
+                    self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(self._game, self, (int(region_index_x), int(region_index_y)))
                 self._draw_list.append((region_index_x, region_index_y))
 
 

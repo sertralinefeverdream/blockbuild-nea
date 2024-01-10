@@ -1,5 +1,5 @@
 import json
-
+import math
 
 class Region:
     def __init__(self, game, world, position=(0, 0)):
@@ -53,8 +53,14 @@ class Region:
     def get_block_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
-                x_index = abs(position[0] - self._position[0]) // 40
-                y_index = abs(position[1] - self._position[1]) // 40
+                x_index = math.trunc(abs(position[0] - self._position[0]) / 40)
+                y_index = math.trunc(abs(position[1] - self._position[1]) / 40)
+
+                '''
+                 x_index = abs(position[0] - self._position[0]) // 40 * 40
+                y_index = abs(position[1] - self._position[1]) // 40 * 40
+                '''
+
 
                 return x_index, y_index
             else:
@@ -66,11 +72,19 @@ class Region:
                 x_index, y_index = self.get_block_indexes_from_position(position)
                 return self._data[y_index][x_index]
 
+    def get_block_at_indexes(self, x, y):
+        if (type(x) is int and type(y) is int) and 0 <= x <= 20 and 0 <= y <= 20:
+            return self._data[y][x]
+
     def set_block_at_position(self, position, block_id, state_data=None):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
                 x_index, y_index = self.get_block_indexes_from_position(position)
                 self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x_index*40, self._position[1] + y_index*40), block_id, state_data)
+
+    def set_block_at_indexes(self, x, y, block_id, state_data=None):
+        if (type(x) is int and type(y) is int) and 0 <= x <= 20 and 0 <= y <= 20:
+            self._data[y][x] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x*40, self._position[1] + y*40), block_id, state_data)
 
     def get_block_hitboxes(self):
         data = []
@@ -113,7 +127,6 @@ class Region:
 
 
         for entity in self._entity_list:
-            print(self._entity_list)
             entity.draw()
 
     def serialize(self):

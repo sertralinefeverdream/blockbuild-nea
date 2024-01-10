@@ -101,7 +101,6 @@ class Game:
 
             if self.__current_state is not None:
                 self.__clock.tick(self.__framerate)
-                #print(self.__clock.get_fps())
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:

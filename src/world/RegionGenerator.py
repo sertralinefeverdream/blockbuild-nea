@@ -1,10 +1,12 @@
+
 from src.world.Region import Region
 import json
-import noise
+import math
+import opensimplex
 
 class RegionGenerator:
     def __init__(self):
-        pass
+        opensimplex.random_seed()
 
     def create_empty_region(self, game, world, position):
         return Region(game, world, position)
@@ -19,7 +21,15 @@ class RegionGenerator:
 
     def create_generated_region(self, game, world, position):
         region = self.create_empty_region(game, world, position)
-
+        self.generate_region_terrain(region)
+        return region
 
     def generate_region_terrain(self, region):
-        pass
+        for x in range(20):
+            rock_y_limit_at_x = math.trunc(1600 + opensimplex.noise2(region.position[0] + x, 0) * 400)
+            grass_y_limit_at_x = math.trunc(800 + opensimplex.noise2(region.position[0] + x, 0) * 400)
+            for y in range(20):
+                if region.position[1] + y*40 == grass_y_limit_at_x:
+                    region.set_block_at_indexes(x, y, "grass")
+                if region.position[1] + y*40 == rock_y_limit_at_x:
+                    region.set_block_at_indexes(x, y, "stone")
