@@ -1,4 +1,5 @@
 import json
+import math
 from src.entities.Player import Player
 
 class World:
@@ -7,14 +8,14 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (35, 35), None, [300, 4000], 100)
+        self._player = Player(self._game, self, "Hi", (0, 0), (30, 30), None, [400, 400], 100)
 
         self._draw_list = []
         self._data = \
             {
                 '0':
                     {
-                        '0': self._region_generator.create_empty_region(self._game, self, (0, 0))
+                        '0': self._region_generator.create_generated_region(self._game, self, (0, 0))
                     }
             }
 
@@ -36,13 +37,13 @@ class World:
 
     def update(self):
         self.update_draw_list()
+        #print(self._draw_list)
         self.reassign_entities_to_regions()
 
         for x, y in self._draw_list:
             self._data[x][y].update()
-
-        self._camera.x = self._player.position[0] - 600
-        self._camera.y = self._player.position[1] - 400
+            self._camera.x = self._player.position[0] - 600
+            self._camera.y = self._player.position[1] - 400
 
     def draw(self):
         for x, y in self._draw_list:
@@ -50,6 +51,7 @@ class World:
 
     def get_region_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
+
             x_index = int((position[0] // 800)) * 800
             y_index = int((position[1] // 800)) * 800
 
@@ -73,6 +75,7 @@ class World:
                 x_index, y_index = self.get_region_indexes_from_position(position)
                 return self._data[x_index][y_index]
             else:
+                print("Region no long exist")
                 return None
 
     def get_block_at_position(self, position):
@@ -122,6 +125,7 @@ class World:
         self._draw_list.clear()
         camera_x = self._camera.x
         camera_y = self._camera.y
+
         for x in range(6):
             for y in range(6):
                 region_check_x = camera_x + (x-3)*800

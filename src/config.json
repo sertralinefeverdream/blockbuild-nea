@@ -34,6 +34,13 @@
       "break_sfx_id": "btn_click_1",
       "place_sfx_id": "grass_place",
       "footstep_sfx_id": "btn_click_1"
+    },
+    "dirt": {
+      "type": "generic",
+      "texture": "dirt",
+      "break_sfx_id": "btn_click_1",
+      "place_sfx_id": "grass_place",
+      "footstep_sfx_id": "btn_click_1"
     }
   }
 }

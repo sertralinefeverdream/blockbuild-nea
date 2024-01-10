@@ -5,8 +5,10 @@ import math
 import opensimplex
 
 class RegionGenerator:
-    def __init__(self):
+    def __init__(self, rock_base_level=800, grass_base_level=0):
         opensimplex.random_seed()
+        self._rock_base_level = rock_base_level
+        self._grass_base_level = grass_base_level
 
     def create_empty_region(self, game, world, position):
         return Region(game, world, position)
@@ -26,10 +28,16 @@ class RegionGenerator:
 
     def generate_region_terrain(self, region):
         for x in range(20):
-            rock_y_limit_at_x = math.trunc(1600 + opensimplex.noise2(region.position[0] + x, 0) * 400)
-            grass_y_limit_at_x = math.trunc(800 + opensimplex.noise2(region.position[0] + x, 0) * 400)
+            rock_y_limit_at_x = self._rock_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/750, 0) * 400 / 40) * 40
+            grass_y_limit_at_x = self._grass_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 1) * 800 / 40) * 40
+            print(rock_y_limit_at_x, grass_y_limit_at_x)
             for y in range(20):
+                print(region.position[1] + y*40, grass_y_limit_at_x)
                 if region.position[1] + y*40 == grass_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "grass")
-                if region.position[1] + y*40 == rock_y_limit_at_x:
+                elif grass_y_limit_at_x < region.position[1] + y*40 < rock_y_limit_at_x:
+                    region.set_block_at_indexes(x, y, "dirt")
+                elif region.position[1] + y*40 >= rock_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "stone")
+
+

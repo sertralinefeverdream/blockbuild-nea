@@ -110,7 +110,7 @@ class EntityBase:
 
     def update_texture_and_sizes(self): # Call when texture or size changes
         self._texture = pygame.transform.scale(self._texture, self._size)
-        self._hitbox.update((0,0), self._size)
+        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
     def kill(self): # Can be overriden
         self._is_killed = True

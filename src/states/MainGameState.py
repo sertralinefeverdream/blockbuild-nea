@@ -21,7 +21,7 @@ class MainGameState(StateBase):
         pass
 
     def update(self):
-        self._game.window.fill((255, 255, 255))
+        self._game.window.fill((110, 177, 255))
         self._world.update()
         self._world.draw()
 

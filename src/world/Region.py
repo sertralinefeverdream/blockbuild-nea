@@ -53,14 +53,9 @@ class Region:
     def get_block_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
-                x_index = math.trunc(abs(position[0] - self._position[0]) / 40)
-                y_index = math.trunc(abs(position[1] - self._position[1]) / 40)
 
-                '''
-                 x_index = abs(position[0] - self._position[0]) // 40 * 40
-                y_index = abs(position[1] - self._position[1]) // 40 * 40
-                '''
-
+                x_index = abs(position[0] - self._position[0]) // 40
+                y_index = abs(position[1] - self._position[1]) // 40
 
                 return x_index, y_index
             else:
@@ -114,7 +109,6 @@ class Region:
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
-                    '''
                     screen_position = self._world.camera.get_screen_position((
                         (self._position[0] + block_index * 40),
                         (self._position[1] + row_index * 40)
@@ -122,9 +116,6 @@ class Region:
                     if -40 < screen_position[0] < 1200 \
                             and -40 < screen_position[1] < 800:
                         block.draw()
-                    '''
-                    block.draw()
-
 
         for entity in self._entity_list:
             entity.draw()
@@ -155,7 +146,5 @@ class Region:
                                                                                                     (self._position[0] + block_index*40, self._position[1] + int(row_index)*40),
                                                                                                     block["block_id"],
                                                                                                     block["state_data"])
-                # create_block is inefficient
                 else:
-                  #  print(row_index, block_index)
                     self._data[int(row_index)][block_index] = None

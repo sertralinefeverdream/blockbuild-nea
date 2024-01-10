@@ -53,7 +53,6 @@ def main():
     game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator)))
     game.game_loop()
 
-
 if __name__ == "__main__":
     main()
 
