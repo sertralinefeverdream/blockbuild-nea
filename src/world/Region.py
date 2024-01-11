@@ -105,7 +105,7 @@ class Region:
                 continue
             entity.update()
 
-    def draw(self):
+    def draw_blocks(self):
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
@@ -117,6 +117,7 @@ class Region:
                             and -40 < screen_position[1] < 800:
                         block.draw()
 
+    def draw_entities(self):
         for entity in self._entity_list:
             entity.draw()
 

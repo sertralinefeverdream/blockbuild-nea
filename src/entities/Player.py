@@ -21,7 +21,7 @@ class Player(CharacterBase):
         if abs(self._velocity[1]) > self._max_speed[1]:
             self._velocity[1] = self._max_speed[1] if self._velocity[1] > 0 else -self._max_speed[1]
 
-        print(self._position)
+        #print(self._position)
 
         self._position[0] += math.trunc(self._velocity[0] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
@@ -56,7 +56,7 @@ class Player(CharacterBase):
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
-
+        #return
         for x in range(3):
             for y in range(3):
                 region_check_x = self._position[0] + (x-1)*800
@@ -73,13 +73,11 @@ class Player(CharacterBase):
                     if self._velocity[0] > 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] - self._size[0]
-                        self._hitbox.bottom = hitbox.top
-                       # self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.right = hitbox.left
                     elif self._velocity[0] < 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] + 40
-                        self._hitbox.top = hitbox.bottom
-                        #self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.left = hitbox.right
 
         elif axis.lower() == "vertical":
             has_vertically_collided_below = False
@@ -88,12 +86,12 @@ class Player(CharacterBase):
                     if self._velocity[1] > 0:
                         self._velocity[1] = 0
                         self._position[1] = block.position[1] - self._size[1]
-                        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.bottom = hitbox.top
                         has_vertically_collided_below = True
                     elif self._velocity[1] < 0:
                         self._velocity[1] = 0
                         self._position[1] = block.position[1] + 40
-                        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.top = hitbox.bottom
 
             if has_vertically_collided_below:
                 self._is_in_air = False

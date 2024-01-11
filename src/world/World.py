@@ -48,7 +48,10 @@ class World:
     def draw(self):
         self._game.window.fill((110,177,255))
         for x, y in self._draw_list:
-            self._data[x][y].draw()
+            self._data[x][y].draw_blocks()
+
+        for x, y in self._draw_list:
+            self._data[x][y].draw_entities()
 
     def get_region_indexes_from_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
