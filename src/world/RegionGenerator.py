@@ -5,7 +5,7 @@ import math
 import opensimplex
 
 class RegionGenerator:
-    def __init__(self, rock_base_level=800, grass_base_level=0):
+    def __init__(self, rock_base_level=1200, grass_base_level=400):
         opensimplex.random_seed()
         self._rock_base_level = rock_base_level
         self._grass_base_level = grass_base_level
@@ -28,7 +28,7 @@ class RegionGenerator:
 
     def generate_region_terrain(self, region):
         for x in range(20):
-            rock_y_limit_at_x = self._rock_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/750, 0) * 400 / 40) * 40
+            rock_y_limit_at_x = self._rock_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 0) * 400 / 40) * 40
             grass_y_limit_at_x = self._grass_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 1) * 800 / 40) * 40
             print(rock_y_limit_at_x, grass_y_limit_at_x)
             for y in range(20):

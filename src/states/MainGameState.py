@@ -21,10 +21,8 @@ class MainGameState(StateBase):
         pass
 
     def update(self):
-        self._game.window.fill((110, 177, 255))
         self._world.update()
         self._world.draw()
-
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
 
         for layer in self._gui[::-1]:

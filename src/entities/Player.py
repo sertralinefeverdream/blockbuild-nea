@@ -51,7 +51,8 @@ class Player(CharacterBase):
                 self._velocity[0] = math.trunc(self._velocity[0])
 
         if keys_pressed[pygame.K_w]:
-            self.jump()
+            if not self._is_in_air:
+                self.jump()
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
@@ -72,11 +73,13 @@ class Player(CharacterBase):
                     if self._velocity[0] > 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] - self._size[0]
-                        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.bottom = hitbox.top
+                       # self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
                     elif self._velocity[0] < 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] + 40
-                        self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
+                        self._hitbox.top = hitbox.bottom
+                        #self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
         elif axis.lower() == "vertical":
             has_vertically_collided_below = False
@@ -98,7 +101,6 @@ class Player(CharacterBase):
                 self._is_in_air = True
 
     def jump(self):
-        if not self._is_in_air:
             self._velocity[1] = -300
 
     def draw(self):
