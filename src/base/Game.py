@@ -109,7 +109,7 @@ class Game:
                         self.__music_handler.on_music_end()
 
                 self.__current_state.update()
-                pygame.display.update()
+                pygame.display.flip()
             else:
                 self.__running = False
 

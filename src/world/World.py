@@ -46,6 +46,7 @@ class World:
             self._camera.y = self._player.position[1] - 400
 
     def draw(self):
+        self._game.window.fill((110,177,255))
         for x, y in self._draw_list:
             self._data[x][y].draw()
 

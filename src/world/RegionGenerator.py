@@ -29,7 +29,7 @@ class RegionGenerator:
     def generate_region_terrain(self, region):
         for x in range(20):
             rock_y_limit_at_x = self._rock_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 0) * 400 / 40) * 40
-            grass_y_limit_at_x = self._grass_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 1) * 800 / 40) * 40
+            grass_y_limit_at_x = self._grass_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 1) * 400 / 40) * 40
             print(rock_y_limit_at_x, grass_y_limit_at_x)
             for y in range(20):
                 print(region.position[1] + y*40, grass_y_limit_at_x)
