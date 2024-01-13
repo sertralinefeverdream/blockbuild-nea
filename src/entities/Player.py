@@ -104,4 +104,4 @@ class Player(CharacterBase):
     def draw(self):
         #self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
         pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
-        pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
+        #pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)

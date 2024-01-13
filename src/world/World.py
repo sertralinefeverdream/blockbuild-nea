@@ -46,7 +46,7 @@ class World:
             self._camera.y = self._player.position[1] - 400
 
     def draw(self):
-        self._game.window.fill((110,177,255))
+        self._game.window.fill((110, 177, 255))
         for x, y in self._draw_list:
             self._data[x][y].draw_blocks()
 
@@ -130,8 +130,8 @@ class World:
         camera_x = self._camera.x
         camera_y = self._camera.y
 
-        for x in range(6):
-            for y in range(6):
+        for x in range(7):
+            for y in range(7):
                 region_check_x = camera_x + (x-3)*800
                 region_check_y = camera_y + (y-3)*800
 
