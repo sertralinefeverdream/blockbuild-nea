@@ -48,7 +48,9 @@ class World:
     def draw(self):
         self._game.window.fill((110, 177, 255))
         for x, y in self._draw_list:
-            self._data[x][y].draw_blocks()
+            screen_position = self._camera.get_screen_position((int(x), int(y)))
+            if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
+                self._data[x][y].draw_blocks()
 
         for x, y in self._draw_list:
             self._data[x][y].draw_entities()
@@ -130,8 +132,8 @@ class World:
         camera_x = self._camera.x
         camera_y = self._camera.y
 
-        for x in range(7):
-            for y in range(7):
+        for x in range(6):
+            for y in range(6):
                 region_check_x = camera_x + (x-3)*800
                 region_check_y = camera_y + (y-3)*800
 

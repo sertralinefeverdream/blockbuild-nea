@@ -1,5 +1,5 @@
 import json
-import math
+import pygame
 
 class Region:
     def __init__(self, game, world, position=(0, 0)):
@@ -13,6 +13,8 @@ class Region:
             ]  # Indexing for a block requires indexing y coordinate
 
         self._entity_list = []
+        self._region_surface = pygame.Surface((800, 800))
+        self._flag_for_redraw = True # Enabled by a method when the region surface needs to be redrawn
 
     @property
     def game(self):
@@ -79,6 +81,7 @@ class Region:
 
     def set_block_at_indexes(self, x, y, block_id, state_data=None):
         if (type(x) is int and type(y) is int) and 0 <= x <= 20 and 0 <= y <= 20:
+            self.enable_flag_for_redraw()
             self._data[y][x] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x*40, self._position[1] + y*40), block_id, state_data)
 
     def get_block_hitboxes(self):
@@ -95,6 +98,7 @@ class Region:
                 if block is not None:
                     if block.is_broken:
                         del block
+                        self.enable_flag_for_redraw()
                     else:
                         block.update()
 
@@ -105,7 +109,8 @@ class Region:
                 continue
             entity.update()
 
-    def draw_blocks(self):
+    '''
+        def draw_blocks(self):
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if block is not None:
@@ -117,9 +122,26 @@ class Region:
                             and -40 < screen_position[1] < 800:
                         block.draw()
 
+    '''
+
+    def draw_blocks(self):
+        if self._flag_for_redraw:
+            #print("Redrawing")
+            self._flag_for_redraw = False
+            self._region_surface.fill((255, 255, 255))
+            for row_index, row in enumerate(self._data):
+                for block_index, block in enumerate(row):
+                    if block is not None:
+                        self._region_surface.blit(block.texture, (block_index*40, row_index*40))
+
+        self._game.window.blit(self._region_surface, self._world.camera.get_screen_position(self._position))
+
     def draw_entities(self):
         for entity in self._entity_list:
             entity.draw()
+
+    def enable_flag_for_redraw(self):
+        self._flag_for_redraw = True
 
     def serialize(self):
         return json.dumps(self.convert_data())

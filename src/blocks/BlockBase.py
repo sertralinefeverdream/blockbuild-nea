@@ -41,6 +41,7 @@ class BlockBase(ABC):
     def texture(self, value):
         if type(value) is pygame.Surface:
             self._texture = pygame.transform.scale(self._texture, (40, 40))
+            self.enable_flag_for_region_redraw()
 
     @property
     def break_sfx_id(self):
@@ -82,15 +83,15 @@ class BlockBase(ABC):
         pass
 
     @abstractmethod
-    def draw(self, screen_position):
-        pass
-
-    @abstractmethod
     def get_state_data(self):
         return None
 
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
     # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.
+
+    def enable_flag_for_region_redraw(self): # Call when visual change requires the region to be redrawn.
+        region = self._world.get_region_at_position(self._position)
+        region.enable_flag_for_redraw()
 
     def serialize(self):
         return json.dumps(self.convert_data())

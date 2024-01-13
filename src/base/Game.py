@@ -98,9 +98,9 @@ class Game:
             self.__current_state = self.__state_stack.peek()
             self._keys_pressed = pygame.key.get_pressed()
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
+            self.__clock.tick(self.__framerate)
 
             if self.__current_state is not None:
-                self.__clock.tick(self.__framerate)
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
