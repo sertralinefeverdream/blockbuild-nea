@@ -96,7 +96,6 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
-        self.push_state("main_game")
         self.update_states_from_option()
 
         while self.__running:
@@ -115,6 +114,7 @@ class Game:
 
                 self.__current_state.update()
                 if self.__current_state is not None:
+                    self.__current_state.draw()
                     pygame.display.flip()
             else:
                 self.__running = False

@@ -7,18 +7,14 @@ class MainGameState(StateBase):
     def __init__(self, game, world):
         super().__init__(game)
         self._world = world
-<<<<<<< Updated upstream
-=======
-        self._step = 0
         self._escape_key_held = False
->>>>>>> Stashed changes
 
     def initialise_gui(self):
         self._gui = [
             {"fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default")},
-            {},
             {"block_box": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
-                                                            outline_thickness=3, has_box=False)}
+                                                            outline_thickness=3, has_box=False)},
+            {}
         ]
 
     def on_state_enter(self, params=None):
@@ -46,7 +42,7 @@ class MainGameState(StateBase):
 
         if block_at_mouse is not None:
             self._gui[1]["block_box"].is_visible = True
-            self._gui[1]["block_box"].position = self._world.get_screen_position(block_at_mouse.position)
+            self._gui[1]["block_box"].position = self._world.camera.get_screen_position(block_at_mouse.position)
         else:
             self._gui[1]["block_box"].is_visible = False
 

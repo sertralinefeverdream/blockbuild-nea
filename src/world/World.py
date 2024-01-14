@@ -46,6 +46,7 @@ class World:
 
     def draw(self):
         self._game.window.fill((110, 177, 255))
+
         for x, y in self._draw_list:
             screen_position = self._camera.get_screen_position((int(x), int(y)))
             if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
@@ -144,7 +145,7 @@ class World:
                     # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
-                    print("Generating new")
+                   # print("Generating new")
                     #self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
                     self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(self._game, self, (int(region_index_x), int(region_index_y)))
                 self._draw_list.append((region_index_x, region_index_y))

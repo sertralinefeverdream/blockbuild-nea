@@ -9,7 +9,7 @@ class BlockBase(ABC):
         self._world = world
         self._position = list(position)
         self._block_id = block_id
-        self._texture = pygame.transform.scale(texture, (40, 40))
+        self._texture = pygame.transform.scale(texture.convert(), (40, 40))
         self._break_sfx_id = break_sfx_id
         self._place_sfx_id = place_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
@@ -40,7 +40,7 @@ class BlockBase(ABC):
     @texture.setter
     def texture(self, value):
         if type(value) is pygame.Surface:
-            self._texture = pygame.transform.scale(self._texture, (40, 40))
+            self._texture = pygame.transform.scale(value.convert(), (40, 40))
             self.enable_flag_for_region_redraw()
 
     @property
