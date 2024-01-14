@@ -87,45 +87,31 @@ class LoadGameMenuState(StateBase):
         self._gui[0]["bottom_load_button"].font_size = 50
         self._gui[0]["bottom_load_button"].centre_position = (875.0, 450.0)
 
-        for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them
-            for component in layer.values():
-                component.update()
-
     def new_button_func(self, button):
         if button is self._gui[0]["top_new_button"]:
             print("New Top")
-            self._game.push_state("main_game", ["new"])
         elif button is self._gui[0]["middle_new_button"]:
-            self._game.push_state("main_game", ["new"])
+            print("New Middle")
         elif button is self._gui[0]["bottom_new_button"]:
-            self._game.push_state("main_game", ["new"])
-
+            print("New Bottom")
 
     def load_button_func(self, button):
         if button is self._gui[0]["top_load_button"]:
-            self._game.push_state("main_game", ["new"])
+            print("Load Top")
         elif button is self._gui[0]["middle_load_button"]:
-            self._game.push_state("main_game", ["new"])
             print("Load Middle")
         elif button is self._gui[0]["bottom_load_button"]:
-            self._game.push_state("main_game", ["new"])
             print("Load Bottom")
 
-    def on_state_leave(self, params=None):
+    def on_state_leave(self):
         pass
 
     def update(self):
+        self._game.window.fill((255, 255, 255))
         for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them
             for component in layer.values():
                 component.update()
-
-    def draw(self, no_gui=False):
-        self._game.window.fill((255, 255, 255))
-
-        if not no_gui:
-            for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them
-                for component in layer.values():
-                    component.draw()
+                component.draw()
 
     def exit_click(self, button):
         self._game.pop_state()

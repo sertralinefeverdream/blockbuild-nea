@@ -55,13 +55,8 @@ class Player(CharacterBase):
                 self.jump()
 
     def handle_collisions(self, axis):
-<<<<<<< Updated upstream
         hitboxes_to_check = []
         #return
-=======
-        return
-        hitboxes_to_check = []
->>>>>>> Stashed changes
         for x in range(3):
             for y in range(3):
                 region_check_x = self._position[0] + (x-1)*800
