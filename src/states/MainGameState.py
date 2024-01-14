@@ -5,7 +5,6 @@ class MainGameState(StateBase):
     def __init__(self, game, world):
         super().__init__(game)
         self._world = world
-        self._step = 0
 
     def initialise_gui(self):
         self._gui = [
