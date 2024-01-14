@@ -27,7 +27,7 @@ class OptionsMenuState(StateBase):
 
 
 
-    def on_state_enter(self, *args):
+    def on_state_enter(self, params=None):
         self._gui[0]["low_game_vol_button"].size = (200.0, 75.0)
         self._gui[0]["low_game_vol_button"].centre_position = (300.0, 200.0)
 
@@ -56,6 +56,9 @@ class OptionsMenuState(StateBase):
         self._gui[0]["music_vol_label"].centre_position = (600.0, 300.0)
 
         self.initialise_gui_states()
+        for layer in self._gui[::-1]:
+            for component in layer.values():
+                component.update()
 
     def initialise_gui_states(self):
         if self._game.get_option("game_volume").name == "LOW":
@@ -72,15 +75,21 @@ class OptionsMenuState(StateBase):
         elif self._game.get_option("music_volume").name == "HIGH":
             self.high_music_vol_click(self._gui[0]["high_music_vol_button"])
 
-    def on_state_leave(self, *args):
+    def on_state_leave(self, params=None):
         pass
 
     def update(self):
-        self._game.window.fill((255, 255, 255))
         for layer in self._gui[::-1]:
             for component in layer.values():  # Iterates through all guis in dict and updates and draws them
                 component.update()
-                component.draw()
+
+    def draw(self, no_gui=False):
+        self._game.window.fill((255, 255, 255))
+        if not no_gui:
+            for layer in self._gui[::-1]:
+                for component in layer.values():  # Iterates through all guis in dict and updates and draws them
+                    component.draw()
+
 
     def exit_click(self, button):
         self._game.pop_state()

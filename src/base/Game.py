@@ -6,7 +6,7 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler):
         self.__state_stack = state_stack
         self.__window = window
         self.__clock = clock
@@ -16,6 +16,7 @@ class Game:
         self.__config = config
         self._gui_factory = gui_factory
         self._block_factory = block_factory
+        self._file_save_handler = file_save_handler
 
         self.__states = {}
         self.__previous_state = None
@@ -82,6 +83,10 @@ class Game:
         return self._block_factory
 
     @property
+    def file_save_handler(self):
+        return self._file_save_handler
+
+    @property
     def keys_pressed(self):
         return self._keys_pressed
 
@@ -91,7 +96,6 @@ class Game:
 
     def game_loop(self):
         self.push_state("main_menu")
-        self.push_state("main_game")
         self.update_states_from_option()
 
         while self.__running:
@@ -109,6 +113,9 @@ class Game:
                         self.__music_handler.on_music_end()
 
                 self.__current_state.update()
+                if self.__current_state is not None:
+                     self.__current_state.draw()
+
                 pygame.display.flip()
             else:
                 self.__running = False
@@ -128,12 +135,14 @@ class Game:
     def add_to_states(self, state_id, state):
         self.__states[state_id] = state
 
-    def push_state(self, state_id, *args):
+    def push_state(self, state_id, state_enter_params=None, state_leave_params=None):
         self.__previous_state = self.__state_stack.peek()
-        self.__state_stack.push(self.__states[state_id.lower()], *args)
+        self.__state_stack.push(self.__states[state_id.lower()], state_enter_params, state_leave_params)
+        self.__current_state = self.__state_stack.peek()
 
-    def pop_state(self):
-        self.__previous_state = self.__state_stack.pop()
+    def pop_state(self, state_enter_params=None, state_leave_params=None):
+        self.__previous_state = self.__state_stack.pop(state_enter_params, state_leave_params)
+        self.__current_state = self.__state_stack.peek()
 
     def on_game_end(self):
         pygame.quit()

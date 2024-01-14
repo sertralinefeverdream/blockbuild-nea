@@ -16,13 +16,17 @@ class StateBase(ABC):
         pass
 
     @abstractmethod
-    def on_state_enter(self):
+    def on_state_enter(self, params=None):
         pass
 
     @abstractmethod
-    def on_state_leave(self):
+    def on_state_leave(self, params=None):
         pass
 
     @abstractmethod
     def update(self):
+        pass
+
+    @abstractmethod
+    def draw(self):
         pass
