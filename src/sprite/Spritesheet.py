@@ -12,7 +12,7 @@ class Spritesheet:
     def get_sprite(self, x, y, width, height):
         sprite = pygame.Surface((width, height))
         sprite.blit(self._image, (0, 0), (x, y, width, height))
-        return sprite
+        return sprite.convert()
 
     def parse_sprite(self, sprite_id):
         if sprite_id in self._metadata.keys():
