@@ -13,8 +13,13 @@ class Region:
             ]  # Indexing for a block requires indexing y coordinate
 
         self._entity_list = []
+<<<<<<< Updated upstream
         self._region_surface = pygame.Surface((800, 800))
         self._flag_for_redraw = True # Enabled by a method when the region surface needs to be redrawn
+=======
+        self._region_surface = pygame.Surface((800, 800), pygame.SRCALPHA, 32)
+        self._flag_for_redraw = True
+>>>>>>> Stashed changes
 
     @property
     def game(self):
@@ -109,6 +114,7 @@ class Region:
                 continue
             entity.update()
 
+<<<<<<< Updated upstream
     '''
         def draw_blocks(self):
         for row_index, row in enumerate(self._data):
@@ -121,6 +127,21 @@ class Region:
                     if -40 < screen_position[0] < 1200 \
                             and -40 < screen_position[1] < 800:
                         block.draw()
+=======
+    def draw_blocks(self):
+        if self._flag_for_redraw:
+            print("Redrawing")
+            self._flag_for_redraw = False
+            for row_index, row in enumerate(self._data):
+                for block_index, block in enumerate(row):
+                    if block is not None:
+                        self._region_surface.blit(block.texture, (block_index * 40, row_index * 40))
+
+        self._game.window.blit(self._region_surface, self._world.camera.get_screen_position(self._position))
+
+    def enable_flag_for_redraw(self):
+        self._flag_for_redraw = True
+>>>>>>> Stashed changes
 
     '''
 
