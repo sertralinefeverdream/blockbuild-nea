@@ -4,12 +4,10 @@ import json
 from states.MainMenuState import MainMenuState
 from states.LoadGameMenuState import LoadGameMenuState
 from states.OptionsMenuState import OptionsMenuState
-from states.PauseGameState import PauseGameState
 
 from src.sprite.Spritesheet import Spritesheet
 
 from base.Game import Game
-from base.FileSaveHandler import FileSaveHandler
 
 from src.factories.GUIFactory import GUIFactory
 from states.StateStack import StateStack
@@ -43,18 +41,16 @@ def main():
                                              "../assets/imgs/sprites/block_textures/block_textures.json"))
     region_generator = RegionGenerator()
     camera = Camera()
-    file_save_handler = FileSaveHandler()
     
     music_handler = MusicHandler(250, False)
     sfx_handler = SfxHandler()
     game = Game(state_stack, window, clock, music_handler, sfx_handler,
                 config["framerate"], config, gui_factory,\
-                block_factory, file_save_handler)  # Game class handles overall running of game
+                block_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
     game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator)))
-    game.add_to_states("pause_game", PauseGameState(game))
     game.game_loop()
 
 if __name__ == "__main__":

@@ -24,9 +24,8 @@ class MainMenuState(StateBase):
             {}
         ]
 
-    def on_state_enter(self, params=None):
+    def on_state_enter(self, *args):
         self._game.music_handler.set_shuffle_list(["main_menu"])
-
         if self._game.previous_state is not self._game.states["main_menu"]:
             self._game.music_handler.shuffle_play()
 
@@ -42,26 +41,17 @@ class MainMenuState(StateBase):
         self._gui[0]["options_button"].centre_position = (600.0, 400.0)
         self._gui[0]["exit_button"].centre_position = (600.0, 500.0)
 
-        self._gui[0]["logo"].centre_position = (600.0, 100.0)#
+        self._gui[0]["logo"].centre_position = (600.0, 100.0)
 
-        for layer in self._gui[::-1]:
-            for component in layer.values():
-                component.update()
-
-    def on_state_leave(self, params=None):
+    def on_state_leave(self, *args):
         pass
 
     def update(self):
+        self._game.window.fill((255, 255, 255))
         for layer in self._gui[::-1]:
             for component in layer.values():  # Iterates through all guis in dict and updates and draws them
                 component.update()
-
-    def draw(self, no_gui=False):
-        self._game.window.fill((255, 255, 255))
-        if not no_gui:
-            for layer in self._gui[::-1]:
-                for component in layer.values():  # Iterates through all guis in dict and updates and draws them
-                    component.draw()
+                component.draw()
 
     def options_button_click(self, button):
         self._game.push_state("options_menu")

@@ -89,6 +89,4 @@ class RectBox(GUIBase):
                 pygame.draw.rect(self._surface, self._box_colour, self._box)
             if self._has_outline:
                 pygame.draw.rect(self._surface, self._outline_colour, self._box, width=self._outline_thickness)
-        else:
-            print("cant draw")
 
