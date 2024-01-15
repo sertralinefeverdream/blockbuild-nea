@@ -21,8 +21,7 @@ class World:
 
         self._data['0']['0'].entity_list.append(self._player)
 
-        self._default = json.loads('''{"0": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "1": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "2": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "3": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "4": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "5": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "6": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "7": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "8": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "9": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "10": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "11": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "12": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "13": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "14": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "15": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "16": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "17": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "18": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}], "19": [null, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}, {"block_id": "grass", "state_data": null}]}''')
-
+        
     @property
     def game(self):
         return self._game
@@ -47,8 +46,11 @@ class World:
 
     def draw(self):
         self._game.window.fill((110, 177, 255))
+
         for x, y in self._draw_list:
-            self._data[x][y].draw_blocks()
+            screen_position = self._camera.get_screen_position((int(x), int(y)))
+            if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
+                self._data[x][y].draw_blocks()
 
         for x, y in self._draw_list:
             self._data[x][y].draw_entities()
@@ -130,8 +132,8 @@ class World:
         camera_x = self._camera.x
         camera_y = self._camera.y
 
-        for x in range(7):
-            for y in range(7):
+        for x in range(6):
+            for y in range(6):
                 region_check_x = camera_x + (x-3)*800
                 region_check_y = camera_y + (y-3)*800
 
@@ -143,7 +145,7 @@ class World:
                     # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
-                    print("Generating new")
+                   # print("Generating new")
                     #self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
                     self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(self._game, self, (int(region_index_x), int(region_index_y)))
                 self._draw_list.append((region_index_x, region_index_y))

@@ -21,8 +21,6 @@ class Player(CharacterBase):
         if abs(self._velocity[1]) > self._max_speed[1]:
             self._velocity[1] = self._max_speed[1] if self._velocity[1] > 0 else -self._max_speed[1]
 
-        #print(self._position)
-
         self._position[0] += math.trunc(self._velocity[0] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("horizontal")
@@ -56,7 +54,6 @@ class Player(CharacterBase):
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
-        #return
         for x in range(3):
             for y in range(3):
                 region_check_x = self._position[0] + (x-1)*800
