@@ -6,10 +6,34 @@ class Player(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, texture, max_speed, max_health):
         super().__init__(game, world, entity_id, position, size, texture, max_speed, max_health)
 
+        self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
+        self._hotbar_pointer = 0
+
+    @property
+    def hotbar(self):
+        return self._hotbar
+
+    @property
+    def hotbar_pointer(self):
+        return self._hotbar_pointer
+
+    @hotbar_pointer.setter
+    def hotbar_pointer(self, value):
+        if type(value) is int and 0 <= value <= 9:
+            self._hotbar_pointer = value
+
     def update(self):
         if self._health <= 0:
             self.kill()
             return
+
+        for index, item in enumerate(self._hotbar):
+            if item.quantity == 0:
+                self._hotbar[index] = None
+                del item
+
+        if self._hotbar[self._hotbar_pointer] is not None:
+            self._hotbar[self._hotbar_pointer].update()
 
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)

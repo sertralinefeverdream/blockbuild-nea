@@ -112,7 +112,7 @@ class Region:
     def draw_blocks(self):
         if self._flag_for_redraw:
             self._flag_for_redraw = False
-            self._region_surface.fill((255, 255, 255))
+            self._region_surface.fill((110, 177, 255))
             for row_index, row in enumerate(self._data):
                 for block_index, block in enumerate(row):
                     if block is not None:

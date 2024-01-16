@@ -47,7 +47,7 @@ class MainGameState(StateBase):
             self._gui[1]["block_box"].is_visible = False
 
         for layer in self._gui[::-1]:
-            for component in layer.values():  # Iterates through all guis in dict and updates and draws them
+            for component in layer.values():
                 component.update()
 
         if self._game.keys_pressed[pygame.K_ESCAPE]:
