@@ -12,8 +12,9 @@ class MainGameState(StateBase):
     def initialise_gui(self):
         self._gui = [
             {"fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default")},
-            {"block_box": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
-                                                            outline_thickness=3, has_box=False)},
+            {"block_border": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
+                                                            outline_thickness=3, has_box=False),
+            "block_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 10.0), outline_thickness=1, box_colour=(255, 255, 255))},
             {}
         ]
 
@@ -41,10 +42,20 @@ class MainGameState(StateBase):
         block_at_mouse = self._world.get_block_at_position(self._world.camera.get_world_position(mouse_pos))
 
         if block_at_mouse is not None:
-            self._gui[1]["block_box"].is_visible = True
-            self._gui[1]["block_box"].position = self._world.camera.get_screen_position(block_at_mouse.position)
+            self._gui[1]["block_border"].is_visible = True
+            self._gui[1]["block_border"].position = self._world.camera.get_screen_position(block_at_mouse.position)
         else:
-            self._gui[1]["block_box"].is_visible = False
+            self._gui[1]["block_border"].is_visible = False
+
+        current_player_tool = self._world.player.hotbar[self._world.player.hotbar_pointer]
+        if current_player_tool.is_mining:
+            self._gui[1]["block_health_bar"].is_visible = True
+            self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_hovering_hardness_remaining/current_player_tool.block_currently_hovering.hardness) * 20
+            self._gui[1]["block_health_bar"].centre_position = current_player_tool.block_currently_hovering.hitbox.center
+            print(self._gui[1]["block_health_bar"].size)
+            #print("Should be visible")
+        else:
+            self._gui[1]["block_health_bar"].is_visible = False
 
         for layer in self._gui[::-1]:
             for component in layer.values():

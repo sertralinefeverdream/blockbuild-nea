@@ -30,6 +30,10 @@ class World:
         return self._camera
 
     @property
+    def player(self):
+        return self._player
+
+    @property
     def region_generator(self):
         return self._region_generator
 

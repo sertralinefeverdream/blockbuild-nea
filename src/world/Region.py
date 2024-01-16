@@ -101,9 +101,10 @@ class Region:
 
     def update(self):
         for row in self._data:
-            for block in row:
+            for x_index, block in enumerate(row):
                 if block is not None:
                     if block.is_broken:
+                        row[x_index] = None
                         del block
                         self.enable_flag_for_redraw()
                     else:
@@ -118,7 +119,7 @@ class Region:
 
     def draw_blocks(self):
         if self._flag_for_redraw:
-            print("Redrawing")
+           # print("Redrawing")
             self._flag_for_redraw = False
             self._region_surface.fill((110, 177, 255))
             for row_index, row in enumerate(self._data):

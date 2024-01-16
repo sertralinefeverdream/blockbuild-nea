@@ -32,7 +32,7 @@ class RegionGenerator:
             grass_y_limit_at_x = self._grass_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 1) * 400 / 40) * 40
             #print(rock_y_limit_at_x, grass_y_limit_at_x)
             for y in range(20):
-                print(region.position[1] + y*40, grass_y_limit_at_x)
+                #print(region.position[1] + y*40, grass_y_limit_at_x)
                 if region.position[1] + y*40 == grass_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "grass")
                 elif grass_y_limit_at_x < region.position[1] + y*40 < rock_y_limit_at_x:

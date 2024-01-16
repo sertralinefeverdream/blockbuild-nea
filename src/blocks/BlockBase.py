@@ -4,10 +4,11 @@ import json
 
 
 class BlockBase(ABC):
-    def __init__(self, game, world, position, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
+    def __init__(self, game, world, position, hardness, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
         self._game = game
         self._world = world
         self._position = list(position)
+        self._hardness = hardness
         self._block_id = block_id
         self._texture = pygame.transform.scale(texture.convert(), (40, 40))
         self._break_sfx_id = break_sfx_id
@@ -28,6 +29,10 @@ class BlockBase(ABC):
     @property
     def position(self):
         return self._position
+
+    @property
+    def hardness(self):
+        return self._hardness
 
     @property
     def block_id(self):

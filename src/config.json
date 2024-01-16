@@ -23,13 +23,15 @@
   "blocks": {
     "grass": {
       "type": "generic",
+      "hardness": 10,
       "texture": "grass",
-      "break_sfx_id": "btn_click_1",
+      "break_sfx_id": "grass_place",
       "place_sfx_id": "grass_place",
       "footstep_sfx_id": "btn_click_1"
     },
     "stone": {
       "type": "generic",
+      "hardness": 100,
       "texture": "stone",
       "break_sfx_id": "btn_click_1",
       "place_sfx_id": "grass_place",
@@ -37,6 +39,7 @@
     },
     "dirt": {
       "type": "generic",
+      "hardness": 10,
       "texture": "dirt",
       "break_sfx_id": "btn_click_1",
       "place_sfx_id": "grass_place",
@@ -49,10 +52,14 @@
       "type":  "blockitem",
       "texture": "grass_block",
       "max_quantity": 100,
-      "left_use_cooldown": 50,
-      "right_use_cooldown": 250,
-      "left_use_range": 400,
-      "right_use_range": 400,
+      "attack_cooldown": 250,
+      "use_cooldown": 250,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength":  10,
+      "preferred_mine_strength":  10,
+      "preferred_mine_strength_whitelist": ["dirt"],
       "block_id": "grass"
     }
   }

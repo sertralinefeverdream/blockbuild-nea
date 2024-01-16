@@ -37,9 +37,6 @@ class Player(CharacterBase):
             else:
                 continue
 
-        if self._hotbar[self._hotbar_pointer] is not None:
-            self._hotbar[self._hotbar_pointer].update(self._position)
-
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)
         self.handle_inputs(deltatime)
@@ -57,6 +54,9 @@ class Player(CharacterBase):
         self._position[1] += math.trunc(self._velocity[1] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
+
+        if self._hotbar[self._hotbar_pointer] is not None:
+            self._hotbar[self._hotbar_pointer].update(self._position)
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed

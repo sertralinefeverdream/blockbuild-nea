@@ -1,7 +1,7 @@
 import pygame
 
-class GenericItem:
-    def __init__(self, game, world, item_id, name, texture, quantity=-1, max_quantity=100, left_use_cooldown=100, right_use_cooldown=100, left_use_range=40, right_use_range=40):
+class GenericItem: # Can be used for normal items, tools, default, etc
+    def __init__(self, game, world, item_id, name, texture, quantity=-1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mining_strength=10, preferred_mining_strength=10, preferred_mining_strength_white_list=None):
         self._game = game
         self._world = world
         self._item_id = item_id
@@ -9,15 +9,28 @@ class GenericItem:
         self._texture = texture
         self._quantity = quantity
         self._max_quantity = max_quantity
-        self._left_use_cooldown = left_use_cooldown
-        self._right_use_cooldown = right_use_cooldown
-        self._left_use_range = left_use_range
-        self._right_use_range = right_use_range
+        self._attack_cooldown = attack_cooldown
+        self._use_cooldown = use_cooldown
+        self._attack_range = attack_range
+        self._use_range = use_range
+        self._attack_strength = attack_strength
+        self._default_mining_strength = default_mining_strength
+        self._preferred_mining_strength = preferred_mining_strength
 
-        print(f'''DUN3PART{self._right_use_range}''')
+        if preferred_mining_strength_white_list is None:
+            self._preferred_mining_strength_whitelist = []
+        else:
+            self._preferred_mining_strength_whitelist = preferred_mining_strength_white_list
 
-        self._left_use_timer = pygame.time.get_ticks()
-        self._right_use_timer = pygame.time.get_ticks()
+        print(f'''DUN3PART{self._use_range}''')
+
+        self._attack_timer = 0
+        self._right_use_timer = 0
+        self._mine_sound_timer = 0
+        self._block_last_hovering = None
+        self._block_currently_hovering = None
+        self._block_currently_hovering_hardness_remaining = 100
+        self._is_mining = False
 
     @property
     def game(self):
@@ -65,13 +78,13 @@ class GenericItem:
                 self._quantity = self._max_quantity
 
     @property
-    def left_use_timer(self):
-        return self._left_use_timer
+    def attack_timer(self):
+        return self._attack_timer
 
-    @left_use_timer.setter
-    def left_use_timer(self, value):
+    @attack_timer.setter
+    def attack_timer(self, value):
         if type(value) is int:
-            self._left_use_timer = value
+            self._attack_timer = value
 
     @property
     def right_use_timer(self):
@@ -83,34 +96,81 @@ class GenericItem:
             self._right_use_timer = value
 
     @property
-    def left_use_range(self):
-        return self._left_use_range
+    def attack_range(self):
+        return self._attack_range
 
     @property
-    def right_use_range(self):
-        return self._right_use_range
+    def use_range(self):
+        return self._use_range
+
+    @property
+    def is_mining(self):
+        return self._is_mining
+
+    @property
+    def block_currently_hovering(self):
+        return self._block_currently_hovering
+
+    @property
+    def block_currently_hovering_hardness_remaining(self):
+        return self._block_currently_hovering_hardness_remaining
 
     def right_use(self, player_pos):
         pass
 
     def left_use(self, player_pos):
-        pass # Add logic later
+        mouse_pos = pygame.mouse.get_pos()
+        world_pos_from_mouse = self._world.camera.get_world_position(mouse_pos)
+        delta_time = self._game.clock.get_time() / 1000
+
+        if self._block_currently_hovering is None:
+            self._block_currently_hovering_hardness_remaining = 0
+            self._is_mining = False
+            return
+        else:
+            self._is_mining = True
+
+        if self._block_currently_hovering is not self._block_last_hovering:
+            self._block_currently_hovering_hardness_remaining = self._block_currently_hovering.hardness
+
+        if self._block_currently_hovering.block_id in self._preferred_mining_strength_whitelist:
+            print("USING PREFERED")
+            self._block_currently_hovering_hardness_remaining -= (self._preferred_mining_strength) * delta_time
+        else:
+            self._block_currently_hovering_hardness_remaining -= (self._default_mining_strength) * delta_time
+
+        if pygame.time.get_ticks() - self._mine_sound_timer >= 250:
+            self._game.sfx_handler.play_sfx(self._block_currently_hovering.break_sfx_id, self._game.get_option("game_volume").value)
+            self._mine_sound_timer = pygame.time.get_ticks()
+
+        if self._block_currently_hovering_hardness_remaining <= 0:
+                self._block_currently_hovering.kill()
 
     def update(self, player_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
+        world_pos_from_mouse = self._world.camera.get_world_position(mouse_pos)
+
+        self._block_last_hovering = self._block_currently_hovering
+        self._block_currently_hovering = self._world.get_block_at_position(world_pos_from_mouse)
+
         if mouse_keys_pressed[0]:
-            if pygame.time.get_ticks() - self._left_use_timer >= self._left_use_cooldown:
-                self._left_use_timer = pygame.time.get_ticks()
-                self.left_use(player_pos)
-        elif mouse_keys_pressed[2]:
-            if pygame.time.get_ticks() - self._right_use_timer >= self._right_use_cooldown:
+            self.left_use(player_pos)
+        else:
+            self._block_currently_hovering_hardness_remaining = self._block_currently_hovering.hardness if self._block_currently_hovering is not None else 0
+            self._mine_sound_timer = 0
+            self._is_mining = False
+
+        if mouse_keys_pressed[2]:
+            if pygame.time.get_ticks() - self._right_use_timer >= self._use_cooldown:
+                print("CALLED FROM UPDATE RIGHT USE")
                 self._right_use_timer = pygame.time.get_ticks()
                 self.right_use(player_pos)
 
     def get_state_data(self):
         data = \
         {
-            "left_use_timer": self._left_use_timer,
+            "attack_timer": self._attack_timer,
             "right_use_timer": self._right_use_timer,
             "quantity": self._quantity
         }
