@@ -99,7 +99,7 @@ class BlockBase(ABC):
     def convert_data(self): #Overrideable in subclasses. Must follow similar form.
         data = \
             {
-                "block_id": f"{self._block_id}",
+                "block_id": self._block_id,
                 "state_data": self.get_state_data()
             }
         return data

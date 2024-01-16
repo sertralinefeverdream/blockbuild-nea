@@ -76,13 +76,14 @@ class Region:
     def set_block_at_position(self, position, block_id, state_data=None):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
+                self.enable_flag_for_redraw()
                 x_index, y_index = self.get_block_indexes_from_position(position)
                 self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x_index*40, self._position[1] + y_index*40), block_id, state_data)
 
     def set_block_at_indexes(self, x, y, block_id, state_data=None):
         if (type(x) is int and type(y) is int) and 0 <= x <= 20 and 0 <= y <= 20:
-            self.enable_flag_for_redraw()
             self._data[y][x] = self._game.block_factory.create_block(self._game, self._world, (self._position[0] + x*40, self._position[1] + y*40), block_id, state_data)
+
 
     def get_block_hitboxes(self):
         data = []
@@ -90,6 +91,12 @@ class Region:
             for block in row:
                 if block is not None:
                     data.append((block, block.hitbox))
+        return data
+
+    def get_entity_hitboxes(self):
+        data = []
+        for entity in self._entity_list:
+            data.append((entity, entity.hitbox))
         return data
 
     def update(self):
@@ -111,6 +118,7 @@ class Region:
 
     def draw_blocks(self):
         if self._flag_for_redraw:
+            print("Redrawing")
             self._flag_for_redraw = False
             self._region_surface.fill((110, 177, 255))
             for row_index, row in enumerate(self._data):

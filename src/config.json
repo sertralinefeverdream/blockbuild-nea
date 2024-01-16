@@ -42,5 +42,18 @@
       "place_sfx_id": "grass_place",
       "footstep_sfx_id": "btn_click_1"
     }
+  },
+  "items": {
+    "grass_block": {
+      "name": "Grass Block",
+      "type":  "blockitem",
+      "texture": "grass_block",
+      "max_quantity": 100,
+      "left_use_cooldown": 50,
+      "right_use_cooldown": 250,
+      "left_use_range": 400,
+      "right_use_range": 400,
+      "block_id": "grass"
+    }
   }
 }

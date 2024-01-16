@@ -21,7 +21,6 @@ class World:
 
         self._data['0']['0'].entity_list.append(self._player)
 
-        
     @property
     def game(self):
         return self._game

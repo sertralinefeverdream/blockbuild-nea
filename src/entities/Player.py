@@ -8,6 +8,7 @@ class Player(CharacterBase):
 
         self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
         self._hotbar_pointer = 0
+        self._hotbar[0] = self._game.item_factory.create_item(self._game, self._world, "grass_block")
 
     @property
     def hotbar(self):
@@ -28,12 +29,16 @@ class Player(CharacterBase):
             return
 
         for index, item in enumerate(self._hotbar):
-            if item.quantity == 0:
-                self._hotbar[index] = None
-                del item
+            if item is not None:
+                if item.quantity == 0:
+                    self._hotbar[index] = None
+                    print("deleting")
+                    del item
+            else:
+                continue
 
         if self._hotbar[self._hotbar_pointer] is not None:
-            self._hotbar[self._hotbar_pointer].update()
+            self._hotbar[self._hotbar_pointer].update(self._position)
 
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)
@@ -125,4 +130,4 @@ class Player(CharacterBase):
     def draw(self):
         #self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
         pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
-        #pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
+        pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)

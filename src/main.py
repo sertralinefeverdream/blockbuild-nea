@@ -16,6 +16,7 @@ from src.factories.GUIFactory import GUIFactory
 from states.StateStack import StateStack
 
 from src.factories.BlockFactory import BlockFactory
+from src.factories.ItemFactory import ItemFactory
 
 from src.world.Camera import Camera
 from src.world.RegionGenerator import RegionGenerator
@@ -28,19 +29,22 @@ from src.audio.SfxHandler import SfxHandler
 
 def main():
     pygame.init()
-    state_stack = StateStack()  # Holds different "states" which have their own game loops.
-    clock = pygame.time.Clock()
-
     config = None
     with open("config.json") as f:
         config = json.load(f)
 
     window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
     pygame.display.set_caption(config["window_caption"])
+
+    state_stack = StateStack()  # Holds different "states" which have their own game loops.
+    clock = pygame.time.Clock()
+
+    block_spritesheet = Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json")
+    item_spritesheet = Spritesheet("../assets/imgs/sprites/item_textures/item_textures.png", "../assets/imgs/sprites/item_textures/item_textures.json")
+
     gui_factory = GUIFactory()
-    block_factory = BlockFactory(config["blocks"],
-                                 Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png",
-                                             "../assets/imgs/sprites/block_textures/block_textures.json"))
+    block_factory = BlockFactory(config["blocks"], block_spritesheet)
+    item_factory = ItemFactory(config["items"], item_spritesheet, block_spritesheet)
     region_generator = RegionGenerator()
     camera = Camera()
     file_save_handler = FileSaveHandler()
@@ -49,7 +53,7 @@ def main():
     sfx_handler = SfxHandler()
     game = Game(state_stack, window, clock, music_handler, sfx_handler,
                 config["framerate"], config, gui_factory,\
-                block_factory, file_save_handler)  # Game class handles overall running of game
+                block_factory, file_save_handler, item_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
@@ -59,4 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
