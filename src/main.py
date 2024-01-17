@@ -17,7 +17,7 @@ from states.StateStack import StateStack
 
 from src.factories.BlockFactory import BlockFactory
 from src.factories.ItemFactory import ItemFactory
-from src.factories.AnimationHandlerFactory import AnimationHandlerFactory
+from src.factories.CharacterFactory import CharacterFactory
 
 from src.world.Camera import Camera
 from src.world.RegionGenerator import RegionGenerator
@@ -47,15 +47,16 @@ def main():
     gui_factory = GUIFactory()
     block_factory = BlockFactory(config["blocks"], block_spritesheet)
     item_factory = ItemFactory(config["items"], item_spritesheet, block_spritesheet)
+    character_factory = CharacterFactory(config["characters"])
     region_generator = RegionGenerator()
     camera = Camera()
     file_save_handler = FileSaveHandler()
     
     music_handler = MusicHandler(250, False)
     sfx_handler = SfxHandler()
-    game = Game(state_stack, window, clock, music_handler, sfx_handler,
+    game = Game(state_stack, window, clock, music_handler, sfx_handler, \
                 config["framerate"], config, gui_factory,\
-                block_factory, file_save_handler, item_factory)  # Game class handles overall running of game
+                block_factory, file_save_handler, item_factory, character_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))

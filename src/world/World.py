@@ -1,7 +1,5 @@
 import json
-from src.entities.player.Player import Player
-from src.animations.AnimationHandler import AnimationHandler
-from src.sprite.Spritesheet import Spritesheet
+
 
 class World:
     def __init__(self, game, camera, region_generator):
@@ -9,7 +7,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (30, 40), [400, 400], 100, self._game.animation_handler_factory.create_animation_handler(Spritesheet("../assets/imgs/sprites/entity_textures/player/player.png", "../assets/imgs/sprites/entity_textures/player/player.json"), "../src/entities/player/player_anim.json"))
+        self._player = None
 
         self._draw_list = []
         self._data = \
@@ -19,8 +17,6 @@ class World:
                         '0': self._region_generator.create_generated_region(self._game, self, (0, 0))
                     }
             }
-
-        self._data['0']['0'].entity_list.append(self._player)
 
     @property
     def game(self):
@@ -34,11 +30,29 @@ class World:
     def player(self):
         return self._player
 
+    @player.setter
+    def player(self, value):
+        self._player = value
+
     @property
     def region_generator(self):
         return self._region_generator
 
+    def reset(self):
+        self._region_generator.randomise_seed()
+        self._data.clear()
+        self._draw_list.clear()
+        self._data['0'] = {}
+        self._data['0']['0'] = self._region_generator.create_generated_region(self._game, self, (0, 0))
+        self._camera.x = 0
+        self._camera.y = 0
+        self._player = None
+
     def update(self):
+        if self._player is None:
+            self._player = self._game.character_factory.create_character(self._game, self, "player")
+            self.get_region_at_position((0, 0)).entity_list.append(self._player)
+
         self.update_draw_list()
         #print(self._draw_list)
         self.reassign_entities_to_regions()
@@ -110,14 +124,16 @@ class World:
             data[str(x_index)] = {}
             for y_index, region in column.items():
                 data[str(x_index)][str(y_index)] = region.convert_data()
-
         return data
 
     def load_from_data(self, data):
+        self.reset()
         for x_index, column in data.items():
             for y_index, region in column.items():
+                if str(x_index) not in self._data.keys():
+                    self._data[str(x_index)] = {}
                 self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, self, (
-                    x_index, y_index), data[str(x_index)][str(y_index)])
+                    int(x_index), int(y_index)), region)
 
     def reassign_entities_to_regions(self): # Make sure entities are being updated by the region that they actually reside in.
         for region in [self.get_region_at_position((int(x), int(y))) for x, y in self._draw_list]:

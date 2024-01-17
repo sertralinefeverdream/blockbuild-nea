@@ -5,9 +5,9 @@
   "framerate": 60,
 
   "save_files": {
-    "save_1": "../save_files/save_1",
-    "save_2": "../save_files/save_2",
-    "save_3": "../save_files/save_3"
+    "save_file_1": "../save_files/save_file_1.json",
+    "save_file_2": "../save_files/save_file_2.json",
+    "save_file_3": "../save_files/save_file_3.json"
   },
 
   "music_assets": {
@@ -72,8 +72,8 @@
       "max_health": 100,
       "animation_data": {
         "idle": [
-        ["idle1", 100],
-        ["idle2", 100]
+        ["idle1", 250],
+        ["idle2", 250]
         ]
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",

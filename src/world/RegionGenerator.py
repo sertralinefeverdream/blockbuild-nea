@@ -26,6 +26,9 @@ class RegionGenerator:
         self.generate_region_terrain(region)
         return region
 
+    def randomise_seed(self):
+        opensimplex.random_seed()
+
     def generate_region_terrain(self, region):
         for x in range(20):
             rock_y_limit_at_x = self._rock_base_level + math.trunc(opensimplex.noise2((region.position[0]+x*40)/800, 0) * 800 / 40) * 40

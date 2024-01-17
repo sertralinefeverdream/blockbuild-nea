@@ -1,4 +1,4 @@
-from src.entities.player.Player import Player
+from src.entities.Player import Player
 from src.sprite.Spritesheet import Spritesheet
 from src.animations.AnimationHandler import AnimationHandler
 

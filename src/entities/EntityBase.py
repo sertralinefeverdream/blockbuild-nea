@@ -108,12 +108,12 @@ class EntityBase:
     def is_killed(self):
         return self._is_killed
 
-    @abstractmethod
     def convert_data(self):
-        {
+        data = {
             "entity_id": self._entity_id,
             "state_data": self.get_state_data()
         }
+        return data
 
     @abstractmethod
     def get_state_data(self):

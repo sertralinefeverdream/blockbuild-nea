@@ -3,8 +3,8 @@ import pygame
 import math
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, animation_handler, max_speed, max_health):
-        super().__init__(game, world, entity_id, position, size, animation_handler, max_speed, max_health)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler,):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler,)
 
         self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
         self._hotbar_pointer = 0
@@ -31,19 +31,21 @@ class Player(CharacterBase):
         data["hotbar_pointer"] = self._hotbar_pointer
         data["hotbar"] = []
 
-        for index, item in enumerate(self._hotbar):
-            data["hotbar"][index] = item.convert_data()
+        for item in self._hotbar:
+            converted = item.convert_data() if item is not None else None
+            data["hotbar"].append(converted)
         return data
 
     def load_state_data(self, data):
-        self._position = data["position"],
-        self._health = data["health"],
+        self._position = data["position"]
+        self._health = data["health"]
         self._velocity = data["velocity"]
         self._hotbar_pointer = data["hotbar_pointer"]
 
-        for index, item in enumerate(data):
+        for index, item in enumerate(data["hotbar"]):
             if item is not None:
-                self._hotbar[index] = self._game.item_factory.create_item(item[0], item[1])
+                print(f"THIS IS THE ITEM IN HOTBAR {item}")
+                self._hotbar[index] = self._game.item_factory.create_item(self._game, self._world, item["item_id"], item["state_data"])
 
     def update(self):
         if self._health <= 0:
@@ -96,7 +98,8 @@ class Player(CharacterBase):
             self._velocity[0] -= math.trunc(800 * deltatime)
         else:
             if not self._is_in_air:
-                self._animation_handler.play_animation_from_id("idle")
+                if self._animation_handler.current_animation_id != "idle":
+                    self._animation_handler.play_animation_from_id("idle")
             self._velocity[0] *= 0.4
 
             if abs(self._velocity[0]) < 1:

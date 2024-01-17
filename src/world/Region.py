@@ -46,6 +46,8 @@ class Region:
             self._position = list(value)
 
     def is_position_in_region(self, position):
+        print(f"self._position[0]: {self._position[0]}")
+        print(f"<= position[0] {position[0]}")
         if self._position[0] <= position[0] < self._position[0] + 800 \
                 and self._position[1] <= position[1] < self._position[1] + 800:
             return True
@@ -150,7 +152,7 @@ class Region:
                 if self._data[row_index][block_index] is not None:
                     data["terrain"][str(row_index)][block_index] = self._data[row_index][block_index].convert_data()
                 else:
-                    data[str(row_index)][block_index] = None
+                    data["terrain"][str(row_index)][block_index] = None
 
         for entity in self._entity_list:
             data["entity_list"].append(entity.convert_data())
@@ -169,5 +171,11 @@ class Region:
                 else:
                     self._data[int(row_index)][block_index] = None
 
+        print(data)
         for entity in data["entity_list"]:
-            self._entity_list.append(self._game.character_factory.create_character(self._game, self._world, entity["entity_id"], entity["state_data"]))
+            print(entity)
+            entity_instance = self._game.character_factory.create_character(self._game, self._world, entity["entity_id"], entity["state_data"])
+            self._entity_list.append(entity_instance)
+            if self._world.player is None and entity["entity_id"] == "player":
+                self._world.player = entity_instance
+

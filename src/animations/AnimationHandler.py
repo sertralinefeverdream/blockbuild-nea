@@ -25,6 +25,10 @@ class AnimationHandler:
         if type(value) is bool:
             self._reversed = value
 
+    @property
+    def current_animation_id(self):
+        return self._current_animation_id
+
     def create_animation(self, animation_id, data):
         animation = []
         for sprite_parse_id, duration in data:

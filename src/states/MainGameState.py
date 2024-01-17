@@ -8,6 +8,7 @@ class MainGameState(StateBase):
         super().__init__(game)
         self._world = world
         self._escape_key_held = False
+        self._save_file_pointer = None
 
     def initialise_gui(self):
         self._gui = [
@@ -19,7 +20,6 @@ class MainGameState(StateBase):
         ]
 
     def on_state_enter(self, params=None):
-
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
 
         for layer in self._gui[::-1]:
@@ -27,15 +27,34 @@ class MainGameState(StateBase):
                 component.update()
 
         if params is not None:
-            if params[0] == "load":
-                print("load")
-            elif params[0] == "new":
-                print("new")
+            if params[0] == "load_1":
+                self._world.reset()
+                self._save_file_pointer = "save_file_1"
+                self._game.file_save_handler.load_world(self._world, "save_file_1")
+            elif params[0] == "load_2":
+                self._world.reset()
+                self._save_file_pointer = "save_file_2"
+                self._game.file_save_handler.load_world(self._world, "save_file_2")
+            elif params[0] == "load_3":
+                self._world.reset()
+                self._save_file_pointer = "save_file_3"
+                self._game.file_save_handler.load_world(self._world, "save_file_3")
+            elif params[0] == "new_1":
+                self._world.reset()
+                self._save_file_pointer = "save_file_1"
+            elif params[0] == "new_2":
+                self._world.reset()
+                self._save_file_pointer = "save_file_2"
+            elif params[0] == "new_3":
+                self._world.reset()
+                self._save_file_pointer = "save_file_3"
+
 
     def on_state_leave(self, params=None):
         if params is not None:
             if params[0] == "save":
-                print("saving")
+                self._game.file_save_handler.save_world(self._world, self._save_file_pointer)
+                print("SAVING!!")
 
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -51,6 +70,7 @@ class MainGameState(StateBase):
             self._gui[1]["block_border"].is_visible = False
 
         current_player_tool = self._world.player.hotbar[self._world.player.hotbar_pointer]
+        print(self._world.player.hotbar, "PLAYER HOTNBAR")
         if current_player_tool.is_mining:
             self._gui[1]["block_health_bar"].is_visible = True
             self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_hovering_hardness_remaining/current_player_tool.block_currently_hovering.hardness) * 30

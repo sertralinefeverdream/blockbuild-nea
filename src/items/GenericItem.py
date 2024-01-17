@@ -25,7 +25,7 @@ class GenericItem: # Can be used for normal items, tools, default, etc
         print(f'''DUN3PART{self._use_range}''')
 
         self._attack_timer = 0
-        self._right_use_timer = 0
+        self._use_timer = 0
         self._mine_sound_timer = 0
         self._block_last_hovering = None
         self._block_currently_hovering = None
@@ -87,13 +87,13 @@ class GenericItem: # Can be used for normal items, tools, default, etc
             self._attack_timer = value
 
     @property
-    def right_use_timer(self):
-        return self._right_use_timer
+    def use_timer(self):
+        return self._use_timer
 
-    @right_use_timer.setter
-    def right_use_timer(self, value):
+    @use_timer.setter
+    def use_timer(self, value):
         if type(value) is int:
-            self._right_use_timer = value
+            self._use_timer = value
 
     @property
     def attack_range(self):
@@ -162,16 +162,16 @@ class GenericItem: # Can be used for normal items, tools, default, etc
             self._is_mining = False
 
         if mouse_keys_pressed[2]:
-            if pygame.time.get_ticks() - self._right_use_timer >= self._use_cooldown:
+            if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
                 print("CALLED FROM UPDATE RIGHT USE")
-                self._right_use_timer = pygame.time.get_ticks()
+                self._use_timer = pygame.time.get_ticks()
                 self.right_use(player_pos)
 
     def get_state_data(self):
         data = \
         {
             "attack_timer": self._attack_timer,
-            "right_use_timer": self._right_use_timer,
+            "use_timer": self._use_timer,
             "quantity": self._quantity
         }
         return data
@@ -183,6 +183,12 @@ class GenericItem: # Can be used for normal items, tools, default, etc
             "state_data": self.get_state_data()
         }
         return data
+
+    def load_state_data(self, data):
+        self._attack_timer = data["attack_timer"]
+        self._use_timer = data["use_timer"]
+        self._quantity = data["quantity"]
+
 
     def serialize(self):
         pass
