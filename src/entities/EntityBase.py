@@ -2,13 +2,13 @@ import pygame
 from abc import ABC, abstractmethod
 
 class EntityBase:
-    def __init__(self, game, world, entity_id, position, size, texture, max_speed):
+    def __init__(self, game, world, entity_id, position, size, max_speed):
         self._game = game
         self._world = world
         self._entity_id = entity_id
         self._position = list(position)
         self._size = list(size)
-        self._texture = texture
+        self._texture = None
         self._max_speed = list(max_speed)
 
         self._velocity = [0, 0]

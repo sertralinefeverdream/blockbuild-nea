@@ -3,9 +3,10 @@ from abc import ABC, abstractmethod
 
 
 class CharacterBase(EntityBase):
-    def __init__(self, game, world, entity_id, position, size, texture, max_speed, max_health):
-        super().__init__(game, world, entity_id, position, size, texture, max_speed)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler):
+        super().__init__(game, world, entity_id, position, size, max_speed)
         self._max_health = max_health
+        self._animation_handler = animation_handler
 
         self._health = self._max_health
         self._is_in_air = False

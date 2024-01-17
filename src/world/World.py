@@ -1,6 +1,7 @@
 import json
-import math
-from src.entities.Player import Player
+from src.entities.player.Player import Player
+from src.animations.AnimationHandler import AnimationHandler
+from src.sprite.Spritesheet import Spritesheet
 
 class World:
     def __init__(self, game, camera, region_generator):
@@ -8,7 +9,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (30, 30), None, [400, 400], 100)
+        self._player = Player(self._game, self, "Hi", (0, 0), (40, 80), [400, 400], 100, self._game.animation_handler_factory.create_animation_handler(Spritesheet("../assets/imgs/sprites/entity_textures/player/player.png", "../assets/imgs/sprites/entity_textures/player/player.json"), "../src/entities/player/player_anim.json"))
 
         self._draw_list = []
         self._data = \

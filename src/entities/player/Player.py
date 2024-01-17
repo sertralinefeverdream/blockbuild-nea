@@ -3,8 +3,8 @@ import pygame
 import math
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, texture, max_speed, max_health):
-        super().__init__(game, world, entity_id, position, size, texture, max_speed, max_health)
+    def __init__(self, game, world, entity_id, position, size, animation_handler, max_speed, max_health):
+        super().__init__(game, world, entity_id, position, size, animation_handler, max_speed, max_health)
 
         self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
         self._hotbar_pointer = 0
@@ -27,6 +27,9 @@ class Player(CharacterBase):
         if self._health <= 0:
             self.kill()
             return
+
+        self._animation_handler.update()
+        self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
 
         for index, item in enumerate(self._hotbar):
             if item is not None:
@@ -128,6 +131,6 @@ class Player(CharacterBase):
             self._velocity[1] = -300
 
     def draw(self):
-        #self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
-        pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
-        pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
+        self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
+        #pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
+        #pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)

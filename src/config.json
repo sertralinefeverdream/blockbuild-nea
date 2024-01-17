@@ -58,9 +58,15 @@
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength":  10,
-      "preferred_mine_strength":  10,
-      "preferred_mine_strength_whitelist": ["dirt"],
+      "preferred_mine_strength":  100,
+      "preferred_mine_strength_whitelist": ["dirt", "stone"],
       "block_id": "grass"
+    }
+  },
+
+  "characters": {
+    "player": {
+
     }
   }
 }
