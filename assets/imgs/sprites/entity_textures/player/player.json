@@ -1,17 +1,17 @@
 {
   "idle1":
   {
-    "x":0,
-    "y": 0,
-    "width": 32,
-    "height": 32
+    "x":7,
+    "y": 4,
+    "width": 16,
+    "height": 28
   },
 
   "idle2":
   {
-    "x": 32,
-    "y": 0,
-    "width": 32,
-    "height": 32
+    "x": 39,
+    "y": 4,
+    "width": 16,
+    "height": 28
   }
 }

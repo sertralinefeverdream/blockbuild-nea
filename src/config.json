@@ -67,7 +67,7 @@
   "characters": {
     "player": {
       "type": "player",
-      "size": [30, 40],
+      "size": [30, 60],
       "max_speed": [400, 400],
       "max_health": 100,
       "animation_data": {
