@@ -23,6 +23,17 @@ class CharacterBase(EntityBase):
                 self._health = self._max_health
 
     @property
+    def health(self):
+        return self._health
+
+    @health.setter
+    def health(self, value):
+        if (type(value) is int or type(value) is float) and value != 0:
+            self._health = value
+            if self._health > self._max_health:
+                self._health = self._max_health
+
+    @property
     def max_velocity(self):
         return self._max_velocity
 
@@ -39,8 +50,3 @@ class CharacterBase(EntityBase):
     def handle_collisions(self, axis):
         pass
 
-    def update_health(self, value):
-        if (type(value) is int or type(value) is float) and value != 0:
-            self._health += value
-            if self._health > self._max_health:
-                self._health = self._max_health

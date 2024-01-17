@@ -3,31 +3,15 @@
   {
     "x":0,
     "y": 0,
-    "width": 16,
-    "height": 16
+    "width": 32,
+    "height": 32
   },
 
   "idle2":
   {
-    "x": 48,
+    "x": 32,
     "y": 0,
-    "width": 16,
-    "height": 16
-  },
-
-  "idle3":
-  {
-    "x": 96,
-    "y": 0,
-    "width": 16,
-    "height": 16
-  },
-
-  "idle4":
-  {
-    "x": 144,
-    "y": 0,
-    "width": 16,
-    "height": 16
+    "width": 32,
+    "height": 32
   }
 }

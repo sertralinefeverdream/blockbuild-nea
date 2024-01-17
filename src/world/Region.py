@@ -144,19 +144,22 @@ class Region:
         self.load_from_data(json.loads(data))
 
     def convert_data(self):
-        data = {str(x): [None for x in range(20)] for x in range(20)}
+        data = {"terrain": {str(x): [None for x in range(20)] for x in range(20)}, "entity_list": []}
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if self._data[row_index][block_index] is not None:
-                    data[str(row_index)][block_index] = self._data[row_index][block_index].convert_data()
+                    data["terrain"][str(row_index)][block_index] = self._data[row_index][block_index].convert_data()
                 else:
                     data[str(row_index)][block_index] = None
+
+        for entity in self._entity_list:
+            data["entity_list"].append(entity.convert_data())
 
         return data
 
     def load_from_data(self, data):
         # print(data)
-        for row_index, row in data.items():
+        for row_index, row in data["terrain"].items():
             for block_index, block in enumerate(row):
                 if block is not None:
                     self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game, self._world,
@@ -165,3 +168,6 @@ class Region:
                                                                                                     block["state_data"])
                 else:
                     self._data[int(row_index)][block_index] = None
+
+        for entity in data["entity_list"]:
+            self._entity_list.append(self._game.character_factory.create_character(self._game, self._world, entity["entity_id"], entity["state_data"]))

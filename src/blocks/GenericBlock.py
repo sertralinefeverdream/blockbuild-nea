@@ -13,5 +13,8 @@ class GenericBlock(BlockBase):
     def get_state_data(self):
         return None
 
+    def load_state_data(self, data):
+        pass # GenericBlock type has no state data so it doesnt really matter
+
 
 

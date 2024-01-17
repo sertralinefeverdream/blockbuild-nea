@@ -9,7 +9,7 @@ class World:
         self._camera = camera
         self._region_generator = region_generator
 
-        self._player = Player(self._game, self, "Hi", (0, 0), (40, 80), [400, 400], 100, self._game.animation_handler_factory.create_animation_handler(Spritesheet("../assets/imgs/sprites/entity_textures/player/player.png", "../assets/imgs/sprites/entity_textures/player/player.json"), "../src/entities/player/player_anim.json"))
+        self._player = Player(self._game, self, "Hi", (0, 0), (30, 40), [400, 400], 100, self._game.animation_handler_factory.create_animation_handler(Spritesheet("../assets/imgs/sprites/entity_textures/player/player.png", "../assets/imgs/sprites/entity_textures/player/player.json"), "../src/entities/player/player_anim.json"))
 
         self._draw_list = []
         self._data = \

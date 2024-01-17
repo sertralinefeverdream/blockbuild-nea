@@ -91,6 +91,10 @@ class BlockBase(ABC):
     def get_state_data(self):
         return None
 
+    @abstractmethod
+    def load_state_data(self, data):
+        pass
+
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
     # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.
 

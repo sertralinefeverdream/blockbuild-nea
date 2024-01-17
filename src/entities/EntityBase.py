@@ -108,6 +108,21 @@ class EntityBase:
     def is_killed(self):
         return self._is_killed
 
+    @abstractmethod
+    def convert_data(self):
+        {
+            "entity_id": self._entity_id,
+            "state_data": self.get_state_data()
+        }
+
+    @abstractmethod
+    def get_state_data(self):
+        pass
+
+    @abstractmethod
+    def load_state_data(self, data):
+        pass
+
     def update_texture_and_sizes(self): # Call when texture or size changes
         self._texture = pygame.transform.scale(self._texture, self._size)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)

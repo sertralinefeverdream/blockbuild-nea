@@ -47,7 +47,6 @@ def main():
     gui_factory = GUIFactory()
     block_factory = BlockFactory(config["blocks"], block_spritesheet)
     item_factory = ItemFactory(config["items"], item_spritesheet, block_spritesheet)
-    animation_handler_factory = AnimationHandlerFactory()
     region_generator = RegionGenerator()
     camera = Camera()
     file_save_handler = FileSaveHandler()
@@ -56,7 +55,7 @@ def main():
     sfx_handler = SfxHandler()
     game = Game(state_stack, window, clock, music_handler, sfx_handler,
                 config["framerate"], config, gui_factory,\
-                block_factory, file_save_handler, item_factory, animation_handler_factory)  # Game class handles overall running of game
+                block_factory, file_save_handler, item_factory)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))

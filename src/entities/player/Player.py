@@ -23,6 +23,28 @@ class Player(CharacterBase):
         if type(value) is int and 0 <= value <= 9:
             self._hotbar_pointer = value
 
+    def get_state_data(self):
+        data = {}
+        data["position"] = self._position
+        data["health"] = self._health
+        data["velocity"] = self._velocity
+        data["hotbar_pointer"] = self._hotbar_pointer
+        data["hotbar"] = []
+
+        for index, item in enumerate(self._hotbar):
+            data["hotbar"][index] = item.convert_data()
+        return data
+
+    def load_state_data(self, data):
+        self._position = data["position"],
+        self._health = data["health"],
+        self._velocity = data["velocity"]
+        self._hotbar_pointer = data["hotbar_pointer"]
+
+        for index, item in enumerate(data):
+            if item is not None:
+                self._hotbar[index] = self._game.item_factory.create_item(item[0], item[1])
+
     def update(self):
         if self._health <= 0:
             self.kill()
@@ -73,6 +95,8 @@ class Player(CharacterBase):
                 self._velocity[0] = 0
             self._velocity[0] -= math.trunc(800 * deltatime)
         else:
+            if not self._is_in_air:
+                self._animation_handler.play_animation_from_id("idle")
             self._velocity[0] *= 0.4
 
             if abs(self._velocity[0]) < 1:
