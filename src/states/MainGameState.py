@@ -62,6 +62,7 @@ class MainGameState(StateBase):
 
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
+
         self._world.update()
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
