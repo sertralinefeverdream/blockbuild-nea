@@ -13,7 +13,16 @@ class MainGameState(StateBase):
     def initialise_gui(self):
         self._gui = [
             {"fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default"),
-             "hotbar_0": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0))
+             "hotbar_0": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_1": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_2": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_3": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_4": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_5": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_6": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_7": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_8": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0)),
+             "hotbar_9": self._game.gui_factory.create_gui("ItemDisplay", self._game, self._game.window, size = (60.0, 60.0))
             },
             {"block_border": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
                                                             outline_thickness=3, has_box=False),
@@ -23,7 +32,17 @@ class MainGameState(StateBase):
 
     def on_state_enter(self, params=None):
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
-        self._gui[0]["hotbar_0"].position = (300, 700)
+
+        self._gui[0]["hotbar_0"].position = (350, 700)
+        self._gui[0]["hotbar_1"].position = (420, 700)
+        self._gui[0]["hotbar_2"].position = (490, 700)
+        self._gui[0]["hotbar_3"].position = (560, 700)
+        self._gui[0]["hotbar_4"].position = (630, 700)
+        self._gui[0]["hotbar_5"].position = (700, 700)
+        self._gui[0]["hotbar_6"].position = (770, 700)
+        self._gui[0]["hotbar_7"].position = (840, 700)
+        self._gui[0]["hotbar_8"].position = (910, 700)
+        self._gui[0]["hotbar_9"].position = (980, 700)
 
         for layer in self._gui[::-1]:
             for component in layer.values():
@@ -64,7 +83,17 @@ class MainGameState(StateBase):
         self._world.update()
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
+
         self._gui[0]["hotbar_0"].item = self._world.player.hotbar[0]
+        self._gui[0]["hotbar_1"].item = self._world.player.hotbar[1]
+        self._gui[0]["hotbar_2"].item = self._world.player.hotbar[2]
+        self._gui[0]["hotbar_3"].item = self._world.player.hotbar[3]
+        self._gui[0]["hotbar_4"].item = self._world.player.hotbar[4]
+        self._gui[0]["hotbar_5"].item = self._world.player.hotbar[5]
+        self._gui[0]["hotbar_6"].item = self._world.player.hotbar[6]
+        self._gui[0]["hotbar_7"].item = self._world.player.hotbar[7]
+        self._gui[0]["hotbar_8"].item = self._world.player.hotbar[8]
+        self._gui[0]["hotbar_9"].item = self._world.player.hotbar[9]
 
         block_at_mouse = self._world.get_block_at_position(self._world.camera.get_world_position(mouse_pos))
 
