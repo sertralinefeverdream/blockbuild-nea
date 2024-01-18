@@ -3,13 +3,11 @@ import pygame
 import math
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler,):
-        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler,)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler)
 
-        self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
-        self._hotbar_pointer = 0
-        self._hotbar[0] = self._game.item_factory.create_item(self._game, self._world, "grass_block")
-        self._hotbar[0].quantity = 100
+        self._hotbar = self._game.item_container_factory.create_item_container("hotbar_container", self._game, self._world, 10)
+        self._hotbar.pickup_item(self._game.item_factory.create_item(self._game, self._world, "grass_block"))
 
     @property
     def hotbar(self):
@@ -29,24 +27,15 @@ class Player(CharacterBase):
         data["position"] = self._position
         data["health"] = self._health
         data["velocity"] = self._velocity
-        data["hotbar_pointer"] = self._hotbar_pointer
-        data["hotbar"] = []
+        data["hotbar_state_data"] = self._hotbar.get_state_data()
 
-        for item in self._hotbar:
-            converted = item.convert_data() if item is not None else None
-            data["hotbar"].append(converted)
         return data
 
     def load_state_data(self, data):
         self._position = data["position"]
         self._health = data["health"]
         self._velocity = data["velocity"]
-        self._hotbar_pointer = data["hotbar_pointer"]
-
-        for index, item in enumerate(data["hotbar"]):
-            if item is not None:
-                print(f"THIS IS THE ITEM IN HOTBAR {item}")
-                self._hotbar[index] = self._game.item_factory.create_item(self._game, self._world, item["item_id"], item["state_data"])
+        self._hotbar.load_from_data(data["hotbar_state_data"])
 
     def update(self):
         if self._health <= 0:
@@ -55,7 +44,8 @@ class Player(CharacterBase):
 
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-
+        self._hotbar.update(self._position)
+        '''
         for index, item in enumerate(self._hotbar):
             if item is not None:
                 if item.quantity == 0:
@@ -64,6 +54,7 @@ class Player(CharacterBase):
                     del item
             else:
                 continue
+        '''
 
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)
@@ -83,8 +74,11 @@ class Player(CharacterBase):
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
 
-        if self._hotbar[self._hotbar_pointer] is not None:
+        '''
+                if self._hotbar[self._hotbar_pointer] is not None:
             self._hotbar[self._hotbar_pointer].update(self._position)
+        '''
+
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed

@@ -114,5 +114,5 @@ class BlockBase(ABC):
         return data
 
     def kill(self):
-        self._game.sfx_handler.play_sfx(self._break_sfx_id, 1)
+        self._game.sfx_handler.play_sfx(self._break_sfx_id, self._game.get_option("game_volume").value)
         self._is_broken = True
