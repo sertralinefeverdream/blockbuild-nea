@@ -1,7 +1,7 @@
 import pygame
 
-class GenericItem: # Can be used for normal items, tools, default, etc
-    def __init__(self, game, world, item_id, name, texture, quantity=-1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mining_strength=10, preferred_mining_strength=10, preferred_mining_strength_white_list=None):
+class GenericItem: # Can be used for normal items, tools, default, etc lol
+    def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=10, preferred_mine_strength_white_list=None):
         self._game = game
         self._world = world
         self._item_id = item_id
@@ -14,15 +14,13 @@ class GenericItem: # Can be used for normal items, tools, default, etc
         self._attack_range = attack_range
         self._use_range = use_range
         self._attack_strength = attack_strength
-        self._default_mining_strength = default_mining_strength
-        self._preferred_mining_strength = preferred_mining_strength
+        self._default_mine_strength = default_mine_strength
+        self._preferred_mine_strength = preferred_mine_strength
 
-        if preferred_mining_strength_white_list is None:
-            self._preferred_mining_strength_whitelist = []
+        if preferred_mine_strength_white_list is None:
+            self._preferred_mine_strength_whitelist = []
         else:
-            self._preferred_mining_strength_whitelist = preferred_mining_strength_white_list
-
-        print(f'''DUN3PART{self._use_range}''')
+            self._preferred_mine_strength_whitelist = preferred_mine_strength_white_list
 
         self._attack_timer = 0
         self._use_timer = 0
@@ -133,17 +131,27 @@ class GenericItem: # Can be used for normal items, tools, default, etc
         if self._block_currently_hovering is not self._block_last_hovering:
             self._block_currently_hovering_hardness_remaining = self._block_currently_hovering.hardness
 
-        if self._block_currently_hovering.block_id in self._preferred_mining_strength_whitelist:
+        if self._block_currently_hovering.block_id in self._preferred_mine_strength_whitelist:
             print("USING PREFERED")
-            self._block_currently_hovering_hardness_remaining -= (self._preferred_mining_strength) * delta_time
+            self._block_currently_hovering_hardness_remaining -= (self._preferred_mine_strength) * delta_time
         else:
-            self._block_currently_hovering_hardness_remaining -= (self._default_mining_strength) * delta_time
+            self._block_currently_hovering_hardness_remaining -= (self._default_mine_strength) * delta_time
 
         if pygame.time.get_ticks() - self._mine_sound_timer >= 250:
-            self._game.sfx_handler.play_sfx(self._block_currently_hovering.break_sfx_id, self._game.get_option("game_volume").value)
+            self._game.sfx_handler.play_sfx(self._block_currently_hovering.mine_sfx_id, self._game.get_option("game_volume").value)
             self._mine_sound_timer = pygame.time.get_ticks()
 
         if self._block_currently_hovering_hardness_remaining <= 0:
+                if self._block_currently_hovering.loot_drop_id is not None:
+                    if self._block_currently_hovering.loot_drop_tool_whitelist is not None:
+                        if self._item_id in self._block_currently_hovering.loot_drop_tool_whitelist:
+                            self._world.player.hotbar.pickup_item(
+                                self._game.item_factory.create_item(self._game, self._world, self._block_currently_hovering.loot_drop_id))
+                    else:
+                        self._world.player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self._world, self._block_currently_hovering.loot_drop_id))
+                else:
+                    print("LOOT DROP ID IS NONE")
+
                 self._block_currently_hovering.kill()
 
     def update(self, player_pos):
@@ -163,7 +171,6 @@ class GenericItem: # Can be used for normal items, tools, default, etc
 
         if mouse_keys_pressed[2]:
             if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
-                print("CALLED FROM UPDATE RIGHT USE")
                 self._use_timer = pygame.time.get_ticks()
                 self.right_use(player_pos)
 
@@ -188,8 +195,4 @@ class GenericItem: # Can be used for normal items, tools, default, etc
         self._attack_timer = data["attack_timer"]
         self._use_timer = data["use_timer"]
         self._quantity = data["quantity"]
-
-
-    def serialize(self):
-        pass
 

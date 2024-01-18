@@ -16,6 +16,8 @@ class EntityBase:
         self._hitbox = pygame.Rect((0, 0), self._size)
         self._is_killed = False
 
+        #self._facing = "right"
+
         #self.update_texture_and_sizes()
 
     @property
@@ -107,6 +109,12 @@ class EntityBase:
     @property
     def is_killed(self):
         return self._is_killed
+    '''
+    @property
+    def facing(self):
+        return self._facing
+    '''
+
 
     def convert_data(self):
         data = {

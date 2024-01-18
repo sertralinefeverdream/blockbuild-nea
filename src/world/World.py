@@ -53,7 +53,6 @@ class World:
             for region in column.values():
                 for entity in region.entity_list:
                     if entity.entity_id == "player":
-                        print("Player found")
                         return entity
         return None
 
@@ -61,14 +60,12 @@ class World:
         if self._player is None:
             player_reference = self.find_player_reference()
             if player_reference is None:
-                print("Player reference invalid")
                 self._player = self._game.character_factory.create_character(self._game, self, "player")
                 self.get_region_at_position((0, 0)).entity_list.append(self._player)
             else:
                 self._player = player_reference
 
         self.update_draw_list()
-        #print(self._draw_list)
         self.reassign_entities_to_regions()
 
         for x, y in self._draw_list:
@@ -174,7 +171,6 @@ class World:
                 region_exists = self.check_region_exists_at_position((region_check_x, region_check_y))
 
                 if not region_exists:
-                    # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
                    # print("Generating new")

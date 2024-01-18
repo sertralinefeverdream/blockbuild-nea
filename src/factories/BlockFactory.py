@@ -10,7 +10,7 @@ class BlockFactory:
             block_data = self._blocks_data[block_id]
             if block_data["type"] == "generic":
                 #Generic block type has not state data by default
-                return GenericBlock(game, world, position, block_data["hardness"], block_id, self._sprite_sheet.parse_sprite(block_data["texture"]), block_data["break_sfx_id"], block_data["place_sfx_id"], block_data["footstep_sfx_id"])
+                return GenericBlock(game, world, position, block_data["hardness"], block_id, self._sprite_sheet.parse_sprite(block_data["texture"]), block_data["mine_sfx_id"], block_data["place_and_break_sfx_id"], block_data["footstep_sfx_id"], block_data["loot_drop_id"], block_data["loot_drop_tool_whitelist"])
             else:
                 raise NotImplementedError
 

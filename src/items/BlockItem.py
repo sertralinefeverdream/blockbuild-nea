@@ -3,7 +3,7 @@ import math
 from src.items.GenericItem import GenericItem
 
 class BlockItem(GenericItem):
-    def __init__(self, game, world, item_id, name, texture, quantity=-1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=40, preferred_mine_strength_white_list=None, block_id="grass"):
+    def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=40, preferred_mine_strength_white_list=None, block_id="grass"):
         print(f'''DUN2PART {use_range} ''')
         super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown, attack_range, use_range, attack_strength, default_mine_strength, preferred_mine_strength, preferred_mine_strength_white_list)
         self._block_id = block_id
@@ -41,8 +41,8 @@ class BlockItem(GenericItem):
                     return # If entity in the way, the method will return and will not place the block
 
             self._world.set_block_at_position(world_pos_from_mouse, self._block_id)
-            place_sfx_id = self._world.get_block_at_position(world_pos_from_mouse).place_sfx_id
-            self._game.sfx_handler.play_sfx(place_sfx_id, self._game.get_option("game_volume").value)
+            place_and_break_sfx_id = self._world.get_block_at_position(world_pos_from_mouse).place_and_break_sfx_id
+            self._game.sfx_handler.play_sfx(place_and_break_sfx_id, self._game.get_option("game_volume").value)
             self._quantity -= 1
 
 

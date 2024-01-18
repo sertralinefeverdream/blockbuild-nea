@@ -46,8 +46,6 @@ class Region:
             self._position = list(value)
 
     def is_position_in_region(self, position):
-        print(f"self._position[0]: {self._position[0]}")
-        print(f"<= position[0] {position[0]}")
         if self._position[0] <= position[0] < self._position[0] + 800 \
                 and self._position[1] <= position[1] < self._position[1] + 800:
             return True

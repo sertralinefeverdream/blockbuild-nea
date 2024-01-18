@@ -17,35 +17,48 @@
   "sfx_assets": {
     "btn_click_1": "../assets/audio/sfx/gui/btn_click_1.mp3",
     "btn_hover_1": "../assets/audio/sfx/gui/btn_hover_1.mp3",
-    "grass_place": "../assets/audio/sfx/blocks/grass_place.mp3"
+    "grass_place": "../assets/audio/sfx/blocks/grass_place.mp3",
+    "grass_mine": "../assets/audio/sfx/blocks/grass_mine.ogg",
+    "grass_place_break": "../assets/audio/sfx/blocks/grass_place_break.ogg",
+    "stone_mine": "../assets/audio/sfx/blocks/stone_mine.ogg",
+    "stone_place_break": "../assets/audio/sfx/blocks/stone_place_break.ogg",
+    "dirt_mine": "../assets/audio/sfx/blocks/dirt_mine.ogg",
+    "dirt_place_break": "../assets/audio/sfx/blocks/dirt_place_break.ogg"
   },
 
   "blocks": {
     "grass": {
       "type": "generic",
-      "hardness": 10,
+      "hardness": 15,
       "texture": "grass",
-      "break_sfx_id": "grass_place",
-      "place_sfx_id": "grass_place",
-      "footstep_sfx_id": "btn_click_1"
+      "mine_sfx_id": "grass_mine",
+      "place_and_break_sfx_id": "grass_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "grass_block",
+      "loot_drop_tool_whitelist": null
     },
     "stone": {
       "type": "generic",
       "hardness": 100,
       "texture": "stone",
-      "break_sfx_id": "btn_click_1",
-      "place_sfx_id": "grass_place",
-      "footstep_sfx_id": "btn_click_1"
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "stone_block",
+      "loot_drop_tool_whitelist": null
     },
     "dirt": {
       "type": "generic",
       "hardness": 10,
       "texture": "dirt",
-      "break_sfx_id": "btn_click_1",
-      "place_sfx_id": "grass_place",
-      "footstep_sfx_id": "btn_click_1"
+      "mine_sfx_id": "dirt_mine",
+      "place_and_break_sfx_id": "dirt_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "dirt_block",
+      "loot_drop_tool_whitelist": null
     }
   },
+
   "items": {
     "grass_block": {
       "name": "Grass Block",
@@ -59,8 +72,55 @@
       "attack_strength": 10,
       "default_mine_strength":  10,
       "preferred_mine_strength":  100,
-      "preferred_mine_strength_whitelist": ["dirt", "stone"],
+      "preferred_mine_strength_whitelist": null,
       "block_id": "grass"
+    },
+
+      "stone_block": {
+      "name": "Stone Block",
+      "type":  "blockitem",
+      "texture": "stone",
+      "max_quantity": 100,
+      "attack_cooldown": 250,
+      "use_cooldown": 250,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength":  10,
+      "preferred_mine_strength":  100,
+      "preferred_mine_strength_whitelist": null,
+      "block_id": "stone"
+    },
+
+      "dirt_block": {
+      "name": "Dirt Block",
+      "type":  "blockitem",
+      "texture": "dirt",
+      "max_quantity": 100,
+      "attack_cooldown": 250,
+      "use_cooldown": 250,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength":  10,
+      "preferred_mine_strength":  100,
+      "preferred_mine_strength_whitelist": null,
+      "block_id": "dirt"
+    },
+
+    "empty_hands" : {
+      "name": "empty_hands",
+      "type":  "generic",
+      "texture": "grass",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 250,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength":  10,
+      "preferred_mine_strength":  150,
+      "preferred_mine_strength_whitelist": ["stone", "dirt", "grass"]
     }
   },
 

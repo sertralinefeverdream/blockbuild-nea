@@ -4,7 +4,7 @@ class HotbarContainer(ItemContainer):
     def __init__(self, game, world, columns):
         super().__init__(game, world, 1, columns)
         self._current_item_pointer = 0
-        self._no_hands_item = self._game.item_factory.create_item(self._game, self._world, "grass_block")
+        self._no_hands_item = self._game.item_factory.create_item(self._game, self._world, "empty_hands")
         self._current_item = self._no_hands_item
 
     @property
@@ -28,7 +28,6 @@ class HotbarContainer(ItemContainer):
             self._current_item = self._no_hands_item
 
     def update(self, player_pos):
-        print("updating")
         for row_index, row in enumerate(self._data):
             for item_index, item in enumerate(row):
                 if item is not None:

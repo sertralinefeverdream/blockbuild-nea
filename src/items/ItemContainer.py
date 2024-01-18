@@ -15,10 +15,11 @@ class ItemContainer:
 
     def pickup_item(self, item_to_pickup, capacity_check=False):
         if capacity_check and self.get_remaining_capacity_of_same_type(item_to_pickup) < item_to_pickup.quantity:
-            return "Not enough capacity"
+            print("Not enough capacity to pickup all")
 
         unfilled_items_list = self.get_unfilled_items_of_same_type(item_to_pickup)
         if len(unfilled_items_list) > 0:
+            print("CASE 1")
             item_with_highest_quantity = unfilled_items_list[0]
             for item in unfilled_items_list:
                 if item.quantity > item_with_highest_quantity.quantity:
@@ -32,9 +33,11 @@ class ItemContainer:
                 item_with_highest_quantity.quantity += item_to_pickup.quantity
                 item_to_pickup.quantity = 0
         elif self.empty_item_exists():
+            print("CASE 2")
             row_index, item_index = self.get_empty_item_indexes()[0]
             self._data[row_index][item_index] = item_to_pickup
         else:
+            print("CASE 3")
             return item_to_pickup
 
     def get_remaining_capacity_of_same_type(self, item_to_check):
@@ -43,7 +46,7 @@ class ItemContainer:
         for item in list_of_same_items:
             total += (item.max_quantity - item.quantity)
 
-        for row_index, item_index in self.get_empty_item_indexes():
+        for item_to_check in self.get_empty_item_indexes():
             total += item_to_check.max_quantity
 
         return total
@@ -69,7 +72,8 @@ class ItemContainer:
         for row in self._data:
             for item in row:
                 if item is not None:
-                    if item.entity_id == item_to_check.entity_id and item.quantity < item.max_quantity:
+                    if item.item_id == item_to_check.item_id and item.quantity < item.max_quantity:
+                        print("Unfilled item added for return")
                         unfilled_items_list.append(item)
 
         return unfilled_items_list
@@ -105,7 +109,6 @@ class ItemContainer:
                     data[row_index][item_index] = item.convert_data()
                 else:
                     data[row_index][item_index] = None
-        #print(data)
         return data
 
     def update(self):
