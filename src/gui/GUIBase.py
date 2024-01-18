@@ -29,8 +29,6 @@ class GUIBase(ABC):
         else:
             raise TypeError
 
-
-
     @property
     @abstractmethod
     def centre_position(self):

@@ -9,6 +9,7 @@ class Player(CharacterBase):
         self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
         self._hotbar_pointer = 0
         self._hotbar[0] = self._game.item_factory.create_item(self._game, self._world, "grass_block")
+        self._hotbar[0].quantity = 100
 
     @property
     def hotbar(self):
@@ -155,7 +156,7 @@ class Player(CharacterBase):
                 self._is_in_air = True
 
     def jump(self):
-            self._velocity[1] = -300
+            self._velocity[1] = -320
 
     def draw(self):
         self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))

@@ -171,11 +171,9 @@ class Region:
                 else:
                     self._data[int(row_index)][block_index] = None
 
-        print(data)
         for entity in data["entity_list"]:
-            print(entity)
             entity_instance = self._game.character_factory.create_character(self._game, self._world, entity["entity_id"], entity["state_data"])
             self._entity_list.append(entity_instance)
-            if self._world.player is None and entity["entity_id"] == "player":
-                self._world.player = entity_instance
+            #if self._world.player is None and entity["entity_id"] == "player":
+                #self._world.player = entity_instance
 

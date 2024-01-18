@@ -48,10 +48,24 @@ class World:
         self._camera.y = 0
         self._player = None
 
+    def find_player_reference(self):
+        for column in self._data.values():
+            for region in column.values():
+                for entity in region.entity_list:
+                    if entity.entity_id == "player":
+                        print("Player found")
+                        return entity
+        return None
+
     def update(self):
         if self._player is None:
-            self._player = self._game.character_factory.create_character(self._game, self, "player")
-            self.get_region_at_position((0, 0)).entity_list.append(self._player)
+            player_reference = self.find_player_reference()
+            if player_reference is None:
+                print("Player reference invalid")
+                self._player = self._game.character_factory.create_character(self._game, self, "player")
+                self.get_region_at_position((0, 0)).entity_list.append(self._player)
+            else:
+                self._player = player_reference
 
         self.update_draw_list()
         #print(self._draw_list)

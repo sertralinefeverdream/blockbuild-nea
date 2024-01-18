@@ -50,7 +50,7 @@
     "grass_block": {
       "name": "Grass Block",
       "type":  "blockitem",
-      "texture": "grass_block",
+      "texture": "grass",
       "max_quantity": 100,
       "attack_cooldown": 250,
       "use_cooldown": 250,

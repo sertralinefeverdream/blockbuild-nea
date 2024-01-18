@@ -27,8 +27,6 @@ from src.audio.MusicHandler import MusicHandler
 from src.audio.SfxHandler import SfxHandler
 
 
-
-
 def main():
     pygame.init()
     config = None
