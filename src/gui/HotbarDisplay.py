@@ -14,13 +14,14 @@ class HotbarDisplay(GUIBase):
 
     @property
     def centre_position(self):
-        return self._position[0] + (60 + self._number_of_slots*55)/2, self._position[1] + 30
-
+        #return self._position[0] + (60 + self._number_of_slots*55)/2, self._position[1] + 30
+        return self._position[0] + (self._number_of_slots * 60)/2, self._position[1] + 30
     @centre_position.setter
     def centre_position(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._position[0] = value[0] - (60 + self._number_of_slots*55)/2
-            self._position[1] = value[1] - 30
+           # self._position[0] = value[0] - (60 + self._number_of_slots*55)/2
+            #self._position[1] = value[1] - 30
+            self._position = value[0] - (self._number_of_slots * 60)/2, value[1] - 30
 
     @property
     def hotbar(self):

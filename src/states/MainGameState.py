@@ -58,7 +58,6 @@ class MainGameState(StateBase):
         if params is not None:
             if params[0] == "save":
                 self._game.file_save_handler.save_world(self._world, self._save_file_pointer)
-                print("SAVING!!")
 
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
