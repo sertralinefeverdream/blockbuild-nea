@@ -10,6 +10,17 @@ class RegionGenerator:
         self._rock_base_level = rock_base_level
         self._grass_base_level = grass_base_level
 
+    @property
+    def seed(self):
+        print(f"SEED SAVED: {opensimplex.get_seed()} ")
+        return opensimplex.get_seed()
+
+    @seed.setter
+    def seed(self, value):
+        if type(value) is int:
+            print(f"SET SEED: {value}")
+            opensimplex.seed(value)
+
     def create_empty_region(self, game, world, position):
         return Region(game, world, position)
 

@@ -6,7 +6,7 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler, item_factory, character_factory):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler, item_factory, character_factory, item_container_factory):
         self._state_stack = state_stack
         self._window = window
         self._clock = clock
@@ -19,6 +19,7 @@ class Game:
         self._file_save_handler = file_save_handler
         self._item_factory = item_factory
         self._character_factory = character_factory
+        self._item_container_factory = item_container_factory
 
         self._states = {}
         self._previous_state = None
@@ -95,6 +96,10 @@ class Game:
     @property
     def character_factory(self):
         return self._character_factory
+
+    @property
+    def item_container_factory(self):
+        return self._item_container_factory
 
     @property
     def keys_pressed(self):

@@ -3,8 +3,8 @@ from src.blocks.BlockBase import BlockBase
 
 
 class GenericBlock(BlockBase):
-    def __init__(self, game, world, position, hardness, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
-        super().__init__(game, world, position, hardness, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id)
+    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None):
+        super().__init__(game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id, loot_drop_tool_whitelist)
 
     def update(self):
         screen_position = self._world.camera.get_screen_position(self._position)

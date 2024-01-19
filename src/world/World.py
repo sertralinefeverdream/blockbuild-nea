@@ -53,7 +53,6 @@ class World:
             for region in column.values():
                 for entity in region.entity_list:
                     if entity.entity_id == "player":
-                        print("Player found")
                         return entity
         return None
 
@@ -61,14 +60,12 @@ class World:
         if self._player is None:
             player_reference = self.find_player_reference()
             if player_reference is None:
-                print("Player reference invalid")
                 self._player = self._game.character_factory.create_character(self._game, self, "player")
                 self.get_region_at_position((0, 0)).entity_list.append(self._player)
             else:
                 self._player = player_reference
 
         self.update_draw_list()
-        #print(self._draw_list)
         self.reassign_entities_to_regions()
 
         for x, y in self._draw_list:
@@ -134,15 +131,18 @@ class World:
 
     def convert_data(self):  # Converts classes to dict and array representations in preparation for json serialization
         data = {}
+        data["world_data"] = {}
+        data["seed"] = self._region_generator.seed
         for x_index, column in self._data.items():
-            data[str(x_index)] = {}
+            data["world_data"][str(x_index)] = {}
             for y_index, region in column.items():
-                data[str(x_index)][str(y_index)] = region.convert_data()
+                data["world_data"][str(x_index)][str(y_index)] = region.convert_data()
         return data
 
     def load_from_data(self, data):
         self.reset()
-        for x_index, column in data.items():
+        self._region_generator.seed = data["seed"]
+        for x_index, column in data["world_data"].items():
             for y_index, region in column.items():
                 if str(x_index) not in self._data.keys():
                     self._data[str(x_index)] = {}
@@ -174,7 +174,6 @@ class World:
                 region_exists = self.check_region_exists_at_position((region_check_x, region_check_y))
 
                 if not region_exists:
-                    # print("REGION DOESNT EXIST!")
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
                    # print("Generating new")

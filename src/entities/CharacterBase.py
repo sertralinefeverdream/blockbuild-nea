@@ -9,6 +9,7 @@ class CharacterBase(EntityBase):
         self._animation_handler = animation_handler
 
         self._health = self._max_health
+        self._footstep_timer = 0
         self._is_in_air = False
 
     @property

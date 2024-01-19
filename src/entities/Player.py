@@ -3,13 +3,10 @@ import pygame
 import math
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler,):
-        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler,)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler)
 
-        self._hotbar = [None for x in range(10)] # Fixed to size 10 hardcoded
-        self._hotbar_pointer = 0
-        self._hotbar[0] = self._game.item_factory.create_item(self._game, self._world, "grass_block")
-        self._hotbar[0].quantity = 100
+        self._hotbar = self._game.item_container_factory.create_item_container("hotbar_container", self._game, self._world, 9)
 
     @property
     def hotbar(self):
@@ -29,41 +26,28 @@ class Player(CharacterBase):
         data["position"] = self._position
         data["health"] = self._health
         data["velocity"] = self._velocity
-        data["hotbar_pointer"] = self._hotbar_pointer
-        data["hotbar"] = []
+        data["hotbar_state_data"] = self._hotbar.get_state_data()
 
-        for item in self._hotbar:
-            converted = item.convert_data() if item is not None else None
-            data["hotbar"].append(converted)
         return data
 
     def load_state_data(self, data):
         self._position = data["position"]
         self._health = data["health"]
         self._velocity = data["velocity"]
-        self._hotbar_pointer = data["hotbar_pointer"]
-
-        for index, item in enumerate(data["hotbar"]):
-            if item is not None:
-                print(f"THIS IS THE ITEM IN HOTBAR {item}")
-                self._hotbar[index] = self._game.item_factory.create_item(self._game, self._world, item["item_id"], item["state_data"])
+        self._hotbar.load_from_data(data["hotbar_state_data"])
 
     def update(self):
         if self._health <= 0:
             self.kill()
             return
 
+        if self._velocity[0] > 0:
+            self._animation_handler.reversed = False
+        elif self._velocity[0] < 0:
+            self._animation_handler.reversed = True
+
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-
-        for index, item in enumerate(self._hotbar):
-            if item is not None:
-                if item.quantity == 0:
-                    self._hotbar[index] = None
-                    print("deleting")
-                    del item
-            else:
-                continue
 
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)
@@ -79,12 +63,19 @@ class Player(CharacterBase):
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("horizontal")
 
+        ''' prototype footstep
+        if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
+            self._footstep_timer = pygame.time.get_ticks()
+            block_below = self._world.get_block_at_position((math.trunc(self._position[0] + self._size[0]/2), math.trunc(self._position[1] + self._size[1] + 2)))
+            if block_below is not None:
+                self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
+        '''
+
         self._position[1] += math.trunc(self._velocity[1] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
+        self._hotbar.update(self._position)
 
-        if self._hotbar[self._hotbar_pointer] is not None:
-            self._hotbar[self._hotbar_pointer].update(self._position)
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed
@@ -111,6 +102,25 @@ class Player(CharacterBase):
         if keys_pressed[pygame.K_w]:
             if not self._is_in_air:
                 self.jump()
+
+        if keys_pressed[pygame.K_1]:
+            self._hotbar.current_item_pointer = 0
+        elif keys_pressed[pygame.K_2]:
+            self._hotbar.current_item_pointer = 1
+        elif keys_pressed[pygame.K_3]:
+            self._hotbar.current_item_pointer = 2
+        elif keys_pressed[pygame.K_4]:
+            self._hotbar.current_item_pointer = 3
+        elif keys_pressed[pygame.K_5]:
+            self._hotbar.current_item_pointer = 4
+        elif keys_pressed[pygame.K_6]:
+            self._hotbar.current_item_pointer = 5
+        elif keys_pressed[pygame.K_7]:
+            self._hotbar.current_item_pointer = 6
+        elif keys_pressed[pygame.K_8]:
+            self._hotbar.current_item_pointer = 7
+        elif keys_pressed[pygame.K_9]:
+            self._hotbar.current_item_pointer = 8
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []

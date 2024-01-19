@@ -4,16 +4,18 @@ import json
 
 
 class BlockBase(ABC):
-    def __init__(self, game, world, position, hardness, block_id, texture, break_sfx_id, place_sfx_id, footstep_sfx_id):
+    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None):
         self._game = game
         self._world = world
         self._position = list(position)
         self._hardness = hardness
         self._block_id = block_id
         self._texture = pygame.transform.scale(texture.convert(), (40, 40))
-        self._break_sfx_id = break_sfx_id
-        self._place_sfx_id = place_sfx_id
+        self._mine_sfx_id = mine_sfx_id
+        self._place_and_break_sfx_id = place_and_break_sfx_id
         self._footstep_sfx_id = footstep_sfx_id
+        self._loot_drop_id = loot_drop_id
+        self._loot_drop_tool_whitelist = loot_drop_tool_whitelist
 
         self._hitbox = pygame.Rect(self._world.camera.get_screen_position(self._position), (40, 40))
         self._is_broken = False
@@ -49,22 +51,30 @@ class BlockBase(ABC):
             self.enable_flag_for_region_redraw()
 
     @property
-    def break_sfx_id(self):
-        return self._break_sfx_id
-
-    @break_sfx_id.setter
-    def break_sfx_id(self, value):
-        if value in self._game.config["sfx_assets"].keys():
-            self._break_sfx_id = value
+    def loot_drop_id(self):
+        return self._loot_drop_id
 
     @property
-    def place_sfx_id(self):
-        return self._place_sfx_id
+    def loot_drop_tool_whitelist(self):
+        return self._loot_drop_tool_whitelist
 
-    @place_sfx_id.setter
-    def place_sfx_id(self, value):
+    @property
+    def mine_sfx_id(self):
+        return self._mine_sfx_id
+
+    @mine_sfx_id.setter
+    def mine_sfx_id(self, value):
         if value in self._game.config["sfx_assets"].keys():
-            self._place_sfx_id = value
+            self._mine_sfx_id = value
+
+    @property
+    def place_and_break_sfx_id(self):
+        return self._place_and_break_sfx_id
+
+    @place_and_break_sfx_id.setter
+    def place_and_break_sfx_id(self, value):
+        if value in self._game.config["sfx_assets"].keys():
+            self._place_and_break_sfx_id = value
 
     @property
     def footstep_sfx_id(self):
@@ -114,5 +124,5 @@ class BlockBase(ABC):
         return data
 
     def kill(self):
-        self._game.sfx_handler.play_sfx(self._break_sfx_id, 1)
+        self._game.sfx_handler.play_sfx(self._place_and_break_sfx_id, self._game.get_option("game_volume").value)
         self._is_broken = True
