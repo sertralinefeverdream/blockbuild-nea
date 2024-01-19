@@ -131,15 +131,18 @@ class World:
 
     def convert_data(self):  # Converts classes to dict and array representations in preparation for json serialization
         data = {}
+        data["world_data"] = {}
+        data["seed"] = self._region_generator.seed
         for x_index, column in self._data.items():
-            data[str(x_index)] = {}
+            data["world_data"][str(x_index)] = {}
             for y_index, region in column.items():
-                data[str(x_index)][str(y_index)] = region.convert_data()
+                data["world_data"][str(x_index)][str(y_index)] = region.convert_data()
         return data
 
     def load_from_data(self, data):
         self.reset()
-        for x_index, column in data.items():
+        self._region_generator.seed = data["seed"]
+        for x_index, column in data["world_data"].items():
             for y_index, region in column.items():
                 if str(x_index) not in self._data.keys():
                     self._data[str(x_index)] = {}
