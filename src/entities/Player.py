@@ -48,7 +48,6 @@ class Player(CharacterBase):
 
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-        self._hotbar.update(self._position)
 
         deltatime = self._game.clock.get_time() / 1000
         self._velocity[1] += math.trunc(800 * deltatime)
@@ -75,6 +74,8 @@ class Player(CharacterBase):
         self._position[1] += math.trunc(self._velocity[1] * deltatime)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
         self.handle_collisions("vertical")
+        self._hotbar.update(self._position)
+
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed

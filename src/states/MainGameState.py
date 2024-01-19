@@ -79,8 +79,8 @@ class MainGameState(StateBase):
         if current_player_tool is not None:
             if current_player_tool.is_mining:
                 self._gui[1]["block_health_bar"].is_visible = True
-                self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_hovering_hardness_remaining/current_player_tool.block_currently_hovering.hardness) * 30
-                self._gui[1]["block_health_bar"].centre_position = current_player_tool.block_currently_hovering.hitbox.center
+                self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_mining_hardness_remaining/current_player_tool.block_currently_mining.hardness) * 30
+                self._gui[1]["block_health_bar"].centre_position = current_player_tool.block_currently_mining.hitbox.center
             else:
                 self._gui[1]["block_health_bar"].is_visible = False
         else:

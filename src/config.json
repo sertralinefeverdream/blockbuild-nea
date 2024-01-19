@@ -72,7 +72,7 @@
       "attack_strength": 10,
       "default_mine_strength":  10,
       "preferred_mine_strength":  100,
-      "preferred_mine_strength_whitelist": null,
+      "preferred_mine_strength_whitelist": [],
       "block_id": "grass"
     },
 
@@ -88,7 +88,7 @@
       "attack_strength": 10,
       "default_mine_strength":  10,
       "preferred_mine_strength":  100,
-      "preferred_mine_strength_whitelist": null,
+      "preferred_mine_strength_whitelist": [],
       "block_id": "stone"
     },
 
@@ -104,7 +104,7 @@
       "attack_strength": 10,
       "default_mine_strength":  10,
       "preferred_mine_strength":  100,
-      "preferred_mine_strength_whitelist": null,
+      "preferred_mine_strength_whitelist": [],
       "block_id": "dirt"
     },
 
@@ -115,12 +115,12 @@
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 150,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength":  10,
       "preferred_mine_strength":  150,
-      "preferred_mine_strength_whitelist": ["stone", "dirt", "grass"]
+      "preferred_mine_strength_whitelist": []
     }
   },
 

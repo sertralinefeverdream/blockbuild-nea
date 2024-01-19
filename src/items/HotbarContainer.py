@@ -17,9 +17,11 @@ class HotbarContainer(ItemContainer):
 
     @current_item_pointer.setter
     def current_item_pointer(self, value):
-        if 0 <= value <= self._dimensions[1]:
+        if 0 <= value <= self._dimensions[1] and value != self._current_item_pointer:
+            self._current_item.on_unequip()
             self._current_item_pointer = value
             self.update_current_item()
+            self._current_item.on_equip()
 
     def update_current_item(self):
         if self._data[0][self._current_item_pointer] is not None:
