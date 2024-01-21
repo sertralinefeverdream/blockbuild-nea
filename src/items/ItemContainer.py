@@ -28,14 +28,16 @@ class ItemContainer:
             if item_to_pickup.quantity > remaining_quantity:
                 item_with_highest_quantity.quantity += remaining_quantity
                 item_to_pickup.quantity -= remaining_quantity
-                self.pickup_item(item, capacity_check)
+                return self.pickup_item(item, capacity_check)
             elif item_to_pickup.quantity <= remaining_quantity:
                 item_with_highest_quantity.quantity += item_to_pickup.quantity
                 item_to_pickup.quantity = 0
+                return None
         elif self.empty_item_exists():
             #print("CASE 2")
             row_index, item_index = self.get_empty_item_indexes()[0]
             self._data[row_index][item_index] = item_to_pickup
+            return None
         else:
             #print("CASE 3")
             return item_to_pickup

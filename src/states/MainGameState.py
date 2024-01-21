@@ -8,6 +8,7 @@ class MainGameState(StateBase):
         super().__init__(game)
         self._world = world
         self._escape_key_held = False
+        self._inventory_key_held = False
         self._save_file_pointer = None
 
     def initialise_gui(self):
@@ -51,6 +52,8 @@ class MainGameState(StateBase):
                 self._world.reset()
                 self._save_file_pointer = "save_file_3"
 
+        self._inventory_key_held = False
+        self._escape_key_held = False
         self._world.update()
         self._gui[0]["hotbar_display"].hotbar = self._world.player.hotbar
 
@@ -95,6 +98,12 @@ class MainGameState(StateBase):
         elif not self._game.keys_pressed[pygame.K_ESCAPE] and self._escape_key_held:
             self._game.push_state("pause_game")
             self._escape_key_held = False
+
+        if self._game.keys_pressed[pygame.K_e]:
+            self._inventory_key_held = True
+        elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
+            self._game.push_state("inventory", [None, self._world.player.hotbar])
+            self._inventory_key_held = False
 
     def draw(self, no_gui=False):
         self._world.draw()

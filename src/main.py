@@ -6,6 +6,7 @@ from states.LoadGameMenuState import LoadGameMenuState
 from states.OptionsMenuState import OptionsMenuState
 from states.MainGameState import MainGameState
 from states.PauseGameState import PauseGameState
+from states.InventoryState import InventoryState
 
 from src.sprite.Spritesheet import Spritesheet
 
@@ -61,6 +62,7 @@ def main():
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
     game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator)))
     game.add_to_states("pause_game", PauseGameState(game))
+    game.add_to_states("inventory", InventoryState(game))
     game.game_loop()
 
 if __name__ == "__main__":
