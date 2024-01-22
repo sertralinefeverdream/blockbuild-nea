@@ -9,9 +9,17 @@ class ItemContainer:
     def data(self):
         return self._data
 
-    def get_item(self, row_index, column_index):
-        if 0 <= row_index <= len(self._data) - 1 and 0 <= column_index <= len(self._data[0]) - 1:
-            return self._data[row_index, column_index]
+    def set_item_at_index(self, item, row, column):
+        self._data[row][column] = item
+
+    def get_item_indexes(self, item):
+        for row_index, row in enumerate(self._data):
+            if item in row:
+                return row_index, row.index(item)
+        return None
+
+    def get_item_at_index(self, row, column):
+        return self._data[row][column]
 
     def pickup_item(self, item_to_pickup, capacity_check=False):
         if capacity_check and self.get_remaining_capacity_of_same_type(item_to_pickup) < item_to_pickup.quantity:
@@ -19,7 +27,6 @@ class ItemContainer:
 
         unfilled_items_list = self.get_unfilled_items_of_type(item_to_pickup)
         if len(unfilled_items_list) > 0:
-            #print("CASE 1")
             item_with_highest_quantity = unfilled_items_list[0]
             for item in unfilled_items_list:
                 if item.quantity > item_with_highest_quantity.quantity:
@@ -34,7 +41,6 @@ class ItemContainer:
                 item_to_pickup.quantity = 0
                 return None
         elif self.empty_item_exists():
-            #print("CASE 2")
             row_index, item_index = self.get_empty_item_indexes()[0]
             self._data[row_index][item_index] = item_to_pickup
             return None

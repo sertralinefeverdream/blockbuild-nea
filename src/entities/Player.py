@@ -7,10 +7,15 @@ class Player(CharacterBase):
         super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler)
 
         self._hotbar = self._game.item_container_factory.create_item_container("hotbar_container", self._game, self._world, 9)
+        self._inventory = self._game.item_container_factory.create_item_container("item_container", self._game, self._world, 9, 9)
 
     @property
     def hotbar(self):
         return self._hotbar
+
+    @property
+    def inventory(self):
+        return self._inventory
 
     @property
     def hotbar_pointer(self):
@@ -27,6 +32,7 @@ class Player(CharacterBase):
         data["health"] = self._health
         data["velocity"] = self._velocity
         data["hotbar_state_data"] = self._hotbar.get_state_data()
+        data["inventory_state_data"] = self._inventory.get_state_data()
 
         return data
 
@@ -35,6 +41,7 @@ class Player(CharacterBase):
         self._health = data["health"]
         self._velocity = data["velocity"]
         self._hotbar.load_from_data(data["hotbar_state_data"])
+        self._inventory.load_from_data(data["inventory_state_data"])
 
     def update(self):
         if self._health <= 0:

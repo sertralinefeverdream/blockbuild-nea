@@ -59,7 +59,7 @@ class World:
     def update(self):
         if self._player is None:
             player_reference = self.find_player_reference()
-            if player_reference is None:
+            if player_reference is None: # Case when player does not exist.
                 self._player = self._game.character_factory.create_character(self._game, self, "player")
                 self.get_region_at_position((0, 0)).entity_list.append(self._player)
             else:
@@ -68,10 +68,14 @@ class World:
         self.update_draw_list()
         self.reassign_entities_to_regions()
 
+
+
         for x, y in self._draw_list:
             self._data[x][y].update()
             self._camera.x = self._player.position[0] - 600
             self._camera.y = self._player.position[1] - 400
+
+
 
     def draw(self):
         for x, y in self._draw_list:

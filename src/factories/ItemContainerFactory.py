@@ -15,4 +15,5 @@ class ItemContainerFactory:
 
         if state_data is not None:
             item_container.load_from_data(state_data)
+
         return item_container

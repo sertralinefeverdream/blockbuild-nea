@@ -158,18 +158,50 @@ class GenericItem: # Can be used for normal items, tools, default, etc lol
             self._game.sfx_handler.play_sfx(self._block_currently_mining.mine_sfx_id, self._game.get_option("game_volume").value)
             self._mine_sound_timer = pygame.time.get_ticks()
 
-        if self._block_currently_mining_hardness_remaining <= 0:
+        '''
+                if self._block_currently_mining_hardness_remaining <= 0:
                 if self._block_currently_mining.loot_drop_id is not None:
                     if self._block_currently_mining.loot_drop_tool_whitelist is not None:
                         if self._item_id in self._block_currently_mining.loot_drop_tool_whitelist:
-                            self._world.player.hotbar.pickup_item(
+                            remainder = self._world.player.hotbar.pickup_item(
                                 self._game.item_factory.create_item(self._game, self._world, self._block_currently_mining.loot_drop_id))
+                            if remainder is not None:
+                                print("FILL UP INVENTORY")
+                                remainder = self._world.player.inventory.pickup_item(remainder)
+                            if remainder is not None:
+                                print("INVENTORY FULL!")
                     else:
-                        self._world.player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self._world, self._block_currently_mining.loot_drop_id))
+                        remainder = self._world.player.hotbar.pickup_item(
+                            self._game.item_factory.create_item(self._game, self._world,
+                                                                self._block_currently_mining.loot_drop_id))
+                        if remainder is not None:
+                            print("FILL UP INVENTORY")
+                            remainder = self._world.player.inventory.pickup_item(remainder)
+                        if remainder is not None:
+                            print("INVENTORY FULL!")
                 else:
                     print("LOOT DROP ID IS NONE")
 
                 self._block_currently_mining.kill()
+        '''
+
+        if self._block_currently_mining_hardness_remaining <= 0:
+            if self._block_currently_mining.loot_drop_id is not None:
+                if self._block_currently_mining.loot_drop_tool_whitelist is not None:
+                    if self._item_id not in self._block_currently_mining.loot_drop_tool_whitelist:
+                        return None
+                remainder = self._world.player.hotbar.pickup_item(
+                    self._game.item_factory.create_item(self._game, self._world, self._block_currently_mining.loot_drop_id))
+                if remainder is not None:
+                    print("FILL UP INVENTORY")
+                    remainder = self._world.player.inventory.pickup_item(remainder)
+                if remainder is not None:
+                    print("INVENTORY FULL!")
+            else:
+                print("LOOT DROP ID IS NONE")
+
+            self._block_currently_mining.kill()
+
 
     def update(self, player_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()

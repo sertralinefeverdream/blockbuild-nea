@@ -64,7 +64,6 @@ class MainGameState(StateBase):
 
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
-
         self._world.update()
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
@@ -89,10 +88,6 @@ class MainGameState(StateBase):
         else:
             self._gui[1]["block_health_bar"].is_visible = False
 
-        for layer in self._gui[::-1]:
-            for component in layer.values():
-                component.update()
-
         if self._game.keys_pressed[pygame.K_ESCAPE]:
             self._escape_key_held = True
         elif not self._game.keys_pressed[pygame.K_ESCAPE] and self._escape_key_held:
@@ -102,8 +97,13 @@ class MainGameState(StateBase):
         if self._game.keys_pressed[pygame.K_e]:
             self._inventory_key_held = True
         elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
-            self._game.push_state("inventory", [None, self._world.player.hotbar])
+            self._game.push_state("inventory", [self._world.player.inventory, self._world.player.hotbar])
             self._inventory_key_held = False
+
+        for layer in self._gui[::-1]:
+            for component in layer.values():
+                component.update()
+
 
     def draw(self, no_gui=False):
         self._world.draw()
