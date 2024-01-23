@@ -61,6 +61,5 @@ class PauseGameState(StateBase):
     def exit_button_click(self, button):
         self._game.pop_state() #Down to main game state
         self._game.pop_state([], ["save"]) #Down to load game state
-        self._game.pop_state() # Down to main menu
 
 

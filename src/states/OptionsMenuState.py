@@ -28,6 +28,8 @@ class OptionsMenuState(StateBase):
 
 
     def on_state_enter(self, params=None):
+        self._game.music_handler.set_shuffle_list(["main_menu"])
+
         self._gui[0]["low_game_vol_button"].size = (200.0, 75.0)
         self._gui[0]["low_game_vol_button"].centre_position = (300.0, 200.0)
 

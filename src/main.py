@@ -24,7 +24,6 @@ from src.factories.ItemContainerFactory import ItemContainerFactory
 from src.world.Camera import Camera
 from src.world.RegionGenerator import RegionGenerator
 from src.world.World import World
-
 from src.audio.MusicHandler import MusicHandler
 from src.audio.SfxHandler import SfxHandler
 

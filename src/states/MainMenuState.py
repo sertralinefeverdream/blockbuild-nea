@@ -26,7 +26,8 @@ class MainMenuState(StateBase):
 
     def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["main_menu"])
-        if self._game.previous_state is not self._game.states["main_menu"]:
+        print(self._game.previous_state)
+        if self._game.previous_state is not self._game.states["load_game_menu"] and self._game.previous_state is not self._game.states["options_menu"]:
             self._game.music_handler.shuffle_play()
 
         self._gui[0]["play_button"].size = (400.0, 75.0)

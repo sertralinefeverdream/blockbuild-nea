@@ -30,6 +30,7 @@ class Game:
             "music_volume": Volume.LOW
         }
         self._keys_pressed = []
+        self._state_has_changed_flag = False
 
         self.initialise_music_and_sfx()
 
@@ -117,8 +118,8 @@ class Game:
             self._file_save_handler.add_save_location(id, path)
 
         while self._running:
-            self._current_state = self._state_stack.peek()
             self._keys_pressed = pygame.key.get_pressed()
+            self._state_has_changed_flag = False
            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
             self._clock.tick(self._framerate)
 
@@ -131,7 +132,7 @@ class Game:
                         self._music_handler.on_music_end()
 
                 self._current_state.update()
-                if self._current_state is not None:
+                if self._current_state is not None and not self._state_has_changed_flag:
                     self._current_state.draw()
                     pygame.display.flip()
             else:
@@ -154,12 +155,25 @@ class Game:
 
     def push_state(self, state_id, state_enter_params=None, state_leave_params=None):
         self._previous_state = self._state_stack.peek()
-        self._state_stack.push(self._states[state_id.lower()], state_enter_params, state_leave_params)
+        self._state_stack.push(self._states[state_id.lower()])
         self._current_state = self._state_stack.peek()
 
+        if self._previous_state is not None:
+            self._previous_state.on_state_leave(state_leave_params)
+
+        self._current_state.on_state_enter(state_enter_params)
+        self._state_has_changed_flag = True
+
     def pop_state(self, state_enter_params=None, state_leave_params=None):
-        self._previous_state = self._state_stack.pop(state_enter_params, state_leave_params)
+        self._previous_state = self._state_stack.pop()
         self._current_state = self._state_stack.peek()
+
+        self._previous_state.on_state_leave(state_leave_params)
+
+        if self._current_state is not None:
+            self._current_state.on_state_enter(state_enter_params)
+
+        self._state_has_changed_flag = True
 
     def on_game_end(self):
         pygame.quit()

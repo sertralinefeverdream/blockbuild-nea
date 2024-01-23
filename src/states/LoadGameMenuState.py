@@ -93,18 +93,24 @@ class LoadGameMenuState(StateBase):
 
     def new_button_func(self, button):
         if button is self._gui[0]["top_new_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["new_1"])
         elif button is self._gui[0]["middle_new_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["new_2"])
         elif button is self._gui[0]["bottom_new_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["new_3"])
 
     def load_button_func(self, button):
         if button is self._gui[0]["top_load_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["load_1"])
         elif button is self._gui[0]["middle_load_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["load_2"])
         elif button is self._gui[0]["bottom_load_button"]:
+            self._game.pop_state()
             self._game.push_state("main_game", ["load_3"])
 
     def on_state_leave(self, params=None):

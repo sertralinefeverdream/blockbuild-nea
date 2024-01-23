@@ -9,14 +9,14 @@ class ItemContainer:
     def data(self):
         return self._data
 
-    def set_item_at_index(self, item, row, column):
+    def set_item_at_index(self, row, column, item=None):
         self._data[row][column] = item
 
     def get_item_indexes(self, item):
         for row_index, row in enumerate(self._data):
             if item in row:
                 return row_index, row.index(item)
-        return None
+        return -1, -1
 
     def get_item_at_index(self, row, column):
         return self._data[row][column]

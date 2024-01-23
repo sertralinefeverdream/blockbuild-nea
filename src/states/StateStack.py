@@ -16,20 +16,13 @@ class StateStack:
     def empty(self):
         return len(self.__stack) == 0
 
-    def push(self, state, state_enter_params=None, state_leave_params=None):
-        if not self.empty():
-            self.peek().on_state_leave(state_leave_params)
-
+    def push(self, state):
         self.__stack.append(state)
-        state.on_state_enter(state_enter_params)
 
-    def pop(self, state_enter_params=None, state_leave_params=None):
+    def pop(self):
         if not self.empty():
             temp = self.__stack[-1]
-            temp.on_state_leave(state_leave_params)
             del self.__stack[-1]
-            if not self.empty():
-                self.__stack[-1].on_state_enter(state_enter_params)
             return temp
         else:
             return None
