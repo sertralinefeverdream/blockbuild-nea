@@ -6,7 +6,7 @@ from src.audio.Volume import Volume
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler, item_factory, character_factory, item_container_factory):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler, item_factory, character_factory, item_container_factory, spritesheet_factory, block_spritesheet, item_spritesheet):
         self._state_stack = state_stack
         self._window = window
         self._clock = clock
@@ -20,6 +20,9 @@ class Game:
         self._item_factory = item_factory
         self._character_factory = character_factory
         self._item_container_factory = item_container_factory
+        self._spritesheet_factory = spritesheet_factory
+        self._block_spritesheet = block_spritesheet
+        self._item_spritesheet = item_spritesheet
 
         self._states = {}
         self._previous_state = None
@@ -103,8 +106,22 @@ class Game:
         return self._item_container_factory
 
     @property
+    def spritesheet_factory(self):
+        return self._spritesheet_factory
+
+    @property
+    def block_spritesheet(self):
+        return self._block_spritesheet
+
+    @property
+    def item_spritesheet(self):
+        return self._item_spritesheet
+
+    @property
     def keys_pressed(self):
         return self._keys_pressed
+
+
 
     def initialise_music_and_sfx(self):
         self._music_handler.add_music_from_dict(self._config["music_assets"])

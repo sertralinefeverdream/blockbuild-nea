@@ -20,6 +20,7 @@ from src.factories.BlockFactory import BlockFactory
 from src.factories.ItemFactory import ItemFactory
 from src.factories.CharacterFactory import CharacterFactory
 from src.factories.ItemContainerFactory import ItemContainerFactory
+from src.factories.SpritesheetFactory import SpritesheetFactory
 
 from src.world.Camera import Camera
 from src.world.RegionGenerator import RegionGenerator
@@ -36,26 +37,30 @@ def main():
     window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
     pygame.display.set_caption(config["window_caption"])
 
-    state_stack = StateStack()  # Holds different "states" which have their own game loops.
+    state_stack = StateStack()
     clock = pygame.time.Clock()
 
-    block_spritesheet = Spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json")
-    item_spritesheet = Spritesheet("../assets/imgs/sprites/item_textures/item_textures.png", "../assets/imgs/sprites/item_textures/item_textures.json")
 
+
+    spritesheet_factory = SpritesheetFactory()
     gui_factory = GUIFactory()
-    block_factory = BlockFactory(config["blocks"], block_spritesheet)
-    item_factory = ItemFactory(config["items"], item_spritesheet, block_spritesheet)
+    block_factory = BlockFactory(config["blocks"])
+    item_factory = ItemFactory(config["items"])
     character_factory = CharacterFactory(config["characters"])
     item_container_factory = ItemContainerFactory()
     region_generator = RegionGenerator()
     camera = Camera()
     file_save_handler = FileSaveHandler()
+
+    block_spritesheet = spritesheet_factory.create_spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json")
+    item_spritesheet = spritesheet_factory.create_spritesheet("../assets/imgs/sprites/item_textures/item_textures.png", "../assets/imgs/sprites/item_textures/item_textures.json")
+
     
     music_handler = MusicHandler(250, False)
     sfx_handler = SfxHandler()
     game = Game(state_stack, window, clock, music_handler, sfx_handler, \
                 config["framerate"], config, gui_factory,\
-                block_factory, file_save_handler, item_factory, character_factory, item_container_factory)  # Game class handles overall running of game
+                block_factory, file_save_handler, item_factory, character_factory, item_container_factory, spritesheet_factory, block_spritesheet, item_spritesheet)  # Game class handles overall running of game
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))

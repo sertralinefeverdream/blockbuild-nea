@@ -5,6 +5,7 @@ from src.gui.HotbarDisplay import HotbarDisplay
 from src.gui.ItemDisplay import ItemDisplay
 from src.gui.ContainerDisplayInteractive import ContainerDisplayInteractive
 from src.gui.ItemButton import ItemButton
+from src.gui.ImageButton import ImageButton
 
 '''
 This GUIFactory class has allowed me to remove any dependence of StateBase and its child classes on any of the
@@ -30,6 +31,8 @@ class GUIFactory:
             return ContainerDisplayInteractive(*args, **kwargs)
         elif component_id == "ItemButton":
             return ItemButton(*args, **kwargs)
+        elif component_id == "ImageButton":
+            return ImageButton(*args, **kwargs)
         else:
             raise Exception
 

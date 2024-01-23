@@ -114,8 +114,10 @@ class TextButton(ButtonBase):
 
     def draw(self):
         if self._is_visible:
-            pygame.draw.rect(self._surface, self._current_colour, self._rect)
-            pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
+            if self._has_box:
+                pygame.draw.rect(self._surface, self._current_colour, self._rect)
+            if self._has_outline:
+                pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
             self._surface.blit(self._rendered_font[0], (
                 self._position[0] + ((self._size[0] - self._rendered_font[1].size[0]) / 2),
                 self._position[1] + ((self._size[1] - self._rendered_font[1].size[1]) / 2)))

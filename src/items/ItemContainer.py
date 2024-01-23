@@ -20,12 +20,45 @@ class ItemContainer:
 
     def get_item_at_index(self, row, column):
         return self._data[row][column]
+    
+    def has_items_of_quantity(self, item_id, quantity=1): # Do you have n or more of item of type "item_id" in this item container?
+        total_quantity = self.get_total_quantity_by_id(item_id)
+        return total_quantity >= quantity
+
+    def get_total_quantity_by_id(self, item_id): # Get how many of this item of type item_id you have in your item container total
+        list_of_items_of_same_type = self.get_items_of_same_type_by_id(item_id)
+        return sum([item.quantity for item in list_of_items_of_same_type])
+
+    def deplete_item(self, item_id, amount_to_deplete):
+        if self.get_total_quantity_by_id(item_id) > 0:
+            print("CASE 1: There is at least one of this item type in the item container")
+            list_of_items = self.get_items_of_same_type_by_id(item_id)
+            list_of_items.sort(key=lambda l: l.quantity)
+            total_depleted = 0
+            for item in list_of_items:
+                if item.quantity > 0:
+                    for x in range(item.quantity):
+                        item.quantity -= 1
+                        total_depleted += 1
+                        if total_depleted == amount_to_deplete:
+                            return 0
+                        if item.quantity == 0:
+                            break
+                    else:
+                        print("ITEM QUANTITY IS 0")
+
+            return amount_to_deplete - total_depleted # Return remainder left to deplete
+
+        else:
+            print("CASE 2: There is 0 of this item type in the item container")
+
 
     def pickup_item(self, item_to_pickup, capacity_check=False):
         if capacity_check and self.get_remaining_capacity_of_same_type(item_to_pickup) < item_to_pickup.quantity:
-            print("Not enough capacity to pickup all")
+            print("NOT ENOUGH SPACE")
+            return item_to_pickup
 
-        unfilled_items_list = self.get_unfilled_items_of_type(item_to_pickup)
+        unfilled_items_list = self.get_unfilled_items_of_same_type_by_object(item_to_pickup)
         if len(unfilled_items_list) > 0:
             item_with_highest_quantity = unfilled_items_list[0]
             for item in unfilled_items_list:
@@ -45,16 +78,16 @@ class ItemContainer:
             self._data[row_index][item_index] = item_to_pickup
             return None
         else:
-            #print("CASE 3")
             return item_to_pickup
 
-    def get_remaining_capacity_of_same_type(self, item_to_check):
+    def get_remaining_capacity_of_same_type(self, item_to_check): # How many more of item_to_check could you fit in this item container?
         total = 0
-        list_of_same_items = self.get_unfilled_items_of_type(item_to_check)
+        list_of_same_items = self.get_unfilled_items_of_same_type_by_object(item_to_check)
+        print(list_of_same_items, "THIS TOO!!!!")
         for item in list_of_same_items:
             total += (item.max_quantity - item.quantity)
 
-        for item_to_check in self.get_empty_item_indexes():
+        for empty_slot in self.get_empty_item_indexes():
             total += item_to_check.max_quantity
 
         return total
@@ -74,16 +107,19 @@ class ItemContainer:
                     return True
         return False
 
-    def get_items_of_same_type(self, item_to_check):
+    def get_items_of_same_type_by_object(self, item_to_check):
+        return self.get_items_of_same_type_by_id(item_to_check.item_id)
+
+    def get_items_of_same_type_by_id(self, item_id):
         items_list = []
         for row in self._data:
             for item in row:
                 if item is not None:
-                    if item.item_id == item_to_check.item_id:
+                    if item.item_id == item_id:
                         items_list.append(item)
         return items_list
 
-    def get_unfilled_items_of_type(self, item_to_check):
+    def get_unfilled_items_of_same_type_by_object(self, item_to_check):
 
         # legacy code
         # unfilled_items_list = []
@@ -94,7 +130,7 @@ class ItemContainer:
         #            print("Unfilled item added for return")
         #           unfilled_items_list.append(item)
         # return unfilled_items_list
-        return [item for item in self.get_items_of_same_type(item_to_check) if item.quantity < item.max_quantity]
+        return [item for item in self.get_items_of_same_type_by_object(item_to_check) if item.quantity < item.max_quantity]
 
     def convert_data(self):
         data = \

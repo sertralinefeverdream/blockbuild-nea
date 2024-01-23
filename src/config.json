@@ -3,17 +3,14 @@
   "window_size_y": 800,
   "window_caption": "BlockBuild!",
   "framerate": 60,
-
   "save_files": {
     "save_file_1": "../save_files/save_file_1.json",
     "save_file_2": "../save_files/save_file_2.json",
     "save_file_3": "../save_files/save_file_3.json"
   },
-
   "music_assets": {
     "main_menu": "../assets/audio/music/menu_music.mp3"
   },
-
   "sfx_assets": {
     "btn_click_1": "../assets/audio/sfx/gui/btn_click_1.mp3",
     "btn_click_2": "../assets/audio/sfx/gui/btn_click_2.mp3",
@@ -26,7 +23,6 @@
     "dirt_mine": "../assets/audio/sfx/blocks/dirt_mine.ogg",
     "dirt_place_break": "../assets/audio/sfx/blocks/dirt_place_break.ogg"
   },
-
   "blocks": {
     "grass": {
       "type": "generic",
@@ -59,11 +55,10 @@
       "loot_drop_tool_whitelist": null
     }
   },
-
   "items": {
     "grass_block": {
       "name": "Grass Block",
-      "type":  "blockitem",
+      "type": "blockitem",
       "texture": "grass",
       "max_quantity": 5,
       "attack_cooldown": 250,
@@ -71,15 +66,15 @@
       "attack_range": 250,
       "use_range": 440,
       "attack_strength": 10,
-      "default_mine_strength":  10,
-      "preferred_mine_strength":  100,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
+      "recipe": null,
       "block_id": "grass"
     },
-
-      "stone_block": {
+    "stone_block": {
       "name": "Stone Block",
-      "type":  "blockitem",
+      "type": "blockitem",
       "texture": "stone",
       "max_quantity": 5,
       "attack_cooldown": 250,
@@ -87,15 +82,15 @@
       "attack_range": 250,
       "use_range": 440,
       "attack_strength": 10,
-      "default_mine_strength":  10,
-      "preferred_mine_strength":  100,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
+      "recipe": null,
       "block_id": "stone"
     },
-
-      "dirt_block": {
+    "dirt_block": {
       "name": "Dirt Block",
-      "type":  "blockitem",
+      "type": "blockitem",
       "texture": "dirt",
       "max_quantity": 5,
       "attack_cooldown": 250,
@@ -103,15 +98,15 @@
       "attack_range": 250,
       "use_range": 440,
       "attack_strength": 10,
-      "default_mine_strength":  10,
-      "preferred_mine_strength":  100,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
+      "recipe":  null,
       "block_id": "dirt"
     },
-
-    "empty_hands" : {
+    "empty_hands": {
       "name": "empty_hands",
-      "type":  "generic",
+      "type": "generic",
       "texture": "grass",
       "max_quantity": 5,
       "attack_cooldown": 250,
@@ -119,27 +114,59 @@
       "attack_range": 150,
       "use_range": 440,
       "attack_strength": 10,
-      "default_mine_strength":  10,
-      "preferred_mine_strength":  150,
-      "preferred_mine_strength_whitelist": []
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null
+    },
+    "test_pickaxe": {
+      "name": "Test Pickaxe",
+      "type": "generic",
+      "texture": "wooden_pickaxe",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 150,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": ["stone"],
+      "recipe": {
+        "ingredients": {
+          "dirt_block": 3
+        },
+        "amount_crafted": 1,
+        "description": "Requires: 3x Dirt"
+      }
     }
   },
-
   "characters": {
     "player": {
       "type": "player",
-      "size": [30, 60],
-      "max_speed": [400, 400],
+      "size": [
+        30,
+        60
+      ],
+      "max_speed": [
+        400,
+        400
+      ],
       "max_health": 100,
       "animation_data": {
         "idle": [
-        ["idle1", 250],
-        ["idle2", 250]
+          [
+            "idle1",
+            250
+          ],
+          [
+            "idle2",
+            250
+          ]
         ]
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
     }
   }
-
 }

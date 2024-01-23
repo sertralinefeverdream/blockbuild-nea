@@ -97,7 +97,7 @@ class MainGameState(StateBase):
         if self._game.keys_pressed[pygame.K_e]:
             self._inventory_key_held = True
         elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
-            self._game.push_state("inventory", [self._world.player.inventory, self._world.player.hotbar])
+            self._game.push_state("inventory", [self._world.player.inventory, self._world.player.hotbar, self._world])
             self._inventory_key_held = False
 
         for layer in self._gui[::-1]:
