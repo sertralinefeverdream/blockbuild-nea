@@ -346,11 +346,11 @@ class InventoryState(StateBase):
             for component in layer.values():
                 component.update()
 
-    def update_item_display_currently_hovering(self):
+    def update_item_display_currently_hovering(self): # Weirdest auto reformat ever??
         self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
                                                                                            "hotbar_display"].get_hovering() is not None else \
-        self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
-                                                                "inventory_display"].get_hovering() is not None else None
+            self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
+                                                                    "inventory_display"].get_hovering() is not None else None
 
     def draw(self):
         self._game.states["main_game"].draw(True)

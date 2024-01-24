@@ -65,8 +65,8 @@ class World:
             else:
                 self._player = player_reference
 
+        self.reassign_entities_to_regions() # Must be done in this order to prevent player stuttering
         self.update_draw_list()
-        self.reassign_entities_to_regions()
 
         for index, (x, y) in enumerate(self._draw_list):
             self._data[x][y].update()
