@@ -1,5 +1,7 @@
 from src.items.GenericItem import GenericItem
 from src.items.BlockItem import BlockItem
+from src.items.ToolItem import ToolItem
+
 
 class ItemFactory:
     def __init__(self, items_data):
@@ -9,16 +11,49 @@ class ItemFactory:
         if item_id in self._items_data.keys():
             item_data = self._items_data[item_id]
             if item_data["type"] == "generic":
-                item = GenericItem(game, world, item_id, item_data["name"], game.item_spritesheet.parse_sprite(item_data["texture"]), max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"], use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"], use_range=item_data["use_range"], attack_strength=item_data["attack_strength"], default_mine_strength=item_data["default_mine_strength"], preferred_mine_strength=item_data["preferred_mine_strength"], preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"])
+                item = GenericItem(game, world, item_id, item_data["name"],
+                                   game.item_spritesheet.parse_sprite(item_data["texture"]),
+                                   max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
+                                   use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
+                                   use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
+                                   default_mine_strength=item_data["default_mine_strength"],
+                                   preferred_mine_strength=item_data["preferred_mine_strength"],
+                                   preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"])
                 if state_data is not None:
                     item.load_state_data(state_data)
                 if quantity_override is not None:
                     item.quantity = quantity_override
                 return item
             elif item_data["type"] == "blockitem":
-                item = BlockItem(game, world, item_id, item_data["name"], game.block_spritesheet.parse_sprite(item_data["texture"]), max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"], use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"], use_range=item_data["use_range"], attack_strength=item_data["attack_strength"], default_mine_strength=item_data["default_mine_strength"], preferred_mine_strength=item_data["preferred_mine_strength"], preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"], block_id=item_data["block_id"])
+                item = BlockItem(game, world, item_id, item_data["name"],
+                                 game.block_spritesheet.parse_sprite(item_data["texture"]),
+                                 max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
+                                 use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
+                                 use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
+                                 default_mine_strength=item_data["default_mine_strength"],
+                                 preferred_mine_strength=item_data["preferred_mine_strength"],
+                                 preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
+                                 block_id=item_data["block_id"])
                 if state_data is not None:
                     item.load_state_data(state_data)
                 if quantity_override is not None:
                     item.quantity = quantity_override
                 return item
+            elif item_data["type"] == "tool":
+                print(item_data)
+                item = ToolItem(game, world, item_id, item_data["name"],
+                                   game.item_spritesheet.parse_sprite(item_data["texture"]),
+                                   max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
+                                   use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
+                                   use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
+                                   default_mine_strength=item_data["default_mine_strength"],
+                                   preferred_mine_strength=item_data["preferred_mine_strength"],
+                                   preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
+                                   durability=item_data["durability"])
+                if state_data is not None:
+                    item.load_state_data(state_data)
+                if quantity_override is not None:
+                    item.quantity = quantity_override
+                return item
+
+

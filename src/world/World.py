@@ -68,14 +68,11 @@ class World:
         self.update_draw_list()
         self.reassign_entities_to_regions()
 
-
-
-        for x, y in self._draw_list:
+        for index, (x, y) in enumerate(self._draw_list):
             self._data[x][y].update()
-            self._camera.x = self._player.position[0] - 600
-            self._camera.y = self._player.position[1] - 400
-
-
+            if index == 0:
+                self._camera.x = self._player.position[0] - 600
+                self._camera.y = self._player.position[1] - 400
 
     def draw(self):
         for x, y in self._draw_list:
@@ -168,6 +165,8 @@ class World:
         camera_x = self._camera.x
         camera_y = self._camera.y
 
+        region_with_player = None
+
         for x in range(6):
             for y in range(6):
                 region_check_x = camera_x + (x-3)*800
@@ -183,6 +182,11 @@ class World:
                    # print("Generating new")
                     #self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
                     self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(self._game, self, (int(region_index_x), int(region_index_y)))
-                self._draw_list.append((region_index_x, region_index_y))
+                if self._player not in self._data[region_index_x][region_index_y].entity_list:
+                    self._draw_list.append((region_index_x, region_index_y))
+                else:
+                    region_with_player = (region_index_x, region_index_y)
+
+        self._draw_list.insert(0, region_with_player)
 
 

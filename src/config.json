@@ -53,6 +53,16 @@
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "dirt_block",
       "loot_drop_tool_whitelist": null
+    },
+    "iron_ore": {
+      "type": "generic",
+      "hardness": 100,
+      "texture": "iron_ore",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "iron",
+      "loot_drop_tool_whitelist": ["test_pickaxe", "iron_pickaxe"]
     }
   },
   "items": {
@@ -119,9 +129,10 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": null
     },
+
     "test_pickaxe": {
       "name": "Test Pickaxe",
-      "type": "generic",
+      "type": "tool",
       "texture": "wooden_pickaxe",
       "max_quantity": 1,
       "attack_cooldown": 250,
@@ -131,14 +142,54 @@
       "attack_strength": 10,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
-      "preferred_mine_strength_whitelist": ["stone"],
+      "preferred_mine_strength_whitelist": ["stone", "iron_ore"],
       "recipe": {
         "ingredients": {
           "dirt_block": 3
         },
         "amount_crafted": 1,
-        "description": "Requires: 3x Dirt"
-      }
+        "description": "3x Dirt"
+      },
+      "durability": -1
+    },
+
+    "iron_pickaxe": {
+      "name": "Iron Pickaxe",
+      "type": "tool",
+      "texture": "iron_pickaxe",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 150,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 300,
+      "preferred_mine_strength_whitelist": ["stone", "iron_ore"],
+      "recipe": {
+        "ingredients": {
+          "iron": 3
+        },
+        "amount_crafted": 1,
+        "description": "3x Iron"
+      },
+      "durability": -1
+    },
+
+    "iron": {
+      "name": "Iron",
+      "type": "generic",
+      "texture": "iron",
+      "max_quantity": 5,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 150,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null
     }
   },
   "characters": {
@@ -167,6 +218,16 @@
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
+    }
+  },
+
+  "generation_data": {
+    "ore_data": {
+      "iron_ore": {
+        "max_height": 20,
+        "max_vein_size": 8,
+        "probability": 5
+      }
     }
   }
 }

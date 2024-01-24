@@ -1,5 +1,6 @@
 import json
 import pygame
+import random
 
 class Region:
     def __init__(self, game, world, position=(0, 0)):
@@ -62,6 +63,27 @@ class Region:
                 return x_index, y_index
             else:
                 print("Block not in region!")
+
+    def get_quantity_of_blocks_in_region(self, block_id):
+        total = 0
+        for row in self._data:
+            for block in row:
+                if block is not None:
+                    if block.block_id == block_id:
+                        total += 1
+        return total
+
+    def get_random_block_of_type_by_id(self, block_id): # Get a random block of type "block_id" within the region
+        random_block = None
+        if self.get_quantity_of_blocks_in_region(block_id) > 0:
+            blocks_of_same_type_list = []
+            for row in self._data:
+                for block in row:
+                    if block is not None:
+                        if block.block_id == block_id:
+                            blocks_of_same_type_list.append(block)
+            random_block = random.choice(blocks_of_same_type_list)
+        return random_block
 
     def get_block_at_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:

@@ -50,11 +50,12 @@ class ItemContainer:
             return amount_to_deplete - total_depleted # Return remainder left to deplete
 
         else:
+            return amount_to_deplete
             print("CASE 2: There is 0 of this item type in the item container")
 
 
     def pickup_item(self, item_to_pickup, capacity_check=False):
-        if capacity_check and self.get_remaining_capacity_of_same_type(item_to_pickup) < item_to_pickup.quantity:
+        if capacity_check and self.get_remaining_capacity_of_same_type_by_object(item_to_pickup) < item_to_pickup.quantity:
             print("NOT ENOUGH SPACE")
             return item_to_pickup
 
@@ -80,7 +81,7 @@ class ItemContainer:
         else:
             return item_to_pickup
 
-    def get_remaining_capacity_of_same_type(self, item_to_check): # How many more of item_to_check could you fit in this item container?
+    def get_remaining_capacity_of_same_type_by_object(self, item_to_check): # How many more of item_to_check could you fit in this item container?
         total = 0
         list_of_same_items = self.get_unfilled_items_of_same_type_by_object(item_to_check)
         print(list_of_same_items, "THIS TOO!!!!")
@@ -89,6 +90,17 @@ class ItemContainer:
 
         for empty_slot in self.get_empty_item_indexes():
             total += item_to_check.max_quantity
+
+        return total
+
+    def get_remaining_capacity_of_same_type_by_id(self, item_id):
+        total = 0
+        list_of_same_items = self.get_unfilled_items_of_same_type_by_id(item_id)
+        for item in list_of_same_items:
+            total += (item.max_quantity - item.quantity)
+
+        for empty_slot in self.get_empty_item_indexes():
+            total += self._game.config["items"][item_id]["max_quantity"]
 
         return total
 
@@ -118,6 +130,9 @@ class ItemContainer:
                     if item.item_id == item_id:
                         items_list.append(item)
         return items_list
+
+    def get_unfilled_items_of_same_type_by_id(self, item_id):
+        return [item for item in self.get_items_of_same_type_by_id(item_id) if item.quantity < item.max_quantity]
 
     def get_unfilled_items_of_same_type_by_object(self, item_to_check):
 

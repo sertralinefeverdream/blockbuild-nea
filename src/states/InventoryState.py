@@ -39,6 +39,9 @@ class InventoryState(StateBase):
                 "item_description_box": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window),
                 "test_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
+                                                                               self.on_craft_item_press),
+                "iron_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
                                                                                self.on_craft_item_press)
             },
             {},
@@ -50,12 +53,13 @@ class InventoryState(StateBase):
 
     def on_craft_button_press(self, button):
         if self.check_can_craft(self._recipe_selected) and self._recipe_selected is not None:
-            item = self._game.item_factory.create_item(self._game, self._world, self._recipe_selected,
-                                                       quantity_override=self._crafting_recipes[self._recipe_selected][
-                                                           "amount_crafted"])
-            print(f"HERE IT IS {item}")
-            if self._hotbar.get_remaining_capacity_of_same_type(
-                    item) + self._inventory.get_remaining_capacity_of_same_type(item) > item.quantity:
+            if self._hotbar.get_remaining_capacity_of_same_type_by_id(
+                    self._recipe_selected) + self._inventory.get_remaining_capacity_of_same_type_by_id(
+                self._recipe_selected) >= self._game.config["items"][self._recipe_selected]["recipe"]["amount_crafted"]:
+                item = self._game.item_factory.create_item(self._game, self._world, self._recipe_selected,
+                                                           quantity_override=
+                                                           self._crafting_recipes[self._recipe_selected][
+                                                               "amount_crafted"])
                 for ingredient_name, quantity_required in self._crafting_recipes[self._recipe_selected][
                     "ingredients"].items():
                     remainder = self._hotbar.deplete_item(ingredient_name, quantity_required)
@@ -67,7 +71,7 @@ class InventoryState(StateBase):
                 self._inventory.update()
                 pickup_remainder = self._hotbar.pickup_item(item)
                 if pickup_remainder is not None:
-                    pickup_remainder = self._inventory.pickup(pickup_remainder)
+                    pickup_remainder = self._inventory.pickup_item(pickup_remainder)
                 if pickup_remainder is not None:
                     print("THIS CASE SHOULDNT BE REACHED EITHER")
 
@@ -86,6 +90,8 @@ class InventoryState(StateBase):
         self._item_selected = None
         if item_button is self._gui[0]["test_pickaxe_craft_button"]:
             self._recipe_selected = "test_pickaxe"
+        elif item_button is self._gui[0]["iron_pickaxe_craft_button"]:
+            self._recipe_selected = "iron_pickaxe"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -224,7 +230,7 @@ class InventoryState(StateBase):
         self._gui[0]["craft_button"].text = "Craft"
 
         self._gui[0]["item_description_box"].size = (200.0, 50.0)
-        self._gui[0]["item_description_box"].font_size = 30
+        self._gui[0]["item_description_box"].font_size = 20
         self._gui[0]["item_description_box"].text = "TEST"
         self._gui[0]["item_description_box"].position = (710.0, 459.0)
 
@@ -233,10 +239,17 @@ class InventoryState(StateBase):
         self._gui[2]["crafting_background"].box_colour = (200, 200, 200)
         self._gui[2]["crafting_background"].centre_position = (875.0, 230.0)
 
-        self._gui[0]["test_pickaxe_craft_button"].size = (60.0, 60.0)
+        self._gui[0]["test_pickaxe_craft_button"].size = (40.0, 40.0)
         self._gui[0]["test_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("wooden_pickaxe")
         self._gui[0]["test_pickaxe_craft_button"].image_scale_multiplier = 0.9
         self._gui[0]["test_pickaxe_craft_button"].centre_position = (630.0, 80.0)
+        self._gui[0]["test_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[0]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[0]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
+        self._gui[0]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[0]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
+        self._gui[0]["iron_pickaxe_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None
@@ -284,8 +297,7 @@ class InventoryState(StateBase):
             else:
                 self._gui[0]["craft_button"].is_visible = True
                 self._gui[0]["item_description_box"].is_visible = True
-                self._gui[0]["item_description_box"].text = self._crafting_recipes[self._recipe_selected]["description"]
-                # self._gui[0]["item_description_box"].position = (850.0, 480.0)
+                self._gui[0]["item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
 
         elif self._mode == "move":
             self._gui[0]["move_button"].text = "Cancel Move"

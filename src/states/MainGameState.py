@@ -82,7 +82,7 @@ class MainGameState(StateBase):
             if current_player_tool.is_mining:
                 self._gui[1]["block_health_bar"].is_visible = True
                 self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_mining_hardness_remaining/current_player_tool.block_currently_mining.hardness) * 30
-                self._gui[1]["block_health_bar"].centre_position = current_player_tool.block_currently_mining.hitbox.center
+                self._gui[1]["block_health_bar"].centre_position = self._world.camera.get_screen_position((current_player_tool.block_currently_mining.position[0] + 20, current_player_tool.block_currently_mining.position[1] + 20))
             else:
                 self._gui[1]["block_health_bar"].is_visible = False
         else:

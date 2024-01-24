@@ -40,22 +40,19 @@ def main():
     state_stack = StateStack()
     clock = pygame.time.Clock()
 
-
-
     spritesheet_factory = SpritesheetFactory()
     gui_factory = GUIFactory()
     block_factory = BlockFactory(config["blocks"])
     item_factory = ItemFactory(config["items"])
     character_factory = CharacterFactory(config["characters"])
     item_container_factory = ItemContainerFactory()
-    region_generator = RegionGenerator()
+    region_generator = RegionGenerator(generation_data=config["generation_data"])
     camera = Camera()
     file_save_handler = FileSaveHandler()
 
     block_spritesheet = spritesheet_factory.create_spritesheet("../assets/imgs/sprites/block_textures/block_textures.png", "../assets/imgs/sprites/block_textures/block_textures.json")
     item_spritesheet = spritesheet_factory.create_spritesheet("../assets/imgs/sprites/item_textures/item_textures.png", "../assets/imgs/sprites/item_textures/item_textures.json")
 
-    
     music_handler = MusicHandler(250, False)
     sfx_handler = SfxHandler()
     game = Game(state_stack, window, clock, music_handler, sfx_handler, \
