@@ -74,12 +74,13 @@ class World:
                 self._camera.x = self._player.position[0] - 600
                 self._camera.y = self._player.position[1] - 400
 
-    def draw(self):
+    def draw_blocks(self):
         for x, y in self._draw_list:
             screen_position = self._camera.get_screen_position((int(x), int(y)))
             if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
                 self._data[x][y].draw_blocks()
 
+    def draw_entities(self):
         for x, y in self._draw_list:
             self._data[x][y].draw_entities()
 

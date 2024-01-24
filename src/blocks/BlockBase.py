@@ -4,7 +4,7 @@ import json
 
 
 class BlockBase(ABC):
-    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None):
+    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):
         self._game = game
         self._world = world
         self._position = list(position)
@@ -16,6 +16,7 @@ class BlockBase(ABC):
         self._footstep_sfx_id = footstep_sfx_id
         self._loot_drop_id = loot_drop_id
         self._loot_drop_tool_whitelist = loot_drop_tool_whitelist
+        self._can_collide = can_collide
 
         self._hitbox = pygame.Rect(self._world.camera.get_screen_position(self._position), (40, 40))
         self._is_broken = False
@@ -57,6 +58,15 @@ class BlockBase(ABC):
     @property
     def loot_drop_tool_whitelist(self):
         return self._loot_drop_tool_whitelist
+
+    @property
+    def can_collide(self):
+        return self._can_collide
+
+    @can_collide.setter
+    def can_collide(self, value):
+        if type(value) is bool:
+            self._can_collide = value
 
     @property
     def mine_sfx_id(self):

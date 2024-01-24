@@ -1,26 +1,41 @@
 {
-  "grass" :
-  {
+  "grass": {
     "x": 48,
     "y": 0,
     "width": 16,
     "height": 16
   },
-  "stone":
-  {
+  "stone": {
     "x": 16,
     "y": 0,
     "width": 16,
     "height": 16
   },
-  "dirt":
-  {
+  "dirt": {
     "x": 32,
     "y": 0,
     "width": 16,
     "height": 16
   },
-  "iron_ore":{
+  "oak_log": {
+    "x": 64,
+    "y": 16,
+    "width": 16,
+    "height": 16
+  },
+  "oak_plank": {
+    "x": 64,
+    "y": 0,
+    "width": 16,
+    "height": 16
+  },
+  "leaf": {
+    "x": 64,
+    "y:" 48,
+    "width": 16,
+    "height": 16
+  },
+  "iron_ore": {
     "x": 16,
     "y": 32,
     "width": 16,

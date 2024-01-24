@@ -26,13 +26,14 @@
   "blocks": {
     "grass": {
       "type": "generic",
-      "hardness": 15,
+      "hardness": 20,
       "texture": "grass",
       "mine_sfx_id": "grass_mine",
       "place_and_break_sfx_id": "grass_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "grass_block",
-      "loot_drop_tool_whitelist": null
+      "loot_drop_tool_whitelist": null,
+      "can_collide": true
     },
     "stone": {
       "type": "generic",
@@ -42,7 +43,9 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "stone_block",
-      "loot_drop_tool_whitelist": null
+      "loot_drop_tool_whitelist": ["test_pickaxe",
+        "iron_pickaxe"],
+      "can_collide": true
     },
     "dirt": {
       "type": "generic",
@@ -52,17 +55,19 @@
       "place_and_break_sfx_id": "dirt_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "dirt_block",
-      "loot_drop_tool_whitelist": null
+      "loot_drop_tool_whitelist": null,
+      "can_collide": true
     },
     "iron_ore": {
       "type": "generic",
-      "hardness": 100,
+      "hardness": 150,
       "texture": "iron_ore",
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "iron",
-      "loot_drop_tool_whitelist": ["test_pickaxe", "iron_pickaxe"]
+      "loot_drop_tool_whitelist": ["test_pickaxe", "iron_pickaxe"],
+      "can_collide": true
     }
   },
   "items": {
@@ -223,7 +228,8 @@
 
   "generation_data": {
     "ore_data": {
-      "iron_ore": {
+      "iron_ore_vein": {
+        "block_id": "iron_ore",
         "max_height": 20,
         "max_vein_size": 8,
         "probability": 5

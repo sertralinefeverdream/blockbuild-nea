@@ -143,7 +143,7 @@ class Player(CharacterBase):
 
         if axis.lower() == "horizontal":
             for block, hitbox in hitboxes_to_check:
-                if self._hitbox.colliderect(hitbox):
+                if self._hitbox.colliderect(hitbox) and block.can_collide:
                     if self._velocity[0] > 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] - self._size[0]
@@ -156,7 +156,7 @@ class Player(CharacterBase):
         elif axis.lower() == "vertical":
             has_vertically_collided_below = False
             for block, hitbox in hitboxes_to_check:
-                if self._hitbox.colliderect(hitbox):
+                if self._hitbox.colliderect(hitbox) and block.can_collide:
                     if self._velocity[1] > 0:
                         self._velocity[1] = 0
                         self._position[1] = block.position[1] - self._size[1]

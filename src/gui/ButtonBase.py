@@ -158,6 +158,10 @@ class ButtonBase(GUIBase):
             self._outline_colour = value
 
     @property
+    def is_hovering(self):
+        return self._is_hovering
+
+    @property
     def is_enabled(self):
         return self._is_enabled
 

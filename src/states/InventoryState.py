@@ -10,6 +10,7 @@ class InventoryState(StateBase):
         self._inventory_key_held = False
         self._item_selected = None  # In the form (row_index, column_index, id) where id identifies whether the item originates from the inventory or the hotbar
         self._recipe_selected = None
+        self._item_display_hovering = None
         self._mode = "default"
         self._crafting_recipes = {}
         self._world = None
@@ -22,12 +23,18 @@ class InventoryState(StateBase):
 
     def initialise_gui(self):
         self._gui = [
+            {"name_box": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window)
+             },
             {
                 "inventory_display": self._game.gui_factory.create_gui("ContainerDisplayInteractive", self._game,
                                                                        self._game.window, 9, 9,
-                                                                       self.on_inventory_item_press),
+                                                                       self.on_inventory_item_press,
+                                                                       self.on_inventory_and_hotbar_hover_enter,
+                                                                       self.on_inventory_and_hotbar_hover_leave),
                 "hotbar_display": self._game.gui_factory.create_gui("ContainerDisplayInteractive", self._game,
-                                                                    self._game.window, 1, 9, self.on_hotbar_item_press),
+                                                                    self._game.window, 1, 9, self.on_hotbar_item_press,
+                                                                    self.on_inventory_and_hotbar_hover_enter,
+                                                                    self.on_inventory_and_hotbar_hover_leave),
                 "move_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
                                                                  self.on_move_button_press),
                 "delete_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
@@ -42,9 +49,9 @@ class InventoryState(StateBase):
                                                                                self.on_craft_item_press),
                 "iron_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
-                                                                               self.on_craft_item_press)
+                                                                               self.on_craft_item_press),
+
             },
-            {},
             {
                 "crafting_background": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window),
                 # "crafting_info_background": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window)
@@ -85,32 +92,38 @@ class InventoryState(StateBase):
         else:
             return False
 
+    def on_inventory_and_hotbar_hover_enter(self, item_button):
+        self._item_display_hovering = item_button
+
+    def on_inventory_and_hotbar_hover_leave(self, item_button):
+        self._item_display_hovering = None
+
     def on_craft_item_press(self, item_button):
         self._mode = "default"
         self._item_selected = None
-        if item_button is self._gui[0]["test_pickaxe_craft_button"]:
+        if item_button is self._gui[1]["test_pickaxe_craft_button"]:
             self._recipe_selected = "test_pickaxe"
-        elif item_button is self._gui[0]["iron_pickaxe_craft_button"]:
+        elif item_button is self._gui[1]["iron_pickaxe_craft_button"]:
             self._recipe_selected = "iron_pickaxe"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
 
         if self._mode == "default":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "hotbar_display"])
             if self._hotbar.get_item_at_index(item_button_row, item_button_column) is not None:
                 self._item_selected = (item_button_row, item_button_column, "hotbar")
             else:
                 self._item_selected = None
         elif self._mode == "move":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "hotbar_display"])
             self.swap((item_button_row, item_button_column, "hotbar"), self._item_selected)
             self._item_selected = None
             self._mode = "default"
         elif self._mode == "merge":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "hotbar_display"])
             selected_item_container = self._inventory if self._item_selected[2] == "inventory" else self._hotbar
             item_1 = selected_item_container.get_item_at_index(self._item_selected[0], self._item_selected[1])
@@ -125,20 +138,20 @@ class InventoryState(StateBase):
         self._recipe_selected = None
 
         if self._mode == "default":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "inventory_display"])
             if self._inventory.get_item_at_index(item_button_row, item_button_column) is not None:
                 self._item_selected = (item_button_row, item_button_column, "inventory")
             else:
                 self._item_selected = None
         elif self._mode == "move":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "inventory_display"])
             self.swap((item_button_row, item_button_column, "inventory"), self._item_selected)
             self._item_selected = None
             self._mode = "default"
         elif self._mode == "merge":
-            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[0][
+            item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "inventory_display"])
             selected_item_container = self._inventory if self._item_selected[2] == "inventory" else self._hotbar
             item_1 = selected_item_container.get_item_at_index(
@@ -213,53 +226,60 @@ class InventoryState(StateBase):
 
     def on_state_enter(self, params=None):
 
-        self._gui[0]["inventory_display"].centre_position = (300.0, 300.0)
-        self._gui[0]["hotbar_display"].centre_position = (600.0, 700.0)
+        self._gui[1]["inventory_display"].centre_position = (300.0, 300.0)
+        self._gui[1]["hotbar_display"].centre_position = (600.0, 700.0)
 
-        self._gui[0]["move_button"].size = (110.0, 50.0)
-        self._gui[0]["move_button"].centre_position = (175.0, 600.0)
+        self._gui[1]["move_button"].size = (110.0, 50.0)
+        self._gui[1]["move_button"].centre_position = (175.0, 600.0)
 
-        self._gui[0]["delete_button"].size = (110.0, 50.0)
-        self._gui[0]["delete_button"].centre_position = (300.0, 600.0)
+        self._gui[1]["delete_button"].size = (110.0, 50.0)
+        self._gui[1]["delete_button"].centre_position = (300.0, 600.0)
 
-        self._gui[0]["merge_button"].size = (110.0, 50.0)
-        self._gui[0]["merge_button"].centre_position = (425.0, 600.0)
+        self._gui[1]["merge_button"].size = (110.0, 50.0)
+        self._gui[1]["merge_button"].centre_position = (425.0, 600.0)
 
-        self._gui[0]["craft_button"].size = (110.0, 50.0)
-        self._gui[0]["craft_button"].centre_position = (630.0, 470.0)
-        self._gui[0]["craft_button"].text = "Craft"
+        self._gui[1]["craft_button"].size = (110.0, 50.0)
+        self._gui[1]["craft_button"].centre_position = (630.0, 470.0)
+        self._gui[1]["craft_button"].text = "Craft"
 
-        self._gui[0]["item_description_box"].size = (200.0, 50.0)
-        self._gui[0]["item_description_box"].font_size = 20
-        self._gui[0]["item_description_box"].text = "TEST"
-        self._gui[0]["item_description_box"].position = (710.0, 459.0)
+        self._gui[1]["item_description_box"].size = (200.0, 50.0)
+        self._gui[1]["item_description_box"].font_size = 20
+        self._gui[1]["item_description_box"].text = "TEST"
+        self._gui[1]["item_description_box"].position = (710.0, 459.0)
+
+        self._gui[0]["name_box"].font_size = 25
+        self._gui[0]["name_box"].text_colour = (255, 255, 255)
+        self._gui[0]["name_box"].has_box = False
+        self._gui[0]["name_box"].has_outline = False
+        self._gui[0]["name_box"].is_visible = False
 
         self._gui[2]["crafting_background"].colour = (125, 50, 0)
         self._gui[2]["crafting_background"].size = (600.0, 400.0)
         self._gui[2]["crafting_background"].box_colour = (200, 200, 200)
         self._gui[2]["crafting_background"].centre_position = (875.0, 230.0)
 
-        self._gui[0]["test_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[0]["test_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("wooden_pickaxe")
-        self._gui[0]["test_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[0]["test_pickaxe_craft_button"].centre_position = (630.0, 80.0)
-        self._gui[0]["test_pickaxe_craft_button"].outline_thickness = 3
+        self._gui[1]["test_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["test_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("wooden_pickaxe")
+        self._gui[1]["test_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["test_pickaxe_craft_button"].centre_position = (630.0, 80.0)
+        self._gui[1]["test_pickaxe_craft_button"].outline_thickness = 3
 
-        self._gui[0]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[0]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
-        self._gui[0]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[0]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
-        self._gui[0]["iron_pickaxe_craft_button"].outline_thickness = 3
+        self._gui[1]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
+        self._gui[1]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
+        self._gui[1]["iron_pickaxe_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None
         self._world = params[2] if params is not None else None
         self._inventory_key_held = False
         self._item_selected = None
+        self._item_display_hovering = None
         self._mode = "default"
 
-        self._gui[0]["inventory_display"].container = self._inventory
-        self._gui[0]["hotbar_display"].container = self._hotbar
+        self._gui[1]["inventory_display"].container = self._inventory
+        self._gui[1]["hotbar_display"].container = self._hotbar
 
         for layer in self._gui[::-1]:
             for component in layer.values():
@@ -269,6 +289,7 @@ class InventoryState(StateBase):
         pass
 
     def update(self):
+        mouse_pos = pygame.mouse.get_pos()
         if self._game.keys_pressed[pygame.K_e]:
             self._inventory_key_held = True
         elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
@@ -279,38 +300,57 @@ class InventoryState(StateBase):
         self._inventory.update()
 
         if self._mode == "default":
-            self._gui[0]["move_button"].text = "Move Item"
-            self._gui[0]["merge_button"].text = "Merge"
-            self._gui[0]["delete_button"].text = "Delete"
+            self._gui[1]["move_button"].text = "Move Item"
+            self._gui[1]["merge_button"].text = "Merge"
+            self._gui[1]["delete_button"].text = "Delete"
             if self._item_selected is None:
-                self._gui[0]["move_button"].is_visible = False
-                self._gui[0]["delete_button"].is_visible = False
-                self._gui[0]["merge_button"].is_visible = False
+                self._gui[1]["move_button"].is_visible = False
+                self._gui[1]["delete_button"].is_visible = False
+                self._gui[1]["merge_button"].is_visible = False
             else:
-                self._gui[0]["move_button"].is_visible = True
-                self._gui[0]["delete_button"].is_visible = True
-                self._gui[0]["merge_button"].is_visible = True
+                self._gui[1]["move_button"].is_visible = True
+                self._gui[1]["delete_button"].is_visible = True
+                self._gui[1]["merge_button"].is_visible = True
 
             if self._recipe_selected is None:
-                self._gui[0]["craft_button"].is_visible = False
-                self._gui[0]["item_description_box"].is_visible = False
+                self._gui[1]["craft_button"].is_visible = False
+                self._gui[1]["item_description_box"].is_visible = False
             else:
-                self._gui[0]["craft_button"].is_visible = True
-                self._gui[0]["item_description_box"].is_visible = True
-                self._gui[0]["item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
+                self._gui[1]["craft_button"].is_visible = True
+                self._gui[1]["item_description_box"].is_visible = True
+                self._gui[1][
+                    "item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
 
         elif self._mode == "move":
-            self._gui[0]["move_button"].text = "Cancel Move"
-            self._gui[0]["delete_button"].is_visible = False
-            self._gui[0]["merge_button"].is_visible = False
+            self._gui[1]["move_button"].text = "Cancel Move"
+            self._gui[1]["delete_button"].is_visible = False
+            self._gui[1]["merge_button"].is_visible = False
         elif self._mode == "merge":
-            self._gui[0]["merge_button"].text = "Cancel Merge"
-            self._gui[0]["move_button"].is_visible = False
-            self._gui[0]["delete_button"].is_visible = False
+            self._gui[1]["merge_button"].text = "Cancel Merge"
+            self._gui[1]["move_button"].is_visible = False
+            self._gui[1]["delete_button"].is_visible = False
+
+        self.update_item_display_currently_hovering()
+
+        if self._item_display_hovering is not None:
+            if self._item_display_hovering.item is not None:
+                self._gui[0]["name_box"].position = mouse_pos
+                self._gui[0]["name_box"].text = self._item_display_hovering.item.name
+                self._gui[0]["name_box"].is_visible = True
+            else:
+                self._gui[0]["name_box"].is_visible = False
+        else:
+            self._gui[0]["name_box"].is_visible = False
 
         for layer in self._gui[::-1]:
             for component in layer.values():
                 component.update()
+
+    def update_item_display_currently_hovering(self):
+        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
+                                                                                           "hotbar_display"].get_hovering() is not None else \
+        self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
+                                                                "inventory_display"].get_hovering() is not None else None
 
     def draw(self):
         self._game.states["main_game"].draw(True)

@@ -62,6 +62,8 @@ class MainGameState(StateBase):
             if params[0] == "save":
                 self._game.file_save_handler.save_world(self._world, self._save_file_pointer)
 
+
+
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
         self._world.update()
@@ -106,9 +108,10 @@ class MainGameState(StateBase):
 
 
     def draw(self, no_gui=False):
-        self._world.draw()
+        self._world.draw_blocks()
         if not no_gui:
             for layer in self._gui[::-1]:
                 for component in layer.values():
                     component.draw()
+        self._world.draw_entities()
 

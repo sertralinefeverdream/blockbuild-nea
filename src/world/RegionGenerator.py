@@ -56,17 +56,20 @@ class RegionGenerator:
                 elif region.position[1] + y*40 >= rock_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "stone")
 
+        self.populate_region_with_ores(region)
+
+    def populate_region_with_ores(self, region):
         if region.get_quantity_of_blocks_in_region("stone") > 0:
             random_stone_block = region.get_random_block_of_type_by_id("stone")
             if random_stone_block is not None:
                 ores_that_can_be_generated = []
                 for ore_id, ore_data in self._generation_data["ore_data"].items():
-                    if ore_data["max_height"] <= random_stone_block.position[1]:
-                        ores_that_can_be_generated.append((ore_id, ore_data))
+                    if random_stone_block.position[1] >= ore_data["max_height"]:
+                        ores_that_can_be_generated.append(ore_data)
                 ore_to_generate = random.choice(ores_that_can_be_generated)
                 region_indexes = region.get_block_indexes_from_position(random_stone_block.position)
-                if random.randint(1, ore_to_generate[1]["probability"]) == 1:
-                    self.generate_vein(region, ore_to_generate[0], region_indexes, ore_to_generate[1]["max_vein_size"])
+                if random.randint(1, ore_to_generate["probability"]) == 1:
+                    self.generate_vein(region, ore_to_generate["block_id"], region_indexes, ore_to_generate["max_vein_size"])
             else:
                 print("NO STONE BLOCKS HERE ")
 
