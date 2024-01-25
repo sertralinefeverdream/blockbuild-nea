@@ -1,5 +1,5 @@
 import json
-
+import random
 
 class World:
     def __init__(self, game, camera, region_generator):
@@ -180,14 +180,30 @@ class World:
                 if not region_exists:
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
-                   # print("Generating new")
                     #self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
                     self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(self._game, self, (int(region_index_x), int(region_index_y)))
+
+
                 if self._player not in self._data[region_index_x][region_index_y].entity_list:
                     self._draw_list.append((region_index_x, region_index_y))
                 else:
                     region_with_player = (region_index_x, region_index_y)
 
         self._draw_list.insert(0, region_with_player)
+
+
+            '''
+            random_grass_block = self._data[x][y].get_random_block_of_type_by_id("grass")
+            if random_grass_block is not None:  # 1 in 10 chance of a grass block being where a tree spawns in
+                tree_to_generate = random.choice(list(self._region_generator.generation_data["tree_data"].values()))
+                if random.randint(1, tree_to_generate["probability"]) == 1:
+                    self._region_generator.generate_tree(self, tree_to_generate["trunk_block_id"],
+                                                         tree_to_generate["leaf_block_id"],
+                                                         (random_grass_block.position[0],
+                                                          random_grass_block.position[1] - 40),
+                                                         tree_to_generate["trunk_length"],
+                                                         tree_to_generate["leaf_base_layer_width"])
+                                                                     '''
+
 
 

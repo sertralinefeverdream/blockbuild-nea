@@ -16,6 +16,7 @@ class Region:
         self._entity_list = []
         self._region_surface = pygame.Surface((800, 800))
         self._flag_for_redraw = True
+        self._has_trees = False
 
     @property
     def game(self):
@@ -64,13 +65,19 @@ class Region:
             else:
                 print("Block not in region!")
 
+    def position_from_block_indexes(self, block_indexes):
+        if 0 <= block_indexes[0] <= 19 and 0 <= block_indexes[1] <= 19:
+            return self._position[0] + block_indexes[0]*40, self._position[1] + block
+
     def get_quantity_of_blocks_in_region(self, block_id):
         total = 0
         for row in self._data:
             for block in row:
-                if block is not None:
+                if block is not None and block_id is not None:
                     if block.block_id == block_id:
                         total += 1
+                elif block is None and block_id is None:
+                    total += 1
         return total
 
     def get_random_block_of_type_by_id(self, block_id): # Get a random block of type "block_id" within the region

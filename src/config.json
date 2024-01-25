@@ -35,6 +35,17 @@
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
+    "leaf": {
+      "type": "generic",
+      "hardness": 20,
+      "texture": "leaf",
+      "mine_sfx_id": "grass_mine",
+      "place_and_break_sfx_id": "grass_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": null,
+      "loot_drop_tool_whitelist": null,
+      "can_collide": false
+    },
     "stone": {
       "type": "generic",
       "hardness": 100,
@@ -43,8 +54,10 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "stone_block",
-      "loot_drop_tool_whitelist": ["test_pickaxe",
-        "iron_pickaxe"],
+      "loot_drop_tool_whitelist": [
+        "test_pickaxe",
+        "iron_pickaxe"
+      ],
       "can_collide": true
     },
     "dirt": {
@@ -66,11 +79,95 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "iron",
-      "loot_drop_tool_whitelist": ["test_pickaxe", "iron_pickaxe"],
+      "loot_drop_tool_whitelist": [
+        "test_pickaxe",
+        "iron_pickaxe"
+      ],
+      "can_collide": true
+    },
+    "oak_log": {
+      "type": "generic",
+      "hardness": 30,
+      "texture": "oak_log",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "oak_log",
+      "loot_drop_tool_whitelist": null,
+      "can_collide": false
+    },
+    "oak_plank": {
+      "type": "generic",
+      "hardness": 30,
+      "texture": "oak_plank",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "oak_plank",
+      "loot_drop_tool_whitelist": null,
       "can_collide": true
     }
   },
   "items": {
+    "oak_plank": {
+      "name": "Oak Plank",
+      "type": "blockitem",
+      "texture": "oak_plank",
+      "max_quantity": 5,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "oak_log": 1
+        },
+        "amount_crafted": 4,
+        "description": "Requires 1x Oak Log, Makes 4x Oak Plank"
+      },
+      "block_id": "oak_log"
+    },
+    "stick": {
+      "name": "Stick",
+      "type": "generic",
+      "texture": "stick",
+      "max_quantity": 5,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "oak_plank": 1
+        },
+        "amount_crafted": 4,
+        "description": "Requires 1x Oak Plank, Makes 4x Stick"
+      }
+    },
+    "oak_log": {
+      "name": "Oak Log",
+      "type": "blockitem",
+      "texture": "oak_log",
+      "max_quantity": 5,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 250,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null,
+      "block_id": "oak_log"
+    },
     "grass_block": {
       "name": "Grass Block",
       "type": "blockitem",
@@ -116,7 +213,7 @@
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
-      "recipe":  null,
+      "recipe": null,
       "block_id": "dirt"
     },
     "empty_hands": {
@@ -134,7 +231,6 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": null
     },
-
     "test_pickaxe": {
       "name": "Test Pickaxe",
       "type": "tool",
@@ -147,17 +243,19 @@
       "attack_strength": 10,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
-      "preferred_mine_strength_whitelist": ["stone", "iron_ore"],
+      "preferred_mine_strength_whitelist": [
+        "stone",
+        "iron_ore"
+      ],
       "recipe": {
         "ingredients": {
           "dirt_block": 3
         },
         "amount_crafted": 1,
-        "description": "3x Dirt"
+        "description": "Requires 3x Dirt, Makes 1x Iron Pickaxe"
       },
       "durability": -1
     },
-
     "iron_pickaxe": {
       "name": "Iron Pickaxe",
       "type": "tool",
@@ -170,17 +268,19 @@
       "attack_strength": 10,
       "default_mine_strength": 10,
       "preferred_mine_strength": 300,
-      "preferred_mine_strength_whitelist": ["stone", "iron_ore"],
+      "preferred_mine_strength_whitelist": [
+        "stone",
+        "iron_ore"
+      ],
       "recipe": {
         "ingredients": {
           "iron": 3
         },
         "amount_crafted": 1,
-        "description": "3x Iron"
+        "description": "Requires 3x Iron, Makes 1x Iron Pickaxe"
       },
       "durability": -1
     },
-
     "iron": {
       "name": "Iron",
       "type": "generic",
@@ -225,7 +325,6 @@
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
     }
   },
-
   "generation_data": {
     "ore_data": {
       "iron_ore_vein": {
@@ -233,6 +332,15 @@
         "max_height": 20,
         "max_vein_size": 8,
         "probability": 5
+      }
+    },
+    "tree_data": {
+      "oak_tree": {
+        "trunk_block_id": "oak_log",
+        "leaf_block_id": "leaf",
+        "trunk_length": 4,
+        "leaf_base_layer_width": 5,
+        "probability": 3
       }
     }
   }
