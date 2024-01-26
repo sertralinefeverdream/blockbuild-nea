@@ -167,9 +167,10 @@ class World:
         camera_y = self._camera.y
 
         region_with_player = None
+        regions_to_generate_trees_for = []
 
-        for x in range(6):
-            for y in range(6):
+        for x in range(7):
+            for y in range(7):
                 region_check_x = camera_x + (x-3)*800
                 region_check_y = camera_y + (y-3)*800
 
@@ -192,18 +193,6 @@ class World:
         self._draw_list.insert(0, region_with_player)
 
 
-            '''
-            random_grass_block = self._data[x][y].get_random_block_of_type_by_id("grass")
-            if random_grass_block is not None:  # 1 in 10 chance of a grass block being where a tree spawns in
-                tree_to_generate = random.choice(list(self._region_generator.generation_data["tree_data"].values()))
-                if random.randint(1, tree_to_generate["probability"]) == 1:
-                    self._region_generator.generate_tree(self, tree_to_generate["trunk_block_id"],
-                                                         tree_to_generate["leaf_block_id"],
-                                                         (random_grass_block.position[0],
-                                                          random_grass_block.position[1] - 40),
-                                                         tree_to_generate["trunk_length"],
-                                                         tree_to_generate["leaf_base_layer_width"])
-                                                                     '''
 
 
 

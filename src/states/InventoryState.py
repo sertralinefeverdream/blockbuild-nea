@@ -44,12 +44,21 @@ class InventoryState(StateBase):
                 "craft_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
                                                                   self.on_craft_button_press),
                 "item_description_box": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window),
-                "test_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                "stone_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
                                                                                self.on_craft_item_press),
                 "iron_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
                                                                                self.on_craft_item_press),
+                "gold_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
+                                                                               self.on_craft_item_press),
+                "oak_plank_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
+                                                                               self.on_craft_item_press),
+                "stick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
+                                                                               self.on_craft_item_press)
 
             },
             {
@@ -101,10 +110,16 @@ class InventoryState(StateBase):
     def on_craft_item_press(self, item_button):
         self._mode = "default"
         self._item_selected = None
-        if item_button is self._gui[1]["test_pickaxe_craft_button"]:
-            self._recipe_selected = "test_pickaxe"
+        if item_button is self._gui[1]["stone_pickaxe_craft_button"]:
+            self._recipe_selected = "stone_pickaxe"
         elif item_button is self._gui[1]["iron_pickaxe_craft_button"]:
             self._recipe_selected = "iron_pickaxe"
+        elif item_button is self._gui[1]["oak_plank_craft_button"]:
+            self._recipe_selected = "oak_plank"
+        elif item_button is self._gui[1]["stick_craft_button"]:
+            self._recipe_selected = "stick"
+        elif item_button is self._gui[1]["gold_pickaxe_craft_button"]:
+            self._recipe_selected = "gold_pickaxe"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -258,17 +273,35 @@ class InventoryState(StateBase):
         self._gui[2]["crafting_background"].box_colour = (200, 200, 200)
         self._gui[2]["crafting_background"].centre_position = (875.0, 230.0)
 
-        self._gui[1]["test_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["test_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("wooden_pickaxe")
-        self._gui[1]["test_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["test_pickaxe_craft_button"].centre_position = (630.0, 80.0)
-        self._gui[1]["test_pickaxe_craft_button"].outline_thickness = 3
+        self._gui[1]["stone_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_pickaxe")
+        self._gui[1]["stone_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["stone_pickaxe_craft_button"].centre_position = (630.0, 80.0)
+        self._gui[1]["stone_pickaxe_craft_button"].outline_thickness = 3
 
         self._gui[1]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
         self._gui[1]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
         self._gui[1]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
         self._gui[1]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
         self._gui[1]["iron_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["gold_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["gold_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_pickaxe")
+        self._gui[1]["gold_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["gold_pickaxe_craft_button"].centre_position = (630.0, 160.0)
+        self._gui[1]["gold_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["oak_plank_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["oak_plank_craft_button"].image = self._game.block_spritesheet.parse_sprite("oak_plank")
+        self._gui[1]["oak_plank_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["oak_plank_craft_button"].centre_position = (670.0, 80.0)
+        self._gui[1]["oak_plank_craft_button"].outline_thickness = 3
+
+        self._gui[1]["stick_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stick_craft_button"].image = self._game.item_spritesheet.parse_sprite("stick")
+        self._gui[1]["stick_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["stick_craft_button"].centre_position = (670.0, 120.0)
+        self._gui[1]["stick_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None
@@ -334,7 +367,7 @@ class InventoryState(StateBase):
 
         if self._item_display_hovering is not None:
             if self._item_display_hovering.item is not None:
-                self._gui[0]["name_box"].position = mouse_pos
+                self._gui[0]["name_box"].position = (mouse_pos[0] + 15, mouse_pos[1])
                 self._gui[0]["name_box"].text = self._item_display_hovering.item.name
                 self._gui[0]["name_box"].is_visible = True
             else:

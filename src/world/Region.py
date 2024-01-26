@@ -16,7 +16,6 @@ class Region:
         self._entity_list = []
         self._region_surface = pygame.Surface((800, 800))
         self._flag_for_redraw = True
-        self._has_trees = False
 
     @property
     def game(self):

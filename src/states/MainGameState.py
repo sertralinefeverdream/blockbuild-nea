@@ -67,7 +67,7 @@ class MainGameState(StateBase):
         self._world.update()
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
-        self._gui[0]["fps_counter"].is_visible = False
+        self._gui[0]["fps_counter"].is_visible = True
 
         block_at_mouse = self._world.get_block_at_position(self._world.camera.get_world_position(mouse_pos))
 
@@ -103,7 +103,6 @@ class MainGameState(StateBase):
         for layer in self._gui[::-1]:
             for component in layer.values():
                 component.update()
-
 
     def draw(self, no_gui=False):
         self._world.draw_blocks()

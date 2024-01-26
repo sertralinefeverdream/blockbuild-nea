@@ -54,10 +54,7 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "stone_block",
-      "loot_drop_tool_whitelist": [
-        "test_pickaxe",
-        "iron_pickaxe"
-      ],
+      "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
     "dirt": {
@@ -80,7 +77,21 @@
       "footstep_sfx_id": "btn_click_1",
       "loot_drop_id": "iron",
       "loot_drop_tool_whitelist": [
-        "test_pickaxe",
+        "stone_pickaxe",
+        "iron_pickaxe"
+      ],
+      "can_collide": true
+    },
+    "gold_ore": {
+      "type": "generic",
+      "hardness": 150,
+      "texture": "gold_ore",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "btn_click_1",
+      "loot_drop_id": "gold",
+      "loot_drop_tool_whitelist": [
+        "stone_pickaxe",
         "iron_pickaxe"
       ],
       "can_collide": true
@@ -113,7 +124,7 @@
       "name": "Oak Plank",
       "type": "blockitem",
       "texture": "oak_plank",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -127,15 +138,15 @@
           "oak_log": 1
         },
         "amount_crafted": 4,
-        "description": "Requires 1x Oak Log, Makes 4x Oak Plank"
+        "description": "Requires 1x Oak Log, Makes 4"
       },
-      "block_id": "oak_log"
+      "block_id": "oak_plank"
     },
     "stick": {
       "name": "Stick",
       "type": "generic",
       "texture": "stick",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -149,14 +160,14 @@
           "oak_plank": 1
         },
         "amount_crafted": 4,
-        "description": "Requires 1x Oak Plank, Makes 4x Stick"
+        "description": "Requires 1x Oak Plank, Makes 4"
       }
     },
     "oak_log": {
       "name": "Oak Log",
       "type": "blockitem",
       "texture": "oak_log",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -172,7 +183,7 @@
       "name": "Grass Block",
       "type": "blockitem",
       "texture": "grass",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -188,7 +199,7 @@
       "name": "Stone Block",
       "type": "blockitem",
       "texture": "stone",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -204,7 +215,7 @@
       "name": "Dirt Block",
       "type": "blockitem",
       "texture": "dirt",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 250,
@@ -216,11 +227,12 @@
       "recipe": null,
       "block_id": "dirt"
     },
+
     "empty_hands": {
       "name": "empty_hands",
       "type": "generic",
       "texture": "grass",
-      "max_quantity": 5,
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 150,
@@ -231,10 +243,10 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": null
     },
-    "test_pickaxe": {
-      "name": "Test Pickaxe",
+    "stone_pickaxe": {
+      "name": "Stone Pickaxe",
       "type": "tool",
-      "texture": "wooden_pickaxe",
+      "texture": "stone_pickaxe",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -242,19 +254,21 @@
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
-      "preferred_mine_strength": 150,
+      "preferred_mine_strength": 50,
       "preferred_mine_strength_whitelist": [
         "stone",
-        "iron_ore"
+        "iron_ore",
+        "gold_ore"
       ],
       "recipe": {
         "ingredients": {
-          "dirt_block": 3
+          "stone_block": 3,
+          "stick": 2
         },
         "amount_crafted": 1,
-        "description": "Requires 3x Dirt, Makes 1x Iron Pickaxe"
+        "description": "Requires 3x Stone, 2x Stick, Makes 1"
       },
-      "durability": -1
+      "durability": 60
     },
     "iron_pickaxe": {
       "name": "Iron Pickaxe",
@@ -270,22 +284,67 @@
       "preferred_mine_strength": 300,
       "preferred_mine_strength_whitelist": [
         "stone",
-        "iron_ore"
+        "iron_ore",
+        "gold_ore"
       ],
       "recipe": {
         "ingredients": {
-          "iron": 3
+          "iron": 3,
+          "stick": 2
         },
         "amount_crafted": 1,
-        "description": "Requires 3x Iron, Makes 1x Iron Pickaxe"
+        "description": "Requires 3x Iron 2x Sticks, Makes 1"
       },
-      "durability": -1
+      "durability": 120
     },
+    "gold_pickaxe": {
+      "name": "Gold Pickaxe",
+      "type": "tool",
+      "texture": "gold_pickaxe",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 150,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 500,
+      "preferred_mine_strength_whitelist": [
+        "stone",
+        "iron_ore",
+        "gold_ore"
+      ],
+      "recipe": {
+        "ingredients": {
+          "gold": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Gold, 2x Sticks, Makes 1"
+      },
+      "durability": 240
+    },
+
     "iron": {
       "name": "Iron",
       "type": "generic",
       "texture": "iron",
-      "max_quantity": 5,
+      "max_quantity": 50,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 150,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null
+    },
+    "gold": {
+      "name": "Gold",
+      "type": "generic",
+      "texture": "gold",
+      "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "attack_range": 150,
@@ -323,22 +382,28 @@
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
-    }
+    },
   },
   "generation_data": {
     "ore_data": {
       "iron_ore_vein": {
         "block_id": "iron_ore",
-        "max_height": 20,
+        "max_height": 800,
         "max_vein_size": 8,
         "probability": 5
+      },
+      "gold_ore_vein": {
+        "block_id": "gold_ore",
+        "max_height": 1600,
+        "max_vein_size": 4,
+        "probability": 3
       }
     },
     "tree_data": {
       "oak_tree": {
         "trunk_block_id": "oak_log",
         "leaf_block_id": "leaf",
-        "trunk_length": 4,
+        "trunk_length": 6,
         "leaf_base_layer_width": 5,
         "probability": 3
       }

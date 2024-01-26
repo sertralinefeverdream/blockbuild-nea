@@ -189,24 +189,26 @@ class GenericItem: # Can be used for normal items, tools, default, etc lol
 
                 self._block_currently_mining.kill()
         '''
-
+        print(self._block_currently_mining_hardness_remaining)
         if self._block_currently_mining_hardness_remaining <= 0:
+            can_be_picked_up = True
             if self._block_currently_mining.loot_drop_id is not None:
                 if self._block_currently_mining.loot_drop_tool_whitelist is not None:
                     if self._item_id not in self._block_currently_mining.loot_drop_tool_whitelist:
-                        return None
-                remainder = self._world.player.hotbar.pickup_item(
-                    self._game.item_factory.create_item(self._game, self._world, self._block_currently_mining.loot_drop_id))
-                if remainder is not None:
-                    print("FILL UP INVENTORY")
-                    remainder = self._world.player.inventory.pickup_item(remainder)
-                if remainder is not None:
-                    print("INVENTORY FULL!")
+                       can_be_picked_up = False
+                if can_be_picked_up:
+                    remainder = self._world.player.hotbar.pickup_item(
+                        self._game.item_factory.create_item(self._game, self._world, self._block_currently_mining.loot_drop_id))
+                    if remainder is not None:
+                        print("FILL UP INVENTORY")
+                        remainder = self._world.player.inventory.pickup_item(remainder)
+                    if remainder is not None:
+                        print("INVENTORY FULL!")
+                else:
+                    print("CANT BE PICKED UP!")
             else:
                 print("LOOT DROP ID IS NONE")
-
             self._block_currently_mining.kill()
-
 
     def update(self, player_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()

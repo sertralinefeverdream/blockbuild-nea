@@ -9,6 +9,10 @@ class ItemContainer:
     def data(self):
         return self._data
 
+    def reset(self):
+        self._data.clear()
+        self._data = self._data = [[None for x in range(self._dimensions[1])] for row_index in range(self._dimensions[0])]
+
     def set_item_at_index(self, row, column, item=None):
         self._data[row][column] = item
 

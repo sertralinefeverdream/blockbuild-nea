@@ -103,7 +103,7 @@ class EntityBase:
         pass
 
     @abstractmethod
-    def draw(self, screen_position):
+    def draw(self):
         pass
 
     @property
