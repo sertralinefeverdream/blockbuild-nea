@@ -11,12 +11,13 @@ class CharacterBase(EntityBase):
         self._health = self._max_health
         self._footstep_timer = 0
         self._is_in_air = False
+        self._is_knockbacked = False
 
     @property
     def max_health(self):
         return self._max_health
 
-    @property
+    @max_health.setter
     def max_health(self, value):
         if (type(value) is int or type(value) is float) and value >= 1:
             self._max_health = value
@@ -29,10 +30,12 @@ class CharacterBase(EntityBase):
 
     @health.setter
     def health(self, value):
-        if (type(value) is int or type(value) is float) and value != 0:
+        if (type(value) is int or type(value) is float):
             self._health = value
             if self._health > self._max_health:
                 self._health = self._max_health
+            elif self._health < 0:
+                self._health = 0
 
     @property
     def max_velocity(self):
@@ -50,4 +53,12 @@ class CharacterBase(EntityBase):
     @abstractmethod
     def handle_collisions(self, axis):
         pass
+
+    def knockback(self, direction, strength):
+        self._velocity[1] = -240
+        self._velocity[0] = strength if direction.lower() == "right" else -strength
+        self._is_knockbacked = True
+
+    def jump(self):
+        self._velocity[1] = -320
 

@@ -383,6 +383,41 @@
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
     },
+    "test": {
+      "type": "generic_hostile",
+      "size": [
+        30,
+        60
+      ],
+      "max_speed": [
+        200,
+        400
+      ],
+      "max_health": 100,
+      "animation_data": {
+        "idle": [
+          [
+            "idle1",
+            250
+          ],
+          [
+            "idle2",
+            250
+          ]
+        ]
+      },
+      "attack_damage": 10,
+      "attack_range": 45,
+      "aggro_range": 400,
+      "chase_range": 800,
+      "auto_jump_cooldown": 1500,
+      "idle_cooldown": 5000,
+      "out_of_los_cooldown": 5000,
+      "attack_cooldown": 250,
+      "loot_table": null,
+      "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
+      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
+    }
   },
   "generation_data": {
     "ore_data": {

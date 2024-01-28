@@ -63,6 +63,7 @@ class MainGameState(StateBase):
                 self._game.file_save_handler.save_world(self._world, self._save_file_pointer)
 
     def update(self):
+        self._gui[0]["hotbar_display"].hotbar = self._world.player.hotbar
         mouse_pos = pygame.mouse.get_pos()
         self._world.update()
 

@@ -12,7 +12,6 @@ class EntityBase:
         self._max_speed = list(max_speed)
 
         self._velocity = [0, 0]
-        self._acceleration = [0, 0]
         self._hitbox = pygame.Rect((0, 0), self._size)
         self._is_killed = False
 
@@ -44,7 +43,17 @@ class EntityBase:
     @position.setter
     def position(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position = value
+            self._position = list(value)
+
+    @property
+    def centre_position(self):
+        return self._position[0] + self._size[0]/2, self._position[1] + self._size[1]/2
+
+    @centre_position.setter
+    def centre_position(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 2:
+            self._position[0] = value[0] - self._size[0]/2
+            self._position[1] = value[1] - self._size[1]/2
 
     @property
     def velocity(self):
@@ -54,15 +63,6 @@ class EntityBase:
     def velocity(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
             self._velocity = value
-
-    @property
-    def acceleration(self):
-        return self._acceleration
-
-    @acceleration.setter
-    def acceleration(self, value):
-        if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._acceleration = value
 
     @property
     def size(self):
@@ -109,11 +109,11 @@ class EntityBase:
     @property
     def is_killed(self):
         return self._is_killed
-    '''
-    @property
-    def facing(self):
-        return self._facing
-    '''
+
+    @is_killed.setter
+    def is_killed(self, value):
+        if type(value) is bool:
+            self._is_killed = value
 
 
     def convert_data(self):

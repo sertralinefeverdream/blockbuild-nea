@@ -1,5 +1,7 @@
 from src.entities.Player import Player
+from src.entities.GenericHostile import GenericHostile
 from src.animations.AnimationHandler import AnimationHandler
+
 
 class CharacterFactory:
     def __init__(self, character_data):
@@ -8,12 +10,28 @@ class CharacterFactory:
     def create_character(self, game, world, entity_id, state_data=None):
         if entity_id in self._character_data.keys():
             entity_data = self._character_data[entity_id]
-            entity_spritesheet = game.spritesheet_factory.create_spritesheet(entity_data["spritesheet_image_path"], entity_data["spritesheet_metadata_path"])
+            entity_spritesheet = game.spritesheet_factory.create_spritesheet(entity_data["spritesheet_image_path"],
+                                                                             entity_data["spritesheet_metadata_path"])
             animation_handler = AnimationHandler(entity_spritesheet)
             animation_handler.load_from_data(entity_data["animation_data"])
-            entity = Player(game, world, entity_id, (0, 0), entity_data["size"], animation_handler=animation_handler, max_speed=entity_data["max_speed"], max_health=entity_data["max_health"])
+            entity = None
+            if entity_data["type"] == "player":
+                entity = Player(game, world, entity_id, (0, 0), entity_data["size"],
+                                animation_handler=animation_handler, max_speed=entity_data["max_speed"],
+                                max_health=entity_data["max_health"])
+            elif entity_data["type"] == "generic_hostile":
+                print("MAKING GENERIC HOSTILE")
+                entity = GenericHostile(game, world, entity_id, (0, 0), entity_data["size"],
+                                        animation_handler=animation_handler, max_speed=entity_data["max_speed"],
+                                        max_health=entity_data["max_health"],
+                                        attack_damage=entity_data["attack_damage"],
+                                        attack_range=entity_data["attack_range"],
+                                        aggro_range=entity_data["aggro_range"], chase_range=entity_data["chase_range"],
+                                        auto_jump_cooldown=entity_data["auto_jump_cooldown"],
+                                        idle_cooldown=entity_data["idle_cooldown"],
+                                        out_of_los_cooldown=entity_data["out_of_los_cooldown"],
+                                        attack_cooldown=entity_data["attack_cooldown"],
+                                        loot_table=entity_data["loot_table"])
             if state_data is not None:
                 entity.load_state_data(state_data)
             return entity
-
-

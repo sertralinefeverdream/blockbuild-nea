@@ -63,11 +63,6 @@ class RegionGenerator:
                             generated_successfully = self.generate_tree_in_region(region, tree_to_generate["trunk_block_id"], tree_to_generate["leaf_block_id"], (x, y-1), tree_to_generate["trunk_length"], tree_to_generate["leaf_base_layer_width"])
                             if generated_successfully:
                                 has_generated_tree_in_region = True
-                            else:
-                                print("TREE NOT GENERATED SUCCESSFULLY")
-                    else:
-                        print("TREE ALREADY EXISTS")
-
                 elif grass_y_limit_at_x < region.position[1] + y * 40 < rock_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "dirt")
                 elif region.position[1] + y * 40 >= rock_y_limit_at_x:
@@ -84,10 +79,10 @@ class RegionGenerator:
                 if region.get_block_at_indexes(current_indexes[0], current_indexes[1]) is None:
                     trunk_block_indexes.append(tuple(current_indexes))
                 else:
-                    print("TRUNK OBSTRUCTED")
+                   # print("TRUNK OBSTRUCTED")
                     return False
             else:
-                print("TRUNK FALLEN OFF REGION")
+               # print("TRUNK FALLEN OFF REGION")
                 return False
             current_indexes[1] -= 1
 
@@ -104,11 +99,11 @@ class RegionGenerator:
                                 leaf_block_indexes.append((current_indexes[0] + j, current_indexes[1]))
                                 leaf_block_indexes.append((current_indexes[0] - j, current_indexes[1]))
                             else:
-                                print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION")
+                               # print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION")
 
                                 return False
                         else:
-                            print("FALLEN OFF")
+                            #print("FALLEN OFF")
                             return False
                     current_indexes[1] -= 1
                 else:
@@ -183,11 +178,10 @@ class RegionGenerator:
                 ore_to_generate = random.choice(ores_that_can_be_generated)
                 region_indexes = region.get_block_indexes_from_position(random_stone_block.position)
                 if random.randint(1, ore_to_generate["probability"]) == 1:
-                    print("GENERATING ORE!!")
+                   # print("GENERATING ORE!!")
                     self.generate_vein(region, ore_to_generate["block_id"], region_indexes,
                                        ore_to_generate["max_vein_size"])
-            else:
-                print("NO STONE BLOCKS HERE ")
+
 
     def generate_vein(self, region, block_id, starting_indexes, max_max_vein_size):
         x, y = starting_indexes

@@ -34,8 +34,7 @@ def main():
     config = None
     with open("config.json") as f:
         config = json.load(f)
-
-    window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
+        window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
     pygame.display.set_caption(config["window_caption"])
 
     state_stack = StateStack()
