@@ -58,6 +58,20 @@ class Player(CharacterBase):
         elif self._velocity[0] < 0:
             self._animation_handler.reversed = True
 
+        if self._is_in_air:
+            if self._velocity[1] < 0:
+                pass
+            elif self._velocity[1] > 0:
+                pass
+        else:
+            if abs(self._velocity[0]) > 0:
+                pass
+            else:
+                pass
+
+        if self._animation_handler.current_animation_id != "idle":
+            self._animation_handler.play_animation_from_id("idle")
+
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
 
@@ -116,10 +130,6 @@ class Player(CharacterBase):
                 self._velocity[0] = 0
             self._velocity[0] -= math.trunc(800 * deltatime)
         else:
-            if not self._is_in_air:
-                if self._animation_handler.current_animation_id != "idle":
-                    self._animation_handler.play_animation_from_id("idle")
-
             if not self._is_knockbacked:
                 self._velocity[0] *= 0.4
 

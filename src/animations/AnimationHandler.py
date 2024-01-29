@@ -7,13 +7,14 @@ class AnimationHandler:
         self._frame_timer = pygame.time.get_ticks()
 
         self._current_frame_pointer = 0
-        self._current_animation_id = "idle"
+        self._current_animation_id = None
         self._loop = False
         self._reversed = False
 
     @property
     def current_frame(self):
         if self._current_animation_id is not None:
+            print(self._animation_data, self._current_animation_id, self._current_frame_pointer)
             current_frame = self._animation_data[self._current_animation_id][self._current_frame_pointer][0]
             if self._reversed:
                 current_frame = pygame.transform.flip(current_frame, True, False)
@@ -48,14 +49,17 @@ class AnimationHandler:
             self.create_animation(animation_id, animation)
 
     def update(self):
-        if pygame.time.get_ticks() - self._frame_timer > self._animation_data[self._current_animation_id][self._current_frame_pointer][1]:
-            self._frame_timer = pygame.time.get_ticks()
-            self._current_frame_pointer += 1
-            if self._current_frame_pointer > len(self._animation_data[self._current_animation_id]) - 1:
-                if not self._loop:
-                    self.play_animation_from_id("idle")
+        if self._current_animation_id is not None:
+            if pygame.time.get_ticks() - self._frame_timer > self._animation_data[self._current_animation_id][self._current_frame_pointer][1]:
+                self._frame_timer = pygame.time.get_ticks()
+                if self._current_frame_pointer < len(self._animation_data[self._current_animation_id]) - 1:
+                    self._current_frame_pointer += 1
                 else:
-                    self._current_frame_pointer = 0
+                    if self._loop:
+                        self._current_frame_pointer = 0
+
+
+
 
 
 
