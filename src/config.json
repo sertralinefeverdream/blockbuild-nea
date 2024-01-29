@@ -227,7 +227,6 @@
       "recipe": null,
       "block_id": "dirt"
     },
-
     "empty_hands": {
       "name": "empty_hands",
       "type": "generic",
@@ -324,7 +323,6 @@
       },
       "durability": 240
     },
-
     "iron": {
       "name": "Iron",
       "type": "generic",
@@ -360,7 +358,7 @@
     "player": {
       "type": "player",
       "size": [
-        30,
+        37,
         60
       ],
       "max_speed": [
@@ -372,11 +370,73 @@
         "idle": [
           [
             "idle1",
-            250
+            100
           ],
           [
             "idle2",
-            250
+            100
+          ]
+        ],
+        "run": [
+          [
+            "run1",
+            63
+          ],
+          [
+            "run2",
+            63
+          ],
+          [
+            "run3",
+            63
+          ],
+          [
+            "run4",
+            63
+          ],
+          [
+            "run5",
+            63
+          ],
+          [
+            "run6",
+            63
+          ],
+          [
+            "run7",
+            63
+          ],
+          [
+            "run8",
+            63
+          ]
+        ],
+        "jump": [
+          [
+            "jumpfall1",
+            100
+          ],
+          [
+            "jumpfall3",
+            100
+          ],
+          [
+            "jumpfall4",
+            100
+          ],
+          [
+            "jumpfall5",
+            100
+          ]
+        ],
+        "fall": [
+          [
+            "jumpfall5",
+            100
+          ],
+          [
+            "jumpfall6",
+            259
           ]
         ]
       },
@@ -386,7 +446,7 @@
     "test": {
       "type": "generic_hostile",
       "size": [
-        30,
+        37,
         60
       ],
       "max_speed": [
@@ -398,17 +458,79 @@
         "idle": [
           [
             "idle1",
-            250
+            100
           ],
           [
             "idle2",
-            250
+            100
+          ]
+        ],
+        "run": [
+          [
+            "run1",
+            63
+          ],
+          [
+            "run2",
+            63
+          ],
+          [
+            "run3",
+            63
+          ],
+          [
+            "run4",
+            63
+          ],
+          [
+            "run5",
+            63
+          ],
+          [
+            "run6",
+            63
+          ],
+          [
+            "run7",
+            63
+          ],
+          [
+            "run8",
+            63
+          ]
+        ],
+        "jump": [
+          [
+            "jumpfall1",
+            100
+          ],
+          [
+            "jumpfall3",
+            100
+          ],
+          [
+            "jumpfall4",
+            100
+          ],
+          [
+            "jumpfall5",
+            100
+          ]
+        ],
+        "fall": [
+          [
+            "jumpfall5",
+            100
+          ],
+          [
+            "jumpfall6",
+            259
           ]
         ]
       },
       "attack_damage": 10,
       "attack_range": 45,
-      "aggro_range": 400,
+      "aggro_range": -1,
       "chase_range": 800,
       "auto_jump_cooldown": 1500,
       "idle_cooldown": 5000,

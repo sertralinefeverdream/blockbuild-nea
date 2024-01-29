@@ -14,7 +14,7 @@ class AnimationHandler:
     @property
     def current_frame(self):
         if self._current_animation_id is not None:
-            print(self._animation_data, self._current_animation_id, self._current_frame_pointer)
+            #print(self._animation_data, self._current_animation_id, self._current_frame_pointer)
             current_frame = self._animation_data[self._current_animation_id][self._current_frame_pointer][0]
             if self._reversed:
                 current_frame = pygame.transform.flip(current_frame, True, False)
@@ -33,6 +33,15 @@ class AnimationHandler:
     def current_animation_id(self):
         return self._current_animation_id
 
+    @property
+    def loop(self):
+        return self._loop
+
+    @loop.setter
+    def loop(self, value):
+        if type(value) is bool:
+            self._loop = value
+
     def create_animation(self, animation_id, data):
         animation = []
         for sprite_parse_id, duration in data:
@@ -47,12 +56,15 @@ class AnimationHandler:
     def load_from_data(self, data):
         for animation_id, animation in data.items():
             self.create_animation(animation_id, animation)
+        #print(self._animation_data)
 
     def update(self):
         if self._current_animation_id is not None:
+            #print("UPDATING")
+            #print(self._animation_data, "HERE")
             if pygame.time.get_ticks() - self._frame_timer > self._animation_data[self._current_animation_id][self._current_frame_pointer][1]:
                 self._frame_timer = pygame.time.get_ticks()
-                if self._current_frame_pointer < len(self._animation_data[self._current_animation_id]) - 1:
+                if self._current_frame_pointer < len(self._animation_data[self._current_animation_id])-1:
                     self._current_frame_pointer += 1
                 else:
                     if self._loop:

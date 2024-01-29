@@ -1,17 +1,99 @@
 {
-  "idle1":
-  {
-    "x":7,
+  "idle1": {
+    "x": 7,
+    "y": 4,
+    "width": 16,
+    "height": 28
+  },
+  "idle2": {
+    "x": 39,
     "y": 4,
     "width": 16,
     "height": 28
   },
 
-  "idle2":
-  {
+  "run1": {
+    "x": 7,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run2": {
     "x": 39,
-    "y": 4,
-    "width": 16,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run3": {
+    "x": 71,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run4": {
+    "x": 103,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run5": {
+    "x": 135,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run6": {
+    "x": 167,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run7": {
+    "x": 199,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "run8": {
+    "x": 231,
+    "y": 100,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall1": {
+    "x": 7,
+    "y": 164,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall2": {
+    "x": 38,
+    "y": 164,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall3": {
+    "x": 71,
+    "y": 164,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall4": {
+    "x": 102,
+    "y": 164,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall5": {
+    "x": 134,
+    "y": 164,
+    "width": 19,
+    "height": 28
+  },
+  "jumpfall6": {
+    "x": 166,
+    "y": 164,
+    "width": 19,
     "height": 28
   }
 }

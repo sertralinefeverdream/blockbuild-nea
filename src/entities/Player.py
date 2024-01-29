@@ -51,7 +51,9 @@ class Player(CharacterBase):
             self.kill()
             return
 
-        self._hitbox.size = self._size
+        deltatime = self._game.clock.get_time() / 1000
+        self._velocity[1] += math.trunc(800 * deltatime)
+        self.handle_inputs(deltatime)
 
         if self._velocity[0] > 0:
             self._animation_handler.reversed = False
@@ -59,25 +61,16 @@ class Player(CharacterBase):
             self._animation_handler.reversed = True
 
         if self._is_in_air:
-            if self._velocity[1] < 0:
-                pass
-            elif self._velocity[1] > 0:
-                pass
-        else:
-            if abs(self._velocity[0]) > 0:
-                pass
-            else:
-                pass
-
-        if self._animation_handler.current_animation_id != "idle":
-            self._animation_handler.play_animation_from_id("idle")
+            if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
+                print("Playing jump")
+                self._animation_handler.play_animation_from_id("jump")
+                self._animation_handler.loop = False
+            elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
+                self._animation_handler.play_animation_from_id("fall")
+                self._animation_handler.loop = False
 
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-
-        deltatime = self._game.clock.get_time() / 1000
-        self._velocity[1] += math.trunc(800 * deltatime)
-        self.handle_inputs(deltatime)
 
         if abs(self._velocity[0]) > self._max_speed[0]:
             self._velocity[0] = self._max_speed[0] if self._velocity[0] > 0 else -self._max_speed[0]
@@ -125,13 +118,23 @@ class Player(CharacterBase):
             if self._velocity[0] < 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
             self._velocity[0] += math.trunc(800 * deltatime)
+            if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
+                self._animation_handler.play_animation_from_id("run")
+                self._animation_handler.loop = True
         elif keys_pressed[pygame.K_a]:
             if self._velocity[0] > 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
+            if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
+                self._animation_handler.play_animation_from_id("run")
+                self._animation_handler.loop = True
             self._velocity[0] -= math.trunc(800 * deltatime)
         else:
             if not self._is_knockbacked:
                 self._velocity[0] *= 0.4
+
+            if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
+                self._animation_handler.play_animation_from_id("idle")
+                self._animation_handler.loop = True
 
             if abs(self._velocity[0]) < 1:
                 self._velocity[0] = 0
@@ -200,6 +203,14 @@ class Player(CharacterBase):
         self._velocity[1] = -320
 
     def draw(self):
-        self._game.window.blit(self._texture, self._world.camera.get_screen_position(self._position))
+        bounding_rect = self._texture.get_bounding_rect()
+        texture_size = self._texture.get_size()
+
+        screen_pos = list(self._world.camera.get_screen_position(self._position))
+        if self._animation_handler.reversed:
+            screen_pos[1] -= (texture_size[0] - bounding_rect.size[0])
+
+
+        self._game.window.blit(self._texture, screen_pos)
         # pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
        # pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
