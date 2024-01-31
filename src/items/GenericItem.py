@@ -186,7 +186,16 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
             self._is_mining = False
             if entity_in_range_of_tool is not None:
                 direction = "right" if entity_in_range_of_tool.centre_position[0] > player_centre_pos[0] else "left"
+                entity_in_range_of_tool.health -= self._attack_strength
                 entity_in_range_of_tool.knockback(direction, 200)
+                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
+                    remainder = self._world.player.hotbar.pickup_item(
+                        self._game.item_factory.create_item(self._game, self._world,
+                                                            entity_in_range_of_tool.loot))
+                    if remainder is not None:
+                        remainder = self._world.player.inventory.pickup_item(remainder)
+                    if remainder is not None:
+                        print("INVENTORY FULL!")
             return "attack"
 
     def left_use(self, player_centre_pos):

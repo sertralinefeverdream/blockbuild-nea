@@ -21,7 +21,15 @@
     "stone_mine": "../assets/audio/sfx/blocks/stone_mine.ogg",
     "stone_place_break": "../assets/audio/sfx/blocks/stone_place_break.ogg",
     "dirt_mine": "../assets/audio/sfx/blocks/dirt_mine.ogg",
-    "dirt_place_break": "../assets/audio/sfx/blocks/dirt_place_break.ogg"
+    "dirt_place_break": "../assets/audio/sfx/blocks/dirt_place_break.ogg",
+    "wood_place_break": "../assets/audio/sfx/blocks/wood_place_break.ogg",
+    "wood_mine": "../assets/audio/sfx/blocks/wood_mine.ogg",
+    "grass_footstep": "../assets/audio/sfx/blocks/grass_footstep.wav",
+    "stone_footstep": "../assets/audio/sfx/blocks/stone_footstep.wav",
+    "dirt_footstep": "../assets/audio/sfx/blocks/dirt_footstep.wav",
+    "wood_footstep": "../assets/audio/sfx/blocks/wood_footstep.wav",
+    "player_hurt": "../assets/audio/sfx/entities/player/player_hurt.wav",
+    "player_death": "../assets/audio/sfx/entities/player/player_death.wav"
   },
   "blocks": {
     "grass": {
@@ -30,7 +38,7 @@
       "texture": "grass",
       "mine_sfx_id": "grass_mine",
       "place_and_break_sfx_id": "grass_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "grass_footstep",
       "loot_drop_id": "grass_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
@@ -41,7 +49,7 @@
       "texture": "leaf",
       "mine_sfx_id": "grass_mine",
       "place_and_break_sfx_id": "grass_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "grass_footstep",
       "loot_drop_id": null,
       "loot_drop_tool_whitelist": null,
       "can_collide": false
@@ -52,7 +60,7 @@
       "texture": "stone",
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "stone_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
@@ -63,7 +71,7 @@
       "texture": "dirt",
       "mine_sfx_id": "dirt_mine",
       "place_and_break_sfx_id": "dirt_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "dirt_footstep",
       "loot_drop_id": "dirt_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
@@ -74,7 +82,7 @@
       "texture": "iron_ore",
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "iron",
       "loot_drop_tool_whitelist": [
         "stone_pickaxe",
@@ -88,7 +96,7 @@
       "texture": "gold_ore",
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "gold",
       "loot_drop_tool_whitelist": [
         "stone_pickaxe",
@@ -100,9 +108,9 @@
       "type": "generic",
       "hardness": 30,
       "texture": "oak_log",
-      "mine_sfx_id": "stone_mine",
-      "place_and_break_sfx_id": "stone_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "mine_sfx_id": "wood_mine",
+      "place_and_break_sfx_id": "wood_place_break",
+      "footstep_sfx_id": "wood_footstep",
       "loot_drop_id": "oak_log",
       "loot_drop_tool_whitelist": null,
       "can_collide": false
@@ -111,9 +119,9 @@
       "type": "generic",
       "hardness": 30,
       "texture": "oak_plank",
-      "mine_sfx_id": "stone_mine",
-      "place_and_break_sfx_id": "stone_place_break",
-      "footstep_sfx_id": "btn_click_1",
+      "mine_sfx_id": "wood_mine",
+      "place_and_break_sfx_id": "wood_place_break",
+      "footstep_sfx_id": "wood_footstep",
       "loot_drop_id": "oak_plank",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
@@ -127,7 +135,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -149,7 +157,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -170,7 +178,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -186,7 +194,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -202,7 +210,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -218,7 +226,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 250,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -234,7 +242,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 45,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -249,7 +257,7 @@
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -276,7 +284,7 @@
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -303,7 +311,7 @@
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -330,7 +338,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -345,7 +353,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 55,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -475,7 +483,9 @@
         ]
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
-      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
+      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json",
+      "hurt_sfx_id": "player_hurt",
+      "death_sfx_id": "player_death"
     },
     "test": {
       "type": "generic_hostile",
@@ -490,6 +500,16 @@
       "max_health": 100,
       "animation_data": {
         "idle": [
+          [
+            "idle1",
+            100
+          ],
+          [
+            "idle2",
+            100
+          ]
+        ],
+        "run": [
           [
             "idle1",
             100
@@ -560,19 +580,58 @@
             "jumpfall6",
             259
           ]
+        ],
+        "attack": [
+          [
+            "attack1",
+            63
+          ],
+          [
+            "attack2",
+            63
+          ],
+          [
+            "attack3",
+            63
+          ],
+          [
+            "attack4",
+            63
+          ],
+          [
+            "attack5",
+            63
+          ],
+          [
+            "attack6",
+            63
+          ],
+          [
+            "attack7",
+            63
+          ],
+          [
+            "attack8",
+            63
+          ]
         ]
       },
       "attack_damage": 10,
       "attack_range": 45,
-      "aggro_range": -1,
+      "aggro_range": 200,
       "chase_range": 800,
       "auto_jump_cooldown": 1500,
       "idle_cooldown": 5000,
       "out_of_los_cooldown": 5000,
       "attack_cooldown": 500,
-      "loot_table": null,
+      "loot": "iron",
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
-      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"
+      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json",
+      "hurt_sfx_id": "player_hurt",
+      "death_sfx_id": "player_death",
+      "aggro_sfx_id": "player_hurt",
+      "idle_sfx_id_list": [],
+      "random_idle_sound_cooldown": 12000
     }
   },
   "generation_data": {
@@ -598,6 +657,13 @@
         "leaf_base_layer_width": 5,
         "probability": 3
       }
+    },
+    "npc_spawn_data": {
+      "entity_spawn_list": [
+        "test"
+      ],
+      "random_spawn_cooldown": 2500,
+      "entity_spawn_limit_per_region": 3
     }
   }
 }

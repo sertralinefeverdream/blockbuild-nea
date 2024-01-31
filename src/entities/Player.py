@@ -4,8 +4,8 @@ import math
 
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler):
-        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, hurt_sfx_id, death_sfx_id, animation_handler):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id)
 
         self._hotbar = self._game.item_container_factory.create_item_container("hotbar_container", self._game,
                                                                                self._world, 9)
@@ -55,22 +55,15 @@ class Player(CharacterBase):
         self._velocity[1] += math.trunc(800 * deltatime)
         self.handle_inputs(deltatime)
 
-        if self._velocity[0] > 0:
-            self._animation_handler.reversed = False
-        elif self._velocity[0] < 0:
-            self._animation_handler.reversed = True
-
         if self._is_in_air:
             if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                if self._animation_handler.current_animation_id == "attack":
-                    if self._animation_handler.is_finished:
-                        self._animation_handler.play_animation_from_id("jump")
-                        self._animation_handler.loop = False
-                else:
-                    self._animation_handler.play_animation_from_id("jump")
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
             elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
 
@@ -86,14 +79,6 @@ class Player(CharacterBase):
         self._position[0] += math.trunc(self._velocity[0] * deltatime)
         self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
         self.handle_collisions("horizontal")
-
-        ''' prototype footstep logic
-        if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
-            self._footstep_timer = pygame.time.get_ticks()
-            block_below = self._world.get_block_at_position((math.trunc(self._position[0] + self._size[0]/2), math.trunc(self._position[1] + self._size[1] + 2)))
-            if block_below is not None:
-                self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
-        '''
 
         self._position[1] += math.trunc(self._velocity[1] * deltatime)
         self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
@@ -114,7 +99,15 @@ class Player(CharacterBase):
         else:
             self._is_in_air = True
 
-        item_return_action = self._hotbar.update(self.centre_position) # Item returns a value which indicates what kind of left-mouse action aka distinguishing between mining and attacking so as to play the correct animation
+        if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
+            print(self._velocity[0])
+            self._footstep_timer = pygame.time.get_ticks()
+            block_below = self._world.get_block_at_position((math.trunc(self._position[0] + self._size[0]/2), math.trunc(self._position[1] + self._size[1] + 2)))
+            if block_below is not None and block_below.can_collide:
+                self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
+
+        item_return_action = self._hotbar.update(
+            self.centre_position)  # Item returns a value which indicates what kind of left-mouse action aka distinguishing between mining and attacking so as to play the correct animation
         if item_return_action == "attack" and self._animation_handler.current_animation_id != "attack":
             self._animation_handler.play_animation_from_id("attack")
             self._animation_handler.loop = False
@@ -126,24 +119,29 @@ class Player(CharacterBase):
             if self._velocity[0] < 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
             self._velocity[0] += math.trunc(800 * deltatime)
+            self._animation_handler.reversed = False
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
         elif keys_pressed[pygame.K_a]:
             if self._velocity[0] > 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
+            self._velocity[0] -= math.trunc(800 * deltatime)
+            self._animation_handler.reversed = True
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
-            self._velocity[0] -= math.trunc(800 * deltatime)
         else:
             if not self._is_knockbacked:
                 self._velocity[0] *= 0.4
 
             if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("idle")
                     self._animation_handler.loop = True
 
@@ -194,10 +192,11 @@ class Player(CharacterBase):
                     if self._velocity[0] > 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] - self._size[0]
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
                     elif self._velocity[0] < 0:
                         self._velocity[0] = 0
                         self._position[0] = block.position[0] + 40
-                self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
 
         elif axis.lower() == "vertical":
             for block, hitbox in hitboxes_to_check:
@@ -205,10 +204,11 @@ class Player(CharacterBase):
                     if self._velocity[1] > 0:
                         self._velocity[1] = 0
                         self._position[1] = block.position[1] - self._size[1]
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
                     elif self._velocity[1] < 0:
                         self._velocity[1] = 0
                         self._position[1] = block.position[1] + 40
-            self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
 
     def jump(self):
         self._velocity[1] = -320
@@ -218,9 +218,6 @@ class Player(CharacterBase):
         texture_size = self._texture.get_size()
 
         screen_pos = list(self._world.camera.get_screen_position(self._position))
-        if self._animation_handler.reversed:
-            screen_pos[1] -= (texture_size[0] - bounding_rect.size[0])
-
         self._game.window.blit(self._texture, screen_pos)
         # pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
-       # pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
+    # pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)

@@ -18,7 +18,7 @@ class CharacterFactory:
             if entity_data["type"] == "player":
                 entity = Player(game, world, entity_id, (0, 0), entity_data["size"],
                                 animation_handler=animation_handler, max_speed=entity_data["max_speed"],
-                                max_health=entity_data["max_health"])
+                                max_health=entity_data["max_health"], hurt_sfx_id=entity_data["hurt_sfx_id"], death_sfx_id=entity_data["death_sfx_id"])
             elif entity_data["type"] == "generic_hostile":
                 print("MAKING GENERIC HOSTILE")
                 entity = GenericHostile(game, world, entity_id, (0, 0), entity_data["size"],
@@ -31,7 +31,13 @@ class CharacterFactory:
                                         idle_cooldown=entity_data["idle_cooldown"],
                                         out_of_los_cooldown=entity_data["out_of_los_cooldown"],
                                         attack_cooldown=entity_data["attack_cooldown"],
-                                        loot_table=entity_data["loot_table"])
+                                        loot=entity_data["loot"],
+                                        hurt_sfx_id=entity_data["hurt_sfx_id"],
+                                        death_sfx_id=entity_data["death_sfx_id"],
+                                        aggro_sfx_id=entity_data["aggro_sfx_id"],
+                                        idle_sfx_id_list=entity_data["idle_sfx_id_list"],
+                                        random_idle_sound_cooldown=entity_data["random_idle_sound_cooldown"]
+                                        )
             if state_data is not None:
                 entity.load_state_data(state_data)
             return entity

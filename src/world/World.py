@@ -3,10 +3,13 @@ import random
 import pygame
 
 class World:
-    def __init__(self, game, camera, region_generator):
+    def __init__(self, game, camera, region_generator, npc_spawn_cooldown=10000, entity_spawn_limit_per_region=3, entity_random_spawn_list=["test"]):
         self._game = game
         self._camera = camera
         self._region_generator = region_generator
+        self._npc_spawn_cooldown = npc_spawn_cooldown
+        self._entity_spawn_limit_per_region = entity_spawn_limit_per_region
+        self._entity_random_spawn_list = entity_random_spawn_list
 
         self._player = None
 
@@ -18,9 +21,12 @@ class World:
                         '0': self._region_generator.create_generated_region(self._game, self, (0, 0))
                     }
             }
-
+        '''
         self._test_enemy = self._game.character_factory.create_character(self._game, self, "test")
         self._test_enemy.position = (0, 0)
+        '''
+
+        self._npc_spawn_timer = 0
         self.test_points = []
 
     @property
@@ -53,7 +59,7 @@ class World:
         self._draw_list.clear()
         self._data['0'] = {}
         self._data['0']['0'] = self._region_generator.create_generated_region(self._game, self, (0, 0))
-        self._data["0"]["0"].add_entity(self._test_enemy)
+      #  self._data["0"]["0"].add_entity(self._test_enemy)
 
         self._camera.x = 0
         self._camera.y = 0
@@ -68,23 +74,38 @@ class World:
         return None
 
     def update(self):
-        player_reference = self.find_player_reference()
-        if player_reference is None: # Case when player does not exist.
-            #print("PLAYER REFERENCE IS BEING CREATED")
-            if self._player is None:
-                print("FIRST CASE")
+        if self._player is None:
+            player_reference = self.find_player_reference()
+            if player_reference is None:
                 self._player = self._game.character_factory.create_character(self._game, self, "player")
+                self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
-                print("SECOND CASE")
-                self._player.health = self._player.max_health
-                self._player.is_killed = False
-            #print(f"REGION WITH PLAYER IN IT", self.get_region_at_position((0, 0)).entity_list)
-            self.get_region_at_position(self._player.position).add_entity(self._player)
-            self._camera.x = self._player.position[0] - 600
-            self._camera.y = self._player.position[1] - 400
+                self._player = player_reference
+
+        self._player.health = self._player.max_health
+        self._player.is_killed = False
+
+        self._camera.x = self._player.position[0] - 600
+        self._camera.y = self._player.position[1] - 400
 
         self.reassign_entities_to_regions() # Must be done in this order to prevent player stuttering
         self.update_draw_list()
+
+        if pygame.time.get_ticks() - self._npc_spawn_timer >= self._npc_spawn_cooldown: # Script for randomly spawning stuff in
+            valid_regions = []
+            for x_index, y_index in self._draw_list:
+                region = self.get_region_at_position((int(x_index), int(y_index)))
+                if region.get_quantity_of_blocks_in_region("grass") > 0 and len(region.entity_list) < self._entity_spawn_limit_per_region:
+                    valid_regions.append(region)
+
+            if len(valid_regions) > 0:
+                selected_region_to_spawn_npc_in = random.choice(valid_regions)
+                self._npc_spawn_timer = pygame.time.get_ticks()
+                random_block = selected_region_to_spawn_npc_in.get_random_block_of_type_by_id("grass")
+                npc = self._game.character_factory.create_character(self._game, self,
+                                                                random.choice(self._entity_random_spawn_list))
+                npc.position = (random_block.position[0], random_block.position[1] - npc.size[1])
+                selected_region_to_spawn_npc_in.add_entity(npc)
 
         for index, (x, y) in enumerate(self._draw_list):
             self._data[x][y].update()
