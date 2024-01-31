@@ -1,5 +1,6 @@
 import json
 import random
+import pygame
 
 class World:
     def __init__(self, game, camera, region_generator):
@@ -20,7 +21,7 @@ class World:
 
         self._test_enemy = self._game.character_factory.create_character(self._game, self, "test")
         self._test_enemy.position = (0, 0)
-
+        self.test_points = []
 
     @property
     def game(self):
@@ -97,6 +98,10 @@ class World:
             if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
                 self._data[x][y].draw_blocks()
 
+        for points in self.test_points:
+            screen_pos = self._camera.get_screen_position(points)
+            pygame.draw.circle(self._game.window, (0,0,0), screen_pos, 5, 5)
+
     def draw_entities(self):
         for x, y in self._draw_list:
             self._data[x][y].draw_entities()
@@ -137,6 +142,21 @@ class World:
                 return region.get_block_at_position(position)
             else:
                 return None
+
+    def get_entities_at_position(self, position, ignore_player=True):
+        if (type(position) is list or type(position) is tuple) and len(position) == 2:
+            regions_to_check = []
+            entities = []
+            for x in range(3):
+                for y in range(3):
+                    region_check_x = position[0] + (x-1)*800
+                    region_check_y = position[1] + (x-1)*800
+                    if self.check_region_exists_at_position((region_check_x, region_check_y)):
+                        regions_to_check.append(self.get_region_at_position((region_check_x, region_check_y)))
+            #print(regions_to_check)
+            for region in regions_to_check:
+                entities += region.get_entities_at_position(position, ignore_player)
+            return entities
 
     def set_block_at_position(self, position, block_id, state_data=None):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:

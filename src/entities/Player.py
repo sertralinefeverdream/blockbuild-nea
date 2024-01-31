@@ -62,12 +62,17 @@ class Player(CharacterBase):
 
         if self._is_in_air:
             if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                print("Playing jump")
-                self._animation_handler.play_animation_from_id("jump")
-                self._animation_handler.loop = False
+                if self._animation_handler.current_animation_id == "attack":
+                    if self._animation_handler.is_finished:
+                        self._animation_handler.play_animation_from_id("jump")
+                        self._animation_handler.loop = False
+                else:
+                    self._animation_handler.play_animation_from_id("jump")
+                    self._animation_handler.loop = False
             elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
-                self._animation_handler.play_animation_from_id("fall")
-                self._animation_handler.loop = False
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("fall")
+                    self._animation_handler.loop = False
 
         self._animation_handler.update()
         self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
@@ -109,7 +114,10 @@ class Player(CharacterBase):
         else:
             self._is_in_air = True
 
-        self._hotbar.update(self._position)
+        item_return_action = self._hotbar.update(self.centre_position) # Item returns a value which indicates what kind of left-mouse action aka distinguishing between mining and attacking so as to play the correct animation
+        if item_return_action == "attack" and self._animation_handler.current_animation_id != "attack":
+            self._animation_handler.play_animation_from_id("attack")
+            self._animation_handler.loop = False
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed
@@ -119,22 +127,25 @@ class Player(CharacterBase):
                 self._velocity[0] = 0
             self._velocity[0] += math.trunc(800 * deltatime)
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                self._animation_handler.play_animation_from_id("run")
-                self._animation_handler.loop = True
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("run")
+                    self._animation_handler.loop = True
         elif keys_pressed[pygame.K_a]:
             if self._velocity[0] > 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                self._animation_handler.play_animation_from_id("run")
-                self._animation_handler.loop = True
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("run")
+                    self._animation_handler.loop = True
             self._velocity[0] -= math.trunc(800 * deltatime)
         else:
             if not self._is_knockbacked:
                 self._velocity[0] *= 0.4
 
             if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
-                self._animation_handler.play_animation_from_id("idle")
-                self._animation_handler.loop = True
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("idle")
+                    self._animation_handler.loop = True
 
             if abs(self._velocity[0]) < 1:
                 self._velocity[0] = 0
@@ -209,7 +220,6 @@ class Player(CharacterBase):
         screen_pos = list(self._world.camera.get_screen_position(self._position))
         if self._animation_handler.reversed:
             screen_pos[1] -= (texture_size[0] - bounding_rect.size[0])
-
 
         self._game.window.blit(self._texture, screen_pos)
         # pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))

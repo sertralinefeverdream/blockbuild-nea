@@ -141,6 +141,16 @@ class Region:
             data.append((entity, entity.hitbox))
         return data
 
+    def get_entities_at_position(self, position, ignore_player=True):
+        if (type(position) is list or type(position) is tuple) and len(position) == 2:
+            list_of_entities = []
+            for entity in self._entity_list:
+                  if entity.hitbox.collidepoint(self._world.camera.get_screen_position(position)):
+                      if ignore_player and entity.entity_id == "player":
+                          continue
+                      list_of_entities.append(entity)
+            return list_of_entities
+
     def add_entity(self, entity):
         self._entity_list.append(entity)
 

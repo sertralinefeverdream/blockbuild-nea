@@ -10,6 +10,7 @@ class AnimationHandler:
         self._current_animation_id = None
         self._loop = False
         self._reversed = False
+        self._is_finished = True
 
     @property
     def current_frame(self):
@@ -19,6 +20,10 @@ class AnimationHandler:
             if self._reversed:
                 current_frame = pygame.transform.flip(current_frame, True, False)
             return current_frame
+
+    @property
+    def is_finished(self):
+        return self._is_finished
 
     @property
     def reversed(self):
@@ -50,18 +55,16 @@ class AnimationHandler:
 
     def play_animation_from_id(self, animation_id):
         self._current_frame_pointer = 0
+        self._is_finished = False
         self._current_animation_id = animation_id
         self._frame_timer = pygame.time.get_ticks()
 
     def load_from_data(self, data):
         for animation_id, animation in data.items():
             self.create_animation(animation_id, animation)
-        #print(self._animation_data)
 
     def update(self):
         if self._current_animation_id is not None:
-            #print("UPDATING")
-            #print(self._animation_data, "HERE")
             if pygame.time.get_ticks() - self._frame_timer > self._animation_data[self._current_animation_id][self._current_frame_pointer][1]:
                 self._frame_timer = pygame.time.get_ticks()
                 if self._current_frame_pointer < len(self._animation_data[self._current_animation_id])-1:
@@ -69,6 +72,8 @@ class AnimationHandler:
                 else:
                     if self._loop:
                         self._current_frame_pointer = 0
+                    else:
+                        self._is_finished = True
 
 
 

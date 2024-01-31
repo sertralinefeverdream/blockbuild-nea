@@ -234,7 +234,7 @@
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
-      "attack_range": 150,
+      "attack_range": 45,
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
@@ -438,6 +438,40 @@
             "jumpfall6",
             259
           ]
+        ],
+        "attack": [
+          [
+            "attack1",
+            63
+          ],
+          [
+            "attack2",
+            63
+          ],
+          [
+            "attack3",
+            63
+          ],
+          [
+            "attack4",
+            63
+          ],
+          [
+            "attack5",
+            63
+          ],
+          [
+            "attack6",
+            63
+          ],
+          [
+            "attack7",
+            63
+          ],
+          [
+            "attack8",
+            63
+          ]
         ]
       },
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
@@ -535,7 +569,7 @@
       "auto_jump_cooldown": 1500,
       "idle_cooldown": 5000,
       "out_of_los_cooldown": 5000,
-      "attack_cooldown": 250,
+      "attack_cooldown": 500,
       "loot_table": null,
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json"

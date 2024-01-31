@@ -136,39 +136,40 @@ class GenericHostile(CharacterBase):
         self._velocity[1] += math.trunc(800 * deltatime)
 
         if self._is_aggro:
-            if self._is_in_los:
-                self._last_position_in_los = self._world.player.centre_position
-                if self._world.player.centre_position[0] > self._position[0] + self._size[0] / 2:
-                    self._moving = "right"
-                elif self._world.player.centre_position[0] < self._position[0] + self._size[0] / 2:
-                    self._moving = "left"
-                else:
-                    self._moving = "stationary"
-                if player_distance_from_entity < self._attack_range and pygame.time.get_ticks() - self._attack_timer >= self._attack_cooldown:
-                    self._attack_timer = pygame.time.get_ticks()
-                    self._world.player.health -= self._attack_damage
+            if pygame.time.get_ticks() - self._attack_timer >= self._attack_cooldown:
+                if self._is_in_los:
+                    self._last_position_in_los = self._world.player.centre_position
+                    if self._world.player.centre_position[0] > self._position[0] + self._size[0] / 2:
+                        self._moving = "right"
+                    elif self._world.player.centre_position[0] < self._position[0] + self._size[0] / 2:
+                        self._moving = "left"
+                    else:
+                        self._moving = "stationary"
+                    if player_distance_from_entity < self._attack_range:
+                        self._attack_timer = pygame.time.get_ticks()
+                        self._world.player.health -= self._attack_damage
+                        self._moving = "stationary"
 
-                    direction = "left"
-                    if self._world.player.centre_position[0] > self.centre_position[0]:
-                        direction = "right"
-                    self._world.player.knockback(direction, 200)
-            else:
-                if self._last_position_in_los[0] > self._position[0] + self._size[0] / 2:
-                    self._moving = "right"
-                elif self._last_position_in_los[0] < self._position[0] + self._size[0] / 2:
-                    self._moving = "left"
-
+                        direction = "left"
+                        if self._world.player.centre_position[0] > self.centre_position[0]:
+                            direction = "right"
+                        self._world.player.knockback(direction, 200)
                 else:
-                    print("LAST PLACE REACHED AND CANT SEE PLAYER. DEAGGROING")
-                    self._is_aggro = False # When it reaches last place it saw the player
-                    self._moving = "stationary"
+                    if self._last_position_in_los[0] > self._position[0] + self._size[0] / 2:
+                        self._moving = "right"
+                    elif self._last_position_in_los[0] < self._position[0] + self._size[0] / 2:
+                        self._moving = "left"
+
+                    else:
+                        print("LAST PLACE REACHED AND CANT SEE PLAYER. DEAGGROING")
+                        self._is_aggro = False # When it reaches last place it saw the player
+                        self._moving = "stationary"
 
         else: # In the case where player is too far away to aggro
             if pygame.time.get_ticks() - self._idle_timer >= self._idle_cooldown:
                 self._idle_timer = pygame.time.get_ticks()
-                self._current_idle_action = random.choice(["static", "move_left", "move_right"])
+                self._current_idle_action = random.choice(["static"])
             if self._current_idle_action == "static":
-                #print("STATIC")
                 self._moving = "stationary"
             elif self._current_idle_action == "move_left":
                 self._moving = "left"

@@ -95,5 +95,54 @@
     "y": 164,
     "width": 19,
     "height": 28
+  },
+  "attack1": {
+    "x": 7,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack2": {
+    "x": 40,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  } ,
+  "attack3": {
+    "x": 71,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack4": {
+    "x": 102,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack5": {
+    "x": 134,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack6":{
+    "x": 166,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack7": {
+    "x": 197,
+    "y": 257,
+    "width": 19,
+    "height": 31
+  },
+  "attack8": {
+    "x": 231,
+    "y": 257,
+    "width": 19,
+    "height": 31
   }
+
 }

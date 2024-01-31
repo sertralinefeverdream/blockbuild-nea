@@ -29,17 +29,17 @@ class HotbarContainer(ItemContainer):
         else:
             self._current_item = self._no_hands_item
 
-    def update(self, player_pos=None, update_current_item=True):
+    def update(self, player_centre_pos=None, update_current_item=True):
         for row_index, row in enumerate(self._data):
             for item_index, item in enumerate(row):
                 if item is not None:
                     if item.quantity == 0:
                         self._data[row_index][item_index] = None
 
-        if update_current_item and player_pos is not None:
+        if update_current_item and player_centre_pos is not None:
             self.update_current_item()
             if self._current_item is not None:
-                self._current_item.update(player_pos)
+                return self._current_item.update(player_centre_pos)
 
 
 
