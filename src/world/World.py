@@ -22,7 +22,7 @@ class World:
                     }
             }
 
-        self._npc_spawn_timer = 0
+        self._npc_spawn_timer = -100000
         self.test_points = []
 
     @property
@@ -60,6 +60,7 @@ class World:
         self._camera.x = 0
         self._camera.y = 0
         self._player = None
+        self._npc_spawn_timer = -1 * 10**3
 
     def find_player_reference(self):
         for column in self._data.values():
@@ -90,17 +91,24 @@ class World:
 
         if pygame.time.get_ticks() - self._npc_spawn_timer >= self._npc_spawn_cooldown: # Script for randomly spawning stuff in
             valid_regions = []
-            for x_index, y_index in self._draw_list:
-                region = self.get_region_at_position((int(x_index), int(y_index)))
-                if region.get_quantity_of_blocks_in_region("grass") > 0 and len(region.entity_list) < self._entity_spawn_limit_per_region:
-                    valid_regions.append(region)
+            check_offset = 5 if self._player.velocity[0] > 0 else -5 if self._player.velocity[0] < 0 else -2 # Will spawn entities in front of the player's direction
+            for x in range(5):
+                for y in range(5):
+                    region_check_x = self._player.position[0] + (x+check_offset)*800
+                    region_check_y = self._player.position[1] + (y-2)*800
+
+                    region_exists = self.check_region_exists_at_position((region_check_x, region_check_y))
+                    if region_exists:
+                        region = self.get_region_at_position((region_check_x, region_check_y))
+                        if region.get_quantity_of_blocks_in_region("grass") > 0 and len(region.entity_list) < self._entity_spawn_limit_per_region:
+                            valid_regions.append(region)
 
             if len(valid_regions) > 0:
                 selected_region_to_spawn_npc_in = random.choice(valid_regions)
                 self._npc_spawn_timer = pygame.time.get_ticks()
                 random_block = selected_region_to_spawn_npc_in.get_random_block_of_type_by_id("grass")
                 npc = self._game.character_factory.create_character(self._game, self,
-                                                                random.choice(self._entity_random_spawn_list))
+                                                                    random.choice(self._entity_random_spawn_list))
                 npc.position = (random_block.position[0], random_block.position[1] - npc.size[1])
                 selected_region_to_spawn_npc_in.add_entity(npc)
 

@@ -54,10 +54,11 @@ class AnimationHandler:
         self._animation_data[animation_id] = animation
 
     def play_animation_from_id(self, animation_id):
-        self._current_frame_pointer = 0
-        self._is_finished = False
-        self._current_animation_id = animation_id
-        self._frame_timer = pygame.time.get_ticks()
+        if animation_id in self._animation_data.keys():
+            self._current_frame_pointer = 0
+            self._is_finished = False
+            self._current_animation_id = animation_id
+            self._frame_timer = pygame.time.get_ticks()
 
     def load_from_data(self, data):
         for animation_id, animation in data.items():

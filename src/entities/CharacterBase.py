@@ -61,8 +61,8 @@ class CharacterBase(EntityBase):
     def handle_collisions(self, axis):
         pass
 
-    def kill(self):
-        if self._death_sfx_id is not None:
+    def kill(self, play_sfx=True):
+        if self._death_sfx_id is not None and play_sfx:
             self._game.sfx_handler.play_sfx(self._death_sfx_id, self._game.get_option("game_volume").value)
         self._is_killed = True
 

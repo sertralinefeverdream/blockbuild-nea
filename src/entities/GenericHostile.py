@@ -6,7 +6,7 @@ import random
 
 class GenericHostile(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id, aggro_sfx_id, idle_sfx_id_list, random_idle_sound_cooldown, attack_damage, attack_range,
-                 aggro_range, chase_range, auto_jump_cooldown, idle_cooldown=5000, out_of_los_cooldown=5000, attack_cooldown=250, loot=None):
+                 aggro_range, chase_range, auto_jump_cooldown, idle_cooldown, out_of_los_cooldown, attack_cooldown, loot):
         super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id)
 
         self._aggro_sfx_id = aggro_sfx_id
@@ -32,6 +32,7 @@ class GenericHostile(CharacterBase):
         self._out_of_los_timer = 0
         self._attack_timer = 0
         self._random_idle_sound_timer = 0
+        self._last_update_timer = 0
 
     @property
     def attack_damage(self):
@@ -84,9 +85,14 @@ class GenericHostile(CharacterBase):
     def update(self):
         deltatime = self._game.clock.get_time() / 1000
 
-        if self._health <= 0:
+        if self._health <= 0  :
             self.kill()
             return
+        elif pygame.time.get_ticks() - self._last_update_timer >= self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
+            self.kill(False)
+            return
+
+        self._last_update_timer = pygame.time.get_ticks()
 
         self._is_in_los = self.is_player_in_line_of_sight()
         player_distance_from_entity = None
@@ -298,8 +304,6 @@ class GenericHostile(CharacterBase):
                 if self._world.check_region_exists_at_position((region_check_x, region_check_y)):
                     hitboxes_to_check += self._world.get_region_at_position(
                         (region_check_x, region_check_y)).get_block_hitboxes()
-                else:
-                    print("Region invalid")
 
         if axis.lower() == "horizontal":
             for block, hitbox in hitboxes_to_check:
@@ -342,6 +346,9 @@ class GenericHostile(CharacterBase):
                 self._is_in_air = False
             else:
                 self._is_in_air = True
+
+    def aggro(self):
+        self._is_aggro = True
 
     def load_state_data(self, data):
         self._position = data["position"]

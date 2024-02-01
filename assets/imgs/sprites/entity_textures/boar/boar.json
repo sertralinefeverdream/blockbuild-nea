@@ -1,0 +1,62 @@
+{
+  "idle1": {
+    "x": 7,
+    "y": 21,
+    "width": 18,
+    "height": 10
+  },
+  "idle2": {
+    "x": 40,
+    "y": 21,
+    "width": 18,
+    "height": 10
+  },
+  "idle3": {
+    "x": 71,
+    "y": 21,
+    "width": 18,
+    "height": 10
+  },
+  "idle4": {
+    "x": 103,
+    "y": 21,
+    "width": 18,
+    "height": 10
+  },
+  "run1": {
+    "x": 7,
+    "y": 52,
+    "width": 18,
+    "height": 11
+  },
+  "run2": {
+    "x": 39,
+    "y": 52,
+    "width": 18,
+    "height": 11
+  },
+  "run3": {
+    "x": 72,
+    "y": 52,
+    "width": 18,
+    "height": 11
+  },
+  "run4": {
+    "x": 103,
+    "y": 52,
+    "width": 18,
+    "height": 11
+  },
+  "jumpfall1": {
+    "x": 7,
+    "y": 83,
+    "width": 18,
+    "height": 12
+  },
+  "jumpfall2": {
+    "x": 40,
+    "y": 83,
+    "width": 18,
+    "height": 12
+  }
+}

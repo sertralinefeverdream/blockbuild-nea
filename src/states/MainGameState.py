@@ -29,7 +29,7 @@ class MainGameState(StateBase):
     def on_state_enter(self, params=None):
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
         self._gui[0]["hotbar_display"].centre_position = (600.0, 700.0)
-        self._gui[0]["player_health_bar"].centre_position = (600.0, 600.0)
+        self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)
 
         for layer in self._gui[::-1]:
             for component in layer.values():
@@ -79,7 +79,7 @@ class MainGameState(StateBase):
         print(self._world.player.health)
 
         self._gui[0]["player_health_bar"].size = ((self._world.player.health/self._world.player.max_health)*540.0, 25.0)
-        self._gui[0]["player_health_bar"].centre_position = (600.0, 600.0)
+        self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)
 
         block_at_mouse = self._world.get_block_at_position(self._world.camera.get_world_position(mouse_pos))
 

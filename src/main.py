@@ -8,8 +8,6 @@ from states.MainGameState import MainGameState
 from states.PauseGameState import PauseGameState
 from states.InventoryState import InventoryState
 
-from src.sprite.Spritesheet import Spritesheet
-
 from base.Game import Game
 from base.FileSaveHandler import FileSaveHandler
 

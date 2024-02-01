@@ -363,6 +363,78 @@
     }
   },
   "characters": {
+    "boar": {
+      "type": "generic_passive",
+      "size": [
+        70,
+        40
+      ],
+      "max_speed" : [
+        250,
+        400
+      ],
+      "max_health": 30,
+      "animation_data": {
+        "idle": [
+          [
+            "idle1",
+            100
+          ],
+          [
+            "idle2",
+            100
+          ],
+          [
+            "idle3",
+            100
+          ],
+          [
+            "idle4",
+            100
+          ]
+        ],
+        "run": [
+          [
+            "run1",
+            63
+          ],
+          [
+            "run2",
+            63
+          ],
+          [
+            "run3",
+            63
+          ],
+          [
+            "run4",
+            63
+          ]
+        ],
+        "jump": [
+          [
+            "jumpfall1",
+            250
+          ]
+        ],
+        "fall": [
+          [
+            "jumpfall2",
+            250
+          ]
+        ]
+      },
+      "auto_jump_cooldown": 1500,
+      "aggro_cooldown": 10000,
+      "idle_cooldown": 5000,
+      "loot": null,
+      "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/boar/boar.png",
+      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/boar/boar.json",
+      "hurt_sfx_id": "player_hurt",
+      "death_sfx_id": "player_death",
+      "idle_sfx_id_list": [],
+      "random_idle_sound_cooldown": 12000
+    },
     "player": {
       "type": "player",
       "size": [
@@ -487,17 +559,17 @@
       "hurt_sfx_id": "player_hurt",
       "death_sfx_id": "player_death"
     },
-    "test": {
+    "wolf": {
       "type": "generic_hostile",
       "size": [
-        37,
-        60
+        60,
+        50
       ],
       "max_speed": [
         200,
         400
       ],
-      "max_health": 100,
+      "max_health": 50,
       "animation_data": {
         "idle": [
           [
@@ -507,15 +579,13 @@
           [
             "idle2",
             100
-          ]
-        ],
-        "run": [
+          ],
           [
-            "idle1",
+            "idle3",
             100
           ],
           [
-            "idle2",
+            "idle4",
             100
           ]
         ],
@@ -543,14 +613,6 @@
           [
             "run6",
             63
-          ],
-          [
-            "run7",
-            63
-          ],
-          [
-            "run8",
-            63
           ]
         ],
         "jump": [
@@ -559,26 +621,14 @@
             100
           ],
           [
-            "jumpfall3",
-            100
-          ],
-          [
-            "jumpfall4",
-            100
-          ],
-          [
-            "jumpfall5",
+            "jumpfall2",
             100
           ]
         ],
         "fall": [
           [
-            "jumpfall5",
-            100
-          ],
-          [
-            "jumpfall6",
-            259
+            "jumpfall3",
+            250
           ]
         ],
         "attack": [
@@ -597,36 +647,20 @@
           [
             "attack4",
             63
-          ],
-          [
-            "attack5",
-            63
-          ],
-          [
-            "attack6",
-            63
-          ],
-          [
-            "attack7",
-            63
-          ],
-          [
-            "attack8",
-            63
           ]
         ]
       },
-      "attack_damage": 10,
+      "attack_damage": 7.5,
       "attack_range": 45,
-      "aggro_range": 200,
+      "aggro_range": 400,
       "chase_range": 800,
       "auto_jump_cooldown": 1500,
       "idle_cooldown": 5000,
       "out_of_los_cooldown": 5000,
       "attack_cooldown": 500,
-      "loot": "iron",
-      "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/player/player.png",
-      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/player/player.json",
+      "loot": null,
+      "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/wolf/wolf.png",
+      "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/wolf/wolf.json",
       "hurt_sfx_id": "player_hurt",
       "death_sfx_id": "player_death",
       "aggro_sfx_id": "player_hurt",
@@ -660,10 +694,12 @@
     },
     "npc_spawn_data": {
       "entity_spawn_list": [
-        "test"
+        "boar",
+        "wolf"
       ],
-      "random_spawn_cooldown": 45000,
-      "entity_spawn_limit_per_region": 1
+      "random_spawn_cooldown": 10000,
+      "entity_spawn_limit_per_region": 1,
+      "despawn_time": 60000
     }
   }
 }

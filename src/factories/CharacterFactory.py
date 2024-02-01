@@ -1,5 +1,6 @@
 from src.entities.Player import Player
 from src.entities.GenericHostile import GenericHostile
+from src.entities.GenericPassive import GenericPassive
 from src.animations.AnimationHandler import AnimationHandler
 
 
@@ -18,7 +19,8 @@ class CharacterFactory:
             if entity_data["type"] == "player":
                 entity = Player(game, world, entity_id, (0, 0), entity_data["size"],
                                 animation_handler=animation_handler, max_speed=entity_data["max_speed"],
-                                max_health=entity_data["max_health"], hurt_sfx_id=entity_data["hurt_sfx_id"], death_sfx_id=entity_data["death_sfx_id"])
+                                max_health=entity_data["max_health"], hurt_sfx_id=entity_data["hurt_sfx_id"],
+                                death_sfx_id=entity_data["death_sfx_id"])
             elif entity_data["type"] == "generic_hostile":
                 print("MAKING GENERIC HOSTILE")
                 entity = GenericHostile(game, world, entity_id, (0, 0), entity_data["size"],
@@ -38,6 +40,19 @@ class CharacterFactory:
                                         idle_sfx_id_list=entity_data["idle_sfx_id_list"],
                                         random_idle_sound_cooldown=entity_data["random_idle_sound_cooldown"]
                                         )
+            elif entity_data["type"] == "generic_passive":
+                entity = GenericPassive(game, world, entity_id, (0, 0), entity_data["size"],
+                                        animation_handler=animation_handler,
+                                        max_speed=entity_data["max_speed"], max_health=entity_data["max_health"],
+                                        auto_jump_cooldown=entity_data["auto_jump_cooldown"],
+                                        idle_cooldown=entity_data["idle_cooldown"], loot=entity_data["loot"],
+                                        hurt_sfx_id=entity_data["hurt_sfx_id"],
+                                        death_sfx_id=entity_data["death_sfx_id"],
+                                        idle_sfx_id_list=entity_data["idle_sfx_id_list"],
+                                        random_idle_sound_cooldown=entity_data["random_idle_sound_cooldown"],
+                                        aggro_cooldown=entity_data["aggro_cooldown"])
+            else:
+                raise NotImplementedError
             if state_data is not None:
                 entity.load_state_data(state_data)
             return entity

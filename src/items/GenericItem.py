@@ -187,6 +187,7 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
             if entity_in_range_of_tool is not None:
                 direction = "right" if entity_in_range_of_tool.centre_position[0] > player_centre_pos[0] else "left"
                 entity_in_range_of_tool.health -= self._attack_strength
+                entity_in_range_of_tool.aggro()
                 entity_in_range_of_tool.knockback(direction, 200)
                 if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
                     remainder = self._world.player.hotbar.pickup_item(
