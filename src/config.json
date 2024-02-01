@@ -662,8 +662,8 @@
       "entity_spawn_list": [
         "test"
       ],
-      "random_spawn_cooldown": 2500,
-      "entity_spawn_limit_per_region": 3
+      "random_spawn_cooldown": 45000,
+      "entity_spawn_limit_per_region": 1
     }
   }
 }

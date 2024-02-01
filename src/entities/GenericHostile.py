@@ -145,7 +145,6 @@ class GenericHostile(CharacterBase):
                     else:
                         self._moving = "stationary"
                     if player_distance_from_entity <= self._attack_range:
-                        self._world.player.health -= self._attack_damage
                         self._attack_timer = pygame.time.get_ticks()
                         self._moving = "stationary"
                         if self._animation_handler.current_animation_id != "attack":
@@ -155,6 +154,7 @@ class GenericHostile(CharacterBase):
                         direction = "left"
                         if self._world.player.centre_position[0] > self.centre_position[0]:
                             direction = "right"
+                        self._world.player.health -= self._attack_damage
                         self._world.player.knockback(direction, 200)
                 else:
                     if self._last_position_in_los[0] > self._position[0] + self._size[0] / 2:

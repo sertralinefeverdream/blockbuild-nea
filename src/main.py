@@ -33,7 +33,10 @@ def main():
     config = None
     with open("config.json") as f:
         config = json.load(f)
-        window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
+
+    npc_spawn_data = config["generation_data"]["npc_spawn_data"]
+
+    window = pygame.display.set_mode((config["window_size_x"], config["window_size_y"]))
     pygame.display.set_caption(config["window_caption"])
 
     state_stack = StateStack()
@@ -60,7 +63,7 @@ def main():
     game.add_to_states("main_menu", MainMenuState(game))
     game.add_to_states("options_menu", OptionsMenuState(game))
     game.add_to_states("load_game_menu", LoadGameMenuState(game))
-    game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator)))
+    game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator, npc_spawn_data["random_spawn_cooldown"], npc_spawn_data["entity_spawn_limit_per_region"], npc_spawn_data["entity_spawn_list"])))
     game.add_to_states("pause_game", PauseGameState(game))
     game.add_to_states("inventory", InventoryState(game))
     game.game_loop()

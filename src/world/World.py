@@ -3,7 +3,7 @@ import random
 import pygame
 
 class World:
-    def __init__(self, game, camera, region_generator, npc_spawn_cooldown=10000, entity_spawn_limit_per_region=3, entity_random_spawn_list=["test"]):
+    def __init__(self, game, camera, region_generator, npc_spawn_cooldown=60000, entity_spawn_limit_per_region=1, entity_random_spawn_list=["test"]):
         self._game = game
         self._camera = camera
         self._region_generator = region_generator
@@ -21,10 +21,6 @@ class World:
                         '0': self._region_generator.create_generated_region(self._game, self, (0, 0))
                     }
             }
-        '''
-        self._test_enemy = self._game.character_factory.create_character(self._game, self, "test")
-        self._test_enemy.position = (0, 0)
-        '''
 
         self._npc_spawn_timer = 0
         self.test_points = []
@@ -81,9 +77,10 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
-
-        self._player.health = self._player.max_health
-        self._player.is_killed = False
+        elif self._player.is_killed:
+            self._player = None
+            self._player = self._game.character_factory.create_character(self._game, self, "player")
+            self.get_region_at_position(self._player.position).add_entity(self._player)
 
         self._camera.x = self._player.position[0] - 600
         self._camera.y = self._player.position[1] - 400

@@ -169,10 +169,10 @@ class Region:
                         block.update()
 
         for entity in self._entity_list:
+            entity.update()
             if entity.is_killed:
                 self.remove_entity(entity)
-                continue
-            entity.update()
+                del entity
 
     def draw_blocks(self):
         if self._flag_for_redraw:
