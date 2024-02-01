@@ -17,6 +17,12 @@
     "width": 16,
     "height": 16
   },
+  "diamond": {
+    "x": 112,
+    "y": 48,
+    "width": 16,
+    "height": 16
+  },
   "stick": {
     "x": 80,
     "y": 48,
@@ -37,6 +43,12 @@
   },
   "gold_pickaxe": {
     "x": 64,
+    "y": 96,
+    "width": 16,
+    "height": 16
+  },
+  "diamond_pickaxe": {
+    "x": 48,
     "y": 96,
     "width": 16,
     "height": 16

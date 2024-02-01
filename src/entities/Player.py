@@ -101,9 +101,9 @@ class Player(CharacterBase):
 
         if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
             print(self._velocity[0])
-            self._footstep_timer = pygame.time.get_ticks()
             block_below = self._world.get_block_at_position((math.trunc(self._position[0] + self._size[0]/2), math.trunc(self._position[1] + self._size[1] + 2)))
             if block_below is not None and block_below.can_collide:
+                self._footstep_timer = pygame.time.get_ticks()
                 self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
 
         item_return_action = self._hotbar.update(

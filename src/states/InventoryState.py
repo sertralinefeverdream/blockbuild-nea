@@ -45,20 +45,23 @@ class InventoryState(StateBase):
                                                                   self.on_craft_button_press),
                 "item_description_box": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window),
                 "stone_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                               self._game.window,
-                                                                               self.on_craft_item_press),
+                                                                                self._game.window,
+                                                                                self.on_craft_item_press),
                 "iron_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
                                                                                self.on_craft_item_press),
                 "gold_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                self._game.window,
                                                                                self.on_craft_item_press),
+                "diamond_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                                  self._game.window,
+                                                                                  self.on_craft_item_press),
                 "oak_plank_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                               self._game.window,
-                                                                               self.on_craft_item_press),
+                                                                            self._game.window,
+                                                                            self.on_craft_item_press),
                 "stick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                               self._game.window,
-                                                                               self.on_craft_item_press)
+                                                                        self._game.window,
+                                                                        self.on_craft_item_press)
 
             },
             {
@@ -120,6 +123,8 @@ class InventoryState(StateBase):
             self._recipe_selected = "stick"
         elif item_button is self._gui[1]["gold_pickaxe_craft_button"]:
             self._recipe_selected = "gold_pickaxe"
+        elif item_button is self._gui[1]["diamond_pickaxe_craft_button"]:
+            self._recipe_selected = "diamond_pickaxe"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -291,6 +296,12 @@ class InventoryState(StateBase):
         self._gui[1]["gold_pickaxe_craft_button"].centre_position = (630.0, 160.0)
         self._gui[1]["gold_pickaxe_craft_button"].outline_thickness = 3
 
+        self._gui[1]["diamond_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["diamond_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_pickaxe")
+        self._gui[1]["diamond_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["diamond_pickaxe_craft_button"].centre_position = (630.0, 200.0)
+        self._gui[1]["diamond_pickaxe_craft_button"].outline_thickness = 3
+
         self._gui[1]["oak_plank_craft_button"].size = (40.0, 40.0)
         self._gui[1]["oak_plank_craft_button"].image = self._game.block_spritesheet.parse_sprite("oak_plank")
         self._gui[1]["oak_plank_craft_button"].image_scale_multiplier = 0.7
@@ -379,7 +390,7 @@ class InventoryState(StateBase):
             for component in layer.values():
                 component.update()
 
-    def update_item_display_currently_hovering(self): # Weirdest auto reformat ever??
+    def update_item_display_currently_hovering(self):  # Weirdest auto reformat ever??
         self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
                                                                                            "hotbar_display"].get_hovering() is not None else \
             self._gui[1]["inventory_display"].get_hovering() if self._gui[1][

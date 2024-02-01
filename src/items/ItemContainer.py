@@ -73,7 +73,7 @@ class ItemContainer:
             if item_to_pickup.quantity > remaining_quantity:
                 item_with_highest_quantity.quantity += remaining_quantity
                 item_to_pickup.quantity -= remaining_quantity
-                return self.pickup_item(item, capacity_check)
+                return self.pickup_item(item_to_pickup, capacity_check)
             elif item_to_pickup.quantity <= remaining_quantity:
                 item_with_highest_quantity.quantity += item_to_pickup.quantity
                 item_to_pickup.quantity = 0

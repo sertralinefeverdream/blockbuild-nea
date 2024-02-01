@@ -46,5 +46,11 @@
     "y": 32,
     "width": 16,
     "height": 16
+  },
+  "diamond_ore": {
+    "x": 32,
+    "y": 48,
+    "width": 16,
+    "height": 16
   }
 }

@@ -21,7 +21,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
         self._default_mine_strength = default_mine_strength
         self._preferred_mine_strength = preferred_mine_strength
         self._tool_desc = tool_desc
-        self._points_to_draw = []
 
         if preferred_mine_strength_white_list is None:
             self._preferred_mine_strength_whitelist = []
@@ -140,7 +139,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
 
     def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
                                     range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
-        self._world.test_points.clear()
         world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
         distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
         distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
@@ -162,7 +160,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
         current_point = [player_centre_pos[0], player_centre_pos[1]]
         index = 0
         while index <= range:
-            self._world.test_points.append(current_point)
             block_at_point = self._world.get_block_at_position(current_point)
             if block_at_point is None or (block_at_point is not None and not block_at_point.can_collide):
                 entities_at_point = self._world.get_entities_at_position(current_point)

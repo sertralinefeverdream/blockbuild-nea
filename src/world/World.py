@@ -23,7 +23,6 @@ class World:
             }
 
         self._npc_spawn_timer = -100000
-        self.test_points = []
 
     @property
     def game(self):
@@ -123,10 +122,6 @@ class World:
             screen_position = self._camera.get_screen_position((int(x), int(y)))
             if (-800 <= screen_position[0] <= 1200) and (-800 <= screen_position[1] <= 800):
                 self._data[x][y].draw_blocks()
-
-        for points in self.test_points:
-            screen_pos = self._camera.get_screen_position(points)
-            pygame.draw.circle(self._game.window, (0,0,0), screen_pos, 5, 5)
 
     def draw_entities(self):
         for x, y in self._draw_list:

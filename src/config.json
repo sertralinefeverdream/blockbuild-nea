@@ -86,13 +86,15 @@
       "loot_drop_id": "iron",
       "loot_drop_tool_whitelist": [
         "stone_pickaxe",
-        "iron_pickaxe"
+        "iron_pickaxe",
+        "gold_pickaxe",
+        "diamond_pickaxe"
       ],
       "can_collide": true
     },
     "gold_ore": {
       "type": "generic",
-      "hardness": 150,
+      "hardness": 300,
       "texture": "gold_ore",
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
@@ -100,7 +102,25 @@
       "loot_drop_id": "gold",
       "loot_drop_tool_whitelist": [
         "stone_pickaxe",
-        "iron_pickaxe"
+        "iron_pickaxe",
+        "gold_pickaxe",
+        "diamond_pickaxe"
+      ],
+      "can_collide": true
+    },
+    "diamond_ore": {
+      "type": "generic",
+      "hardness": 450,
+      "texture": "diamond_ore",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "stone_footstep",
+      "loot_drop_id": "diamond",
+      "loot_drop_tool_whitelist": [
+        "stone_pickaxe",
+        "iron_pickaxe",
+        "gold_pickaxe",
+        "diamond_pickaxe"
       ],
       "can_collide": true
     },
@@ -265,7 +285,8 @@
       "preferred_mine_strength_whitelist": [
         "stone",
         "iron_ore",
-        "gold_ore"
+        "gold_ore",
+        "diamond_ore"
       ],
       "recipe": {
         "ingredients": {
@@ -292,7 +313,8 @@
       "preferred_mine_strength_whitelist": [
         "stone",
         "iron_ore",
-        "gold_ore"
+        "gold_ore",
+        "diamond_ore"
       ],
       "recipe": {
         "ingredients": {
@@ -315,11 +337,12 @@
       "use_range": 440,
       "attack_strength": 10,
       "default_mine_strength": 10,
-      "preferred_mine_strength": 500,
+      "preferred_mine_strength": 450,
       "preferred_mine_strength_whitelist": [
         "stone",
         "iron_ore",
-        "gold_ore"
+        "gold_ore",
+        "diamond_ore"
       ],
       "recipe": {
         "ingredients": {
@@ -330,6 +353,33 @@
         "description": "Requires 3x Gold, 2x Sticks, Makes 1"
       },
       "durability": 240
+    },
+    "diamond_pickaxe": {
+      "name": "Diamond Pickaxe",
+      "type": "tool",
+      "texture": "diamond_pickaxe",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 600,
+      "preferred_mine_strength_whitelist": [
+        "stone",
+        "iron_ore",
+        "gold_ore",
+        "diamond_ore"
+      ],
+      "recipe": {
+        "ingredients": {
+          "diamond": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Diamond, 2x Sticks, Makes 1"
+      },
+      "durability": 480
     },
     "iron": {
       "name": "Iron",
@@ -350,6 +400,21 @@
       "name": "Gold",
       "type": "generic",
       "texture": "gold",
+      "max_quantity": 50,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 10,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null
+    },
+    "diamond": {
+      "name": "Gold",
+      "type": "generic",
+      "texture": "diamond",
       "max_quantity": 50,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -674,13 +739,19 @@
         "block_id": "iron_ore",
         "max_height": 800,
         "max_vein_size": 8,
-        "probability": 5
+        "probability": 3
       },
       "gold_ore_vein": {
         "block_id": "gold_ore",
         "max_height": 1600,
         "max_vein_size": 4,
-        "probability": 3
+        "probability": 5
+      },
+      "diamond_ore_vein": {
+        "block_id": "diamond_ore",
+        "max_height": 2400,
+        "max_vein_size": 2,
+        "probability": 9
       }
     },
     "tree_data": {
@@ -697,7 +768,7 @@
         "boar",
         "wolf"
       ],
-      "random_spawn_cooldown": 10000,
+      "random_spawn_cooldown": 30000,
       "entity_spawn_limit_per_region": 1,
       "despawn_time": 60000
     }
