@@ -27,6 +27,10 @@ class MainGameState(StateBase):
         ]
 
     def on_state_enter(self, params=None):
+        self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
+        if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not self._game.states["inventory"]:
+            self._game.music_handler.shuffle_play()
+
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
         self._gui[0]["hotbar_display"].centre_position = (600.0, 700.0)
         self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)
@@ -75,8 +79,6 @@ class MainGameState(StateBase):
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
         self._gui[0]["fps_counter"].is_visible = True
-
-        print(self._world.player.health)
 
         self._gui[0]["player_health_bar"].size = ((self._world.player.health/self._world.player.max_health)*540.0, 25.0)
         self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)

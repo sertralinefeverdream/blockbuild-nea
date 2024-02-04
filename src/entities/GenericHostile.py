@@ -5,12 +5,13 @@ import random
 
 
 class GenericHostile(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id, aggro_sfx_id, idle_sfx_id_list, random_idle_sound_cooldown, attack_damage, attack_range,
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id, aggro_sfx_id, idle_sfx_id_list, attack_sfx_id, random_idle_sound_cooldown, attack_damage, attack_range,
                  aggro_range, chase_range, auto_jump_cooldown, idle_cooldown, out_of_los_cooldown, attack_cooldown, loot):
         super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id)
 
         self._aggro_sfx_id = aggro_sfx_id
         self._idle_sfx_id_list = idle_sfx_id_list
+        self._attack_sfx_id = attack_sfx_id
         self._random_idle_sound_cooldown = random_idle_sound_cooldown
         self._attack_damage = attack_damage
         self._attack_range = attack_range
@@ -152,11 +153,11 @@ class GenericHostile(CharacterBase):
                         self._moving = "stationary"
                     if player_distance_from_entity <= self._attack_range:
                         self._attack_timer = pygame.time.get_ticks()
+                        self._game.sfx_handler.play_sfx(self._attack_sfx_id, self._game.get_option("game_volume").value)
                         self._moving = "stationary"
                         if self._animation_handler.current_animation_id != "attack":
                             self._animation_handler.play_animation_from_id("attack")
                             self._animation_handler.loop = False
-
                         direction = "left"
                         if self._world.player.centre_position[0] > self.centre_position[0]:
                             direction = "right"
@@ -276,7 +277,7 @@ class GenericHostile(CharacterBase):
 
         if pygame.time.get_ticks() - self._random_idle_sound_timer >= self._random_idle_sound_cooldown and len(self._idle_sfx_id_list) > 0:
             self._random_idle_sound_timer = pygame.time.get_ticks()
-            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list))
+            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list), self._game.get_option("game_volume").value)
 
     def get_distance_from_entity(self, entity):
         foreign_entity_centre_pos = entity.centre_position

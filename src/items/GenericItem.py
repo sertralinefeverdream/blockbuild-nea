@@ -2,10 +2,10 @@ import pygame
 import math
 
 
-class GenericItem:  # Can be used for normal items, tools, default, etc lol
+class GenericItem:  # Can be used for normal items, default_items, etc lol
     def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100,
                  use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10,
-                 preferred_mine_strength=10, preferred_mine_strength_white_list=None, tool_desc=None):
+                 preferred_mine_strength=10, preferred_mine_strength_white_list=None):
         self._game = game
         self._world = world
         self._item_id = item_id
@@ -20,7 +20,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
         self._attack_strength = attack_strength
         self._default_mine_strength = default_mine_strength
         self._preferred_mine_strength = preferred_mine_strength
-        self._tool_desc = tool_desc
 
         if preferred_mine_strength_white_list is None:
             self._preferred_mine_strength_whitelist = []
@@ -117,10 +116,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
     @property
     def block_currently_mining_hardness_remaining(self):
         return self._block_currently_mining_hardness_remaining
-
-    @property
-    def tool_desc(self):
-        return self._tool_desc
 
     def right_use(self, player_centre_pos):
         pass
@@ -272,7 +267,6 @@ class GenericItem:  # Can be used for normal items, tools, default, etc lol
             if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
                 self._use_timer = pygame.time.get_ticks()
                 self.right_use(player_centre_pos)
-
 
     def get_state_data(self):
         data = \

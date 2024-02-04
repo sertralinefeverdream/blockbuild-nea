@@ -10,6 +10,7 @@ class MusicHandler:
         self._shuffle_list = []
         self._is_shuffling = is_shuffling
         self._music_fade_time = music_fade_time
+        pygame.mixer.music.set_endevent(pygame.USEREVENT + 1)
 
     @property
     def music_library(self):

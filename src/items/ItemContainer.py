@@ -166,7 +166,6 @@ class ItemContainer:
         self._data = [[None for column_index in range(self._dimensions[1])] for row_index in range(self._dimensions[0])]
 
         for row_index, row in enumerate(data):
-            print(f"ROW INDEX :{row_index}")
             self._data.append([])
             for item_index, item in enumerate(row):
                 if item is not None:

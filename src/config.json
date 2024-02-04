@@ -9,7 +9,10 @@
     "save_file_3": "../save_files/save_file_3.json"
   },
   "music_assets": {
-    "main_menu": "../assets/audio/music/menu_music.mp3"
+    "At Tesko This Week": "../assets/audio/music/At Tesko This Week.mp3",
+    "settings_menu": "../assets/audio/music/settings_menu.mp3",
+    "Atmos Sphear": "../assets/audio/music/Atmos Sphear.mp3",
+    "Aquatic Ambience": "../assets/audio/music/Aquatic Ambience.mp3"
   },
   "sfx_assets": {
     "btn_click_1": "../assets/audio/sfx/gui/btn_click_1.mp3",
@@ -29,7 +32,17 @@
     "dirt_footstep": "../assets/audio/sfx/blocks/dirt_footstep.wav",
     "wood_footstep": "../assets/audio/sfx/blocks/wood_footstep.wav",
     "player_hurt": "../assets/audio/sfx/entities/player/player_hurt.wav",
-    "player_death": "../assets/audio/sfx/entities/player/player_death.wav"
+    "player_death": "../assets/audio/sfx/entities/player/player_death.wav",
+    "boar_death": "../assets/audio/sfx/entities/boar/boar_death.oga",
+    "boar_idle1": "../assets/audio/sfx/entities/boar/boar_idle1.ogg",
+    "boar_idle2": "../assets/audio/sfx/entities/boar/boar_idle2.oga",
+    "boar_idle3": "../assets/audio/sfx/entities/boar/boar_idle3.ogg",
+    "wolf_aggro": "../assets/audio/sfx/entities/wolf/wolf_aggro.ogg",
+    "wolf_hurt": "../assets/audio/sfx/entities/wolf/wolf_hurt.ogg",
+    "wolf_idle1": "../assets/audio/sfx/entities/wolf/wolf_idle1.ogg",
+    "wolf_idle2": "../assets/audio/sfx/entities/wolf/wolf_idle2.ogg",
+    "wolf_idle3": "../assets/audio/sfx/entities/wolf/wolf_idle3.ogg",
+    "munch": "../assets/audio/sfx/items/munch.mp3"
   },
   "blocks": {
     "grass": {
@@ -153,11 +166,11 @@
       "type": "blockitem",
       "texture": "oak_plank",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -175,11 +188,11 @@
       "type": "generic",
       "texture": "stick",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -191,16 +204,33 @@
         "description": "Requires 1x Oak Plank, Makes 4"
       }
     },
+    "porkchop": {
+      "name": "Porkchop",
+      "type": "food",
+      "texture": "porkchop",
+      "max_quantity": 50,
+      "attack_cooldown": 120,
+      "use_cooldown": 250,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": null,
+      "nutrition": 20,
+      "eat_sfx_id": "munch"
+    },
     "oak_log": {
       "name": "Oak Log",
       "type": "blockitem",
       "texture": "oak_log",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -212,11 +242,11 @@
       "type": "blockitem",
       "texture": "grass",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -228,11 +258,11 @@
       "type": "blockitem",
       "texture": "stone",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -244,11 +274,11 @@
       "type": "blockitem",
       "texture": "dirt",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 100,
       "preferred_mine_strength_whitelist": [],
@@ -260,11 +290,11 @@
       "type": "generic",
       "texture": "grass",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
       "preferred_mine_strength_whitelist": [],
@@ -279,10 +309,12 @@
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 50,
       "preferred_mine_strength_whitelist": [
+        "grass",
+        "dirt",
         "stone",
         "iron_ore",
         "gold_ore",
@@ -298,6 +330,98 @@
       },
       "durability": 60
     },
+    "stone_sword": {
+      "name": "Stone Sword",
+      "type": "tool",
+      "texture": "stone_sword",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 15,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "stone_block": 2,
+          "stick": 1
+        },
+        "amount_crafted": 1,
+        "description": "Requires 2x Stone, 1x Stick, Makes 1"
+      },
+      "durability": 120
+    },
+    "iron_sword": {
+      "name": "Iron Sword",
+      "type": "tool",
+      "texture": "iron_sword",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 20,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "iron": 2,
+          "stick": 1
+        },
+        "amount_crafted": 1,
+        "description": "Requires 2x Iron, 1x Stick, Makes 1"
+      },
+      "durability": 120
+    },
+    "gold_sword": {
+      "name": "Gold Sword",
+      "type": "tool",
+      "texture": "gold_sword",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 25,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "gold": 2,
+          "stick": 1
+        },
+        "amount_crafted": 1,
+        "description": "Requires 2x Gold, 1x Stick, Makes 1"
+      },
+      "durability": 250
+    },
+    "diamond_sword": {
+      "name": "Diamond Sword",
+      "type": "tool",
+      "texture": "diamond_sword",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 50,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 150,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "diamond": 2,
+          "stick": 1
+        },
+        "amount_crafted": 2,
+        "description": "Requires 2x Diamond, 1x Stick, Makes 1"
+      },
+      "durability": 1200
+    },
     "iron_pickaxe": {
       "name": "Iron Pickaxe",
       "type": "tool",
@@ -307,10 +431,12 @@
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 300,
       "preferred_mine_strength_whitelist": [
+        "grass",
+        "dirt",
         "stone",
         "iron_ore",
         "gold_ore",
@@ -335,10 +461,12 @@
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 450,
       "preferred_mine_strength_whitelist": [
+        "grass",
+        "dirt",
         "stone",
         "iron_ore",
         "gold_ore",
@@ -362,10 +490,12 @@
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 600,
       "preferred_mine_strength_whitelist": [
+        "grass",
+        "dirt",
         "stone",
         "iron_ore",
         "gold_ore",
@@ -390,7 +520,7 @@
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
       "preferred_mine_strength_whitelist": [],
@@ -405,7 +535,7 @@
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
       "preferred_mine_strength_whitelist": [],
@@ -416,11 +546,11 @@
       "type": "generic",
       "texture": "diamond",
       "max_quantity": 50,
-      "attack_cooldown": 250,
+      "attack_cooldown": 120,
       "use_cooldown": 100,
       "attack_range": 55,
       "use_range": 440,
-      "attack_strength": 10,
+      "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 150,
       "preferred_mine_strength_whitelist": [],
@@ -438,7 +568,7 @@
         250,
         400
       ],
-      "max_health": 30,
+      "max_health": 75,
       "animation_data": {
         "idle": [
           [
@@ -492,12 +622,16 @@
       "auto_jump_cooldown": 1500,
       "aggro_cooldown": 10000,
       "idle_cooldown": 5000,
-      "loot": null,
+      "loot": "porkchop",
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/boar/boar.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/boar/boar.json",
-      "hurt_sfx_id": "player_hurt",
-      "death_sfx_id": "player_death",
-      "idle_sfx_id_list": [],
+      "hurt_sfx_id": "boar_idle1",
+      "death_sfx_id": "boar_death",
+      "idle_sfx_id_list": [
+        "boar_idle1",
+        "boar_idle2",
+        "boar_idle3"
+      ],
       "random_idle_sound_cooldown": 12000
     },
     "player": {
@@ -634,7 +768,7 @@
         200,
         400
       ],
-      "max_health": 50,
+      "max_health": 100,
       "animation_data": {
         "idle": [
           [
@@ -726,10 +860,11 @@
       "loot": null,
       "spritesheet_image_path": "../assets/imgs/sprites/entity_textures/wolf/wolf.png",
       "spritesheet_metadata_path": "../assets/imgs/sprites/entity_textures/wolf/wolf.json",
-      "hurt_sfx_id": "player_hurt",
-      "death_sfx_id": "player_death",
-      "aggro_sfx_id": "player_hurt",
-      "idle_sfx_id_list": [],
+      "hurt_sfx_id": "wolf_hurt",
+      "death_sfx_id": "wolf_death",
+      "aggro_sfx_id": "wolf_aggro",
+      "attack_sfx_id": "wolf_attack",
+      "idle_sfx_id_list": ["wolf_idle1","wolf_idle2","wolf_idle3"],
       "random_idle_sound_cooldown": 12000
     }
   },

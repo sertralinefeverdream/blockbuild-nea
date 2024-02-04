@@ -22,6 +22,10 @@ class PauseGameState(StateBase):
         ]
 
     def on_state_enter(self, params=None):
+        self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
+        if self._game.previous_state is not self._game.states["main_game"]:
+            self._game.music_handler.shuffle_play()
+
         self._gui[0]["options_button"].size = (400.0, 75.0)
         self._gui[0]["options_button"].font_size = 45
         self._gui[0]["options_button"].centre_position = (600.0, 300.0)

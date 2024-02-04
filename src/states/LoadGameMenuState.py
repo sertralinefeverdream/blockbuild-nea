@@ -32,6 +32,10 @@ class LoadGameMenuState(StateBase):
         ]
 
     def on_state_enter(self, *args):
+        self._game.music_handler.set_shuffle_list(["At Tesko This Week"])
+        if self._game.previous_state is not self._game.states["main_menu"]:
+            self._game.shuffle_play()
+
         self._gui[0]["exit_button"].size = (400.0, 75.0)
         self._gui[0]["exit_button"].centre_position = (600.0, 600.0)
 

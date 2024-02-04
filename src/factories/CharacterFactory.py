@@ -38,6 +38,7 @@ class CharacterFactory:
                                         death_sfx_id=entity_data["death_sfx_id"],
                                         aggro_sfx_id=entity_data["aggro_sfx_id"],
                                         idle_sfx_id_list=entity_data["idle_sfx_id_list"],
+                                        attack_sfx_id=entity_data["attack_sfx_id"],
                                         random_idle_sound_cooldown=entity_data["random_idle_sound_cooldown"]
                                         )
             elif entity_data["type"] == "generic_passive":

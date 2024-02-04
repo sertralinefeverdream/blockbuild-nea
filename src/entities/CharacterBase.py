@@ -67,7 +67,7 @@ class CharacterBase(EntityBase):
         self._is_killed = True
 
     def knockback(self, direction, strength):
-        if self._is_knockbacked == False:
+        if not self._is_knockbacked:
             self._velocity[1] = -240
         self._velocity[0] = strength if direction.lower() == "right" else -strength
         self._is_knockbacked = True

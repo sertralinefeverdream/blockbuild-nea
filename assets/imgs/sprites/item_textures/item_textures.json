@@ -5,6 +5,12 @@
     "width": 16,
     "height": 16
   },
+  "porkchop": {
+    "x": 128,
+    "y": 80,
+    "width": 16,
+    "height": 16
+  },
   "iron": {
     "x": 112,
     "y": 16,
@@ -26,6 +32,30 @@
   "stick": {
     "x": 80,
     "y": 48,
+    "width": 16,
+    "height": 16
+  },
+  "stone_sword": {
+    "x": 16,
+    "y": 64,
+    "width": 16,
+    "height": 16
+  },
+  "iron_sword": {
+    "x": 32,
+    "y": 64,
+    "width": 16,
+    "height": 16
+  },
+  "gold_sword": {
+    "x": 64,
+    "y": 64,
+    "width": 16,
+    "height": 16
+  },
+  "diamond_sword": {
+    "x": 48,
+    "y": 64,
     "width": 16,
     "height": 16
   },

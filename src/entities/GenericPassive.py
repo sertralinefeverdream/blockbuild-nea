@@ -166,7 +166,7 @@ class GenericPassive(CharacterBase):
         if pygame.time.get_ticks() - self._random_idle_sound_timer >= self._random_idle_sound_cooldown and len(
                 self._idle_sfx_id_list) > 0:
             self._random_idle_sound_timer = pygame.time.get_ticks()
-            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list))
+            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list), self._game.get_option("game_volume").value)
 
 
     def handle_collisions(self, axis):

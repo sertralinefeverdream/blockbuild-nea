@@ -2,9 +2,14 @@ from src.items.GenericItem import GenericItem
 import pygame
 import math
 
+
 class ToolItem(GenericItem):
-    def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=1, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=10, preferred_mine_strength_white_list=None, tool_desc=None, durability=100):
-        super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown, attack_range, use_range, attack_strength, default_mine_strength, preferred_mine_strength, preferred_mine_strength_white_list, tool_desc)
+    def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=1, attack_cooldown=100,
+                 use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10,
+                 preferred_mine_strength=10, preferred_mine_strength_white_list=None, durability=100):
+        super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown,
+                         attack_range, use_range, attack_strength, default_mine_strength, preferred_mine_strength,
+                         preferred_mine_strength_white_list)
         self._durability = durability
 
     def attack(self, entity_in_range_of_tool, player_centre_pos):
@@ -12,8 +17,20 @@ class ToolItem(GenericItem):
             self._attack_timer = pygame.time.get_ticks()
             self._is_mining = False
             if entity_in_range_of_tool is not None:
+                self._durability -= 1
+                print(self._durability)
                 direction = "right" if entity_in_range_of_tool.centre_position[0] > player_centre_pos[0] else "left"
+                entity_in_range_of_tool.health -= self._attack_strength
+                entity_in_range_of_tool.aggro()
                 entity_in_range_of_tool.knockback(direction, 200)
+                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
+                    remainder = self._world.player.hotbar.pickup_item(
+                        self._game.item_factory.create_item(self._game, self._world, \
+                                                            entity_in_range_of_tool.loot))
+                    if remainder is not None:
+                        remainder = self._world.player.inventory.pickup_item(remainder)
+                    if remainder is not None:
+                        print("INVENTORY FULL!")
             return "attack"
 
     '''
@@ -76,23 +93,23 @@ class ToolItem(GenericItem):
 
         entity_in_range_of_tool = self.get_entity_in_range_of_tool(player_centre_pos, mouse_pos, self._attack_range)
 
-        if entity_in_range_of_tool is not None: # If an entity is within range attack and forgo mining completely
+        if entity_in_range_of_tool is not None:  # If an entity is within range attack and forgo mining completely
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
         self._block_last_mining = self._block_currently_mining
         self._block_currently_mining = self._world.get_block_at_position(mouse_world_pos)
 
-        if self._block_currently_mining is None: # If trying to mine air block
+        if self._block_currently_mining is None:  # If trying to mine air block
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
-        elif self._block_currently_mining is not None and math.sqrt( # If out of range entirely
+        elif self._block_currently_mining is not None and math.sqrt(  # If out of range entirely
                 (self._block_currently_mining.position[0] - player_centre_pos[0]) ** 2 + (
                         self._block_currently_mining.position[1] - player_centre_pos[1]) ** 2) > self._use_range:
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
-        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False: # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
+        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False:  # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
             self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
 
         self._is_mining = True
@@ -131,10 +148,9 @@ class ToolItem(GenericItem):
 
     def update(self, player_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()
-        print("UPDATING")
 
         if mouse_keys_pressed[0]:
-            self.left_use(player_pos)
+            return self.left_use(player_pos)
         elif not mouse_keys_pressed[0]:
             self._is_mining = False
             self._mine_sound_timer = 0
