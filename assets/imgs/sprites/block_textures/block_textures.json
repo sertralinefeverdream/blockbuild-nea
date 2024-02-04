@@ -29,6 +29,18 @@
     "width": 16,
     "height": 16
   },
+  "trap_door_closed": {
+    "x": 64,
+    "y": 144,
+    "width": 16,
+    "height": 16
+  },
+  "trap_door_open" : {
+    "x": 64,
+    "y": 80,
+    "width": 16,
+    "height": 16
+  },
   "leaf": {
     "x": 64,
     "y": 48,

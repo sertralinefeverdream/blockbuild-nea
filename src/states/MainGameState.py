@@ -9,6 +9,7 @@ class MainGameState(StateBase):
         self._world = world
         self._escape_key_held = False
         self._inventory_key_held = False
+        self._interact_key_held = False
         self._save_file_pointer = None
 
     def initialise_gui(self):
@@ -64,6 +65,7 @@ class MainGameState(StateBase):
 
         self._inventory_key_held = False
         self._escape_key_held = False
+        self._interact_key_held = False
         self._world.update()
         self._gui[0]["hotbar_display"].hotbar = self._world.player.hotbar
 
@@ -113,6 +115,15 @@ class MainGameState(StateBase):
         elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
             self._game.push_state("inventory", [self._world.player.inventory, self._world.player.hotbar, self._world])
             self._inventory_key_held = False
+
+        if self._game.keys_pressed[pygame.K_f]:
+            self._interact_key_held = True
+        elif not self._game.keys_pressed[pygame.K_f] and self._interact_key_held:
+            if block_at_mouse is not None:
+                if hasattr(block_at_mouse, "interact"):
+                    if callable(block_at_mouse.interact):
+                        block_at_mouse.interact()
+            self._interact_key_held = False
 
         for layer in self._gui[::-1]:
             for component in layer.values():

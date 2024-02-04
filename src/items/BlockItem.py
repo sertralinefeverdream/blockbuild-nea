@@ -4,19 +4,17 @@ from src.items.GenericItem import GenericItem
 
 class BlockItem(GenericItem):
     def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=40, preferred_mine_strength_white_list=None, block_id="grass"):
-        print(f'''DUN2PART {use_range} ''')
         super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown, attack_range, use_range, attack_strength, default_mine_strength, preferred_mine_strength, preferred_mine_strength_white_list)
         self._block_id = block_id
-        #print(f'''DUN4PART {self._use_range}''')
+
 
     def right_use(self, player_pos):
-        print("RIGHT USE METHOD CALLED IN BLOCK ITEM")
         mouse_pos = pygame.mouse.get_pos()
         mouse_world_pos = self._world.camera.get_world_position(mouse_pos)
         block_at_world_pos = self._world.get_block_at_position(mouse_world_pos)
 
         if math.sqrt((mouse_world_pos[0] - player_pos[0])**2 + (mouse_world_pos[1] - player_pos[1])**2) > self._use_range:
-            print(f"Out of range {math.sqrt((mouse_world_pos[0] - player_pos[0])**2 + (mouse_world_pos[1] - player_pos[1])**2)}")
+          #  print(f"Out of range {math.sqrt((mouse_world_pos[0] - player_pos[0])**2 + (mouse_world_pos[1] - player_pos[1])**2)}")
             return # return if outside of action range for right use action
 
         if block_at_world_pos is None and self._quantity != 0:

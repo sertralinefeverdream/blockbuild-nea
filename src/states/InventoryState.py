@@ -71,6 +71,9 @@ class InventoryState(StateBase):
                 "oak_plank_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                             self._game.window,
                                                                             self.on_craft_item_press),
+                "trap_door_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                            self._game.window,
+                                                                            self.on_craft_item_press),
                 "stick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                         self._game.window,
                                                                         self.on_craft_item_press)
@@ -145,6 +148,8 @@ class InventoryState(StateBase):
             self._recipe_selected = "gold_sword"
         elif item_button is self._gui[1]["diamond_sword_craft_button"]:
             self._recipe_selected = "diamond_sword"
+        elif item_button is self._gui[1]["trap_door_craft_button"]:
+            self._recipe_selected = "trap_door"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -360,6 +365,12 @@ class InventoryState(StateBase):
         self._gui[1]["stick_craft_button"].image_scale_multiplier = 0.7
         self._gui[1]["stick_craft_button"].centre_position = (670.0, 120.0)
         self._gui[1]["stick_craft_button"].outline_thickness = 3
+
+        self._gui[1]["trap_door_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["trap_door_craft_button"].image = self._game.block_spritesheet.parse_sprite("trap_door_open")
+        self._gui[1]["trap_door_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["trap_door_craft_button"].centre_position = (670.0, 160.0)
+        self._gui[1]["trap_door_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None

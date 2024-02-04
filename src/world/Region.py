@@ -15,7 +15,7 @@ class Region:
             ]  # Indexing for a block requires indexing y coordinate
 
         self._entity_list = []
-        self._region_surface = pygame.Surface((800, 800))
+        self._region_surface = pygame.Surface((800, 800), pygame.SRCALPHA)
         self._flag_for_redraw = True
 
     @property

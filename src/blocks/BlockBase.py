@@ -10,7 +10,7 @@ class BlockBase(ABC):
         self._position = list(position)
         self._hardness = hardness
         self._block_id = block_id
-        self._texture = pygame.transform.scale(texture.convert(), (40, 40))
+        self._texture = pygame.transform.scale(texture.convert_alpha(), (40, 40))
         self._mine_sfx_id = mine_sfx_id
         self._place_and_break_sfx_id = place_and_break_sfx_id
         self._footstep_sfx_id = footstep_sfx_id

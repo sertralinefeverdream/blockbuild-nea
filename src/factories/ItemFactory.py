@@ -30,11 +30,6 @@ class ItemFactory:
                                  preferred_mine_strength=item_data["preferred_mine_strength"],
                                  preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
                                  block_id=item_data["block_id"])
-                if state_data is not None:
-                    item.load_state_data(state_data)
-                if quantity_override is not None:
-                    item.quantity = quantity_override
-                return item
             elif item_data["type"] == "tool":
                 print(item_data)
                 item = ToolItem(game, world, item_id, item_data["name"],

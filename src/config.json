@@ -42,7 +42,8 @@
     "wolf_idle1": "../assets/audio/sfx/entities/wolf/wolf_idle1.ogg",
     "wolf_idle2": "../assets/audio/sfx/entities/wolf/wolf_idle2.ogg",
     "wolf_idle3": "../assets/audio/sfx/entities/wolf/wolf_idle3.ogg",
-    "munch": "../assets/audio/sfx/items/munch.mp3"
+    "munch": "../assets/audio/sfx/items/munch.mp3",
+    "door_use": "../assets/audio/sfx/blocks/door_use.ogg"
   },
   "blocks": {
     "grass": {
@@ -158,6 +159,20 @@
       "loot_drop_id": "oak_plank",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
+    },
+    "trap_door" : {
+      "type": "door",
+      "hardness": 30,
+      "texture": "trap_door_closed",
+      "mine_sfx_id": "wood_mine",
+      "place_and_break_sfx_id": "wood_place_break",
+      "footstep_sfx_id": "wood_footstep",
+      "use_sfx_id": "door_use",
+      "open_texture_id": "trap_door_open",
+      "closed_texture_id": "trap_door_closed",
+      "loot_drop_id": "trap_door",
+      "loot_drop_tool_whitelist": null,
+      "can_collide": true
     }
   },
   "items": {
@@ -182,6 +197,28 @@
         "description": "Requires 1x Oak Log, Makes 4"
       },
       "block_id": "oak_plank"
+    },
+    "trap_door": {
+      "name": "Trap Door",
+      "type": "blockitem",
+      "texture": "trap_door_open",
+      "max_quantity": 50,
+      "attack_cooldown": 120,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "oak_plank": 3
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Oak Planks, Makes 1"
+      },
+      "block_id": "trap_door"
     },
     "stick": {
       "name": "Stick",

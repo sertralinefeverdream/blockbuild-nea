@@ -77,21 +77,10 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "porkchop"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_sword"))
         elif self._player.is_killed:
             self._player = None
             self._player = self._game.character_factory.create_character(self._game, self, "player")
             self.get_region_at_position(self._player.position).add_entity(self._player)
-
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "porkchop"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_sword"))
-            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_sword"))
 
         self._camera.x = self._player.position[0] - 600
         self._camera.y = self._player.position[1] - 400
