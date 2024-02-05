@@ -2,7 +2,7 @@
   "window_size_x": 1200,
   "window_size_y": 800,
   "window_caption": "BlockBuild!",
-  "framerate": 60,
+  "framerate": 70,
   "save_files": {
     "save_file_1": "../save_files/save_file_1.json",
     "save_file_2": "../save_files/save_file_2.json",
