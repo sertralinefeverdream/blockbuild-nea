@@ -82,5 +82,29 @@
     "y": 96,
     "width": 16,
     "height": 16
+  },
+  "stone_axe": {
+    "x": 16,
+    "y": 112,
+    "width": 16,
+    "height": 16
+  },
+  "iron_axe": {
+    "x": 32,
+    "y": 112,
+    "width": 16,
+    "height": 16
+  },
+  "gold_axe": {
+    "x": 64,
+    "y": 112,
+    "width": 16,
+    "height": 16
+  },
+  "diamond_axe": {
+    "x": 48,
+    "y": 112,
+    "width": 16,
+    "height": 16
   }
 }

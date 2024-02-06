@@ -7,6 +7,7 @@ from states.OptionsMenuState import OptionsMenuState
 from states.MainGameState import MainGameState
 from states.PauseGameState import PauseGameState
 from states.InventoryState import InventoryState
+from states.ChestInteractState import ChestInteractState
 
 from base.Game import Game
 from base.FileSaveHandler import FileSaveHandler
@@ -64,6 +65,7 @@ def main():
     game.add_to_states("main_game", MainGameState(game, World(game, camera, region_generator, npc_spawn_data["random_spawn_cooldown"], npc_spawn_data["entity_spawn_limit_per_region"], npc_spawn_data["entity_spawn_list"])))
     game.add_to_states("pause_game", PauseGameState(game))
     game.add_to_states("inventory", InventoryState(game))
+    game.add_to_states("chest_interact", ChestInteractState(game))
     game.game_loop()
 
 if __name__ == "__main__":

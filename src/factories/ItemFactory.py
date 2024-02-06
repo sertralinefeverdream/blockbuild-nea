@@ -33,7 +33,7 @@ class ItemFactory:
             elif item_data["type"] == "tool":
                 print(item_data)
                 item = ToolItem(game, world, item_id, item_data["name"],
-                                   game.item_spritesheet.parse_sprite(item_data["texture"]),
+                                   game.item_spritesheet.parse_sprite(item_data["texture"]), tool_break_sfx_id=item_data["tool_break_sfx_id"],
                                    max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
                                    use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
                                    use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],

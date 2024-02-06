@@ -41,6 +41,12 @@
     "width": 16,
     "height": 16
   },
+  "chest": {
+    "x": 160,
+    "y": 0,
+    "width": 16,
+    "height": 16
+  },
   "leaf": {
     "x": 64,
     "y": 48,

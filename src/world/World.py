@@ -77,10 +77,25 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
+                '''
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_axe"))
+            
+           self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_axe"))
+                            '''
+
         elif self._player.is_killed:
             self._player = None
             self._player = self._game.character_factory.create_character(self._game, self, "player")
             self.get_region_at_position(self._player.position).add_entity(self._player)
+
+            '''
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_axe"))
+         '''
 
         self._camera.x = self._player.position[0] - 600
         self._camera.y = self._player.position[1] - 400
@@ -211,7 +226,7 @@ class World:
                 self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game, self, (
                     int(x_index), int(y_index)), region)
 
-    def reassign_entities_to_regions(self): # Make sure entities are being updated by the region that they actually reside in.
+    def reassign_entities_to_regions(self): #
         for region in [self.get_region_at_position((int(x), int(y))) for x, y in self._draw_list]:
             for entity in region.entity_list[::]:
                 if not region.is_position_in_region(entity.position):

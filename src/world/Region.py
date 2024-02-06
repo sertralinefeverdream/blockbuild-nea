@@ -209,6 +209,10 @@ class Region:
                     data["terrain"][str(row_index)][block_index] = None
 
         for entity in self._entity_list:
+            if hasattr(entity, "handle_collisions"):
+                if callable(entity.handle_collisions):
+                    entity.handle_collisions("horizontal")
+                    entity.handle_collisions("vertical")
             data["entity_list"].append(entity.convert_data())
 
         return data

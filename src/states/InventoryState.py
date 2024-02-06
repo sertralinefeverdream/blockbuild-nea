@@ -68,6 +68,18 @@ class InventoryState(StateBase):
                 "diamond_pickaxe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                   self._game.window,
                                                                                   self.on_craft_item_press),
+                "stone_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                                self._game.window,
+                                                                                self.on_craft_item_press),
+                "iron_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
+                                                                               self.on_craft_item_press),
+                "gold_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                               self._game.window,
+                                                                               self.on_craft_item_press),
+                "diamond_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                                  self._game.window,
+                                                                                  self.on_craft_item_press),
                 "oak_plank_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                             self._game.window,
                                                                             self.on_craft_item_press),
@@ -75,6 +87,9 @@ class InventoryState(StateBase):
                                                                             self._game.window,
                                                                             self.on_craft_item_press),
                 "stick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                        self._game.window,
+                                                                        self.on_craft_item_press),
+                "chest_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                         self._game.window,
                                                                         self.on_craft_item_press)
 
@@ -150,6 +165,16 @@ class InventoryState(StateBase):
             self._recipe_selected = "diamond_sword"
         elif item_button is self._gui[1]["trap_door_craft_button"]:
             self._recipe_selected = "trap_door"
+        elif item_button is self._gui[1]["chest_craft_button"]:
+            self._recipe_selected = "chest_block"
+        elif item_button is self._gui[1]["stone_axe_craft_button"]:
+            self._recipe_selected = "stone_axe"
+        elif item_button is self._gui[1]["iron_axe_craft_button"]:
+            self._recipe_selected = "iron_axe"
+        elif item_button is self._gui[1]["gold_axe_craft_button"]:
+            self._recipe_selected = "gold_axe"
+        elif item_button is self._gui[1]["diamond_axe_craft_button"]:
+            self._recipe_selected = "diamond_axe"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -354,6 +379,30 @@ class InventoryState(StateBase):
         self._gui[1]["diamond_pickaxe_craft_button"].centre_position = (630.0, 200.0)
         self._gui[1]["diamond_pickaxe_craft_button"].outline_thickness = 3
 
+        self._gui[1]["stone_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_axe")
+        self._gui[1]["stone_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["stone_axe_craft_button"].centre_position = (770.0, 80.0)
+        self._gui[1]["stone_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["iron_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["iron_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_axe")
+        self._gui[1]["iron_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["iron_axe_craft_button"].centre_position = (770.0, 120.0)
+        self._gui[1]["iron_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["gold_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["gold_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_axe")
+        self._gui[1]["gold_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["gold_axe_craft_button"].centre_position = (770.0, 160.0)
+        self._gui[1]["gold_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["diamond_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["diamond_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_axe")
+        self._gui[1]["diamond_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["diamond_axe_craft_button"].centre_position = (770.0, 200.0)
+        self._gui[1]["diamond_axe_craft_button"].outline_thickness = 3
+
         self._gui[1]["oak_plank_craft_button"].size = (40.0, 40.0)
         self._gui[1]["oak_plank_craft_button"].image = self._game.block_spritesheet.parse_sprite("oak_plank")
         self._gui[1]["oak_plank_craft_button"].image_scale_multiplier = 0.7
@@ -371,6 +420,12 @@ class InventoryState(StateBase):
         self._gui[1]["trap_door_craft_button"].image_scale_multiplier = 0.7
         self._gui[1]["trap_door_craft_button"].centre_position = (670.0, 160.0)
         self._gui[1]["trap_door_craft_button"].outline_thickness = 3
+
+        self._gui[1]["chest_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["chest_craft_button"].image = self._game.block_spritesheet.parse_sprite("chest")
+        self._gui[1]["chest_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["chest_craft_button"].centre_position = (670.0, 200.0)
+        self._gui[1]["chest_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None

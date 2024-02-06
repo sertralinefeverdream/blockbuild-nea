@@ -59,7 +59,9 @@ class ItemDisplay(RectBox):
                 pygame.draw.rect(self._surface, self._outline_colour, self._box, width=self._outline_thickness)
 
             if self._item is not None:
-                quantity_text = pygame.freetype.SysFont(self._quantity_text_font, self._quantity_text_font_size).render(f"{self._item.quantity}", fgcolor=self._quantity_text_font_colour)
+                quantity_text = pygame.freetype.SysFont(self._quantity_text_font, self._quantity_text_font_size).render(f"{self._item.quantity if not hasattr(self._item, '''durability''') else self._item.durability}", fgcolor=self._quantity_text_font_colour)
                 item_texture = pygame.transform.scale(self._item.texture, (self._size[0] * self._item_scale_multiplier, self._size[1] * self._item_scale_multiplier))
                 self._surface.blit(item_texture, (self._position[0] + (self._size[0] - self._size[0] * self._item_scale_multiplier)/2, self._position[1] + (self._size[0] - self._size[0] * self._item_scale_multiplier)/2))
                 self._surface.blit(quantity_text[0], (self._position[0] + self._outline_thickness, self._position[1] + self._outline_thickness))
+
+

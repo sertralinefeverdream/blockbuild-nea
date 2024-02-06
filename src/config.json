@@ -43,7 +43,8 @@
     "wolf_idle2": "../assets/audio/sfx/entities/wolf/wolf_idle2.ogg",
     "wolf_idle3": "../assets/audio/sfx/entities/wolf/wolf_idle3.ogg",
     "munch": "../assets/audio/sfx/items/munch.mp3",
-    "door_use": "../assets/audio/sfx/blocks/door_use.ogg"
+    "door_use": "../assets/audio/sfx/blocks/door_use.ogg",
+    "tool_break": "../assets/audio/sfx/items/tool_break.ogg"
   },
   "blocks": {
     "grass": {
@@ -157,6 +158,18 @@
       "place_and_break_sfx_id": "wood_place_break",
       "footstep_sfx_id": "wood_footstep",
       "loot_drop_id": "oak_plank",
+      "loot_drop_tool_whitelist": null,
+      "can_collide": true
+    },
+    "chest": {
+      "type": "chest",
+      "hardness": 30,
+      "texture": "chest",
+      "mine_sfx_id": "wood_mine",
+      "place_and_break_sfx_id": "wood_place_break",
+      "footstep_sfx_id": "wood_footstep",
+      "use_sfx_id": "door_use",
+      "loot_drop_id": "chest_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
@@ -290,6 +303,28 @@
       "recipe": null,
       "block_id": "grass"
     },
+    "chest_block": {
+      "name": "Chest Block",
+      "type": "blockitem",
+      "texture": "chest",
+      "max_quantity": 50,
+      "attack_cooldown": 120,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "oak_plank": 8
+        },
+        "amount_crafted": 1,
+        "description": "Requires 8x Oak Plank, Makes 1"
+      },
+      "block_id": "chest"
+    },
     "stone_block": {
       "name": "Stone Block",
       "type": "blockitem",
@@ -341,6 +376,7 @@
       "name": "Stone Pickaxe",
       "type": "tool",
       "texture": "stone_pickaxe",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -367,10 +403,40 @@
       },
       "durability": 60
     },
+    "stone_axe": {
+      "name": "Stone Axe",
+      "type": "tool",
+      "texture": "stone_axe",
+      "tool_break_sfx_id": "tool_break",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 25,
+      "preferred_mine_strength_whitelist": [
+        "oak_log",
+        "oak_plank",
+        "trap_door",
+        "chest"
+      ],
+      "recipe": {
+        "ingredients": {
+          "stone_block": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Stone, 2x Stick, Makes 1"
+      },
+      "durability": 60
+    },
     "stone_sword": {
       "name": "Stone Sword",
       "type": "tool",
       "texture": "stone_sword",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -394,6 +460,7 @@
       "name": "Iron Sword",
       "type": "tool",
       "texture": "iron_sword",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -417,6 +484,7 @@
       "name": "Gold Sword",
       "type": "tool",
       "texture": "gold_sword",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -440,6 +508,7 @@
       "name": "Diamond Sword",
       "type": "tool",
       "texture": "diamond_sword",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -463,6 +532,7 @@
       "name": "Iron Pickaxe",
       "type": "tool",
       "texture": "iron_pickaxe",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -489,10 +559,40 @@
       },
       "durability": 120
     },
+    "iron_axe": {
+      "name": "Iron Axe",
+      "type": "tool",
+      "texture": "iron_axe",
+      "tool_break_sfx_id": "tool_break",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 50,
+      "preferred_mine_strength_whitelist": [
+        "oak_log",
+        "oak_plank",
+        "trap_door",
+        "chest"
+      ],
+      "recipe": {
+        "ingredients": {
+          "iron": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Iron 2x Sticks, Makes 1"
+      },
+      "durability": 120
+    },
     "gold_pickaxe": {
       "name": "Gold Pickaxe",
       "type": "tool",
       "texture": "gold_pickaxe",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
@@ -519,14 +619,45 @@
       },
       "durability": 240
     },
+    "gold_axe": {
+      "name": "Gold Axe",
+      "type": "tool",
+      "texture": "gold_axe",
+      "tool_break_sfx_id": "tool_break",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 75,
+      "preferred_mine_strength_whitelist": [
+        "oak_log",
+        "oak_plank",
+        "trap_door",
+        "chest"
+      ],
+      "recipe": {
+        "ingredients": {
+          "gold": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Gold, 2x Sticks, Makes 1"
+      },
+      "durability": 240
+    },
     "diamond_pickaxe": {
       "name": "Diamond Pickaxe",
       "type": "tool",
       "texture": "diamond_pickaxe",
+      "tool_break_sfx_id": "tool_break",
       "max_quantity": 1,
       "attack_cooldown": 250,
       "use_cooldown": 100,
       "use_range": 440,
+      "attack_range": 55,
       "attack_strength": 5,
       "default_mine_strength": 10,
       "preferred_mine_strength": 600,
@@ -537,6 +668,35 @@
         "iron_ore",
         "gold_ore",
         "diamond_ore"
+      ],
+      "recipe": {
+        "ingredients": {
+          "diamond": 3,
+          "stick": 2
+        },
+        "amount_crafted": 1,
+        "description": "Requires 3x Diamond, 2x Sticks, Makes 1"
+      },
+      "durability": 480
+    },
+    "diamond_axe": {
+      "name": "Diamond Axe",
+      "type": "tool",
+      "texture": "diamond_axe",
+      "tool_break_sfx_id": "tool_break",
+      "max_quantity": 1,
+      "attack_cooldown": 250,
+      "attack_range": 55,
+      "use_cooldown": 100,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 125,
+      "preferred_mine_strength_whitelist": [
+        "oak_log",
+        "oak_plank",
+        "trap_door",
+        "chest"
       ],
       "recipe": {
         "ingredients": {

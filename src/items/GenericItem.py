@@ -271,8 +271,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def get_state_data(self):
         data = \
             {
-                "attack_timer": self._attack_timer,
-                "use_timer": self._use_timer,
                 "quantity": self._quantity
             }
         return data
@@ -288,6 +286,4 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
 
 
     def load_state_data(self, data):
-        self._attack_timer = data["attack_timer"]
-        self._use_timer = data["use_timer"]
         self._quantity = data["quantity"]

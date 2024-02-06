@@ -1,5 +1,6 @@
 from src.blocks.GenericBlock import GenericBlock
 from src.blocks.DoorBlock import DoorBlock
+from src.blocks.ChestBlock import ChestBlock
 
 
 class BlockFactory:
@@ -23,6 +24,13 @@ class BlockFactory:
                                   block_data["use_sfx_id"], block_data["open_texture_id"],
                                   block_data["closed_texture_id"], block_data["loot_drop_id"],
                                   block_data["loot_drop_tool_whitelist"], block_data["can_collide"])
+            elif block_data["type"] == "chest":
+                block = ChestBlock(game, world, position, block_data["hardness"], block_id,
+                                   game.block_spritesheet.parse_sprite(block_data["texture"]),
+                                   block_data["mine_sfx_id"],
+                                   block_data["place_and_break_sfx_id"], block_data["footstep_sfx_id"],
+                                   block_data["use_sfx_id"], block_data["loot_drop_id"],
+                                   block_data["loot_drop_tool_whitelist"], block_data["can_collide"])
             else:
                 raise NotImplementedError
 

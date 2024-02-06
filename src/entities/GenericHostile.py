@@ -33,7 +33,7 @@ class GenericHostile(CharacterBase):
         self._out_of_los_timer = 0
         self._attack_timer = 0
         self._random_idle_sound_timer = 0
-        self._last_update_timer = 0
+        self._last_update_timer = pygame.time.get_ticks()
 
     @property
     def attack_damage(self):
@@ -86,7 +86,7 @@ class GenericHostile(CharacterBase):
     def update(self):
         deltatime = self._game.clock.get_time() / 1000
 
-        if self._health <= 0  :
+        if self._health <= 0:
             self.kill()
             return
         elif pygame.time.get_ticks() - self._last_update_timer >= self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
@@ -103,11 +103,13 @@ class GenericHostile(CharacterBase):
                 player_distance_from_entity = self.get_distance_from_entity(self._world.player)
                 if self._is_aggro:
                     if self._is_in_los:
+                        print("IN LINE OF SIGHT")
                         self._out_of_los_timer = pygame.time.get_ticks()
                         if player_distance_from_entity >= self._chase_range:
                             print("DEAGGROING OUT OF RANGE")
                             self._is_aggro = False
                     else:
+                        print("OUT OF LINE OF SIGHT")
                         if pygame.time.get_ticks() - self._out_of_los_timer >= self._out_of_los_cooldown or player_distance_from_entity >= self._chase_range:
                             print("OUT OF LOS TIMER EXPIRED. DEAGGROING")
                             self._is_aggro = False
@@ -124,6 +126,7 @@ class GenericHostile(CharacterBase):
                 self._is_in_los = False
                 self._last_position_in_los = None
         else:
+            print("PLAYER IS NONE")
             player_distance_from_entity = None
             self._is_aggro = False
             self._is_in_los = False
@@ -354,31 +357,13 @@ class GenericHostile(CharacterBase):
     def load_state_data(self, data):
         self._position = data["position"]
         self._health = data["health"]
-        self._velocity = data["velocity"]
         self._moving = data["moving"]
-        self._is_aggro = data["is_aggro"]
         self._current_idle_action = data["current_idle_action"]
-        self._is_in_los = data["is_in_los"]
-        self._last_position_in_los = data["last_position_in_los"]
-        self._auto_jump_timer = data["auto_jump_timer"]
-        self._idle_timer = data["idle_timer"]
-        self._out_of_los_timer = data["out_of_los_timer"]
-        self._attack_timer = data["attack_timer"]
-        self._random_idle_sound_timer = data["random_idle_sound_timer"]
 
     def get_state_data(self):
         data = {}
         data["position"] = self._position
         data["health"] = self._health
-        data["velocity"] = self._velocity
         data["moving"] = self._moving
-        data["is_aggro"] = self._is_aggro
         data["current_idle_action"] = self._current_idle_action
-        data["is_in_los"] = self._is_in_los
-        data["last_position_in_los"] = self._last_position_in_los
-        data["auto_jump_timer"] = self._auto_jump_timer
-        data["idle_timer"] = self._idle_timer
-        data["out_of_los_timer"] = self._out_of_los_timer
-        data["attack_timer"] = self._attack_timer
-        data["random_idle_sound_timer"] = self._random_idle_sound_timer
         return data

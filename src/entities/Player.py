@@ -33,7 +33,6 @@ class Player(CharacterBase):
         data = {}
         data["position"] = self._position
         data["health"] = self._health
-        data["velocity"] = self._velocity
         data["hotbar_state_data"] = self._hotbar.get_state_data()
         data["inventory_state_data"] = self._inventory.get_state_data()
 
@@ -42,7 +41,6 @@ class Player(CharacterBase):
     def load_state_data(self, data):
         self._position = data["position"]
         self._health = data["health"]
-        self._velocity = data["velocity"]
         self._hotbar.load_from_data(data["hotbar_state_data"])
         self._inventory.load_from_data(data["inventory_state_data"])
 

@@ -17,7 +17,8 @@ class MainGameState(StateBase):
             {
                 "fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default"),
              "hotbar_display": self._game.gui_factory.create_gui("HotbarDisplay", self._game, self._game.window, 9),
-                "player_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(540.0, 25), outline_thickness=3)
+                "player_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(540.0, 25), outline_thickness=3),
+                "interact_text": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="[F] To Interact")
             },
             {
                 "block_border": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
@@ -29,12 +30,18 @@ class MainGameState(StateBase):
 
     def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
-        if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not self._game.states["inventory"]:
+        if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not self._game.states["inventory"] and self._game.previous_state is not self._game.states["chest_interact"]:
             self._game.music_handler.shuffle_play()
 
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
         self._gui[0]["hotbar_display"].centre_position = (600.0, 700.0)
         self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)
+
+        self._gui[0]["interact_text"].font_size = 25
+        self._gui[0]["interact_text"].text_colour = (255, 255, 255)
+        self._gui[0]["interact_text"].has_box = False
+        self._gui[0]["interact_text"].has_outline = False
+        self._gui[0]["interact_text"].is_visible = False
 
         for layer in self._gui[::-1]:
             for component in layer.values():
@@ -90,7 +97,14 @@ class MainGameState(StateBase):
         if block_at_mouse is not None:
             self._gui[1]["block_border"].is_visible = True
             self._gui[1]["block_border"].position = self._world.camera.get_screen_position(block_at_mouse.position)
+            if hasattr(block_at_mouse, "interact"):
+                if callable(block_at_mouse.interact):
+                    self._gui[0]["interact_text"].position = (mouse_pos[0] + 15, mouse_pos[1])
+                    self._gui[0]["interact_text"].is_visible = True
+            else:
+                self._gui[0]["interact_text"].is_visible = False
         else:
+            self._gui[0]["interact_text"].is_visible = False
             self._gui[1]["block_border"].is_visible = False
 
         current_player_tool = self._world.player.hotbar.current_item

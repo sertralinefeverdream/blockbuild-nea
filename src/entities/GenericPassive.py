@@ -38,8 +38,11 @@ class GenericPassive(CharacterBase):
     def update(self):
         deltatime = self._game.clock.get_time() / 1000
 
-        if self._health <= 0 or pygame.time.get_ticks() - self._last_update_timer >= self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
+        if self._health <= 0:
             self.kill()
+            return
+        elif pygame.time.get_ticks() - self._last_update_timer >= self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
+            self.kill(False)
             return
 
         self._last_update_timer = pygame.time.get_ticks()
@@ -243,25 +246,13 @@ class GenericPassive(CharacterBase):
     def load_state_data(self, data):
         self._position = data["position"]
         self._health = data["health"]
-        self._velocity = data["velocity"]
         self._moving = data["moving"]
-        self._is_aggro = data["is_aggro"]
         self._current_idle_action = data["current_idle_action"]
-        self._auto_jump_timer = data["auto_jump_timer"]
-        self._idle_timer = data["idle_timer"]
-        self._random_idle_sound_timer = data["random_idle_sound_timer"]
-        self._last_update_timer = data["last_update_timer"]
 
     def get_state_data(self):
         data = {}
         data["position"] = self._position
         data["health"] = self._health
-        data["velocity"] = self._velocity
         data["moving"] = self._moving
-        data["is_aggro"] = self._is_aggro
         data["current_idle_action"] = self._current_idle_action
-        data["auto_jump_timer"] = self._auto_jump_timer
-        data["idle_timer"] = self._idle_timer
-        data["random_idle_sound_timer"] = self._random_idle_sound_timer
-        data["last_update_timer"] = self._last_update_timer
         return data
