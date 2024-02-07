@@ -22,13 +22,6 @@ class Region:
     def game(self):
         return self._game
 
-    '''
-     @property
-    def world(self):
-        return self._world
-        
-    '''
-
     @property
     def position(self):
         return self._position
@@ -46,6 +39,39 @@ class Region:
     def position(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
             self._position = list(value)
+
+    def update(self):
+        for row in self._data:
+            for x_index, block in enumerate(row):
+                if block is not None:
+                    if block.is_broken:
+                        row[x_index] = None
+                        del block
+                        self.enable_flag_for_redraw()
+                    else:
+                        block.update()
+
+        for entity in self._entity_list:
+            entity.update()
+            if entity.is_killed:
+                self.remove_entity(entity)
+                del entity
+
+    def draw_blocks(self):
+        if self._flag_for_redraw:
+            # print("Redrawing")
+            self._flag_for_redraw = False
+            self._region_surface.fill((110, 177, 255))
+            for row_index, row in enumerate(self._data):
+                for block_index, block in enumerate(row):
+                    if block is not None:
+                        self._region_surface.blit(block.texture, (block_index * 40, row_index * 40))
+
+        self._game.window.blit(self._region_surface, self._world.camera.get_screen_position(self._position))
+
+    def draw_entities(self):
+        for entity in self._entity_list:
+            entity.draw()
 
     def is_position_in_region(self, position):
         if self._position[0] <= position[0] < self._position[0] + 800 \
@@ -157,47 +183,8 @@ class Region:
     def remove_entity(self, entity):
         self._entity_list.remove(entity)
 
-    def update(self):
-        for row in self._data:
-            for x_index, block in enumerate(row):
-                if block is not None:
-                    if block.is_broken:
-                        row[x_index] = None
-                        del block
-                        self.enable_flag_for_redraw()
-                    else:
-                        block.update()
-
-        for entity in self._entity_list:
-            entity.update()
-            if entity.is_killed:
-                self.remove_entity(entity)
-                del entity
-
-    def draw_blocks(self):
-        if self._flag_for_redraw:
-            # print("Redrawing")
-            self._flag_for_redraw = False
-            self._region_surface.fill((110, 177, 255))
-            for row_index, row in enumerate(self._data):
-                for block_index, block in enumerate(row):
-                    if block is not None:
-                        self._region_surface.blit(block.texture, (block_index * 40, row_index * 40))
-
-        self._game.window.blit(self._region_surface, self._world.camera.get_screen_position(self._position))
-
-    def draw_entities(self):
-        for entity in self._entity_list:
-            entity.draw()
-
     def enable_flag_for_redraw(self):
         self._flag_for_redraw = True
-
-    def serialize(self):
-        return json.dumps(self.convert_data())
-
-    def load_from_serialized(self, data):
-        self.load_from_data(json.loads(data))
 
     def convert_data(self):
         data = {"terrain": {str(x): [None for x in range(20)] for x in range(20)}, "entity_list": []}

@@ -44,7 +44,8 @@
     "wolf_idle3": "../assets/audio/sfx/entities/wolf/wolf_idle3.ogg",
     "munch": "../assets/audio/sfx/items/munch.mp3",
     "door_use": "../assets/audio/sfx/blocks/door_use.ogg",
-    "tool_break": "../assets/audio/sfx/items/tool_break.ogg"
+    "tool_break": "../assets/audio/sfx/items/tool_break.ogg",
+    "respawn_anchor_use": "../assets/audio/sfx/blocks/respawn_anchor_use.ogg"
   },
   "blocks": {
     "grass": {
@@ -78,6 +79,19 @@
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "stone_block",
       "loot_drop_tool_whitelist": null,
+      "can_collide": true
+    },
+    "respawn_anchor": {
+      "type": "respawn_anchor",
+      "hardness": 100,
+      "texture": "respawn_anchor",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "stone_footstep",
+      "use_sfx_id": "respawn_anchor_use",
+      "loot_drop_id": "respawn_anchor",
+      "loot_drop_tool_whitelist": [
+      ],
       "can_collide": true
     },
     "dirt": {
@@ -173,7 +187,7 @@
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
-    "trap_door" : {
+    "trap_door": {
       "type": "door",
       "hardness": 30,
       "texture": "trap_door_closed",
@@ -324,6 +338,29 @@
         "description": "Requires 8x Oak Plank, Makes 1"
       },
       "block_id": "chest"
+    },
+    "respawn_anchor_block": {
+      "name": "Respawn Anchor",
+      "type": "blockitem",
+      "texture": "respawn_anchor",
+      "max_quantity": 50,
+      "attack_cooldown": 120,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "stone": 8,
+          "diamond": 1
+        },
+        "amount_crafted": 1,
+        "description": "Requires 8x Stone, 1x Diamond, Makes 1"
+      },
+      "block_id": "respawn_anchor"
     },
     "stone_block": {
       "name": "Stone Block",
@@ -761,7 +798,7 @@
         70,
         40
       ],
-      "max_speed" : [
+      "max_speed": [
         250,
         400
       ],
@@ -1061,7 +1098,11 @@
       "death_sfx_id": "wolf_death",
       "aggro_sfx_id": "wolf_aggro",
       "attack_sfx_id": "wolf_attack",
-      "idle_sfx_id_list": ["wolf_idle1","wolf_idle2","wolf_idle3"],
+      "idle_sfx_id_list": [
+        "wolf_idle1",
+        "wolf_idle2",
+        "wolf_idle3"
+      ],
       "random_idle_sound_cooldown": 12000
     }
   },

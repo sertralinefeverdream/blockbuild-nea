@@ -24,6 +24,41 @@ class RectBox(GUIBase):
         else:
             raise TypeError
 
+    @property
+    def box_colour(self):
+        return self._box_colour
+
+    @box_colour.setter
+    def box_colour(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 3:
+            self._box_colour = list(value)
+
+    @property
+    def outline_thickness(self):
+        return self._outline_thickness
+
+    @outline_thickness.setter
+    def outline_thickness(self, value):
+        if type(value) is int and value > 0:
+            self._outline_thickness = value
+
+    @property
+    def outline_colour(self):
+        return self._outline_colour
+
+    @outline_colour.setter
+    def outline_colour(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 3:
+            self._outline_colour = list(value)
+
+    @property
+    def outline_thickness(self):
+        return self._outline_thickness
+
+    @outline_thickness.setter
+    def outline_thickness(self, value):
+        if type(value) is float or type(value) is int:
+            self._outline_thickness = value
 
     @property
     def centre_position(self):
@@ -37,40 +72,6 @@ class RectBox(GUIBase):
             raise TypeError
 
     @property
-    def box_colour(self):
-        return self._box_colour
-
-    @box_colour.setter
-    def box_colour(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 3:
-            self._box_colour = list(value)
-        else:
-            raise TypeError
-
-    @property
-    def outline_colour(self):
-        return self._outline_colour
-
-    @outline_colour.setter
-    def outline_colour(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 3:
-            self._outline_colour = list(value)
-        else:
-            raise TypeError
-
-    @property
-    def outline_thickness(self):
-        return self._outline_thickness
-
-    @outline_thickness.setter
-    def outline_thickness(self, value):
-        if type(value) is float or type(value) is int:
-            self._outline_thickness = value
-        else:
-            raise TypeError
-
-
-    @property
     def has_box(self):
         return self._has_box
 
@@ -78,6 +79,15 @@ class RectBox(GUIBase):
     def has_box(self, value):
         if type(value) is bool:
             self._has_box = value
+
+    @property
+    def has_outline(self):
+        return self._has_outline
+
+    @has_outline.setter
+    def has_outline(self, value):
+        if type(value) is bool:
+            self._has_outline = value
 
     def update(self):
         self._box.update(self._position, self._size)

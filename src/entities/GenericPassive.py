@@ -1,8 +1,9 @@
 import pygame.time
 import math
 import random
-
 from src.entities.CharacterBase import CharacterBase
+
+# Cleaned up
 
 class GenericPassive(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id, idle_sfx_id_list, random_idle_sound_cooldown,
@@ -48,7 +49,6 @@ class GenericPassive(CharacterBase):
         self._last_update_timer = pygame.time.get_ticks()
 
         if self._is_aggro:
-            print("START FLEEING")
             if pygame.time.get_ticks() - self._aggro_timer >= self._aggro_cooldown:
                 print("STOP FLEEING")
                 self._is_aggro = False
@@ -171,6 +171,14 @@ class GenericPassive(CharacterBase):
             self._random_idle_sound_timer = pygame.time.get_ticks()
             self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list), self._game.get_option("game_volume").value)
 
+    def draw(self):
+        screen_pos = self._world.camera.get_screen_position(self._position)
+        health_bar_width = self._health / self._max_health * 50
+        pygame.draw.rect(self._game.window, (255, 0, 0), (
+        screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10))
+        pygame.draw.rect(self._game.window, (0, 0, 0), (
+        screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10), width=2)
+        self._game.window.blit(self._texture, screen_pos)
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
@@ -225,18 +233,8 @@ class GenericPassive(CharacterBase):
             else:
                 self._is_in_air = True
 
-
     def jump(self):
         self._velocity[1] = -320
-
-    def draw(self):
-        screen_pos = self._world.camera.get_screen_position(self._position)
-        health_bar_width = self._health / self._max_health * 50
-        pygame.draw.rect(self._game.window, (255, 0, 0), (
-        screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10))
-        pygame.draw.rect(self._game.window, (0, 0, 0), (
-        screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10), width=2)
-        self._game.window.blit(self._texture, screen_pos)
 
     def aggro(self):
         self._is_aggro = True

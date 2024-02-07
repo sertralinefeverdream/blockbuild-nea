@@ -9,9 +9,17 @@ class ItemContainer:
     def data(self):
         return self._data
 
+    def update(self):
+        for row_index, row in enumerate(self._data):
+            for item_index, item in enumerate(row):
+                if item is not None:
+                    if item.quantity == 0:
+                        self._data[row_index][item_index] = None
+
     def reset(self):
         self._data.clear()
-        self._data = self._data = [[None for x in range(self._dimensions[1])] for row_index in range(self._dimensions[0])]
+        self._data = self._data = [[None for x in range(self._dimensions[1])] for row_index in
+                                   range(self._dimensions[0])]
 
     def set_item_at_index(self, row, column, item=None):
         self._data[row][column] = item
@@ -24,12 +32,14 @@ class ItemContainer:
 
     def get_item_at_index(self, row, column):
         return self._data[row][column]
-    
-    def has_items_of_quantity(self, item_id, quantity=1): # Do you have n or more of item of type "item_id" in this item container?
+
+    def has_items_of_quantity(self, item_id,
+                              quantity=1):  # Do you have n or more of item of type "item_id" in this item container?
         total_quantity = self.get_total_quantity_by_id(item_id)
         return total_quantity >= quantity
 
-    def get_total_quantity_by_id(self, item_id): # Get how many of this item of type item_id you have in your item container total
+    def get_total_quantity_by_id(self,
+                                 item_id):  # Get how many of this item of type item_id you have in your item container total
         list_of_items_of_same_type = self.get_items_of_same_type_by_id(item_id)
         return sum([item.quantity for item in list_of_items_of_same_type])
 
@@ -51,15 +61,15 @@ class ItemContainer:
                     else:
                         print("ITEM QUANTITY IS 0")
 
-            return amount_to_deplete - total_depleted # Return remainder left to deplete
+            return amount_to_deplete - total_depleted  # Return remainder left to deplete
 
         else:
             return amount_to_deplete
             print("CASE 2: There is 0 of this item type in the item container")
 
-
     def pickup_item(self, item_to_pickup, capacity_check=False):
-        if capacity_check and self.get_remaining_capacity_of_same_type_by_object(item_to_pickup) < item_to_pickup.quantity:
+        if capacity_check and self.get_remaining_capacity_of_same_type_by_object(
+                item_to_pickup) < item_to_pickup.quantity:
             print("NOT ENOUGH SPACE")
             return item_to_pickup
 
@@ -85,7 +95,8 @@ class ItemContainer:
         else:
             return item_to_pickup
 
-    def get_remaining_capacity_of_same_type_by_object(self, item_to_check): # How many more of item_to_check could you fit in this item container?
+    def get_remaining_capacity_of_same_type_by_object(self,
+                                                      item_to_check):  # How many more of item_to_check could you fit in this item container?
         total = 0
         list_of_same_items = self.get_unfilled_items_of_same_type_by_object(item_to_check)
         print(list_of_same_items, "THIS TOO!!!!")
@@ -149,7 +160,8 @@ class ItemContainer:
         #            print("Unfilled item added for return")
         #           unfilled_items_list.append(item)
         # return unfilled_items_list
-        return [item for item in self.get_items_of_same_type_by_object(item_to_check) if item.quantity < item.max_quantity]
+        return [item for item in self.get_items_of_same_type_by_object(item_to_check) if
+                item.quantity < item.max_quantity]
 
     def convert_data(self):
         data = \
@@ -184,10 +196,3 @@ class ItemContainer:
                 else:
                     data[row_index][item_index] = None
         return data
-
-    def update(self):
-        for row_index, row in enumerate(self._data):
-            for item_index, item in enumerate(row):
-                if item is not None:
-                    if item.quantity == 0:
-                        self._data[row_index][item_index] = None

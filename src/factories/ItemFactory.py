@@ -11,6 +11,7 @@ class ItemFactory:
     def create_item(self, game, world, item_id, state_data=None, quantity_override=None):
         if item_id in self._items_data.keys():
             item_data = self._items_data[item_id]
+            item = None
             if item_data["type"] == "generic":
                 item = GenericItem(game, world, item_id, item_data["name"],
                                    game.item_spritesheet.parse_sprite(item_data["texture"]),
@@ -31,7 +32,6 @@ class ItemFactory:
                                  preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
                                  block_id=item_data["block_id"])
             elif item_data["type"] == "tool":
-                print(item_data)
                 item = ToolItem(game, world, item_id, item_data["name"],
                                    game.item_spritesheet.parse_sprite(item_data["texture"]), tool_break_sfx_id=item_data["tool_break_sfx_id"],
                                    max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],

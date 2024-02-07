@@ -25,16 +25,6 @@ class ImageButton(ButtonBase):
             self._image = value
 
     @property
-    def size(self):
-        return self._size
-
-    @size.setter
-    def size(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._size = list(value)
-
-
-    @property
     def image_scale_multiplier(self):
         return self._image_scale_multiplier
 
@@ -42,7 +32,6 @@ class ImageButton(ButtonBase):
     def image_scale_multiplier(self, value):
         if type(value) is float and 0.0 < value < 1.0:
             self._image_scale_multiplier = value
-
 
     def update(self):
         self._rect.update(self._position, self._size)
@@ -95,14 +84,6 @@ class ImageButton(ButtonBase):
             if self._disabled_click_sfx_id is not None:
                 self._game.sfx_handler.play_sfx(self._disabled_click_sfx_id, self._game.get_option("game_volume").value)
 
-    def on_hover_leave(self):
-        self._current_colour = self._button_colour
-        if self._hover_leave_sfx_id is not None:
-            self._game.sfx_handler.play_sfx(self._hover_leave_sfx_id, self._game.get_option("game_volume").value)
-
-        if self._is_enabled and self._hover_leave_func is not None:
-            self._hover_leave_func(self)
-
     def on_hover_enter(self):
         self._current_colour = self._hover_colour
 
@@ -112,3 +93,10 @@ class ImageButton(ButtonBase):
         if self._is_enabled and self._hover_enter_func is not None:
             self._hover_enter_func(self)
 
+    def on_hover_leave(self):
+        self._current_colour = self._button_colour
+        if self._hover_leave_sfx_id is not None:
+            self._game.sfx_handler.play_sfx(self._hover_leave_sfx_id, self._game.get_option("game_volume").value)
+
+        if self._is_enabled and self._hover_leave_func is not None:
+            self._hover_leave_func(self)

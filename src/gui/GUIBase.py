@@ -15,8 +15,6 @@ class GUIBase(ABC):
     def position(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2:
             self._position = list(value)
-        else:
-            raise TypeError
 
     @property
     def is_visible(self):
@@ -26,8 +24,6 @@ class GUIBase(ABC):
     def is_visible(self, value):
         if type(value) is bool:
             self._is_visible = value
-        else:
-            raise TypeError
 
     @property
     @abstractmethod

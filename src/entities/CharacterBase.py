@@ -45,15 +45,6 @@ class CharacterBase(EntityBase):
                 self._health = 0
 
     @property
-    def max_velocity(self):
-        return self._max_velocity
-
-    @max_velocity.setter
-    def max_velocity(self, value):
-        if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._max_velocity = value
-
-    @property
     def is_in_air(self):
         return self._is_in_air
 

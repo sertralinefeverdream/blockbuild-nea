@@ -54,6 +54,7 @@ class CharacterFactory:
                                         aggro_cooldown=entity_data["aggro_cooldown"])
             else:
                 raise NotImplementedError
+
             if state_data is not None:
                 entity.load_state_data(state_data)
             return entity

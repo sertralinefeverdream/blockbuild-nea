@@ -91,6 +91,9 @@ class InventoryState(StateBase):
                                                                         self.on_craft_item_press),
                 "chest_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                         self._game.window,
+                                                                        self.on_craft_item_press),
+                "respawn_anchor_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                        self._game.window,
                                                                         self.on_craft_item_press)
 
             },
@@ -99,6 +102,233 @@ class InventoryState(StateBase):
                 # "crafting_info_background": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window)
             }
         ]
+
+    def on_state_enter(self, params=None):
+        self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
+        if self._game.previous_state is not self._game.states["main_game"]:
+            self._game.music_handler.shuffle_play()
+
+        self._gui[1]["inventory_display"].centre_position = (300.0, 300.0)
+        self._gui[1]["hotbar_display"].centre_position = (600.0, 700.0)
+
+        self._gui[1]["move_button"].size = (110.0, 50.0)
+        self._gui[1]["move_button"].centre_position = (175.0, 600.0)
+
+        self._gui[1]["delete_button"].size = (110.0, 50.0)
+        self._gui[1]["delete_button"].centre_position = (300.0, 600.0)
+
+        self._gui[1]["merge_button"].size = (110.0, 50.0)
+        self._gui[1]["merge_button"].centre_position = (425.0, 600.0)
+
+        self._gui[1]["craft_button"].size = (110.0, 50.0)
+        self._gui[1]["craft_button"].centre_position = (630.0, 470.0)
+        self._gui[1]["craft_button"].text = "Craft"
+
+        self._gui[1]["item_description_box"].size = (200.0, 50.0)
+        self._gui[1]["item_description_box"].font_size = 20
+        self._gui[1]["item_description_box"].text = "TEST"
+        self._gui[1]["item_description_box"].position = (710.0, 459.0)
+
+        self._gui[0]["name_box"].font_size = 25
+        self._gui[0]["name_box"].text_colour = (255, 255, 255)
+        self._gui[0]["name_box"].has_box = False
+        self._gui[0]["name_box"].has_outline = False
+        self._gui[0]["name_box"].is_visible = False
+
+        self._gui[2]["crafting_background"].colour = (125, 50, 0)
+        self._gui[2]["crafting_background"].size = (600.0, 400.0)
+        self._gui[2]["crafting_background"].box_colour = (200, 200, 200)
+        self._gui[2]["crafting_background"].centre_position = (875.0, 230.0)
+
+        self._gui[1]["stone_sword_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_sword")
+        self._gui[1]["stone_sword_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["stone_sword_craft_button"].centre_position = (710.0, 80.0)
+        self._gui[1]["stone_sword_craft_button"].outline_thickness = 3
+
+        self._gui[1]["iron_sword_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["iron_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_sword")
+        self._gui[1]["iron_sword_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["iron_sword_craft_button"].centre_position = (710.0, 120.0)
+        self._gui[1]["iron_sword_craft_button"].outline_thickness = 3
+
+        self._gui[1]["gold_sword_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["gold_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_sword")
+        self._gui[1]["gold_sword_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["gold_sword_craft_button"].centre_position = (710.0, 160.0)
+        self._gui[1]["gold_sword_craft_button"].outline_thickness = 3
+
+        self._gui[1]["diamond_sword_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["diamond_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_sword")
+        self._gui[1]["diamond_sword_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["diamond_sword_craft_button"].centre_position = (710.0, 200.0)
+        self._gui[1]["diamond_sword_craft_button"].outline_thickness = 3
+
+        self._gui[1]["stone_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_pickaxe")
+        self._gui[1]["stone_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["stone_pickaxe_craft_button"].centre_position = (630.0, 80.0)
+        self._gui[1]["stone_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
+        self._gui[1]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
+        self._gui[1]["iron_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["gold_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["gold_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_pickaxe")
+        self._gui[1]["gold_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["gold_pickaxe_craft_button"].centre_position = (630.0, 160.0)
+        self._gui[1]["gold_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["diamond_pickaxe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["diamond_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_pickaxe")
+        self._gui[1]["diamond_pickaxe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["diamond_pickaxe_craft_button"].centre_position = (630.0, 200.0)
+        self._gui[1]["diamond_pickaxe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["stone_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_axe")
+        self._gui[1]["stone_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["stone_axe_craft_button"].centre_position = (750.0, 80.0)
+        self._gui[1]["stone_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["iron_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["iron_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_axe")
+        self._gui[1]["iron_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["iron_axe_craft_button"].centre_position = (750.0, 120.0)
+        self._gui[1]["iron_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["gold_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["gold_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_axe")
+        self._gui[1]["gold_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["gold_axe_craft_button"].centre_position = (750.0, 160.0)
+        self._gui[1]["gold_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["diamond_axe_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["diamond_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_axe")
+        self._gui[1]["diamond_axe_craft_button"].image_scale_multiplier = 0.9
+        self._gui[1]["diamond_axe_craft_button"].centre_position = (750.0, 200.0)
+        self._gui[1]["diamond_axe_craft_button"].outline_thickness = 3
+
+        self._gui[1]["oak_plank_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["oak_plank_craft_button"].image = self._game.block_spritesheet.parse_sprite("oak_plank")
+        self._gui[1]["oak_plank_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["oak_plank_craft_button"].centre_position = (670.0, 80.0)
+        self._gui[1]["oak_plank_craft_button"].outline_thickness = 3
+
+        self._gui[1]["stick_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stick_craft_button"].image = self._game.item_spritesheet.parse_sprite("stick")
+        self._gui[1]["stick_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["stick_craft_button"].centre_position = (670.0, 120.0)
+        self._gui[1]["stick_craft_button"].outline_thickness = 3
+
+        self._gui[1]["trap_door_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["trap_door_craft_button"].image = self._game.block_spritesheet.parse_sprite("trap_door_open")
+        self._gui[1]["trap_door_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["trap_door_craft_button"].centre_position = (670.0, 160.0)
+        self._gui[1]["trap_door_craft_button"].outline_thickness = 3
+
+        self._gui[1]["chest_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["chest_craft_button"].image = self._game.block_spritesheet.parse_sprite("chest")
+        self._gui[1]["chest_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["chest_craft_button"].centre_position = (670.0, 200.0)
+        self._gui[1]["chest_craft_button"].outline_thickness = 3
+
+        self._gui[1]["respawn_anchor_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["respawn_anchor_craft_button"].image = self._game.block_spritesheet.parse_sprite("respawn_anchor")
+        self._gui[1]["respawn_anchor_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["respawn_anchor_craft_button"].centre_position = (790.0, 80.0)
+        self._gui[1]["respawn_anchor_craft_button"].outline_thickness = 3
+
+        self._inventory = params[0] if params is not None else None
+        self._hotbar = params[1] if params is not None else None
+        self._world = params[2] if params is not None else None
+        self._inventory_key_held = False
+        self._item_selected = None
+        self._item_display_hovering = None
+        self._mode = "default"
+
+        self._gui[1]["inventory_display"].container = self._inventory
+        self._gui[1]["hotbar_display"].container = self._hotbar
+
+        for layer in self._gui[::-1]:
+            for component in layer.values():
+                component.update()
+
+    def on_state_leave(self, params=None):
+        pass
+
+    def update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self._game.keys_pressed[pygame.K_e]:
+            self._inventory_key_held = True
+        elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
+            self._game.pop_state()
+            self._inventory_key_held = False
+
+        self._hotbar.update(None, False)
+        self._inventory.update()
+
+        if self._mode == "default":
+            self._gui[1]["move_button"].text = "Move Item"
+            self._gui[1]["merge_button"].text = "Merge"
+            self._gui[1]["delete_button"].text = "Delete"
+            if self._item_selected is None:
+                self._gui[1]["move_button"].is_visible = False
+                self._gui[1]["delete_button"].is_visible = False
+                self._gui[1]["merge_button"].is_visible = False
+            else:
+                self._gui[1]["move_button"].is_visible = True
+                self._gui[1]["delete_button"].is_visible = True
+                self._gui[1]["merge_button"].is_visible = True
+
+            if self._recipe_selected is None:
+                self._gui[1]["craft_button"].is_visible = False
+                self._gui[1]["item_description_box"].is_visible = False
+            else:
+                self._gui[1]["craft_button"].is_visible = True
+                self._gui[1]["item_description_box"].is_visible = True
+                self._gui[1][
+                    "item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
+
+        elif self._mode == "move":
+            self._gui[1]["move_button"].text = "Cancel Move"
+            self._gui[1]["delete_button"].is_visible = False
+            self._gui[1]["merge_button"].is_visible = False
+        elif self._mode == "merge":
+            self._gui[1]["merge_button"].text = "Cancel Merge"
+            self._gui[1]["move_button"].is_visible = False
+            self._gui[1]["delete_button"].is_visible = False
+
+        self.update_item_display_currently_hovering()
+
+        if self._item_display_hovering is not None:
+            if self._item_display_hovering.item is not None:
+                self._gui[0]["name_box"].position = (mouse_pos[0] + 15, mouse_pos[1])
+                self._gui[0]["name_box"].text = self._item_display_hovering.item.name
+                self._gui[0]["name_box"].is_visible = True
+            else:
+                self._gui[0]["name_box"].is_visible = False
+        else:
+            self._gui[0]["name_box"].is_visible = False
+
+        for layer in self._gui[::-1]:
+            for component in layer.values():
+                component.update()
+
+    def draw(self):
+        self._game.states["main_game"].draw(True)
+        for layer in self._gui[::-1]:
+            for component in layer.values():
+                component.draw()
+
+    def update_item_display_currently_hovering(self):  # Weirdest auto reformat ever??
+        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
+                                                                                           "hotbar_display"].get_hovering() is not None else \
+            self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
+                                                                    "inventory_display"].get_hovering() is not None else None
 
     def on_craft_button_press(self, button):
         if self.check_can_craft(self._recipe_selected) and self._recipe_selected is not None:
@@ -175,6 +405,8 @@ class InventoryState(StateBase):
             self._recipe_selected = "gold_axe"
         elif item_button is self._gui[1]["diamond_axe_craft_button"]:
             self._recipe_selected = "diamond_axe"
+        elif item_button is self._gui[1]["respawn_anchor_craft_button"]:
+            self._recipe_selected = "respawn_anchor_block"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
@@ -293,224 +525,3 @@ class InventoryState(StateBase):
                     self._mode = "merge"
         elif self._mode == "merge":
             self._mode = "default"
-
-    def on_state_enter(self, params=None):
-        self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
-        if self._game.previous_state is not self._game.states["main_game"]:
-            self._game.music_handler.shuffle_play()
-
-        self._gui[1]["inventory_display"].centre_position = (300.0, 300.0)
-        self._gui[1]["hotbar_display"].centre_position = (600.0, 700.0)
-
-        self._gui[1]["move_button"].size = (110.0, 50.0)
-        self._gui[1]["move_button"].centre_position = (175.0, 600.0)
-
-        self._gui[1]["delete_button"].size = (110.0, 50.0)
-        self._gui[1]["delete_button"].centre_position = (300.0, 600.0)
-
-        self._gui[1]["merge_button"].size = (110.0, 50.0)
-        self._gui[1]["merge_button"].centre_position = (425.0, 600.0)
-
-        self._gui[1]["craft_button"].size = (110.0, 50.0)
-        self._gui[1]["craft_button"].centre_position = (630.0, 470.0)
-        self._gui[1]["craft_button"].text = "Craft"
-
-        self._gui[1]["item_description_box"].size = (200.0, 50.0)
-        self._gui[1]["item_description_box"].font_size = 20
-        self._gui[1]["item_description_box"].text = "TEST"
-        self._gui[1]["item_description_box"].position = (710.0, 459.0)
-
-        self._gui[0]["name_box"].font_size = 25
-        self._gui[0]["name_box"].text_colour = (255, 255, 255)
-        self._gui[0]["name_box"].has_box = False
-        self._gui[0]["name_box"].has_outline = False
-        self._gui[0]["name_box"].is_visible = False
-
-        self._gui[2]["crafting_background"].colour = (125, 50, 0)
-        self._gui[2]["crafting_background"].size = (600.0, 400.0)
-        self._gui[2]["crafting_background"].box_colour = (200, 200, 200)
-        self._gui[2]["crafting_background"].centre_position = (875.0, 230.0)
-
-        self._gui[1]["stone_sword_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["stone_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_sword")
-        self._gui[1]["stone_sword_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["stone_sword_craft_button"].centre_position = (710.0, 80.0)
-        self._gui[1]["stone_sword_craft_button"].outline_thickness = 3
-
-        self._gui[1]["iron_sword_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["iron_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_sword")
-        self._gui[1]["iron_sword_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["iron_sword_craft_button"].centre_position = (710.0, 120.0)
-        self._gui[1]["iron_sword_craft_button"].outline_thickness = 3
-
-        self._gui[1]["gold_sword_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["gold_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_sword")
-        self._gui[1]["gold_sword_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["gold_sword_craft_button"].centre_position = (710.0, 160.0)
-        self._gui[1]["gold_sword_craft_button"].outline_thickness = 3
-
-        self._gui[1]["diamond_sword_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["diamond_sword_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_sword")
-        self._gui[1]["diamond_sword_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["diamond_sword_craft_button"].centre_position = (710.0, 200.0)
-        self._gui[1]["diamond_sword_craft_button"].outline_thickness = 3
-
-        self._gui[1]["stone_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["stone_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_pickaxe")
-        self._gui[1]["stone_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["stone_pickaxe_craft_button"].centre_position = (630.0, 80.0)
-        self._gui[1]["stone_pickaxe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["iron_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["iron_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_pickaxe")
-        self._gui[1]["iron_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["iron_pickaxe_craft_button"].centre_position = (630.0, 120.0)
-        self._gui[1]["iron_pickaxe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["gold_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["gold_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_pickaxe")
-        self._gui[1]["gold_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["gold_pickaxe_craft_button"].centre_position = (630.0, 160.0)
-        self._gui[1]["gold_pickaxe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["diamond_pickaxe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["diamond_pickaxe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_pickaxe")
-        self._gui[1]["diamond_pickaxe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["diamond_pickaxe_craft_button"].centre_position = (630.0, 200.0)
-        self._gui[1]["diamond_pickaxe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["stone_axe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["stone_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("stone_axe")
-        self._gui[1]["stone_axe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["stone_axe_craft_button"].centre_position = (770.0, 80.0)
-        self._gui[1]["stone_axe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["iron_axe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["iron_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("iron_axe")
-        self._gui[1]["iron_axe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["iron_axe_craft_button"].centre_position = (770.0, 120.0)
-        self._gui[1]["iron_axe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["gold_axe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["gold_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("gold_axe")
-        self._gui[1]["gold_axe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["gold_axe_craft_button"].centre_position = (770.0, 160.0)
-        self._gui[1]["gold_axe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["diamond_axe_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["diamond_axe_craft_button"].image = self._game.item_spritesheet.parse_sprite("diamond_axe")
-        self._gui[1]["diamond_axe_craft_button"].image_scale_multiplier = 0.9
-        self._gui[1]["diamond_axe_craft_button"].centre_position = (770.0, 200.0)
-        self._gui[1]["diamond_axe_craft_button"].outline_thickness = 3
-
-        self._gui[1]["oak_plank_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["oak_plank_craft_button"].image = self._game.block_spritesheet.parse_sprite("oak_plank")
-        self._gui[1]["oak_plank_craft_button"].image_scale_multiplier = 0.7
-        self._gui[1]["oak_plank_craft_button"].centre_position = (670.0, 80.0)
-        self._gui[1]["oak_plank_craft_button"].outline_thickness = 3
-
-        self._gui[1]["stick_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["stick_craft_button"].image = self._game.item_spritesheet.parse_sprite("stick")
-        self._gui[1]["stick_craft_button"].image_scale_multiplier = 0.7
-        self._gui[1]["stick_craft_button"].centre_position = (670.0, 120.0)
-        self._gui[1]["stick_craft_button"].outline_thickness = 3
-
-        self._gui[1]["trap_door_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["trap_door_craft_button"].image = self._game.block_spritesheet.parse_sprite("trap_door_open")
-        self._gui[1]["trap_door_craft_button"].image_scale_multiplier = 0.7
-        self._gui[1]["trap_door_craft_button"].centre_position = (670.0, 160.0)
-        self._gui[1]["trap_door_craft_button"].outline_thickness = 3
-
-        self._gui[1]["chest_craft_button"].size = (40.0, 40.0)
-        self._gui[1]["chest_craft_button"].image = self._game.block_spritesheet.parse_sprite("chest")
-        self._gui[1]["chest_craft_button"].image_scale_multiplier = 0.7
-        self._gui[1]["chest_craft_button"].centre_position = (670.0, 200.0)
-        self._gui[1]["chest_craft_button"].outline_thickness = 3
-
-        self._inventory = params[0] if params is not None else None
-        self._hotbar = params[1] if params is not None else None
-        self._world = params[2] if params is not None else None
-        self._inventory_key_held = False
-        self._item_selected = None
-        self._item_display_hovering = None
-        self._mode = "default"
-
-        self._gui[1]["inventory_display"].container = self._inventory
-        self._gui[1]["hotbar_display"].container = self._hotbar
-
-        for layer in self._gui[::-1]:
-            for component in layer.values():
-                component.update()
-
-    def on_state_leave(self, params=None):
-        pass
-
-    def update(self):
-        mouse_pos = pygame.mouse.get_pos()
-        if self._game.keys_pressed[pygame.K_e]:
-            self._inventory_key_held = True
-        elif not self._game.keys_pressed[pygame.K_e] and self._inventory_key_held:
-            self._game.pop_state()
-            self._inventory_key_held = False
-
-        self._hotbar.update(None, False)
-        self._inventory.update()
-
-        if self._mode == "default":
-            self._gui[1]["move_button"].text = "Move Item"
-            self._gui[1]["merge_button"].text = "Merge"
-            self._gui[1]["delete_button"].text = "Delete"
-            if self._item_selected is None:
-                self._gui[1]["move_button"].is_visible = False
-                self._gui[1]["delete_button"].is_visible = False
-                self._gui[1]["merge_button"].is_visible = False
-            else:
-                self._gui[1]["move_button"].is_visible = True
-                self._gui[1]["delete_button"].is_visible = True
-                self._gui[1]["merge_button"].is_visible = True
-
-            if self._recipe_selected is None:
-                self._gui[1]["craft_button"].is_visible = False
-                self._gui[1]["item_description_box"].is_visible = False
-            else:
-                self._gui[1]["craft_button"].is_visible = True
-                self._gui[1]["item_description_box"].is_visible = True
-                self._gui[1][
-                    "item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
-
-        elif self._mode == "move":
-            self._gui[1]["move_button"].text = "Cancel Move"
-            self._gui[1]["delete_button"].is_visible = False
-            self._gui[1]["merge_button"].is_visible = False
-        elif self._mode == "merge":
-            self._gui[1]["merge_button"].text = "Cancel Merge"
-            self._gui[1]["move_button"].is_visible = False
-            self._gui[1]["delete_button"].is_visible = False
-
-        self.update_item_display_currently_hovering()
-
-        if self._item_display_hovering is not None:
-            if self._item_display_hovering.item is not None:
-                self._gui[0]["name_box"].position = (mouse_pos[0] + 15, mouse_pos[1])
-                self._gui[0]["name_box"].text = self._item_display_hovering.item.name
-                self._gui[0]["name_box"].is_visible = True
-            else:
-                self._gui[0]["name_box"].is_visible = False
-        else:
-            self._gui[0]["name_box"].is_visible = False
-
-        for layer in self._gui[::-1]:
-            for component in layer.values():
-                component.update()
-
-    def update_item_display_currently_hovering(self):  # Weirdest auto reformat ever??
-        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
-                                                                                           "hotbar_display"].get_hovering() is not None else \
-            self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
-                                                                    "inventory_display"].get_hovering() is not None else None
-
-    def draw(self):
-        self._game.states["main_game"].draw(True)
-        for layer in self._gui[::-1]:
-            for component in layer.values():
-                component.draw()

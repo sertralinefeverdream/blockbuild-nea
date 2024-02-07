@@ -1,6 +1,6 @@
 import pygame
 from abc import ABC, abstractmethod
-import json
+# Cleaned up
 
 
 class BlockBase(ABC):
@@ -52,23 +52,6 @@ class BlockBase(ABC):
             self.enable_flag_for_region_redraw()
 
     @property
-    def loot_drop_id(self):
-        return self._loot_drop_id
-
-    @property
-    def loot_drop_tool_whitelist(self):
-        return self._loot_drop_tool_whitelist
-
-    @property
-    def can_collide(self):
-        return self._can_collide
-
-    @can_collide.setter
-    def can_collide(self, value):
-        if type(value) is bool:
-            self._can_collide = value
-
-    @property
     def mine_sfx_id(self):
         return self._mine_sfx_id
 
@@ -96,6 +79,23 @@ class BlockBase(ABC):
             self._footstep_sfx_id = value
 
     @property
+    def loot_drop_id(self):
+        return self._loot_drop_id
+
+    @property
+    def loot_drop_tool_whitelist(self):
+        return self._loot_drop_tool_whitelist
+
+    @property
+    def can_collide(self):
+        return self._can_collide
+
+    @can_collide.setter
+    def can_collide(self, value):
+        if type(value) is bool:
+            self._can_collide = value
+
+    @property
     def hitbox(self):
         return self._hitbox
 
@@ -114,16 +114,12 @@ class BlockBase(ABC):
     @abstractmethod
     def load_state_data(self, data):
         pass
-
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
     # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.
 
     def enable_flag_for_region_redraw(self): # Call when visual change requires the region to be redrawn.
         region = self._world.get_region_at_position(self._position)
         region.enable_flag_for_redraw()
-
-    def serialize(self):
-        return json.dumps(self.convert_data())
 
     def convert_data(self): #Overrideable in subclasses. Must follow similar form.
         data = \

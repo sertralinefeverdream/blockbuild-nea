@@ -43,12 +43,17 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
         return self._world
 
     @property
+    def item_id(self):
+        return self._item_id
+
+    @property
     def name(self):
         return self._name
 
-    @property
-    def item_id(self):
-        return self._item_id
+    @name.setter
+    def name(self, value):
+        if type(value) is str:
+            self._name = value
 
     @property
     def texture(self):
@@ -117,8 +122,23 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def block_currently_mining_hardness_remaining(self):
         return self._block_currently_mining_hardness_remaining
 
-    def right_use(self, player_centre_pos):
-        pass
+
+    def update(self, player_centre_pos):
+        mouse_keys_pressed = pygame.mouse.get_pressed()
+
+        if mouse_keys_pressed[0]:
+            return self.left_use(player_centre_pos)
+        elif not mouse_keys_pressed[0]:
+            self._is_mining = False
+            self._mine_sound_timer = 0
+            if self._block_currently_mining is not None:
+                self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
+
+        if mouse_keys_pressed[2]:
+            if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
+                self._use_timer = pygame.time.get_ticks()
+                self.right_use(player_centre_pos)
+
 
     def on_equip(self):
         self._attack_timer = 0
@@ -131,65 +151,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
 
     def on_unequip(self):
         pass
-
-    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
-                                    range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
-        world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
-        distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
-        distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
-        distance_away = math.sqrt(distance_x ** 2 + distance_y ** 2)
-
-        if distance_away == 0:
-            return None
-
-        theta = math.acos(distance_x / distance_away)
-
-        dx = 10 * math.cos(theta)
-        dy = 10 * math.sin(theta)
-
-        if world_mouse_pos[0] < player_centre_pos[0]:
-            dx *= -1
-        if world_mouse_pos[1] < player_centre_pos[1]:
-            dy *= -1
-
-        current_point = [player_centre_pos[0], player_centre_pos[1]]
-        index = 0
-        while index <= range:
-            block_at_point = self._world.get_block_at_position(current_point)
-            if block_at_point is None or (block_at_point is not None and not block_at_point.can_collide):
-                entities_at_point = self._world.get_entities_at_position(current_point)
-                if len(entities_at_point) > 0:
-                    if len(entities_at_point) > 1:
-                        entities_at_point.sort(key=lambda x: math.sqrt(
-                            ((x.centre_position[0]) - (player_centre_pos[0])) ** 2 + (
-                                    (x.centre_position[1]) - (player_centre_pos[1])) ** 2))
-                    return entities_at_point[0]
-            else:
-                return None
-
-            current_point[0] += dx
-            current_point[1] += dy
-            index += 10
-        return None
-
-    def attack(self, entity_in_range_of_tool, player_centre_pos):
-        if pygame.time.get_ticks() - self._attack_timer >= self._attack_cooldown:
-            self._attack_timer = pygame.time.get_ticks()
-            self._is_mining = False
-            if entity_in_range_of_tool is not None:
-                direction = "right" if entity_in_range_of_tool.centre_position[0] > player_centre_pos[0] else "left"
-                entity_in_range_of_tool.health -= self._attack_strength
-                entity_in_range_of_tool.aggro()
-                entity_in_range_of_tool.knockback(direction, 200)
-                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
-                    remainder = self._world.player.hotbar.pickup_item(
-                        self._game.item_factory.create_item(self._game, self._world,
-                                                            entity_in_range_of_tool.loot))
-                    if remainder is not None:
-                        remainder = self._world.player.inventory.pickup_item(remainder)
-                    if remainder is not None:
-                        print("INVENTORY FULL!")
-            return "attack"
 
     def left_use(self, player_centre_pos):
         mouse_pos = pygame.mouse.get_pos()
@@ -251,22 +212,67 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
                 print("LOOT DROP ID IS NONE")
             self._block_currently_mining.kill()
 
+    def right_use(self, player_centre_pos):
+        pass
 
-    def update(self, player_centre_pos):
-        mouse_keys_pressed = pygame.mouse.get_pressed()
+    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
+                                    range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
+        world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
+        distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
+        distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
+        distance_away = math.sqrt(distance_x ** 2 + distance_y ** 2)
 
-        if mouse_keys_pressed[0]:
-            return self.left_use(player_centre_pos)
-        elif not mouse_keys_pressed[0]:
+        if distance_away == 0:
+            return None
+
+        theta = math.acos(distance_x / distance_away)
+
+        dx = 10 * math.cos(theta)
+        dy = 10 * math.sin(theta)
+
+        if world_mouse_pos[0] < player_centre_pos[0]:
+            dx *= -1
+        if world_mouse_pos[1] < player_centre_pos[1]:
+            dy *= -1
+
+        current_point = [player_centre_pos[0], player_centre_pos[1]]
+        index = 0
+        while index <= range:
+            block_at_point = self._world.get_block_at_position(current_point)
+            if block_at_point is None or (block_at_point is not None and not block_at_point.can_collide):
+                entities_at_point = self._world.get_entities_at_position(current_point)
+                if len(entities_at_point) > 0:
+                    if len(entities_at_point) > 1:
+                        entities_at_point.sort(key=lambda x: math.sqrt(
+                            ((x.centre_position[0]) - (player_centre_pos[0])) ** 2 + (
+                                    (x.centre_position[1]) - (player_centre_pos[1])) ** 2))
+                    return entities_at_point[0]
+            else:
+                return None
+
+            current_point[0] += dx
+            current_point[1] += dy
+            index += 10
+        return None
+
+    def attack(self, entity_in_range_of_tool, player_centre_pos):
+        if pygame.time.get_ticks() - self._attack_timer >= self._attack_cooldown:
+            self._attack_timer = pygame.time.get_ticks()
             self._is_mining = False
-            self._mine_sound_timer = 0
-            if self._block_currently_mining is not None:
-                self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
-
-        if mouse_keys_pressed[2]:
-            if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
-                self._use_timer = pygame.time.get_ticks()
-                self.right_use(player_centre_pos)
+            if entity_in_range_of_tool is not None:
+                direction = "right" if entity_in_range_of_tool.centre_position[0] > player_centre_pos[0] else "left"
+                entity_in_range_of_tool.health -= self._attack_strength
+                entity_in_range_of_tool.aggro()
+                entity_in_range_of_tool.knockback(direction, 200)
+                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
+                    remainder = self._world.player.hotbar.pickup_item(
+                        self._game.item_factory.create_item(self._game, self._world,
+                                                            entity_in_range_of_tool.loot))
+                    if remainder is not None:
+                        remainder = self._world.player.inventory.pickup_item(remainder)
+                    if remainder is not None:
+                        print("INVENTORY FULL!")
+            return "attack"
 
     def get_state_data(self):
         data = \

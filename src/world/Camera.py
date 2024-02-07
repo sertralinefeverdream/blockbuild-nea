@@ -14,21 +14,6 @@ class Camera:
             self._position = list(value)
 
     @property
-    def min_x(self):
-        return self._position[0]
-
-    def max_x(self):
-        return self._position[1]
-
-    @property
-    def min_y(self):
-        return self._position[1]
-
-    @property
-    def max_y(self):
-        return self._position[1] + 800
-
-    @property
     def x(self):
         return self._position[0]
 

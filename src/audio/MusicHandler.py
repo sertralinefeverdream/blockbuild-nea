@@ -1,6 +1,7 @@
 import pygame.mixer
 import random
 
+#Refactored
 
 
 class MusicHandler:
@@ -24,19 +25,17 @@ class MusicHandler:
     def is_shuffling(self):
         return self._shuffle_list
 
+    @property
+    def music_fade_time(self):
+        return self._music_fade_time
+
+    @music_fade_time.setter
+    def music_fade_time(self, value):
+        if type(value) is int and value >= 0:
+            self._music_fade_time = value
+
     def set_shuffle_list(self, shuffle_list):
         self._shuffle_list = shuffle_list
-
-    def add_music_from_dict(self, music_dict):
-        for music_id, music_path in music_dict.items():
-            self.add_music(music_id, music_path)
-
-    def add_music(self, music_id, music_path):
-        try:
-            if music_id not in self._music_library.keys():
-                self._music_library[music_id] = music_path
-        except:
-            print(f"{music_path} was invalid path!")
 
     def shuffle_play(self):
         self._is_shuffling = True
@@ -55,15 +54,26 @@ class MusicHandler:
         else:
             raise Exception
 
-    def on_music_end(self):
-        pygame.mixer.music.unload()
-        if self._is_shuffling:
-            self.shuffle_play()
-
     def stop_music(self):
         self._is_shuffling = False
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()
+
+    def add_music_from_dict(self, music_dict):
+        for music_id, music_path in music_dict.items():
+            self.add_music(music_id, music_path)
+
+    def add_music(self, music_id, music_path):
+        try:
+            if music_id not in self._music_library.keys():
+                self._music_library[music_id] = music_path
+        except:
+            print(f"{music_path} was invalid path!")
+
+    def on_music_end(self):
+        pygame.mixer.music.unload()
+        if self._is_shuffling:
+            self.shuffle_play()
 
     def update_volume(self, vol):
         pygame.mixer.music.set_volume(vol)

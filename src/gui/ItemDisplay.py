@@ -10,12 +10,16 @@ class ItemDisplay(RectBox):
         self._item = None
         self._item_scale_multiplier = item_scale_multiplier
         self._quantity_text_font = quantity_text_font
-        self._quantity_text_font_colour = quantity_text_font_colour
+        self._quantity_text_font_colour = list(quantity_text_font_colour)
         self._quantity_text_font_size = quantity_text_font_size
 
     @property
     def item(self):
         return self._item
+
+    @item.setter
+    def item(self, value):
+            self._item = value
 
     @property
     def item_scale_multiplier(self):
@@ -36,6 +40,15 @@ class ItemDisplay(RectBox):
             self._quantity_text_font = value
 
     @property
+    def quantity_text_font_colour(self):
+        return self._quantity_text_font_colour
+
+    @quantity_text_font_colour.setter
+    def quantity_text_font_colour(self, value):
+        if (type(value) is list or type(value) is int) and len(value) == 3:
+            self.quantity_text_font_colour = list(value)
+
+    @property
     def quantity_text_font_size(self):
         return self._quantity_text_font_size
 
@@ -43,10 +56,6 @@ class ItemDisplay(RectBox):
     def quantity_text_font_size(self, value):
         if type(value) is int and value > 1:
             self._quantity_text_font_size = value
-
-    @item.setter
-    def item(self, value):
-            self._item = value
 
     def update(self):
         self._box.update(self._position, self._size)

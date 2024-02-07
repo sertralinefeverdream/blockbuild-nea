@@ -1,4 +1,7 @@
 import json
+import os
+# Cleaned up
+
 
 class FileSaveHandler:
     def __init__(self):
@@ -11,7 +14,10 @@ class FileSaveHandler:
 
     def load_world(self, world, save_location_id):
         with open(self._locations[save_location_id], 'r') as f:
-            world.load_from_data(json.load(f))
+            if os.fstat(f).st_size > 0:
+                world.load_from_data(json.load(f))
+            else:
+                print("SAVE FILE EMPTY. MAKING NEW WORLD INSTEAD")
 
     def save_world(self, world, save_location_id):
         with open(self._locations[save_location_id], "w") as f:

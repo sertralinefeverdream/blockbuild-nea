@@ -1,8 +1,7 @@
 import sys
 import pygame
 from src.audio.Volume import Volume
-
-# Refactored
+# Cleaned up
 
 
 class Game:
@@ -62,26 +61,6 @@ class Game:
         return self._config
 
     @property
-    def states(self):
-        return self._states
-
-    @property
-    def previous_state(self):
-        return self._previous_state
-
-    @property
-    def current_state(self):
-        return self._current_state
-
-    @property
-    def previous_state(self):
-        return self._previous_state
-
-    @property
-    def running(self):
-        return self._running
-
-    @property
     def gui_factory(self):
         return self._gui_factory
 
@@ -118,10 +97,24 @@ class Game:
         return self._item_spritesheet
 
     @property
+    def states(self):
+        return self._states
+
+    @property
+    def previous_state(self):
+        return self._previous_state
+
+    @property
+    def current_state(self):
+        return self._current_state
+
+    @property
+    def running(self):
+        return self._running
+
+    @property
     def keys_pressed(self):
         return self._keys_pressed
-
-
 
     def initialise_music_and_sfx(self):
         self._music_handler.add_music_from_dict(self._config["music_assets"])

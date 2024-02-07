@@ -8,7 +8,6 @@ class ChestBlock(InteractableBlockBase):
 
         self._container = self._game.item_container_factory.create_item_container("item_container", self._game, self._world, 6, 6)
 
-
     def interact(self):
         self._game.sfx_handler.play_sfx(self._use_sfx_id, self._game.get_option("game_volume").value)
         self._game.push_state("chest_interact", [self._world.player.inventory, self._world.player.hotbar, self._container])

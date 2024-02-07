@@ -4,8 +4,10 @@ import math
 
 
 class Player(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, hurt_sfx_id, death_sfx_id, animation_handler):
-        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, hurt_sfx_id, death_sfx_id,
+                 animation_handler):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id,
+                         death_sfx_id)
 
         self._hotbar = self._game.item_container_factory.create_item_container("hotbar_container", self._game,
                                                                                self._world, 9)
@@ -19,30 +21,6 @@ class Player(CharacterBase):
     @property
     def inventory(self):
         return self._inventory
-
-    @property
-    def hotbar_pointer(self):
-        return self._hotbar_pointer
-
-    @hotbar_pointer.setter
-    def hotbar_pointer(self, value):
-        if type(value) is int and 0 <= value <= 9:
-            self._hotbar_pointer = value
-
-    def get_state_data(self):
-        data = {}
-        data["position"] = self._position
-        data["health"] = self._health
-        data["hotbar_state_data"] = self._hotbar.get_state_data()
-        data["inventory_state_data"] = self._inventory.get_state_data()
-
-        return data
-
-    def load_state_data(self, data):
-        self._position = data["position"]
-        self._health = data["health"]
-        self._hotbar.load_from_data(data["hotbar_state_data"])
-        self._inventory.load_from_data(data["inventory_state_data"])
 
     def update(self):
         if self._health <= 0:
@@ -98,7 +76,8 @@ class Player(CharacterBase):
             self._is_in_air = True
 
         if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
-            block_below = self._world.get_block_at_position((math.trunc(self._position[0] + self._size[0]/2), math.trunc(self._position[1] + self._size[1] + 2)))
+            block_below = self._world.get_block_at_position(
+                (math.trunc(self._position[0] + self._size[0] / 2), math.trunc(self._position[1] + self._size[1] + 2)))
             if block_below is not None and block_below.can_collide:
                 self._footstep_timer = pygame.time.get_ticks()
                 self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
@@ -108,6 +87,47 @@ class Player(CharacterBase):
         if item_return_action == "attack" and self._animation_handler.current_animation_id != "attack":
             self._animation_handler.play_animation_from_id("attack")
             self._animation_handler.loop = False
+
+    def draw(self):
+        screen_pos = list(self._world.camera.get_screen_position(self._position))
+        self._game.window.blit(self._texture, screen_pos)
+
+    def handle_collisions(self, axis):
+        hitboxes_to_check = []
+        for x in range(3):
+            for y in range(3):
+                region_check_x = self._position[0] + (x - 1) * 800
+                region_check_y = self._position[1] + (y - 1) * 800
+
+                if self._world.check_region_exists_at_position((region_check_x, region_check_y)):
+                    hitboxes_to_check += self._world.get_region_at_position(
+                        (region_check_x, region_check_y)).get_block_hitboxes()
+                else:
+                    print("Region invalid")
+
+        if axis.lower() == "horizontal":
+            for block, hitbox in hitboxes_to_check:
+                if self._hitbox.colliderect(hitbox) and block.can_collide:
+                    if self._velocity[0] > 0:
+                        self._velocity[0] = 0
+                        self._position[0] = block.position[0] - self._size[0]
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
+                    elif self._velocity[0] < 0:
+                        self._velocity[0] = 0
+                        self._position[0] = block.position[0] + 40
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
+
+        elif axis.lower() == "vertical":
+            for block, hitbox in hitboxes_to_check:
+                if self._hitbox.colliderect(hitbox) and block.can_collide:
+                    if self._velocity[1] > 0:
+                        self._velocity[1] = 0
+                        self._position[1] = block.position[1] - self._size[1]
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
+                    elif self._velocity[1] < 0:
+                        self._velocity[1] = 0
+                        self._position[1] = block.position[1] + 40
+                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
 
     def handle_inputs(self, deltatime):
         keys_pressed = self._game.keys_pressed
@@ -170,51 +190,19 @@ class Player(CharacterBase):
         elif keys_pressed[pygame.K_9]:
             self._hotbar.current_item_pointer = 8
 
-    def handle_collisions(self, axis):
-        hitboxes_to_check = []
-        for x in range(3):
-            for y in range(3):
-                region_check_x = self._position[0] + (x - 1) * 800
-                region_check_y = self._position[1] + (y - 1) * 800
-
-                if self._world.check_region_exists_at_position((region_check_x, region_check_y)):
-                    hitboxes_to_check += self._world.get_region_at_position(
-                        (region_check_x, region_check_y)).get_block_hitboxes()
-                else:
-                    print("Region invalid")
-
-        if axis.lower() == "horizontal":
-            for block, hitbox in hitboxes_to_check:
-                if self._hitbox.colliderect(hitbox) and block.can_collide:
-                    if self._velocity[0] > 0:
-                        self._velocity[0] = 0
-                        self._position[0] = block.position[0] - self._size[0]
-                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
-                    elif self._velocity[0] < 0:
-                        self._velocity[0] = 0
-                        self._position[0] = block.position[0] + 40
-                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
-
-        elif axis.lower() == "vertical":
-            for block, hitbox in hitboxes_to_check:
-                if self._hitbox.colliderect(hitbox) and block.can_collide:
-                    if self._velocity[1] > 0:
-                        self._velocity[1] = 0
-                        self._position[1] = block.position[1] - self._size[1]
-                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
-                    elif self._velocity[1] < 0:
-                        self._velocity[1] = 0
-                        self._position[1] = block.position[1] + 40
-                        self._hitbox.topleft = self._world.camera.get_screen_position(self._position)
-
     def jump(self):
         self._velocity[1] = -320
 
-    def draw(self):
-        bounding_rect = self._texture.get_bounding_rect()
-        texture_size = self._texture.get_size()
+    def get_state_data(self):
+        data = {}
+        data["position"] = self._position
+        data["health"] = self._health
+        data["hotbar_state_data"] = self._hotbar.get_state_data()
+        data["inventory_state_data"] = self._inventory.get_state_data()
+        return data
 
-        screen_pos = list(self._world.camera.get_screen_position(self._position))
-        self._game.window.blit(self._texture, screen_pos)
-        # pygame.draw.rect(self._game.window, (0, 0, 0), pygame.Rect(self._world.camera.get_screen_position(self._position), self._size))
-    # pygame.draw.rect(self._game.window, (255, 0, 0), self._hitbox)
+    def load_state_data(self, data):
+        self._position = data["position"]
+        self._health = data["health"]
+        self._hotbar.load_from_data(data["hotbar_state_data"])
+        self._inventory.load_from_data(data["inventory_state_data"])

@@ -17,8 +17,16 @@ class ItemButton(ButtonBase):
         self._item = None
         self._item_scale_multiplier = item_scale_multiplier
         self._quantity_text_font = quantity_text_font
-        self._quantity_text_font_colour = quantity_text_font_colour
+        self._quantity_text_font_colour = list(quantity_text_font_colour)
         self._quantity_text_font_size = quantity_text_font_size
+
+    @property
+    def item(self):
+        return self._item
+
+    @item.setter
+    def item(self, value):
+        self._item = value
 
     @property
     def item_scale_multipler(self):
@@ -30,12 +38,31 @@ class ItemButton(ButtonBase):
             self._item_scale_multiplier = value
 
     @property
-    def item(self):
-        return self._item
+    def quantity_text_font(self):
+        return self._quantity_text_font
 
-    @item.setter
-    def item(self, value):
-        self._item = value
+    @quantity_text_font.setter
+    def quantity_text_font(self, value):
+        if type(value) is str:
+            self._quantity_text_font = value
+
+    @property
+    def quantity_text_font_colour(self):
+        return self._quantity_text_font_colour
+
+    @quantity_text_font_colour.setter
+    def quantity_text_font_colour(self, value):
+        if (type(value) is list or type(value) is tuple) and len(value) == 3:
+            self._quantity_text_font_colour = list(value)
+
+    @property
+    def quantity_text_font_size(self):
+        return self._quantity_text_font_size
+
+    @quantity_text_font_size.setter
+    def quantity_text_font_size(self, value):
+        if (type(value) is int or type(value) is float) and value > 0:
+            self._quantity_text_font_size = value
 
     def update(self):
         self._rect.update(self._position, self._size)

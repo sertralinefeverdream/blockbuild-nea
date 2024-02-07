@@ -15,10 +15,6 @@ class EntityBase:
         self._hitbox = pygame.Rect((0, 0), self._size)
         self._is_killed = False
 
-        #self._facing = "right"
-
-        #self.update_texture_and_sizes()
-
     @property
     def game(self):
         return self._game
@@ -46,41 +42,12 @@ class EntityBase:
             self._position = list(value)
 
     @property
-    def centre_position(self):
-        return self._position[0] + self._size[0]/2, self._position[1] + self._size[1]/2
-
-    @centre_position.setter
-    def centre_position(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position[0] = value[0] - self._size[0]/2
-            self._position[1] = value[1] - self._size[1]/2
-
-    @property
-    def velocity(self):
-        return self._velocity
-
-    @velocity.setter
-    def velocity(self, value):
-        if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._velocity = value
-
-    @property
     def size(self):
         return self._size
 
     @size.setter
     def size(self, value):
         if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._size = value
-            self.update_texture_and_sizes()
-
-    @property
-    def size(self):
-        return self._size
-
-    @size.setter
-    def size(self, value):
-        if (type(value) is tuple or type(value) is list) and len(value) == 2:
             self._size = value
             self.update_texture_and_sizes()
 
@@ -95,16 +62,17 @@ class EntityBase:
             self.update_texture_and_sizes()
 
     @property
+    def velocity(self):
+        return self._velocity
+
+    @velocity.setter
+    def velocity(self, value):
+        if (type(value) is list or type(value) is tuple) and len(value) == 2:
+            self._velocity = value
+
+    @property
     def hitbox(self):
         return self._hitbox
-
-    @abstractmethod
-    def update(self):
-        pass
-
-    @abstractmethod
-    def draw(self):
-        pass
 
     @property
     def is_killed(self):
@@ -115,13 +83,23 @@ class EntityBase:
         if type(value) is bool:
             self._is_killed = value
 
+    @property
+    def centre_position(self):
+        return self._position[0] + self._size[0]/2, self._position[1] + self._size[1]/2
 
-    def convert_data(self):
-        data = {
-            "entity_id": self._entity_id,
-            "state_data": self.get_state_data()
-        }
-        return data
+    @centre_position.setter
+    def centre_position(self, value):
+        if (type(value) is tuple or type(value) is list) and len(value) == 2:
+            self._position[0] = value[0] - self._size[0]/2
+            self._position[1] = value[1] - self._size[1]/2
+
+    @abstractmethod
+    def update(self):
+        pass
+
+    @abstractmethod
+    def draw(self):
+        pass
 
     @abstractmethod
     def get_state_data(self):
@@ -130,6 +108,13 @@ class EntityBase:
     @abstractmethod
     def load_state_data(self, data):
         pass
+
+    def convert_data(self):
+        data = {
+            "entity_id": self._entity_id,
+            "state_data": self.get_state_data()
+        }
+        return data
 
     def update_texture_and_sizes(self): # Call when texture or size changes
         self._texture = pygame.transform.scale(self._texture, self._size)

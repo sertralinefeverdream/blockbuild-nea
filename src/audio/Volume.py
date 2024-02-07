@@ -1,5 +1,5 @@
 from enum import Enum
-
+#Cleand up
 class Volume(Enum):
     OFF = 0.0
     LOW = 0.3

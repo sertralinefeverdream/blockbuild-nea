@@ -10,21 +10,21 @@ class HotbarDisplay(GUIBase):
         self._gui = [self._game.gui_factory.create_gui("ItemDisplay", game, surface, size=(60.0, 60.0)) for x in range(self._number_of_slots)]
 
     @property
-    def centre_position(self):
-        return self._position[0] + (self._number_of_slots*60)/2, self._position[1] + 30
-
-    @centre_position.setter
-    def centre_position(self, value):
-        if (type(value) is list or type(value) is tuple) and len(value) == 2:
-            self._position = value[0] - (self._number_of_slots*60)/2, value[1] - ((60)/2)
-
-    @property
     def hotbar(self):
         return self._hotbar
 
     @hotbar.setter
     def hotbar(self, value):
             self._hotbar = value
+
+    @property
+    def centre_position(self):
+        return self._position[0] + (self._number_of_slots * 60) / 2, self._position[1] + 30
+
+    @centre_position.setter
+    def centre_position(self, value):
+        if (type(value) is list or type(value) is tuple) and len(value) == 2:
+            self._position = value[0] - (self._number_of_slots * 60) / 2, value[1] - ((60) / 2)
 
     def update(self):
         if self._hotbar is not None:

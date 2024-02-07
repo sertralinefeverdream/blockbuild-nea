@@ -95,6 +95,21 @@ class LoadGameMenuState(StateBase):
             for component in layer.values():
                 component.update()
 
+    def on_state_leave(self, params=None):
+        pass
+
+    def update(self):
+        for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them
+            for component in layer.values():
+                component.update()
+
+    def draw(self, no_gui=False):
+        self._game.window.fill((255, 255, 255))
+        if not no_gui:
+            for layer in self._gui[::-1]:
+                for component in layer.values():
+                    component.draw()
+
     def new_button_func(self, button):
         if button is self._gui[0]["top_new_button"]:
             self._game.pop_state()
@@ -116,21 +131,6 @@ class LoadGameMenuState(StateBase):
         elif button is self._gui[0]["bottom_load_button"]:
             self._game.pop_state()
             self._game.push_state("main_game", ["load_3"])
-
-    def on_state_leave(self, params=None):
-        pass
-
-    def update(self):
-        for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them
-            for component in layer.values():
-                component.update()
-
-    def draw(self, no_gui=False):
-        self._game.window.fill((255, 255, 255))
-        if not no_gui:
-            for layer in self._gui[::-1]:
-                for component in layer.values():
-                    component.draw()
 
     def exit_click(self, button):
         self._game.pop_state()

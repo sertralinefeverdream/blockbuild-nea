@@ -2,11 +2,11 @@ import pygame
 import math
 from src.items.GenericItem import GenericItem
 
+
 class BlockItem(GenericItem):
     def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10, preferred_mine_strength=40, preferred_mine_strength_white_list=None, block_id="grass"):
         super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown, attack_range, use_range, attack_strength, default_mine_strength, preferred_mine_strength, preferred_mine_strength_white_list)
         self._block_id = block_id
-
 
     def right_use(self, player_pos):
         mouse_pos = pygame.mouse.get_pos()

@@ -52,37 +52,6 @@ class GenericHostile(CharacterBase):
     def is_aggro(self):
         return self._is_aggro
 
-    def is_player_in_line_of_sight(self): # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line
-        distance_x = abs(self._world.player.centre_position[0] - self.centre_position[0])
-        distance_y = abs(self._world.player.position[1] - self._position[1])
-        distance_away = math.sqrt(distance_x**2+distance_y**2)
-
-        if distance_away == 0:
-            return True
-
-        theta = math.acos(distance_x/distance_away)
-
-        dx = 10 * math.cos(theta)
-        dy = 10 * math.sin(theta)
-
-        if self._world.player.centre_position[0] < self.centre_position[0]:
-            dx *= -1
-        if self._world.player.position[1] < self._position[1]:
-            dy *= -1
-
-        current_point = [self.centre_position[0], self._position[1]]
-        index = 0
-        while index <= distance_away:
-            block_at_current_point = self._world.get_block_at_position(current_point)
-            if block_at_current_point is not None:
-                if block_at_current_point.can_collide:
-                    return False
-            current_point[0] += dx
-            current_point[1] += dy
-            index += 10
-
-        return True
-
     def update(self):
         deltatime = self._game.clock.get_time() / 1000
 
@@ -103,13 +72,11 @@ class GenericHostile(CharacterBase):
                 player_distance_from_entity = self.get_distance_from_entity(self._world.player)
                 if self._is_aggro:
                     if self._is_in_los:
-                        print("IN LINE OF SIGHT")
                         self._out_of_los_timer = pygame.time.get_ticks()
                         if player_distance_from_entity >= self._chase_range:
                             print("DEAGGROING OUT OF RANGE")
                             self._is_aggro = False
                     else:
-                        print("OUT OF LINE OF SIGHT")
                         if pygame.time.get_ticks() - self._out_of_los_timer >= self._out_of_los_cooldown or player_distance_from_entity >= self._chase_range:
                             print("OUT OF LOS TIMER EXPIRED. DEAGGROING")
                             self._is_aggro = False
@@ -282,12 +249,6 @@ class GenericHostile(CharacterBase):
             self._random_idle_sound_timer = pygame.time.get_ticks()
             self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list), self._game.get_option("game_volume").value)
 
-    def get_distance_from_entity(self, entity):
-        foreign_entity_centre_pos = entity.centre_position
-        this_entity_centre_pos = (self._position[0] + self._size[0] / 2, self._position[1] + self._size[1] / 2)
-        return math.sqrt((foreign_entity_centre_pos[0] - this_entity_centre_pos[0]) ** 2 + (
-                foreign_entity_centre_pos[1] - this_entity_centre_pos[1]) ** 2)
-
     def draw(self):
         screen_pos = self._world.camera.get_screen_position(self._position)
         health_bar_width = self._health/self._max_health * 50
@@ -295,8 +256,42 @@ class GenericHostile(CharacterBase):
         pygame.draw.rect(self._game.window, (0, 0, 0), (screen_pos[0] + self._size[0]/2 - health_bar_width/2, screen_pos[1] - 20, health_bar_width, 10), width=2)
         self._game.window.blit(self._texture, screen_pos)
 
-    def jump(self):
-        self._velocity[1] = -320
+    def is_player_in_line_of_sight(self): # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line
+        distance_x = abs(self._world.player.centre_position[0] - self.centre_position[0])
+        distance_y = abs(self._world.player.position[1] - self._position[1])
+        distance_away = math.sqrt(distance_x**2+distance_y**2)
+
+        if distance_away == 0:
+            return True
+
+        theta = math.acos(distance_x/distance_away)
+
+        dx = 10 * math.cos(theta)
+        dy = 10 * math.sin(theta)
+
+        if self._world.player.centre_position[0] < self.centre_position[0]:
+            dx *= -1
+        if self._world.player.position[1] < self._position[1]:
+            dy *= -1
+
+        current_point = [self.centre_position[0], self._position[1]]
+        index = 0
+        while index <= distance_away:
+            block_at_current_point = self._world.get_block_at_position(current_point)
+            if block_at_current_point is not None:
+                if block_at_current_point.can_collide:
+                    return False
+            current_point[0] += dx
+            current_point[1] += dy
+            index += 10
+
+        return True
+
+    def get_distance_from_entity(self, entity):
+        foreign_entity_centre_pos = entity.centre_position
+        this_entity_centre_pos = (self._position[0] + self._size[0] / 2, self._position[1] + self._size[1] / 2)
+        return math.sqrt((foreign_entity_centre_pos[0] - this_entity_centre_pos[0]) ** 2 + (
+                foreign_entity_centre_pos[1] - this_entity_centre_pos[1]) ** 2)
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []
@@ -350,6 +345,9 @@ class GenericHostile(CharacterBase):
                 self._is_in_air = False
             else:
                 self._is_in_air = True
+
+    def jump(self):
+        self._velocity[1] = -320
 
     def aggro(self):
         self._is_aggro = True

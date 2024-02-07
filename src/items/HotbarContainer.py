@@ -8,10 +8,6 @@ class HotbarContainer(ItemContainer):
         self._current_item = self._no_hands_item
 
     @property
-    def current_item(self):
-        return self._current_item
-
-    @property
     def current_item_pointer(self):
         return self._current_item_pointer
 
@@ -23,11 +19,9 @@ class HotbarContainer(ItemContainer):
             self.update_current_item()
             self._current_item.on_equip()
 
-    def update_current_item(self):
-        if self._data[0][self._current_item_pointer] is not None:
-            self._current_item = self._data[0][self._current_item_pointer]
-        else:
-            self._current_item = self._no_hands_item
+    @property
+    def current_item(self):
+        return self._current_item
 
     def update(self, player_centre_pos=None, update_current_item=True):
         for row_index, row in enumerate(self._data):
@@ -40,6 +34,12 @@ class HotbarContainer(ItemContainer):
             self.update_current_item()
             if self._current_item is not None:
                 return self._current_item.update(player_centre_pos)
+
+    def update_current_item(self):
+        if self._data[0][self._current_item_pointer] is not None:
+            self._current_item = self._data[0][self._current_item_pointer]
+        else:
+            self._current_item = self._no_hands_item
 
 
 
