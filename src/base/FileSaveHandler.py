@@ -14,10 +14,10 @@ class FileSaveHandler:
 
     def load_world(self, world, save_location_id):
         with open(self._locations[save_location_id], 'r') as f:
-            if os.fstat(f).st_size > 0:
+            if os.stat(self._locations[save_location_id]).st_size > 0: # If the file is not an empty json file with nothing in it
                 world.load_from_data(json.load(f))
             else:
-                print("SAVE FILE EMPTY. MAKING NEW WORLD INSTEAD")
+                print("SAVE FILE EMPTY. MAKING NEW WORLD INSTEAD") # Forgo loading if json file is empty. Will be filled on save
 
     def save_world(self, world, save_location_id):
         with open(self._locations[save_location_id], "w") as f:

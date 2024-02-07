@@ -81,6 +81,22 @@
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
+    "stone_brick": {
+      "type": "generic",
+      "hardness": 100,
+      "texture": "stone_brick",
+      "mine_sfx_id": "stone_mine",
+      "place_and_break_sfx_id": "stone_place_break",
+      "footstep_sfx_id": "stone_footstep",
+      "loot_drop_id": "stone_block",
+      "loot_drop_tool_whitelist": [
+        "stone_pickaxe",
+        "iron_pickaxe",
+        "gold_pickaxe",
+        "diamond_pickaxe"
+      ],
+      "can_collide": true
+    },
     "respawn_anchor": {
       "type": "respawn_anchor",
       "hardness": 100,
@@ -378,6 +394,28 @@
       "recipe": null,
       "block_id": "stone"
     },
+    "stone_brick_block": {
+      "name": "Stone Brick",
+      "type": "blockitem",
+      "texture": "stone_brick",
+      "max_quantity": 50,
+      "attack_cooldown": 120,
+      "use_cooldown": 100,
+      "attack_range": 55,
+      "use_range": 440,
+      "attack_strength": 5,
+      "default_mine_strength": 10,
+      "preferred_mine_strength": 100,
+      "preferred_mine_strength_whitelist": [],
+      "recipe": {
+        "ingredients": {
+          "stone_block": 4
+        },
+        "amount_crafted": 1,
+        "description": "Requires 4x Stone, Makes 1"
+      },
+      "block_id": "stone_brick"
+    },
     "dirt_block": {
       "name": "Dirt Block",
       "type": "blockitem",
@@ -428,7 +466,9 @@
         "stone",
         "iron_ore",
         "gold_ore",
-        "diamond_ore"
+        "diamond_ore",
+        "stone_brick",
+        "respawn_anchor"
       ],
       "recipe": {
         "ingredients": {
@@ -584,7 +624,9 @@
         "stone",
         "iron_ore",
         "gold_ore",
-        "diamond_ore"
+        "diamond_ore",
+        "stone_brick",
+        "respawn_anchor"
       ],
       "recipe": {
         "ingredients": {
@@ -644,7 +686,9 @@
         "stone",
         "iron_ore",
         "gold_ore",
-        "diamond_ore"
+        "diamond_ore",
+        "stone_brick",
+        "respawn_anchor"
       ],
       "recipe": {
         "ingredients": {
@@ -704,7 +748,9 @@
         "stone",
         "iron_ore",
         "gold_ore",
-        "diamond_ore"
+        "diamond_ore",
+        "stone_brick",
+        "respawn_anchor"
       ],
       "recipe": {
         "ingredients": {

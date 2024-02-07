@@ -87,7 +87,7 @@ class MainGameState(StateBase):
         self._world.update()
 
         self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
-        self._gui[0]["fps_counter"].is_visible = True
+        self._gui[0]["fps_counter"].is_visible = False
 
         self._gui[0]["player_health_bar"].size = ((self._world.player.health/self._world.player.max_health)*540.0, 25.0)
         self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)

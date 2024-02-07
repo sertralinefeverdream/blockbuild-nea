@@ -94,6 +94,9 @@ class InventoryState(StateBase):
                                                                         self.on_craft_item_press),
                 "respawn_anchor_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                         self._game.window,
+                                                                        self.on_craft_item_press),
+                "stone_brick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
+                                                                        self._game.window,
                                                                         self.on_craft_item_press)
 
             },
@@ -241,6 +244,12 @@ class InventoryState(StateBase):
         self._gui[1]["respawn_anchor_craft_button"].image_scale_multiplier = 0.7
         self._gui[1]["respawn_anchor_craft_button"].centre_position = (790.0, 80.0)
         self._gui[1]["respawn_anchor_craft_button"].outline_thickness = 3
+
+        self._gui[1]["stone_brick_craft_button"].size = (40.0, 40.0)
+        self._gui[1]["stone_brick_craft_button"].image = self._game.block_spritesheet.parse_sprite("stone_brick")
+        self._gui[1]["stone_brick_craft_button"].image_scale_multiplier = 0.7
+        self._gui[1]["stone_brick_craft_button"].centre_position = (830.0, 80.0)
+        self._gui[1]["stone_brick_craft_button"].outline_thickness = 3
 
         self._inventory = params[0] if params is not None else None
         self._hotbar = params[1] if params is not None else None
@@ -407,6 +416,8 @@ class InventoryState(StateBase):
             self._recipe_selected = "diamond_axe"
         elif item_button is self._gui[1]["respawn_anchor_craft_button"]:
             self._recipe_selected = "respawn_anchor_block"
+        elif item_button is self._gui[1]["stone_brick_craft_button"]:
+            self._recipe_selected = "stone_brick_block"
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None

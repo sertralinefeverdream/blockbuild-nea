@@ -11,6 +11,12 @@
     "width": 16,
     "height": 16
   },
+  "stone_brick": {
+    "x": 96,
+    "y": 48,
+    "width": 16,
+    "height": 16
+  },
   "dirt": {
     "x": 32,
     "y": 0,
