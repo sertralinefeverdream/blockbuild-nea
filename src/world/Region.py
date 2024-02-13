@@ -132,8 +132,8 @@ class Region:
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             if self.is_position_in_region(position):
                 x_index, y_index = self.get_block_indexes_from_position(position)
-                #print(position)
-                #print(x_index, y_index)
+                # print(position)
+                # print(x_index, y_index)
                 return self._data[y_index][x_index]
 
     def get_block_at_indexes(self, x, y):
@@ -146,12 +146,12 @@ class Region:
                 self.enable_flag_for_redraw()
                 x_index, y_index = self.get_block_indexes_from_position(position)
                 self._data[y_index][x_index] = self._game.block_factory.create_block(self._game, self._world, (
-                self._position[0] + x_index * 40, self._position[1] + y_index * 40), block_id, state_data)
+                    self._position[0] + x_index * 40, self._position[1] + y_index * 40), block_id, state_data)
 
     def set_block_at_indexes(self, x, y, block_id, state_data=None):
         if (type(x) is int and type(y) is int) and 0 <= x <= 20 and 0 <= y <= 20:
             self._data[y][x] = self._game.block_factory.create_block(self._game, self._world, (
-            self._position[0] + x * 40, self._position[1] + y * 40), block_id, state_data)
+                self._position[0] + x * 40, self._position[1] + y * 40), block_id, state_data)
 
     def get_block_hitboxes(self):
         data = []
@@ -171,10 +171,10 @@ class Region:
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             list_of_entities = []
             for entity in self._entity_list:
-                  if entity.hitbox.collidepoint(self._world.camera.get_screen_position(position)):
-                      if ignore_player and entity.entity_id == "player":
-                          continue
-                      list_of_entities.append(entity)
+                if entity.hitbox.collidepoint(self._world.camera.get_screen_position(position)):
+                    if ignore_player and entity.entity_id == "player":
+                        continue
+                    list_of_entities.append(entity)
             return list_of_entities
 
     def add_entity(self, entity):
@@ -196,10 +196,6 @@ class Region:
                     data["terrain"][str(row_index)][block_index] = None
 
         for entity in self._entity_list:
-            if hasattr(entity, "handle_collisions"):
-                if callable(entity.handle_collisions):
-                    entity.handle_collisions("horizontal")
-                    entity.handle_collisions("vertical")
             data["entity_list"].append(entity.convert_data())
 
         return data

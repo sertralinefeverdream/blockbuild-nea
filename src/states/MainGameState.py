@@ -135,7 +135,7 @@ class MainGameState(StateBase):
         elif not self._game.keys_pressed[pygame.K_f] and self._interact_key_held:
             if block_at_mouse is not None:
                 if hasattr(block_at_mouse, "interact"):
-                    if callable(block_at_mouse.interact):
+                    if callable(block_at_mouse.interact): # These two conditions only run if the block class is subclass of InteractableBlock
                         block_at_mouse.interact()
             self._interact_key_held = False
 

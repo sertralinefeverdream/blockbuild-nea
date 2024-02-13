@@ -11,15 +11,6 @@ class FoodItem(GenericItem):
         self._nutrition = nutrition
         self._eat_sfx_id = eat_sfx_id
 
-    def on_equip(self):
-        self._attack_timer = 0
-        self._use_timer = 0
-        self._mine_sound_timer = 0
-        self._block_last_mining = None
-        self._block_currently_mining = None
-        self._block_currently_mining_hardness_remaining = 0
-        self._is_mining = False
-
     def right_use(self, player_centre_pos):
         if self._world.player.health < self._world.player.max_health:
             self._game.sfx_handler.play_sfx(self._eat_sfx_id, self._game.get_option("game_volume").value)

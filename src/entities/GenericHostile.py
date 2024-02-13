@@ -346,9 +346,6 @@ class GenericHostile(CharacterBase):
             else:
                 self._is_in_air = True
 
-    def jump(self):
-        self._velocity[1] = -320
-
     def aggro(self):
         self._is_aggro = True
 
