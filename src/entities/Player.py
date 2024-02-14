@@ -31,21 +31,6 @@ class Player(CharacterBase):
         self._velocity[1] += math.trunc(800 * deltatime)
         self.handle_inputs(deltatime)
 
-        if self._is_in_air:
-            if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
-                    self._animation_handler.play_animation_from_id("fall")
-                    self._animation_handler.loop = False
-            elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
-                    self._animation_handler.play_animation_from_id("fall")
-                    self._animation_handler.loop = False
-
-        self._animation_handler.update()
-        self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-
         if abs(self._velocity[0]) > self._max_speed[0]:
             self._velocity[0] = self._max_speed[0] if self._velocity[0] > 0 else -self._max_speed[0]
 
@@ -74,6 +59,21 @@ class Player(CharacterBase):
             self._is_knockbacked = False
         else:
             self._is_in_air = True
+
+        if self._is_in_air:
+            if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("fall")
+                    self._animation_handler.loop = False
+            elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("fall")
+                    self._animation_handler.loop = False
+
+        self._animation_handler.update()
+        self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
 
         if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
             block_below = self._world.get_block_at_position(
