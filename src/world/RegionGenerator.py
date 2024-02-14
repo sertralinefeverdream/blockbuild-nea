@@ -183,11 +183,11 @@ class RegionGenerator:
                                        ore_to_generate["max_vein_size"])
 
 
-    def generate_vein(self, region, block_id, starting_indexes, max_max_vein_size):
+    def generate_vein(self, region, block_id, starting_indexes, max_vein_size):
         x, y = starting_indexes
 
         ores_generated = 0
-        amount_to_generate = random.randint(1, max_max_vein_size)
+        amount_to_generate = random.randint(1, max_vein_size)
         while ores_generated < amount_to_generate:
             x += random.choice([-1, 0, 1])
             y += random.choice([-1, 0, 1])
