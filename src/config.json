@@ -822,7 +822,7 @@
       "recipe": null
     },
     "diamond": {
-      "name": "Gold",
+      "name": "Diamond",
       "type": "generic",
       "texture": "diamond",
       "max_quantity": 50,

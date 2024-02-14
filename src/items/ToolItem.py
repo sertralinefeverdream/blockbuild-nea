@@ -154,6 +154,12 @@ class ToolItem(GenericItem):
     def update(self, player_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()
 
+        if self._durability <= 0:
+            print("SHOULD BREAK")
+            self._quantity = 0
+            self._game.sfx_handler.play_sfx(self._tool_break_sfx_id, self._game.get_option("game_volume").value)
+            return
+
         if mouse_keys_pressed[0]:
             return self.left_use(player_pos)
         elif not mouse_keys_pressed[0]:
@@ -166,11 +172,6 @@ class ToolItem(GenericItem):
             if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
                 self._use_timer = pygame.time.get_ticks()
                 self.right_use(player_pos)
-
-        if self._durability == 0:
-            self._durability -= 1
-            self._game.sfx_handler.play_sfx(self._tool_break_sfx_id, self._game.get_option("game_volume").value)
-            self._quantity = 0
 
     def get_state_data(self):
         data = \
