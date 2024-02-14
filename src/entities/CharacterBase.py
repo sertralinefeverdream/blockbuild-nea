@@ -1,4 +1,4 @@
-from src.entities.EntityBase import EntityBase
+from entities.EntityBase import EntityBase
 from abc import ABC, abstractmethod
 
 

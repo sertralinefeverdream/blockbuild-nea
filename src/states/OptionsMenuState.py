@@ -1,5 +1,5 @@
-from src.states.StateBase import StateBase
-from src.audio.Volume import Volume
+from states.StateBase import StateBase
+from audio.Volume import Volume
 
 
 class OptionsMenuState(StateBase):

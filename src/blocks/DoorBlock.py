@@ -1,6 +1,6 @@
 import pygame
 
-from src.blocks.InteractableBlockBase import InteractableBlockBase
+from blocks.InteractableBlockBase import InteractableBlockBase
 
 
 class DoorBlock(InteractableBlockBase):

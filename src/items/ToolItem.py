@@ -1,4 +1,4 @@
-from src.items.GenericItem import GenericItem
+from items.GenericItem import GenericItem
 import pygame
 import math
 

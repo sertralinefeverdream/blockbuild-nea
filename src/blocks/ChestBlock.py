@@ -1,4 +1,4 @@
-from src.blocks.InteractableBlockBase import InteractableBlockBase
+from blocks.InteractableBlockBase import InteractableBlockBase
 
 class ChestBlock(InteractableBlockBase):
     def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,

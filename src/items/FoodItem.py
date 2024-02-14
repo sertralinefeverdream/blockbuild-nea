@@ -1,6 +1,6 @@
 import pygame.time
 
-from src.items.GenericItem import GenericItem
+from items.GenericItem import GenericItem
 
 class FoodItem(GenericItem):
     def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100, use_cooldown=100, attack_range=40,

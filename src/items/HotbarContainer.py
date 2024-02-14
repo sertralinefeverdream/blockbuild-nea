@@ -1,4 +1,4 @@
-from src.items.ItemContainer import ItemContainer
+from items.ItemContainer import ItemContainer
 
 class HotbarContainer(ItemContainer):
     def __init__(self, game, world, columns):

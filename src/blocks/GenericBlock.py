@@ -1,5 +1,5 @@
 import pygame
-from src.blocks.BlockBase import BlockBase
+from blocks.BlockBase import BlockBase
 
 
 class GenericBlock(BlockBase):

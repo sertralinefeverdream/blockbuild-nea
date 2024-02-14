@@ -1,6 +1,6 @@
 import pygame
 import math
-from src.items.GenericItem import GenericItem
+from items.GenericItem import GenericItem
 
 
 class BlockItem(GenericItem):

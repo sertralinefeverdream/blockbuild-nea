@@ -1,4 +1,4 @@
-from src.gui.GUIBase import GUIBase
+from gui.GUIBase import GUIBase
 
 class ContainerDisplayInteractive(GUIBase):
     def __init__(self, game, surface, rows, columns, click_func, hover_enter_func=None, hover_leave_func=None, held_func=None, position=(0.0, 0.0), is_visible=True,):

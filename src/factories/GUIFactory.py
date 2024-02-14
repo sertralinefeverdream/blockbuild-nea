@@ -1,11 +1,11 @@
-from src.gui.TextButton import TextButton
-from src.gui.TextLabel import TextLabel
-from src.gui.RectBox import RectBox
-from src.gui.HotbarDisplay import HotbarDisplay
-from src.gui.ItemDisplay import ItemDisplay
-from src.gui.ContainerDisplayInteractive import ContainerDisplayInteractive
-from src.gui.ItemButton import ItemButton
-from src.gui.ImageButton import ImageButton
+from gui.TextButton import TextButton
+from gui.TextLabel import TextLabel
+from gui.RectBox import RectBox
+from gui.HotbarDisplay import HotbarDisplay
+from gui.ItemDisplay import ItemDisplay
+from gui.ContainerDisplayInteractive import ContainerDisplayInteractive
+from gui.ItemButton import ItemButton
+from gui.ImageButton import ImageButton
 
 '''
 This GUIFactory class has allowed me to remove any dependence of StateBase and its child classes on any of the

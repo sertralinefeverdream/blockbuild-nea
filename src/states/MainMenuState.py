@@ -1,4 +1,4 @@
-from src.states.StateBase import StateBase
+from states.StateBase import StateBase
 
 
 class MainMenuState(StateBase):

@@ -1,4 +1,4 @@
-from src.entities.CharacterBase import CharacterBase
+from entities.CharacterBase import CharacterBase
 import pygame
 import math
 

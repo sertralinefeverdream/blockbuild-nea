@@ -1,4 +1,4 @@
-from src.blocks.InteractableBlockBase import InteractableBlockBase
+from blocks.InteractableBlockBase import InteractableBlockBase
 #Cleaned up
 
 class RespawnAnchorBlock(InteractableBlockBase):

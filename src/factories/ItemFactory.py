@@ -1,7 +1,7 @@
-from src.items.GenericItem import GenericItem
-from src.items.BlockItem import BlockItem
-from src.items.ToolItem import ToolItem
-from src.items.FoodItem import FoodItem
+from items.GenericItem import GenericItem
+from items.BlockItem import BlockItem
+from items.ToolItem import ToolItem
+from items.FoodItem import FoodItem
 
 
 class ItemFactory:

@@ -1,7 +1,7 @@
-from src.entities.Player import Player
-from src.entities.GenericHostile import GenericHostile
-from src.entities.GenericPassive import GenericPassive
-from src.animations.AnimationHandler import AnimationHandler
+from entities.Player import Player
+from entities.GenericHostile import GenericHostile
+from entities.GenericPassive import GenericPassive
+from animations.AnimationHandler import AnimationHandler
 
 
 class CharacterFactory:

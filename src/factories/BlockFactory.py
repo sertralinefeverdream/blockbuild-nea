@@ -1,7 +1,7 @@
-from src.blocks.GenericBlock import GenericBlock
-from src.blocks.DoorBlock import DoorBlock
-from src.blocks.ChestBlock import ChestBlock
-from src.blocks.RespawnAnchorBlock import RespawnAnchorBlock
+from blocks.GenericBlock import GenericBlock
+from blocks.DoorBlock import DoorBlock
+from blocks.ChestBlock import ChestBlock
+from blocks.RespawnAnchorBlock import RespawnAnchorBlock
 
 
 class BlockFactory:

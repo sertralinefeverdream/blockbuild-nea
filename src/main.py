@@ -14,18 +14,18 @@ from base.FileSaveHandler import FileSaveHandler
 
 from states.StateStack import StateStack
 
-from src.factories.GUIFactory import GUIFactory
-from src.factories.BlockFactory import BlockFactory
-from src.factories.ItemFactory import ItemFactory
-from src.factories.CharacterFactory import CharacterFactory
-from src.factories.ItemContainerFactory import ItemContainerFactory
-from src.factories.SpritesheetFactory import SpritesheetFactory
+from factories.GUIFactory import GUIFactory
+from factories.BlockFactory import BlockFactory
+from factories.ItemFactory import ItemFactory
+from factories.CharacterFactory import CharacterFactory
+from factories.ItemContainerFactory import ItemContainerFactory
+from factories.SpritesheetFactory import SpritesheetFactory
 
-from src.world.Camera import Camera
-from src.world.RegionGenerator import RegionGenerator
-from src.world.World import World
-from src.audio.MusicHandler import MusicHandler
-from src.audio.SfxHandler import SfxHandler
+from world.Camera import Camera
+from world.RegionGenerator import RegionGenerator
+from world.World import World
+from audio.MusicHandler import MusicHandler
+from audio.SfxHandler import SfxHandler
 
 def main():
     pygame.init()

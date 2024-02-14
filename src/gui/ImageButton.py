@@ -1,5 +1,5 @@
 import pygame
-from src.gui.ButtonBase import ButtonBase
+from gui.ButtonBase import ButtonBase
 
 
 class ImageButton(ButtonBase):

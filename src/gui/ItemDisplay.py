@@ -1,5 +1,4 @@
-from src.gui.RectBox import RectBox
-from src.items.GenericItem import GenericItem
+from gui.RectBox import RectBox
 import pygame
 
 class ItemDisplay(RectBox):

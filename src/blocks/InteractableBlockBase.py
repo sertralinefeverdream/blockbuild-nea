@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.blocks.GenericBlock import GenericBlock
+from blocks.GenericBlock import GenericBlock
 
 class InteractableBlockBase(GenericBlock):
     def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, use_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):

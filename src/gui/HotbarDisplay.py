@@ -1,4 +1,4 @@
-from src.gui.GUIBase import GUIBase
+from gui.GUIBase import GUIBase
 
 class HotbarDisplay(GUIBase):
     def __init__(self, game, surface, number_of_slots, position=(0.0, 0.0), is_visible=True, current_item_colour=(255, 255, 255), default_item_colour=(170, 170, 170)):

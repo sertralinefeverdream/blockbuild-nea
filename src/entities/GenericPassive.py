@@ -1,7 +1,7 @@
 import pygame.time
 import math
 import random
-from src.entities.CharacterBase import CharacterBase
+from entities.CharacterBase import CharacterBase
 
 # Cleaned up
 

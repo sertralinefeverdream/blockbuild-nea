@@ -1,4 +1,4 @@
-from src.world.Region import Region
+from world.Region import Region
 import json
 import math
 import opensimplex

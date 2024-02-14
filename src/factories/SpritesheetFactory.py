@@ -1,4 +1,4 @@
-from src.sprite.Spritesheet import Spritesheet
+from sprite.Spritesheet import Spritesheet
 
 class SpritesheetFactory:
     def __init__(self):

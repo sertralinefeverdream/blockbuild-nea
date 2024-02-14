@@ -1,4 +1,4 @@
-from src.gui.GUIBase import GUIBase
+from gui.GUIBase import GUIBase
 import pygame
 
 

@@ -1,6 +1,6 @@
 import sys
 import pygame
-from src.audio.Volume import Volume
+from audio.Volume import Volume
 # Cleaned up
 
 

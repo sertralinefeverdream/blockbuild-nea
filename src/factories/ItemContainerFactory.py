@@ -1,5 +1,5 @@
-from src.items.ItemContainer import ItemContainer
-from src.items.HotbarContainer import HotbarContainer
+from items.ItemContainer import ItemContainer
+from items.HotbarContainer import HotbarContainer
 
 class ItemContainerFactory:
     def __init__(self):

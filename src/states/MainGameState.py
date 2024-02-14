@@ -1,6 +1,6 @@
 import pygame.mouse
 
-from src.states.StateBase import StateBase
+from states.StateBase import StateBase
 
 
 class MainGameState(StateBase):
