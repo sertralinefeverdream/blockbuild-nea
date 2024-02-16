@@ -185,20 +185,17 @@ class RegionGenerator:
 
     def generate_vein(self, region, block_id, starting_indexes, max_vein_size):
         x, y = starting_indexes
-
         ores_generated = 0
         amount_to_generate = random.randint(1, max_vein_size)
         while ores_generated < amount_to_generate:
             x += random.choice([-1, 0, 1])
             y += random.choice([-1, 0, 1])
-
             x = 19 if x > 19 else 0 if x < 0 else x
-            y = 19 if y > 19 else y if y < 0 else y
+            y = 19 if y > 19 else 0 if y < 0 else y
 
             block_at_indexes = region.get_block_at_indexes(x, y)
             if block_at_indexes is not None:
                 if block_at_indexes.block_id == block_id:
                     continue
-
             region.set_block_at_indexes(x, y, block_id)
             ores_generated += 1

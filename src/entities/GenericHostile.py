@@ -5,9 +5,13 @@ import random
 
 
 class GenericHostile(CharacterBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id, aggro_sfx_id, idle_sfx_id_list, attack_sfx_id, random_idle_sound_cooldown, attack_damage, attack_range,
-                 aggro_range, chase_range, auto_jump_cooldown, idle_cooldown, out_of_los_cooldown, attack_cooldown, loot):
-        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id, death_sfx_id)
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id,
+                 death_sfx_id, aggro_sfx_id, idle_sfx_id_list, attack_sfx_id, random_idle_sound_cooldown, attack_damage,
+                 attack_range,
+                 aggro_range, chase_range, auto_jump_cooldown, idle_cooldown, out_of_los_cooldown, attack_cooldown,
+                 loot):
+        super().__init__(game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id,
+                         death_sfx_id)
 
         self._aggro_sfx_id = aggro_sfx_id
         self._idle_sfx_id_list = idle_sfx_id_list
@@ -58,12 +62,12 @@ class GenericHostile(CharacterBase):
         if self._health <= 0:
             self.kill()
             return
-        elif pygame.time.get_ticks() - self._last_update_timer >= self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
+        elif pygame.time.get_ticks() - self._last_update_timer >= \
+                self._game.config["generation_data"]["npc_spawn_data"]["despawn_time"]:
             self.kill(False)
             return
 
         self._last_update_timer = pygame.time.get_ticks()
-
         self._is_in_los = self.is_player_in_line_of_sight()
         player_distance_from_entity = None
 
@@ -77,15 +81,17 @@ class GenericHostile(CharacterBase):
                             print("DEAGGROING OUT OF RANGE")
                             self._is_aggro = False
                     else:
-                        if pygame.time.get_ticks() - self._out_of_los_timer >= self._out_of_los_cooldown or player_distance_from_entity >= self._chase_range:
+                        if pygame.time.get_ticks() - self._out_of_los_timer >= self._out_of_los_cooldown or \
+                                player_distance_from_entity >= self._chase_range:
                             print("OUT OF LOS TIMER EXPIRED. DEAGGROING")
                             self._is_aggro = False
                 else:
                     if player_distance_from_entity <= self._aggro_range and self._is_in_los:
                         print("AGGROED")
-                        self._is_aggro = True
-                        if self._aggro_sfx_id is not None:
-                            self._game.sfx_handler.play_sfx(self._aggro_sfx_id, self._game.get_option("game_volume").value)
+                        self._is_aggro = True # Screenshot marker
+                        if self._aggro_sfx_id is not None:  # Screenshot marker
+                            self._game.sfx_handler.play_sfx(self._aggro_sfx_id,
+                                                            self._game.get_option("game_volume").value)
             else:
                 print("CASE IF PLAYER DIED")
                 player_distance_from_entity = None
@@ -115,7 +121,7 @@ class GenericHostile(CharacterBase):
                         self._attack_timer = pygame.time.get_ticks()
                         self._game.sfx_handler.play_sfx(self._attack_sfx_id, self._game.get_option("game_volume").value)
                         self._moving = "stationary"
-                        if self._animation_handler.current_animation_id != "attack":
+                        if self._animation_handler.current_animation_id != "attack": # Screenshot Marker
                             self._animation_handler.play_animation_from_id("attack")
                             self._animation_handler.loop = False
                         direction = "left"
@@ -131,13 +137,13 @@ class GenericHostile(CharacterBase):
 
                     else:
                         print("LAST PLACE REACHED AND CANT SEE PLAYER. DEAGGROING")
-                        self._is_aggro = False # When it reaches last place it saw the player
+                        self._is_aggro = False  # When it reaches last place it saw the player
                         self._moving = "stationary"
 
-        else: # In the case where player is too far away to aggro
+        else:  # In the case where player is too far away to aggro
             if pygame.time.get_ticks() - self._idle_timer >= self._idle_cooldown:
                 self._idle_timer = pygame.time.get_ticks()
-                self._current_idle_action = random.choice(["static"])
+                self._current_idle_action = random.choice(["static", "move_left", "move_right"])
             if self._current_idle_action == "static":
                 self._moving = "stationary"
             elif self._current_idle_action == "move_left":
@@ -148,10 +154,12 @@ class GenericHostile(CharacterBase):
         if self._moving == "right":
             if self._velocity[0] < 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
-            self._velocity[0] += math.trunc(800 * deltatime)
+            self._velocity[0] += math.trunc(800 * deltatime) # Screenshot Marker
             self._animation_handler.reversed = False
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":                self._animation_handler.play_animation_from_id("run")
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                        self._animation_handler.current_animation_id != "attack":
+                    self._animation_handler.play_animation_from_id("run")
                 self._animation_handler.play_animation_from_id("run")
                 self._animation_handler.loop = True
         elif self._moving == "left":
@@ -160,7 +168,8 @@ class GenericHostile(CharacterBase):
             self._velocity[0] -= math.trunc(800 * deltatime)
             self._animation_handler.reversed = True
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
         elif self._moving == "stationary":
@@ -168,7 +177,8 @@ class GenericHostile(CharacterBase):
                 self._velocity[0] *= 0.4
 
             if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("idle")
                     self._animation_handler.loop = True
 
@@ -192,7 +202,7 @@ class GenericHostile(CharacterBase):
         self.handle_collisions("vertical")
 
         in_air_check_block_1 = self._world.get_block_at_position(
-            (self._position[0]+1, self._position[1] + self._size[1] + 1))
+            (self._position[0] + 1, self._position[1] + self._size[1] + 1))
         in_air_check_block_2 = self._world.get_block_at_position(
             (self._position[0] + self._size[0] / 2, self._position[1] + self._size[1] + 1))
         in_air_check_block_3 = self._world.get_block_at_position(
@@ -208,11 +218,15 @@ class GenericHostile(CharacterBase):
 
         if self._is_in_air:
             if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("jump")
                     self._animation_handler.loop = False
             elif self._velocity[1] > 0 and self._animation_handler.current_animation_id != "fall":
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
 
@@ -226,7 +240,7 @@ class GenericHostile(CharacterBase):
                 self._footstep_timer = pygame.time.get_ticks()
                 self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
 
-        if self._velocity[0] > 0: # Following logic checks if the entity is moving and to jump if it is obstructed
+        if self._velocity[0] > 0:  # Following logic checks if the entity is moving and to jump if it is obstructed
             auto_jump_check_block = self._world.get_block_at_position(
                 (self._position[0] + self._size[0] + 1, self._position[1] + self._size[1] - 1))
             if auto_jump_check_block is not None and auto_jump_check_block.can_collide:
@@ -245,26 +259,32 @@ class GenericHostile(CharacterBase):
             else:
                 self._auto_jump_timer = 0
 
-        if pygame.time.get_ticks() - self._random_idle_sound_timer >= self._random_idle_sound_cooldown and len(self._idle_sfx_id_list) > 0:
+        if pygame.time.get_ticks() - self._random_idle_sound_timer >= self._random_idle_sound_cooldown and len(
+                self._idle_sfx_id_list) > 0:
             self._random_idle_sound_timer = pygame.time.get_ticks()
-            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list), self._game.get_option("game_volume").value)
+            self._game.sfx_handler.play_sfx(random.choice(self._idle_sfx_id_list),
+                                            self._game.get_option("game_volume").value)
 
     def draw(self):
         screen_pos = self._world.camera.get_screen_position(self._position)
-        health_bar_width = self._health/self._max_health * 50
-        pygame.draw.rect(self._game.window, (255, 0, 0), (screen_pos[0] + self._size[0]/2 - health_bar_width/2, screen_pos[1] - 20, health_bar_width, 10))
-        pygame.draw.rect(self._game.window, (0, 0, 0), (screen_pos[0] + self._size[0]/2 - health_bar_width/2, screen_pos[1] - 20, health_bar_width, 10), width=2)
+        health_bar_width = self._health / self._max_health * 50
+        pygame.draw.rect(self._game.window, (255, 0, 0), (
+            screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10))
+        pygame.draw.rect(self._game.window, (0, 0, 0), (
+            screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10),
+                         width=2)
         self._game.window.blit(self._texture, screen_pos)
 
-    def is_player_in_line_of_sight(self): # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line
+    def is_player_in_line_of_sight(
+            self):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line
         distance_x = abs(self._world.player.centre_position[0] - self.centre_position[0])
         distance_y = abs(self._world.player.position[1] - self._position[1])
-        distance_away = math.sqrt(distance_x**2+distance_y**2)
+        distance_away = math.sqrt(distance_x ** 2 + distance_y ** 2)
 
         if distance_away == 0:
             return True
 
-        theta = math.acos(distance_x/distance_away)
+        theta = math.acos(distance_x / distance_away)
 
         dx = 10 * math.cos(theta)
         dy = 10 * math.sin(theta)

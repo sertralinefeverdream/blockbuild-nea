@@ -106,8 +106,7 @@
       "footstep_sfx_id": "stone_footstep",
       "use_sfx_id": "respawn_anchor_use",
       "loot_drop_id": "respawn_anchor",
-      "loot_drop_tool_whitelist": [
-      ],
+      "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
     "dirt": {
@@ -146,7 +145,6 @@
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "gold",
       "loot_drop_tool_whitelist": [
-        "stone_pickaxe",
         "iron_pickaxe",
         "gold_pickaxe",
         "diamond_pickaxe"
@@ -162,8 +160,6 @@
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "diamond",
       "loot_drop_tool_whitelist": [
-        "stone_pickaxe",
-        "iron_pickaxe",
         "gold_pickaxe",
         "diamond_pickaxe"
       ],
@@ -370,7 +366,7 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": {
         "ingredients": {
-          "stone": 8,
+          "stone_block": 8,
           "diamond": 1
         },
         "amount_crafted": 1,
@@ -1170,7 +1166,7 @@
         "block_id": "diamond_ore",
         "max_height": 2400,
         "max_vein_size": 2,
-        "probability": 9
+        "probability": 7
       }
     },
     "tree_data": {

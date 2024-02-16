@@ -69,6 +69,15 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond"))
 
         elif self._player.is_killed:
             self._player = None

@@ -362,12 +362,17 @@ class InventoryState(StateBase):
                     pickup_remainder = self._inventory.pickup_item(pickup_remainder)
                 if pickup_remainder is not None:
                     print("THIS CASE SHOULDNT BE REACHED EITHER")
+            else:
+                print(" NOT ENOUGH CAPACITY")
+        else:
+            print("CANT CRAFT")
 
     def check_can_craft(self, recipe_id):
         if recipe_id is not None:
             for ingredient_name, quantity_required in self._crafting_recipes[recipe_id]["ingredients"].items():
                 if self._hotbar.get_total_quantity_by_id(ingredient_name) + self._inventory.get_total_quantity_by_id(
                         ingredient_name) < quantity_required:
+                    print(f"NOT ENOUGH {ingredient_name}")
                     return False
             return True
         else:
