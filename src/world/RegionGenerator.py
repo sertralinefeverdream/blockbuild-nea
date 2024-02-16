@@ -76,7 +76,7 @@ class RegionGenerator:
 
         for x in range(random.randint(3, trunk_length)):
             if 0 <= current_indexes[0] <= 19 and 0 <= current_indexes[1] <= 19:
-                if region.get_block_at_indexes(current_indexes[0], current_indexes[1]) is None:
+                if region.get_block_at_indexes(*current_indexes) is None:
                     trunk_block_indexes.append(tuple(current_indexes))
                 else:
                    # print("TRUNK OBSTRUCTED")
@@ -85,7 +85,7 @@ class RegionGenerator:
                # print("TRUNK FALLEN OFF REGION")
                 return False
             current_indexes[1] -= 1
-
+        #SCREEN SHOT MARKER
         for i in range(leaf_base_layer_width):
             if 0 <= current_indexes[1] <= 19:
                 if region.get_block_at_indexes(*current_indexes) is None:
@@ -99,9 +99,9 @@ class RegionGenerator:
                                 leaf_block_indexes.append((current_indexes[0] + j, current_indexes[1]))
                                 leaf_block_indexes.append((current_indexes[0] - j, current_indexes[1]))
                             else:
-                               # print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION")
+                               # print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION") SCREENSHOT MARKER
 
-                                return False
+                                return False ## Screenshot Marker
                         else:
                             #print("FALLEN OFF")
                             return False
