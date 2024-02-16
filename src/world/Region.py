@@ -186,8 +186,9 @@ class Region:
     def enable_flag_for_redraw(self):
         self._flag_for_redraw = True
 
+    # Region Load and Save methods
     def convert_data(self):
-        data = {"terrain": {str(x): [None for x in range(20)] for x in range(20)}, "entity_list": []}
+        data = {"terrain": {str(x): [None for _ in range(20)] for x in range(20)}, "entity_list": []}
         for row_index, row in enumerate(self._data):
             for block_index, block in enumerate(row):
                 if self._data[row_index][block_index] is not None:
@@ -201,7 +202,6 @@ class Region:
         return data
 
     def load_from_data(self, data):
-        # print(data)
         for row_index, row in data["terrain"].items():
             for block_index, block in enumerate(row):
                 if block is not None:
@@ -218,8 +218,7 @@ class Region:
                     self._data[int(row_index)][block_index] = None
 
         for entity in data["entity_list"]:
-            entity_instance = self._game.character_factory.create_character(self._game, self._world,
-                                                                            entity["entity_id"], entity["state_data"])
+            entity_instance = self._game.character_factory.create_character(self._game, self._world,entity["entity_id"], entity["state_data"])
             self.add_entity(entity_instance)
             # if self._world.player is None and entity["entity_id"] == "player":
             # self._world.player = entity_instance

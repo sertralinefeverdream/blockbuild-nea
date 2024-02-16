@@ -109,6 +109,7 @@ class EntityBase:
     def load_state_data(self, data):
         pass
 
+    #Entity save data
     def convert_data(self):
         data = {
             "entity_id": self._entity_id,

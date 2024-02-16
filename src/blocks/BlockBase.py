@@ -109,7 +109,7 @@ class BlockBase(ABC):
 
     @abstractmethod
     def get_state_data(self):
-        return None
+        pass
 
     @abstractmethod
     def load_state_data(self, data):
@@ -121,6 +121,7 @@ class BlockBase(ABC):
         region = self._world.get_region_at_position(self._position)
         region.enable_flag_for_redraw()
 
+    # Block save data function
     def convert_data(self): #Overrideable in subclasses. Must follow similar form.
         data = \
             {

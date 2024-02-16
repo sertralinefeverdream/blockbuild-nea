@@ -171,6 +171,7 @@ class ItemContainer:
             }
         return data
 
+    #ItemContainer class save and load methods
     def load_from_data(self, data):
         self._data.clear()
         print(f"data:{self._data}")

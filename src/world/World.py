@@ -250,6 +250,7 @@ class World:
     def load_from_serialized(self, data):
         self.load_from_data(json.loads(data))
 
+    #World class save and load methods
     def convert_data(self):  # Converts classes to dict and array representations in preparation for json serialization
         data = {}
         data["world_data"] = {}
