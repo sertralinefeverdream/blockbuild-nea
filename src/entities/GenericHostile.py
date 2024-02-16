@@ -81,6 +81,7 @@ class GenericHostile(CharacterBase):
                             print("DEAGGROING OUT OF RANGE")
                             self._is_aggro = False
                     else:
+                        print("OUT OF LINE OF SIGHT")
                         if pygame.time.get_ticks() - self._out_of_los_timer >= self._out_of_los_cooldown or \
                                 player_distance_from_entity >= self._chase_range:
                             print("OUT OF LOS TIMER EXPIRED. DEAGGROING")
