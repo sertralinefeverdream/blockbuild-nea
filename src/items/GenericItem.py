@@ -215,18 +215,14 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def right_use(self, player_centre_pos):
         pass
 
-    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
-                                    range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
+    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos, range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
         world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
         distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
         distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
         distance_away = math.sqrt(distance_x ** 2 + distance_y ** 2)
-
         if distance_away == 0:
             return None
-
         theta = math.acos(distance_x / distance_away)
-
         dx = 10 * math.cos(theta)
         dy = 10 * math.sin(theta)
 
