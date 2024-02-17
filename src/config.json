@@ -42,6 +42,7 @@
     "wolf_idle1": "../assets/audio/sfx/entities/wolf/wolf_idle1.ogg",
     "wolf_idle2": "../assets/audio/sfx/entities/wolf/wolf_idle2.ogg",
     "wolf_idle3": "../assets/audio/sfx/entities/wolf/wolf_idle3.ogg",
+    "wolf_death": "../assets/audio/sfx/entities/wolf/wolf_death.ogg",
     "munch": "../assets/audio/sfx/items/munch.mp3",
     "door_use": "../assets/audio/sfx/blocks/door_use.ogg",
     "tool_break": "../assets/audio/sfx/items/tool_break.ogg",

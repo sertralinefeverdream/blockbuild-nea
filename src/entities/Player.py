@@ -72,9 +72,6 @@ class Player(CharacterBase):
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
 
-        self._animation_handler.update()
-        self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
-
         if pygame.time.get_ticks() - self._footstep_timer > 200 and not self._is_in_air and abs(self._velocity[0]) > 0:
             block_below = self._world.get_block_at_position(
                 (math.trunc(self._position[0] + self._size[0] / 2), math.trunc(self._position[1] + self._size[1] + 2)))
@@ -88,9 +85,15 @@ class Player(CharacterBase):
             self._animation_handler.play_animation_from_id("attack")
             self._animation_handler.loop = False
 
+        self._animation_handler.update()
+        self._texture = pygame.transform.scale(self._animation_handler.current_frame, self._size)
+
     def draw(self):
         screen_pos = list(self._world.camera.get_screen_position(self._position))
-        self._game.window.blit(self._texture, screen_pos)
+        if self._texture is not None:
+            self._game.window.blit(self._texture, screen_pos)
+        else:
+            print(self._texture, "NONE !!")
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []

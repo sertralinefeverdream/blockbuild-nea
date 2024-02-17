@@ -273,7 +273,10 @@ class GenericHostile(CharacterBase):
         pygame.draw.rect(self._game.window, (0, 0, 0), (
             screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10),
                          width=2)
-        self._game.window.blit(self._texture, screen_pos)
+        if self._texture is not None:
+            self._game.window.blit(self._texture, screen_pos)
+        else:
+            print("TEXTURE IS NONE!")
 
     def is_player_in_line_of_sight(
             self):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line

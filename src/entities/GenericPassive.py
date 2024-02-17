@@ -178,7 +178,10 @@ class GenericPassive(CharacterBase):
         screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10))
         pygame.draw.rect(self._game.window, (0, 0, 0), (
         screen_pos[0] + self._size[0] / 2 - health_bar_width / 2, screen_pos[1] - 20, health_bar_width, 10), width=2)
-        self._game.window.blit(self._texture, screen_pos)
+        if self._texture is not None:
+            self._game.window.blit(self._texture, screen_pos)
+        else:
+            print("TEXTURE IS NONE!!")
 
     def handle_collisions(self, axis):
         hitboxes_to_check = []

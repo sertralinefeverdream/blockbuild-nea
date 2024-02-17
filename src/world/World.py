@@ -69,15 +69,20 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
-            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond"))
+            #self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "respawn_anchor_block"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_pickaxe"))
+            '''
+            for x in range(7):
+                for y in range(50):
+                    self._player.hotbar.pickup_item(
+                        self._game.item_factory.create_item(self._game, self, "dirt_block"))
+
+            for x in range(81):
+                for y in range(50):
+                    self._player.inventory.pickup_item(
+                        self._game.item_factory.create_item(self._game, self, "dirt_block"))
+            '''
 
         elif self._player.is_killed:
             self._player = None
