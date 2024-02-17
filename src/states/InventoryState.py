@@ -392,7 +392,7 @@ class InventoryState(StateBase):
         elif item_button is self._gui[1]["iron_pickaxe_craft_button"]:
             self._recipe_selected = "iron_pickaxe"
         elif item_button is self._gui[1]["oak_plank_craft_button"]:
-            self._recipe_selected = "oak_plank"
+            self._recipe_selected = "oak_plank_block"
         elif item_button is self._gui[1]["stick_craft_button"]:
             self._recipe_selected = "stick"
         elif item_button is self._gui[1]["gold_pickaxe_craft_button"]:
@@ -426,7 +426,6 @@ class InventoryState(StateBase):
 
     def on_hotbar_item_press(self, item_button):
         self._recipe_selected = None
-
         if self._mode == "default":
             item_button_row, item_button_column = self.find_item_button_indexes_in_display(item_button, self._gui[1][
                 "hotbar_display"])

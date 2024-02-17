@@ -3,7 +3,7 @@ import pygame
 
 class ItemDisplay(RectBox):
     def __init__(self, game, surface, position=(0, 0), is_visible=True, size=(100.0, 100.0), box_colour=(200, 200, 200),
-                 outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=30, quantity_text_font_colour=(0, 0, 0)):
+                 outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=25, quantity_text_font_colour=(0, 0, 0)):
         super().__init__(game, surface, position, is_visible, size, box_colour, outline_thickness, outline_colour,
                          has_box, has_outline)
         self._item = None

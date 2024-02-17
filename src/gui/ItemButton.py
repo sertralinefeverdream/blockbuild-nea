@@ -8,7 +8,7 @@ class ItemButton(ButtonBase):
                  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(255, 255, 255),
                  button_colour=(170, 170, 170), outline_thickness=5, outline_colour=(0, 0, 0), has_box=True,
                  has_outline=True, is_enabled=True,
-                 is_visible=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=30, quantity_text_font_colour=(0, 0, 0)):
+                 is_visible=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=25, quantity_text_font_colour=(0, 0, 0)):
         super().__init__(game, surface, click_func, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id,
                          disabled_click_sfx_id, position,
                          size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour,

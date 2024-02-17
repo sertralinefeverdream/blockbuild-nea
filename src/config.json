@@ -89,7 +89,7 @@
       "mine_sfx_id": "stone_mine",
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "stone_footstep",
-      "loot_drop_id": "stone_block",
+      "loot_drop_id": "stone_brick_block",
       "loot_drop_tool_whitelist": [
         "stone_pickaxe",
         "iron_pickaxe",
@@ -106,7 +106,7 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "stone_footstep",
       "use_sfx_id": "respawn_anchor_use",
-      "loot_drop_id": "respawn_anchor",
+      "loot_drop_id": "respawn_anchor_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
@@ -146,6 +146,7 @@
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "gold",
       "loot_drop_tool_whitelist": [
+        "stone_pickaxe",
         "iron_pickaxe",
         "gold_pickaxe",
         "diamond_pickaxe"
@@ -161,6 +162,8 @@
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "diamond",
       "loot_drop_tool_whitelist": [
+        "stone_pickaxe",
+        "iron_pickaxe",
         "gold_pickaxe",
         "diamond_pickaxe"
       ],
@@ -173,7 +176,7 @@
       "mine_sfx_id": "wood_mine",
       "place_and_break_sfx_id": "wood_place_break",
       "footstep_sfx_id": "wood_footstep",
-      "loot_drop_id": "oak_log",
+      "loot_drop_id": "oak_log_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": false
     },
@@ -184,7 +187,7 @@
       "mine_sfx_id": "wood_mine",
       "place_and_break_sfx_id": "wood_place_break",
       "footstep_sfx_id": "wood_footstep",
-      "loot_drop_id": "oak_plank",
+      "loot_drop_id": "oak_plank_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
@@ -210,13 +213,13 @@
       "use_sfx_id": "door_use",
       "open_texture_id": "trap_door_open",
       "closed_texture_id": "trap_door_closed",
-      "loot_drop_id": "trap_door",
+      "loot_drop_id": "trap_door_block",
       "loot_drop_tool_whitelist": null,
       "can_collide": true
     }
   },
   "items": {
-    "oak_plank": {
+    "oak_plank_block": {
       "name": "Oak Plank",
       "type": "blockitem",
       "texture": "oak_plank",
@@ -231,14 +234,14 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": {
         "ingredients": {
-          "oak_log": 1
+          "oak_log_block": 1
         },
         "amount_crafted": 4,
         "description": "Requires 1x Oak Log, Makes 4"
       },
       "block_id": "oak_plank"
     },
-    "trap_door": {
+    "trap_door_block": {
       "name": "Trap Door",
       "type": "blockitem",
       "texture": "trap_door_open",
@@ -298,7 +301,7 @@
       "nutrition": 20,
       "eat_sfx_id": "munch"
     },
-    "oak_log": {
+    "oak_log_block": {
       "name": "Oak Log",
       "type": "blockitem",
       "texture": "oak_log",
