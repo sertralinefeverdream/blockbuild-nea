@@ -53,6 +53,8 @@ class Region:
 
         for entity in self._entity_list:
             entity.update()
+
+        for entity in self._entity_list:
             if entity.is_killed:
                 self.remove_entity(entity)
                 del entity
@@ -178,10 +180,12 @@ class Region:
             return list_of_entities
 
     def add_entity(self, entity):
-        self._entity_list.append(entity)
+        if entity not in self._entity_list:
+            self._entity_list.append(entity)
 
     def remove_entity(self, entity):
-        self._entity_list.remove(entity)
+        if entity in self._entity_list:
+            self._entity_list.remove(entity)
 
     def enable_flag_for_redraw(self):
         self._flag_for_redraw = True

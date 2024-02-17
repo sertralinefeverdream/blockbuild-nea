@@ -69,15 +69,41 @@ class World:
                 self.get_region_at_position(self._player.position).add_entity(self._player)
             else:
                 self._player = player_reference
-            #self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_axe"))
-            #self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_pickaxe"))
 
+            '''
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_pickaxe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_pickaxe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_pickaxe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_sword"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "diamond_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_sword"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_axe"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_sword"))
+            self._player.hotbar.pickup_item(self._game.item_factory.create_item(self._game, self, "gold_axe"))
+
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_pickaxe"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_sword"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "iron_axe"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "trap_door_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "respawn_anchor_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "chest_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "oak_plank_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "oak_log_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "grass_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stone_brick_block"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "dirt_block"))
+            
+
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "stick"))
+            self._player.inventory.pickup_item(self._game.item_factory.create_item(self._game, self, "porkchop"))
+            '''
 
         elif self._player.is_killed:
+            self.get_region_at_position(self._player.position).remove_entity(self._player)
             self._player = None
             self._player = self._game.character_factory.create_character(self._game, self, "player")
             self._player.position = self._respawn_location
-            self.get_region_at_position(self._player.position).add_entity(self._player)
 
         self._camera.x = self._player.position[0] - 600
         self._camera.y = self._player.position[1] - 400

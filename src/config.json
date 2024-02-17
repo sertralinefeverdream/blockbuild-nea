@@ -256,7 +256,7 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": {
         "ingredients": {
-          "oak_plank": 3
+          "oak_plank_block": 3
         },
         "amount_crafted": 1,
         "description": "Requires 3x Oak Planks, Makes 1"
@@ -278,7 +278,7 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": {
         "ingredients": {
-          "oak_plank": 1
+          "oak_plank_block": 1
         },
         "amount_crafted": 4,
         "description": "Requires 1x Oak Plank, Makes 4"
@@ -348,7 +348,7 @@
       "preferred_mine_strength_whitelist": [],
       "recipe": {
         "ingredients": {
-          "oak_plank": 8
+          "oak_plank_block": 8
         },
         "amount_crafted": 1,
         "description": "Requires 8x Oak Plank, Makes 1"
