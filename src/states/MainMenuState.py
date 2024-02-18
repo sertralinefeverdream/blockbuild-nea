@@ -26,7 +26,7 @@ class MainMenuState(StateBase):
 
     def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["At Tesko This Week"])
-        print(self._game.previous_state)
+        #print(self._game.previous_state)
         if self._game.previous_state is not self._game.states["load_game_menu"]:
             self._game.music_handler.shuffle_play()
 
@@ -49,7 +49,7 @@ class MainMenuState(StateBase):
                 component.update()
 
     def on_state_leave(self, params=None):
-        pass
+        print("LEAVING MAIN MENU STATE")
 
     def update(self):
         for layer in self._gui[::-1]:

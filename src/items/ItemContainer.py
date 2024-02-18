@@ -174,7 +174,7 @@ class ItemContainer:
     #ItemContainer class save and load methods
     def load_from_data(self, data):
         self._data.clear()
-        print(f"data:{self._data}")
+        #print(f"data:{self._data}")
         self._dimensions = (len(data), len(data[0]))
         self._data = [[None for column_index in range(self._dimensions[1])] for row_index in range(self._dimensions[0])]
 

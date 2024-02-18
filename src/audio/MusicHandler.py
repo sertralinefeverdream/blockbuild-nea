@@ -40,7 +40,7 @@ class MusicHandler:
     def shuffle_play(self):
         self._is_shuffling = True
         if len(self._shuffle_list) != 0:
-            print(self._music_library)
+            #print(self._music_library)
             pygame.mixer.music.load(self._music_library[random.choice(self._shuffle_list)])
             pygame.mixer.music.play(fade_ms=self._music_fade_time)
         else:

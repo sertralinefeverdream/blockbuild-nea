@@ -19,7 +19,7 @@ class InventoryState(StateBase):
             if item_data["recipe"] is not None:
                 self._crafting_recipes[item_id] = item_data["recipe"]
 
-        print(self._crafting_recipes)
+        #print(self._crafting_recipes)
 
     def initialise_gui(self):
         self._gui = [
@@ -107,6 +107,7 @@ class InventoryState(StateBase):
         ]
 
     def on_state_enter(self, params=None):
+        print("ENTERING INVENTORY STATE!")
         self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
         if self._game.previous_state is not self._game.states["main_game"]:
             self._game.music_handler.shuffle_play()
@@ -408,7 +409,7 @@ class InventoryState(StateBase):
         elif item_button is self._gui[1]["diamond_sword_craft_button"]:
             self._recipe_selected = "diamond_sword"
         elif item_button is self._gui[1]["trap_door_craft_button"]:
-            self._recipe_selected = "trap_door"
+            self._recipe_selected = "trap_door_block"
         elif item_button is self._gui[1]["chest_craft_button"]:
             self._recipe_selected = "chest_block"
         elif item_button is self._gui[1]["stone_axe_craft_button"]:

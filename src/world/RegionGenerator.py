@@ -18,13 +18,13 @@ class RegionGenerator:
 
     @property
     def seed(self):
-        print(f"SEED SAVED: {opensimplex.get_seed()} ")
+        #print(f"SEED SAVED: {opensimplex.get_seed()} ")
         return opensimplex.get_seed()
 
     @seed.setter
     def seed(self, value):
         if type(value) is int:
-            print(f"SET SEED: {value}")
+            #print(f"SET SEED: {value}")
             opensimplex.seed(value)
 
     def create_empty_region(self, game, world, position):
@@ -118,53 +118,6 @@ class RegionGenerator:
             region.set_block_at_indexes(x, y, trunk_block_id)
 
         return True
-
-    ''' Legacy Code 
-    def generate_tree(self, world, trunk_block_id, leaf_block_id, starting_position, trunk_length,
-                      leaf_base_layer_width):
-
-        trunk_block_indexes = []
-        leaf_block_indexes = []
-
-        current_position = list(starting_position[::1])
-
-        for x in range(random.randint(4, trunk_length)):
-            if world.get_block_at_position(current_position) is None:
-                print(f"CURRENT POSITION 1:", current_position)
-                trunk_block_indexes.append(tuple(current_position))
-                print("CURRENT POSITION 2: ", current_position)
-                current_position[1] -= 40
-                print(trunk_block_indexes, " TRUNK INDEXES HERE")
-
-            else:
-                print("CANT SPAWN TREE HERE DUE TO TRUNK OBSTRUCTION")
-                return None
-
-        for i in range(leaf_base_layer_width):
-            if world.get_block_at_position((current_position[0], current_position[1])) is None:
-                leaf_block_indexes.append((current_position[0], current_position[1]))
-                for j in range(leaf_base_layer_width - i):
-                    if world.get_block_at_position(
-                            (current_position[0] + j*40, current_position[1])) is None and world.get_block_at_position(
-                            (current_position[0] - j*40, current_position[1])) is None:
-                        leaf_block_indexes.append((current_position[0] + j*40, current_position[1]))
-                        leaf_block_indexes.append((current_position[0] - j*40, current_position[1]))
-                    else:
-                        print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION")
-                        return None
-                current_position[1] -= 40
-            else:
-                return None
-
-        print(leaf_block_indexes)
-        print(trunk_block_indexes)
-
-        for x, y in leaf_block_indexes:
-            world.set_block_at_position((x, y), leaf_block_id)
-
-        for x, y in trunk_block_indexes:
-            world.set_block_at_position((x, y), trunk_block_id)
-            '''
 
     def populate_region_with_ores(self, region):
         if region.get_quantity_of_blocks_in_region("stone") > 0:

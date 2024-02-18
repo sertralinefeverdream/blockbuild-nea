@@ -90,12 +90,7 @@
       "place_and_break_sfx_id": "stone_place_break",
       "footstep_sfx_id": "stone_footstep",
       "loot_drop_id": "stone_brick_block",
-      "loot_drop_tool_whitelist": [
-        "stone_pickaxe",
-        "iron_pickaxe",
-        "gold_pickaxe",
-        "diamond_pickaxe"
-      ],
+      "loot_drop_tool_whitelist": null,
       "can_collide": true
     },
     "respawn_anchor": {

@@ -31,7 +31,7 @@ class LoadGameMenuState(StateBase):
              }
         ]
 
-    def on_state_enter(self, *args):
+    def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["At Tesko This Week"])
         if self._game.previous_state is not self._game.states["main_menu"]:
             self._game.shuffle_play()
@@ -96,7 +96,7 @@ class LoadGameMenuState(StateBase):
                 component.update()
 
     def on_state_leave(self, params=None):
-        pass
+        print(f"LEAVING LOAD GAME STATE")
 
     def update(self):
         for layer in self._gui[::-1]:  # Iterates through all guis in dict and updates and draws them

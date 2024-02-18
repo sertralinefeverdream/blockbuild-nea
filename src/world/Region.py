@@ -41,6 +41,7 @@ class Region:
             self._position = list(value)
 
     def update(self):
+        #print(f"REGION DEPTH: {len(self._data)}, REGION WIDTH: {len(self._data[0])}")
         for row in self._data:
             for x_index, block in enumerate(row):
                 if block is not None:

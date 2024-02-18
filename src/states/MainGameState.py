@@ -29,6 +29,7 @@ class MainGameState(StateBase):
         ]
 
     def on_state_enter(self, params=None):
+        print("ENTERING MAIN GAME STATE!")
         self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
         if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not self._game.states["inventory"] and self._game.previous_state is not self._game.states["chest_interact"]:
             self._game.music_handler.shuffle_play()

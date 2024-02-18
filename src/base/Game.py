@@ -165,22 +165,26 @@ class Game:
 
     def push_state(self, state_id, state_enter_params=None, state_leave_params=None):
         self._previous_state = self._state_stack.peek()
+        print(f"LEAVING {self._state_stack.peek()}")
         self._state_stack.push(self._states[state_id.lower()])
         self._current_state = self._state_stack.peek()
 
         if self._previous_state is not None:
             self._previous_state.on_state_leave(state_leave_params)
 
+        #print(f"PUSHING {self._current_state} TO THE STACK!")
         self._current_state.on_state_enter(state_enter_params)
         self._state_has_changed_flag = True
 
     def pop_state(self, state_enter_params=None, state_leave_params=None):
         self._previous_state = self._state_stack.pop()
+        #print(f"POPPING {self._previous_state} OFF THE STACK!")
         self._current_state = self._state_stack.peek()
 
         self._previous_state.on_state_leave(state_leave_params)
 
         if self._current_state is not None:
+            #print(f"ENTERING {self._current_state}")
             self._current_state.on_state_enter(state_enter_params)
 
         self._state_has_changed_flag = True
