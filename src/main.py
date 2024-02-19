@@ -30,6 +30,7 @@ from audio.SfxHandler import SfxHandler
 #ADDED TO UPLOAD
 
 def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     pygame.init()
     config = None
     with open("config.json") as f:
