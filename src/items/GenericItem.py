@@ -122,7 +122,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def block_currently_mining_hardness_remaining(self):
         return self._block_currently_mining_hardness_remaining
 
-
     def update(self, player_centre_pos):
         mouse_keys_pressed = pygame.mouse.get_pressed()
 
@@ -138,7 +137,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
             if pygame.time.get_ticks() - self._use_timer >= self._use_cooldown:
                 self._use_timer = pygame.time.get_ticks()
                 self.right_use(player_centre_pos)
-
 
     def on_equip(self):
         self._attack_timer = 0
@@ -159,24 +157,23 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
 
         entity_in_range_of_tool = self.get_entity_in_range_of_tool(player_centre_pos, mouse_pos, self._attack_range)
 
-
-        if entity_in_range_of_tool is not None: # If an entity is within range attack and forgo mining completely
+        if entity_in_range_of_tool is not None:  # If an entity is within range attack and forgo mining completely
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
         self._block_last_mining = self._block_currently_mining
         self._block_currently_mining = self._world.get_block_at_position(mouse_world_pos)
 
-        if self._block_currently_mining is None: # If trying to mine air block
+        if self._block_currently_mining is None:  # If trying to mine air block
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
-        elif self._block_currently_mining is not None and math.sqrt( # If out of range entirely
+        elif self._block_currently_mining is not None and math.sqrt(  # If out of range entirely
                 (self._block_currently_mining.position[0] - player_centre_pos[0]) ** 2 + (
                         self._block_currently_mining.position[1] - player_centre_pos[1]) ** 2) > self._use_range:
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
-        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False: # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
+        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False:  # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
             self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
 
         self._is_mining = True
@@ -215,7 +212,8 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def right_use(self, player_centre_pos):
         pass
 
-    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos, range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
+    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
+                                    range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
         world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
         distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
         distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
@@ -277,7 +275,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
             }
         return data
 
-
     def convert_data(self):
         data = \
             {
@@ -285,7 +282,6 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
                 "state_data": self.get_state_data()
             }
         return data
-
 
     def load_state_data(self, data):
         self._quantity = data["quantity"]

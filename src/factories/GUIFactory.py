@@ -12,6 +12,7 @@ This GUIFactory class has allowed me to remove any dependence of StateBase and i
 GUI classes. GUIFactory instance is passed as an argument during StateBase initialisation.
 '''
 
+
 class GUIFactory:
     def __init__(self):
         pass
@@ -35,4 +36,3 @@ class GUIFactory:
             return ImageButton(*args, **kwargs)
         else:
             raise Exception
-

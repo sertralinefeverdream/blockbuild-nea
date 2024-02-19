@@ -1,8 +1,10 @@
 from entities.EntityBase import EntityBase
 from abc import abstractmethod
 
+
 class CharacterBase(EntityBase):
-    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id=None, death_sfx_id=None):
+    def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler,
+                 hurt_sfx_id=None, death_sfx_id=None):
         super().__init__(game, world, entity_id, position, size, max_speed)
         self._max_health = max_health
         self._animation_handler = animation_handler
@@ -64,4 +66,3 @@ class CharacterBase(EntityBase):
 
     def jump(self):
         self._velocity[1] = -320
-

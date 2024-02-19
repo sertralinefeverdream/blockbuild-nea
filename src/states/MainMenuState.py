@@ -26,7 +26,7 @@ class MainMenuState(StateBase):
 
     def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["At Tesko This Week"])
-        #print(self._game.previous_state)
+        # print(self._game.previous_state)
         if self._game.previous_state is not self._game.states["load_game_menu"]:
             self._game.music_handler.shuffle_play()
 
@@ -62,7 +62,6 @@ class MainMenuState(StateBase):
             for layer in self._gui[::-1]:
                 for component in layer.values():  # Iterates through all guis in dict and updates and draws them
                     component.draw()
-
 
     def options_button_click(self, button):
         self._game.push_state("options_menu")

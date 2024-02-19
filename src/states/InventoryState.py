@@ -19,7 +19,7 @@ class InventoryState(StateBase):
             if item_data["recipe"] is not None:
                 self._crafting_recipes[item_id] = item_data["recipe"]
 
-        #print(self._crafting_recipes)
+        # print(self._crafting_recipes)
 
     def initialise_gui(self):
         self._gui = [
@@ -45,14 +45,14 @@ class InventoryState(StateBase):
                                                                   self.on_craft_button_press),
                 "item_description_box": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window),
                 "stone_sword_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                                self._game.window,
-                                                                                self.on_craft_item_press),
+                                                                              self._game.window,
+                                                                              self.on_craft_item_press),
                 "iron_sword_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                                self._game.window,
-                                                                                self.on_craft_item_press),
+                                                                             self._game.window,
+                                                                             self.on_craft_item_press),
                 "gold_sword_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                                self._game.window,
-                                                                                self.on_craft_item_press),
+                                                                             self._game.window,
+                                                                             self.on_craft_item_press),
                 "diamond_sword_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                                 self._game.window,
                                                                                 self.on_craft_item_press),
@@ -69,17 +69,17 @@ class InventoryState(StateBase):
                                                                                   self._game.window,
                                                                                   self.on_craft_item_press),
                 "stone_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                                self._game.window,
-                                                                                self.on_craft_item_press),
+                                                                            self._game.window,
+                                                                            self.on_craft_item_press),
                 "iron_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                               self._game.window,
-                                                                               self.on_craft_item_press),
+                                                                           self._game.window,
+                                                                           self.on_craft_item_press),
                 "gold_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                               self._game.window,
-                                                                               self.on_craft_item_press),
+                                                                           self._game.window,
+                                                                           self.on_craft_item_press),
                 "diamond_axe_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                                  self._game.window,
-                                                                                  self.on_craft_item_press),
+                                                                              self._game.window,
+                                                                              self.on_craft_item_press),
                 "oak_plank_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
                                                                             self._game.window,
                                                                             self.on_craft_item_press),
@@ -93,11 +93,11 @@ class InventoryState(StateBase):
                                                                         self._game.window,
                                                                         self.on_craft_item_press),
                 "respawn_anchor_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                        self._game.window,
-                                                                        self.on_craft_item_press),
+                                                                                 self._game.window,
+                                                                                 self.on_craft_item_press),
                 "stone_brick_craft_button": self._game.gui_factory.create_gui("ImageButton", self._game,
-                                                                        self._game.window,
-                                                                        self.on_craft_item_press)
+                                                                              self._game.window,
+                                                                              self.on_craft_item_press)
 
             },
             {

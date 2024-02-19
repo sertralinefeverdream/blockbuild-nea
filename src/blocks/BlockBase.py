@@ -1,10 +1,13 @@
 import pygame
 from abc import ABC, abstractmethod
+
+
 # Cleaned up
 
 
 class BlockBase(ABC):
-    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id, footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):
+    def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,
+                 footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):
         self._game = game
         self._world = world
         self._position = list(position)
@@ -114,15 +117,16 @@ class BlockBase(ABC):
     @abstractmethod
     def load_state_data(self, data):
         pass
+
     # To be implemented differently in subclasses !! State data includes things that are not constant thru out runtime e.g.
     # a loottable of what will be dropped i guess in the case of some future container block akin to a chest or storage block.
 
-    def enable_flag_for_region_redraw(self): # Call when visual change requires the region to be redrawn.
+    def enable_flag_for_region_redraw(self):  # Call when visual change requires the region to be redrawn.
         region = self._world.get_region_at_position(self._position)
         region.enable_flag_for_redraw()
 
     # Block save data function
-    def convert_data(self): #Overrideable in subclasses. Must follow similar form.
+    def convert_data(self):  # Overrideable in subclasses. Must follow similar form.
         data = \
             {
                 "block_id": self._block_id,

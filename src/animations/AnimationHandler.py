@@ -1,5 +1,4 @@
 import pygame
-# Refactored
 
 class AnimationHandler:
     def __init__(self, spritesheet):
@@ -77,4 +76,3 @@ class AnimationHandler:
     def load_from_data(self, data):
         for animation_id, animation in data.items():
             self.create_animation(animation_id, animation)
-

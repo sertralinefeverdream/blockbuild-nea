@@ -88,7 +88,7 @@ class GenericHostile(CharacterBase):
                 else:
                     if player_distance_from_entity <= self._aggro_range and self._is_in_los:
                         print("AGGROED")
-                        self._is_aggro = True # Screenshot marker
+                        self._is_aggro = True  # Screenshot marker
                         if self._aggro_sfx_id is not None:  # Screenshot marker
                             self._game.sfx_handler.play_sfx(self._aggro_sfx_id,
                                                             self._game.get_option("game_volume").value)
@@ -121,7 +121,7 @@ class GenericHostile(CharacterBase):
                         self._attack_timer = pygame.time.get_ticks()
                         self._game.sfx_handler.play_sfx(self._attack_sfx_id, self._game.get_option("game_volume").value)
                         self._moving = "stationary"
-                        if self._animation_handler.current_animation_id != "attack": # Screenshot Marker
+                        if self._animation_handler.current_animation_id != "attack":  # Screenshot Marker
                             self._animation_handler.play_animation_from_id("attack")
                             self._animation_handler.loop = False
                         direction = "left"
@@ -154,7 +154,7 @@ class GenericHostile(CharacterBase):
         if self._moving == "right":
             if self._velocity[0] < 0 and not self._is_knockbacked:
                 self._velocity[0] = 0
-            self._velocity[0] += math.trunc(800 * deltatime) # Screenshot Marker
+            self._velocity[0] += math.trunc(800 * deltatime)  # Screenshot Marker
             self._animation_handler.reversed = False
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
                 if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
@@ -168,7 +168,7 @@ class GenericHostile(CharacterBase):
             self._velocity[0] -= math.trunc(800 * deltatime)
             self._animation_handler.reversed = True
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
@@ -225,7 +225,7 @@ class GenericHostile(CharacterBase):
                     self._animation_handler.loop = False
             elif self._velocity[1] > 0 and self._animation_handler.current_animation_id != "fall":
                 if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False

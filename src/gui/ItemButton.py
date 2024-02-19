@@ -8,7 +8,8 @@ class ItemButton(ButtonBase):
                  held_func=None, hover_leave_func=None, hover_enter_func=None, hover_colour=(255, 255, 255),
                  button_colour=(170, 170, 170), outline_thickness=5, outline_colour=(0, 0, 0), has_box=True,
                  has_outline=True, is_enabled=True,
-                 is_visible=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=25, quantity_text_font_colour=(0, 0, 0)):
+                 is_visible=True, item_scale_multiplier=0.7, quantity_text_font="calibri", quantity_text_font_size=25,
+                 quantity_text_font_colour=(0, 0, 0)):
         super().__init__(game, surface, click_func, click_sfx_id, hover_enter_sfx_id, hover_leave_sfx_id,
                          disabled_click_sfx_id, position,
                          size, held_func, hover_leave_func, hover_enter_func, hover_colour, button_colour,
@@ -100,7 +101,8 @@ class ItemButton(ButtonBase):
                 pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
             if self._item is not None:
                 quantity_text = pygame.freetype.SysFont(self._quantity_text_font, self._quantity_text_font_size).render(
-                    f"{self._item.quantity if not hasattr(self._item, '''durability''') else self._item.durability}", fgcolor=self._quantity_text_font_colour)
+                    f"{self._item.quantity if not hasattr(self._item, '''durability''') else self._item.durability}",
+                    fgcolor=self._quantity_text_font_colour)
                 item_texture = pygame.transform.scale(self._item.texture, (
                     self._size[0] * self._item_scale_multiplier, self._size[1] * self._item_scale_multiplier))
                 self._surface.blit(item_texture, (

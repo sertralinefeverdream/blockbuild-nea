@@ -4,7 +4,8 @@ import math
 
 
 class ToolItem(GenericItem):
-    def __init__(self, game, world, item_id, name, texture, tool_break_sfx_id, quantity=1, max_quantity=1, attack_cooldown=100,
+    def __init__(self, game, world, item_id, name, texture, tool_break_sfx_id, quantity=1, max_quantity=1,
+                 attack_cooldown=100,
                  use_cooldown=100, attack_range=40, use_range=40, attack_strength=10, default_mine_strength=10,
                  preferred_mine_strength=10, preferred_mine_strength_white_list=None, durability=100):
         super().__init__(game, world, item_id, name, texture, quantity, max_quantity, attack_cooldown, use_cooldown,

@@ -32,4 +32,3 @@ class StateStack:
             return self.__stack[-1]
         else:
             return None
-

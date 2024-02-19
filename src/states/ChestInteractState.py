@@ -42,7 +42,6 @@ class ChestInteractState(StateBase):
             {}
         ]
 
-
     def on_state_enter(self, params=None):
         self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
         if self._game.previous_state is not self._game.states["main_game"]:

@@ -3,7 +3,8 @@ import pygame
 
 
 class RectBox(GUIBase):
-    def __init__(self, game, surface, position=(0, 0), is_visible=True, size=(100.0, 100.0), box_colour=(255,0,0), outline_thickness=5, outline_colour=(0, 0, 0), has_box=True,has_outline=True):
+    def __init__(self, game, surface, position=(0, 0), is_visible=True, size=(100.0, 100.0), box_colour=(255, 0, 0),
+                 outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True):
         super().__init__(game, surface, position, is_visible)
         self._size = list(size)
         self._box_colour = list(box_colour)
@@ -62,12 +63,12 @@ class RectBox(GUIBase):
 
     @property
     def centre_position(self):
-        return (self._position[0] + self._size[0]/2, self._position[1] + self._size[1]/2)
+        return (self._position[0] + self._size[0] / 2, self._position[1] + self._size[1] / 2)
 
     @centre_position.setter
     def centre_position(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position = [value[0] - (self._size[0]/2), value[1] - (self._size[1]/2)]
+            self._position = [value[0] - (self._size[0] / 2), value[1] - (self._size[1] / 2)]
         else:
             raise TypeError
 
@@ -98,4 +99,3 @@ class RectBox(GUIBase):
                 pygame.draw.rect(self._surface, self._box_colour, self._box)
             if self._has_outline:
                 pygame.draw.rect(self._surface, self._outline_colour, self._box, width=self._outline_thickness)
-

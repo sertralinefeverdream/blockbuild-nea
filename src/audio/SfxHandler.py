@@ -1,8 +1,5 @@
 import pygame.mixer
 
-# Cleaned up
-
-
 class SfxHandler:
     def __init__(self):
         pygame.mixer.init()
@@ -32,4 +29,3 @@ class SfxHandler:
     def stop_sfx(self, sfx_id):
         if sfx_id in self._sfx_library.keys():
             self._sfx_library[sfx_id].stop()
-

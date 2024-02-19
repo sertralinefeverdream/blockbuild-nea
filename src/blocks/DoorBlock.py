@@ -5,7 +5,8 @@ from blocks.InteractableBlockBase import InteractableBlockBase
 
 class DoorBlock(InteractableBlockBase):
     def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,
-                 footstep_sfx_id, use_sfx_id, open_texture_id, closed_texture_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):
+                 footstep_sfx_id, use_sfx_id, open_texture_id, closed_texture_id, loot_drop_id=None,
+                 loot_drop_tool_whitelist=None, can_collide=True):
         super().__init__(game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,
                          footstep_sfx_id, use_sfx_id, loot_drop_id, loot_drop_tool_whitelist, can_collide)
         self._open_texture_id = open_texture_id

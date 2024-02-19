@@ -1,5 +1,6 @@
 from sprite.Spritesheet import Spritesheet
 
+
 class SpritesheetFactory:
     def __init__(self):
         pass

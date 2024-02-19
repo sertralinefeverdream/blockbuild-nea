@@ -33,23 +33,24 @@ class ItemFactory:
                                  block_id=item_data["block_id"])
             elif item_data["type"] == "tool":
                 item = ToolItem(game, world, item_id, item_data["name"],
-                                   game.item_spritesheet.parse_sprite(item_data["texture"]), tool_break_sfx_id=item_data["tool_break_sfx_id"],
-                                   max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
-                                   use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
-                                   use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
-                                   default_mine_strength=item_data["default_mine_strength"],
-                                   preferred_mine_strength=item_data["preferred_mine_strength"],
-                                   preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
-                                   durability=item_data["durability"])
+                                game.item_spritesheet.parse_sprite(item_data["texture"]),
+                                tool_break_sfx_id=item_data["tool_break_sfx_id"],
+                                max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
+                                use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
+                                use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
+                                default_mine_strength=item_data["default_mine_strength"],
+                                preferred_mine_strength=item_data["preferred_mine_strength"],
+                                preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
+                                durability=item_data["durability"])
             elif item_data["type"] == "food":
                 item = FoodItem(game, world, item_id, item_data["name"],
-                                   game.item_spritesheet.parse_sprite(item_data["texture"]),
-                                   max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
-                                   use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
-                                   use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
-                                   default_mine_strength=item_data["default_mine_strength"],
-                                   preferred_mine_strength=item_data["preferred_mine_strength"],
-                                   preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
+                                game.item_spritesheet.parse_sprite(item_data["texture"]),
+                                max_quantity=item_data["max_quantity"], attack_cooldown=item_data["attack_cooldown"],
+                                use_cooldown=item_data["use_cooldown"], attack_range=item_data["attack_range"],
+                                use_range=item_data["use_range"], attack_strength=item_data["attack_strength"],
+                                default_mine_strength=item_data["default_mine_strength"],
+                                preferred_mine_strength=item_data["preferred_mine_strength"],
+                                preferred_mine_strength_white_list=item_data["preferred_mine_strength_whitelist"],
                                 nutrition=item_data["nutrition"], eat_sfx_id=item_data["eat_sfx_id"]
                                 )
 
@@ -58,5 +59,3 @@ class ItemFactory:
             if quantity_override is not None:
                 item.quantity = quantity_override
             return item
-
-

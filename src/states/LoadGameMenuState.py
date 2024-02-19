@@ -8,27 +8,37 @@ class LoadGameMenuState(StateBase):
     def initialise_gui(self):
         self._gui = [
             {
-                "top_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="Save 1:"),
-                "top_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.load_button_func,  text="Load"),
-                "top_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.new_button_func,  text="New"),
+                "top_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window,
+                                                                    text="Save 1:"),
+                "top_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                     self.load_button_func, text="Load"),
+                "top_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                    self.new_button_func, text="New"),
 
-                "middle_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="Save 2:"),
-                "middle_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.load_button_func,  text="Load"),
-                "middle_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.new_button_func,  text="New"),
+                "middle_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window,
+                                                                       text="Save 2:"),
+                "middle_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                        self.load_button_func, text="Load"),
+                "middle_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                       self.new_button_func, text="New"),
 
-                "bottom_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="Save 3:"),
-                "bottom_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.load_button_func,  text="Load"),
-                "bottom_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.new_button_func,  text="New"),
-                
-                "exit_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window, self.exit_click,  text="Exit")
+                "bottom_save_label": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window,
+                                                                       text="Save 3:"),
+                "bottom_load_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                        self.load_button_func, text="Load"),
+                "bottom_new_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                       self.new_button_func, text="New"),
+
+                "exit_button": self._game.gui_factory.create_gui("TextButton", self._game, self._game.window,
+                                                                 self.exit_click, text="Exit")
             },
             {},
             {
-                "top_box":self._game.gui_factory.create_gui("RectBox", self._game, self._game.window),
+                "top_box": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window),
                 "middle_box": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window),
                 "bottom_box": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window)
 
-             }
+            }
         ]
 
     def on_state_enter(self, params=None):

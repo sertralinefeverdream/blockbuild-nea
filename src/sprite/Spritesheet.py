@@ -17,6 +17,5 @@ class Spritesheet:
     def parse_sprite(self, sprite_id):
         if sprite_id in self._metadata.keys():
             sprite_metadata = self._metadata[sprite_id]
-            return self.get_sprite(sprite_metadata["x"], sprite_metadata["y"], sprite_metadata["width"], sprite_metadata["height"])
-
-
+            return self.get_sprite(sprite_metadata["x"], sprite_metadata["y"], sprite_metadata["width"],
+                                   sprite_metadata["height"])

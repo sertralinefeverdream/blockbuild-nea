@@ -15,15 +15,21 @@ class MainGameState(StateBase):
     def initialise_gui(self):
         self._gui = [
             {
-                "fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="default"),
-             "hotbar_display": self._game.gui_factory.create_gui("HotbarDisplay", self._game, self._game.window, 9),
-                "player_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(540.0, 25), outline_thickness=3),
-                "interact_text": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window, text="[F] To Interact")
+                "fps_counter": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window,
+                                                                 text="default"),
+                "hotbar_display": self._game.gui_factory.create_gui("HotbarDisplay", self._game, self._game.window, 9),
+                "player_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window,
+                                                                       size=(540.0, 25), outline_thickness=3),
+                "interact_text": self._game.gui_factory.create_gui("TextLabel", self._game, self._game.window,
+                                                                   text="[F] To Interact")
             },
             {
-                "block_border": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 40.0),
-                                                            outline_thickness=3, has_box=False),
-            "block_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window, size=(40.0, 10.0), has_outline=False, box_colour=(190, 190, 190))
+                "block_border": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window,
+                                                                  size=(40.0, 40.0),
+                                                                  outline_thickness=3, has_box=False),
+                "block_health_bar": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window,
+                                                                      size=(40.0, 10.0), has_outline=False,
+                                                                      box_colour=(190, 190, 190))
             },
             {}
         ]
@@ -31,7 +37,8 @@ class MainGameState(StateBase):
     def on_state_enter(self, params=None):
         print("ENTERING MAIN GAME STATE!")
         self._game.music_handler.set_shuffle_list(["Atmos Sphear", "Aquatic Ambience"])
-        if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not self._game.states["inventory"] and self._game.previous_state is not self._game.states["chest_interact"]:
+        if self._game.previous_state is not self._game.states["pause_game"] and self._game.previous_state is not \
+                self._game.states["inventory"] and self._game.previous_state is not self._game.states["chest_interact"]:
             self._game.music_handler.shuffle_play()
 
         self._gui[0]["fps_counter"].position = (12.5, 12.5)
@@ -87,10 +94,11 @@ class MainGameState(StateBase):
         mouse_pos = pygame.mouse.get_pos()
         self._world.update()
 
-        self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps()//1)
+        self._gui[0]["fps_counter"].text = str(self._game.clock.get_fps() // 1)
         self._gui[0]["fps_counter"].is_visible = False
 
-        self._gui[0]["player_health_bar"].size = ((self._world.player.health/self._world.player.max_health)*540.0, 25.0)
+        self._gui[0]["player_health_bar"].size = (
+        (self._world.player.health / self._world.player.max_health) * 540.0, 25.0)
         self._gui[0]["player_health_bar"].centre_position = (600.0, 650.0)
 
         block_at_mouse = self._world.get_block_at_position(self._world.camera.get_world_position(mouse_pos))
@@ -112,8 +120,13 @@ class MainGameState(StateBase):
         if current_player_tool is not None:
             if current_player_tool.is_mining:
                 self._gui[1]["block_health_bar"].is_visible = True
-                self._gui[1]["block_health_bar"].size[0] = (current_player_tool.block_currently_mining_hardness_remaining/current_player_tool.block_currently_mining.hardness) * 30
-                self._gui[1]["block_health_bar"].centre_position = self._world.camera.get_screen_position((current_player_tool.block_currently_mining.position[0] + 20, current_player_tool.block_currently_mining.position[1] + 20))
+                self._gui[1]["block_health_bar"].size[0] = (
+                                                                       current_player_tool.block_currently_mining_hardness_remaining / current_player_tool.block_currently_mining.hardness) * 30
+                self._gui[1]["block_health_bar"].centre_position = self._world.camera.get_screen_position((
+                                                                                                          current_player_tool.block_currently_mining.position[
+                                                                                                              0] + 20,
+                                                                                                          current_player_tool.block_currently_mining.position[
+                                                                                                              1] + 20))
             else:
                 self._gui[1]["block_health_bar"].is_visible = False
         else:
@@ -136,15 +149,14 @@ class MainGameState(StateBase):
         elif not self._game.keys_pressed[pygame.K_f] and self._interact_key_held:
             if block_at_mouse is not None:
                 if hasattr(block_at_mouse, "interact"):
-                    if callable(block_at_mouse.interact): # These two conditions only run if the block class is subclass of InteractableBlock
+                    if callable(
+                            block_at_mouse.interact):  # These two conditions only run if the block class is subclass of InteractableBlock
                         block_at_mouse.interact()
             self._interact_key_held = False
 
         for layer in self._gui[::-1]:
             for component in layer.values():
                 component.update()
-
-
 
     def draw(self, no_gui=False):
         self._world.draw_blocks()
@@ -153,4 +165,3 @@ class MainGameState(StateBase):
                 for component in layer.values():
                     component.draw()
         self._world.draw_entities()
-

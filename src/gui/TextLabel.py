@@ -2,11 +2,13 @@ import pygame
 from abc import ABC, abstractmethod
 from gui.GUIBase import GUIBase
 
+
 # Important! TextLabel is position from top-right position of the rendered font's surface rect. not the rect we draw around it
 
 class TextLabel(GUIBase):
     def __init__(self, game, surface, position=(0, 0), box_overhang=(25, 25), box_colour=(255, 0, 0),
-                 outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True, is_visible=True, font_name="calibri",
+                 outline_thickness=5, outline_colour=(0, 0, 0), has_box=True, has_outline=True, is_visible=True,
+                 font_name="calibri",
                  font_size=50, text="BlockBuild!", text_colour=(0, 0, 0)):
         super().__init__(game, surface, position, is_visible)
         self._box_overhang = list(box_overhang)
@@ -24,7 +26,8 @@ class TextLabel(GUIBase):
         self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour, size=self._font_size)
         self._box = pygame.Rect(
             (self._position[0] - self._box_overhang[0] / 2, self._position[1] - self._box_overhang[1] / 2),
-            (self._rendered_font[1].size[0] + self._box_overhang[0], self._rendered_font[1].size[1] + self._box_overhang[1]))
+            (self._rendered_font[1].size[0] + self._box_overhang[0],
+             self._rendered_font[1].size[1] + self._box_overhang[1]))
 
         self.update_font()
 
@@ -140,12 +143,14 @@ class TextLabel(GUIBase):
 
     @property
     def centre_position(self):
-        return (self._position[0] + self._rendered_font[1].size[0] / 2, self._position[1] + self._rendered_font[1].size[1] / 2)
+        return (
+        self._position[0] + self._rendered_font[1].size[0] / 2, self._position[1] + self._rendered_font[1].size[1] / 2)
 
     @centre_position.setter
     def centre_position(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position = [value[0] - (self._rendered_font[1].size[0] / 2), value[1] - (self._rendered_font[1].size[1] / 2)]
+            self._position = [value[0] - (self._rendered_font[1].size[0] / 2),
+                              value[1] - (self._rendered_font[1].size[1] / 2)]
         else:
             raise TypeError
 
@@ -163,8 +168,10 @@ class TextLabel(GUIBase):
             # self._position[1] + ((self._rect.size[1] - self._rendered_font[1].size[1]) / 2)))
             self._surface.blit(self._rendered_font[0], self._position)
 
-    def conform_overhang_to_size(self, size): #Calculates overhang so that the box surrounding text conforms to a certain size
-        if size[0] >= self._rendered_font[1].size[0] and size[1] >= self._rendered_font[1].size[1] and (type(size) is tuple or type(size is list)) and len(size) == 2:
+    def conform_overhang_to_size(self,
+                                 size):  # Calculates overhang so that the box surrounding text conforms to a certain size
+        if size[0] >= self._rendered_font[1].size[0] and size[1] >= self._rendered_font[1].size[1] and (
+                type(size) is tuple or type(size is list)) and len(size) == 2:
             self._box_overhang[0] = (size[0] - self._rendered_font[1].size[0])
             self._box_overhang[1] = (size[1] - self._rendered_font[1].size[1])
             self.update_box()
@@ -172,10 +179,11 @@ class TextLabel(GUIBase):
             print("SIZE MUST BE LARGER THAN OR EQUAL TO SIZE OF ORIGINAL OR INVALID TYPE")
 
     def update_box(self):
-        self._box.update((self._position[0] - self._box_overhang[0] / 2, self._position[1] - self._box_overhang[1] / 2),(
-        self._rendered_font[1].size[0] + self._box_overhang[0], self._rendered_font[1].size[1] + self._box_overhang[1]))
+        self._box.update((self._position[0] - self._box_overhang[0] / 2, self._position[1] - self._box_overhang[1] / 2),
+                         (
+                             self._rendered_font[1].size[0] + self._box_overhang[0],
+                             self._rendered_font[1].size[1] + self._box_overhang[1]))
 
     def update_font(self):
         self._font = pygame.freetype.SysFont(self._font_name, self._font_size)
         self._rendered_font = self._font.render(self._text, fgcolor=self._text_colour)
-

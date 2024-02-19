@@ -19,7 +19,7 @@ class ItemContainer:
     def reset(self):
         self._data.clear()
         self._data = [[None for x in range(self._dimensions[1])] for row_index in
-                                   range(self._dimensions[0])]
+                      range(self._dimensions[0])]
 
     def set_item_at_index(self, row, column, item=None):
         self._data[row][column] = item
@@ -171,10 +171,10 @@ class ItemContainer:
             }
         return data
 
-    #ItemContainer class save and load methods
+    # ItemContainer class save and load methods
     def load_from_data(self, data):
         self._data.clear()
-        #print(f"data:{self._data}")
+        # print(f"data:{self._data}")
         self._dimensions = (len(data), len(data[0]))
         self._data = [[None for column_index in range(self._dimensions[1])] for row_index in range(self._dimensions[0])]
 

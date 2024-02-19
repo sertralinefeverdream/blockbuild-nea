@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class GUIBase(ABC):
     def __init__(self, game, surface, position=(0.0, 0.0), is_visible=True):
         self._game = game

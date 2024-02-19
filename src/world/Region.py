@@ -41,7 +41,7 @@ class Region:
             self._position = list(value)
 
     def update(self):
-        #print(f"REGION DEPTH: {len(self._data)}, REGION WIDTH: {len(self._data[0])}")
+        # print(f"REGION DEPTH: {len(self._data)}, REGION WIDTH: {len(self._data[0])}")
         for row in self._data:
             for x_index, block in enumerate(row):
                 if block is not None:
@@ -223,7 +223,8 @@ class Region:
                     self._data[int(row_index)][block_index] = None
 
         for entity in data["entity_list"]:
-            entity_instance = self._game.character_factory.create_character(self._game, self._world,entity["entity_id"], entity["state_data"])
+            entity_instance = self._game.character_factory.create_character(self._game, self._world,
+                                                                            entity["entity_id"], entity["state_data"])
             self.add_entity(entity_instance)
             # if self._world.player is None and entity["entity_id"] == "player":
             # self._world.player = entity_instance

@@ -18,13 +18,13 @@ class RegionGenerator:
 
     @property
     def seed(self):
-        #print(f"SEED SAVED: {opensimplex.get_seed()} ")
+        # print(f"SEED SAVED: {opensimplex.get_seed()} ")
         return opensimplex.get_seed()
 
     @seed.setter
     def seed(self, value):
         if type(value) is int:
-            #print(f"SET SEED: {value}")
+            # print(f"SET SEED: {value}")
             opensimplex.seed(value)
 
     def create_empty_region(self, game, world, position):
@@ -60,7 +60,13 @@ class RegionGenerator:
                     if has_generated_tree_in_region == False:
                         if random.randint(1, 5) == 1:
                             tree_to_generate = random.choice(list(self._generation_data["tree_data"].values()))
-                            generated_successfully = self.generate_tree_in_region(region, tree_to_generate["trunk_block_id"], tree_to_generate["leaf_block_id"], (x, y-1), tree_to_generate["trunk_length"], tree_to_generate["leaf_base_layer_width"])
+                            generated_successfully = self.generate_tree_in_region(region,
+                                                                                  tree_to_generate["trunk_block_id"],
+                                                                                  tree_to_generate["leaf_block_id"],
+                                                                                  (x, y - 1),
+                                                                                  tree_to_generate["trunk_length"],
+                                                                                  tree_to_generate[
+                                                                                      "leaf_base_layer_width"])
                             if generated_successfully:
                                 has_generated_tree_in_region = True
                 elif grass_y_limit_at_x < region.position[1] + y * 40 < rock_y_limit_at_x:
@@ -68,7 +74,8 @@ class RegionGenerator:
                 elif region.position[1] + y * 40 >= rock_y_limit_at_x:
                     region.set_block_at_indexes(x, y, "stone")
 
-    def generate_tree_in_region(self, region, trunk_block_id, leaf_block_id, starting_indexes, trunk_length, leaf_base_layer_width):
+    def generate_tree_in_region(self, region, trunk_block_id, leaf_block_id, starting_indexes, trunk_length,
+                                leaf_base_layer_width):
         trunk_block_indexes = []
         leaf_block_indexes = []
 
@@ -79,13 +86,13 @@ class RegionGenerator:
                 if region.get_block_at_indexes(*current_indexes) is None:
                     trunk_block_indexes.append(tuple(current_indexes))
                 else:
-                   # print("TRUNK OBSTRUCTED")
+                    # print("TRUNK OBSTRUCTED")
                     return False
             else:
-               # print("TRUNK FALLEN OFF REGION")
+                # print("TRUNK FALLEN OFF REGION")
                 return False
             current_indexes[1] -= 1
-        #SCREEN SHOT MARKER
+        # SCREEN SHOT MARKER
         for i in range(leaf_base_layer_width):
             if 0 <= current_indexes[1] <= 19:
                 if region.get_block_at_indexes(*current_indexes) is None:
@@ -95,15 +102,15 @@ class RegionGenerator:
                         if 0 <= current_indexes[0] + j <= 19 and 0 <= current_indexes[0] - j <= 19:
                             if region.get_block_at_indexes(
                                     current_indexes[0] + j, current_indexes[1]) is None and region.get_block_at_indexes(
-                                    current_indexes[0] - j, current_indexes[1]) is None:
+                                current_indexes[0] - j, current_indexes[1]) is None:
                                 leaf_block_indexes.append((current_indexes[0] + j, current_indexes[1]))
                                 leaf_block_indexes.append((current_indexes[0] - j, current_indexes[1]))
                             else:
-                               # print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION") SCREENSHOT MARKER
+                                # print("CANT SPAWN HERE DUE TO LEAF OBSTRUCTION") SCREENSHOT MARKER
 
-                                return False ## Screenshot Marker
+                                return False  ## Screenshot Marker
                         else:
-                            #print("FALLEN OFF")
+                            # print("FALLEN OFF")
                             return False
                     current_indexes[1] -= 1
                 else:
@@ -131,10 +138,9 @@ class RegionGenerator:
                 ore_to_generate = random.choice(ores_that_can_be_generated)
                 region_indexes = region.get_block_indexes_from_position(random_stone_block.position)
                 if random.randint(1, ore_to_generate["probability"]) == 1:
-                   # print("GENERATING ORE!!")
+                    # print("GENERATING ORE!!")
                     self.generate_vein(region, ore_to_generate["block_id"], region_indexes,
                                        ore_to_generate["max_vein_size"])
-
 
     def generate_vein(self, region, block_id, starting_indexes, max_vein_size):
         x, y = starting_indexes

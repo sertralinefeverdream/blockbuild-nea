@@ -1,11 +1,15 @@
 import sys
 import pygame
 from audio.Volume import Volume
+
+
 # Cleaned up
 
 
 class Game:
-    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory, block_factory, file_save_handler, item_factory, character_factory, item_container_factory, spritesheet_factory, block_spritesheet, item_spritesheet):
+    def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory,
+                 block_factory, file_save_handler, item_factory, character_factory, item_container_factory,
+                 spritesheet_factory, block_spritesheet, item_spritesheet):
         self._state_stack = state_stack
         self._window = window
         self._clock = clock
@@ -38,7 +42,7 @@ class Game:
 
     @property
     def state_stack(self):
-      return self._state_stack
+        return self._state_stack
 
     @property
     def window(self):
@@ -123,14 +127,14 @@ class Game:
     def game_loop(self):
         self.push_state("main_menu")
         self.update_states_from_option()
-        
+
         for id, path in self._config["save_files"].items():
             self._file_save_handler.add_save_location(id, path)
 
         while self._running:
             self._keys_pressed = pygame.key.get_pressed()
             self._state_has_changed_flag = False
-           # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
+            # self.update_states_from_options() # Options can change during runtime. This method updates states in the game with whats set in the option dict as necessary.
             self._clock.tick(self._framerate)
 
             if self._current_state is not None:
@@ -138,7 +142,7 @@ class Game:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         self._running = False
-                    if event.type == pygame.USEREVENT + 1: # Event id for whenever music stops playing.
+                    if event.type == pygame.USEREVENT + 1:  # Event id for whenever music stops playing.
                         self._music_handler.on_music_end()
 
                 self._current_state.update()
@@ -172,19 +176,19 @@ class Game:
         if self._previous_state is not None:
             self._previous_state.on_state_leave(state_leave_params)
 
-        #print(f"PUSHING {self._current_state} TO THE STACK!")
+        # print(f"PUSHING {self._current_state} TO THE STACK!")
         self._current_state.on_state_enter(state_enter_params)
         self._state_has_changed_flag = True
 
     def pop_state(self, state_enter_params=None, state_leave_params=None):
         self._previous_state = self._state_stack.pop()
-        #print(f"POPPING {self._previous_state} OFF THE STACK!")
+        # print(f"POPPING {self._previous_state} OFF THE STACK!")
         self._current_state = self._state_stack.peek()
 
         self._previous_state.on_state_leave(state_leave_params)
 
         if self._current_state is not None:
-            #print(f"ENTERING {self._current_state}")
+            # print(f"ENTERING {self._current_state}")
             self._current_state.on_state_enter(state_enter_params)
 
         self._state_has_changed_flag = True
@@ -192,5 +196,3 @@ class Game:
     def on_game_end(self):
         pygame.quit()
         sys.exit()
-
-

@@ -68,8 +68,12 @@ class ImageButton(ButtonBase):
             if self._has_outline:
                 pygame.draw.rect(self._surface, self._outline_colour, self._rect, width=self._outline_thickness)
             if self._image is not None:
-                self._surface.blit(pygame.transform.scale(self._image, (self._size[0] * self._image_scale_multiplier, self._size[1] * self._image_scale_multiplier)), (self._position[0] + self._size[0]/2 - (self._size[0] * self._image_scale_multiplier)/2, self._position[1] + self._size[1]/2 - (self._size[1] * self._image_scale_multiplier)/2))
-
+                self._surface.blit(pygame.transform.scale(self._image, (
+                self._size[0] * self._image_scale_multiplier, self._size[1] * self._image_scale_multiplier)), (
+                                   self._position[0] + self._size[0] / 2 - (
+                                               self._size[0] * self._image_scale_multiplier) / 2,
+                                   self._position[1] + self._size[1] / 2 - (
+                                               self._size[1] * self._image_scale_multiplier) / 2))
 
     def on_mouse_hold(self):
         if self._is_enabled and self._held_func is not None:

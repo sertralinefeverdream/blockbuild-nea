@@ -1,6 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 
+
 class EntityBase:
     def __init__(self, game, world, entity_id, position, size, max_speed):
         self._game = game
@@ -85,13 +86,13 @@ class EntityBase:
 
     @property
     def centre_position(self):
-        return self._position[0] + self._size[0]/2, self._position[1] + self._size[1]/2
+        return self._position[0] + self._size[0] / 2, self._position[1] + self._size[1] / 2
 
     @centre_position.setter
     def centre_position(self, value):
         if (type(value) is tuple or type(value) is list) and len(value) == 2:
-            self._position[0] = value[0] - self._size[0]/2
-            self._position[1] = value[1] - self._size[1]/2
+            self._position[0] = value[0] - self._size[0] / 2
+            self._position[1] = value[1] - self._size[1] / 2
 
     @abstractmethod
     def update(self):
@@ -109,7 +110,7 @@ class EntityBase:
     def load_state_data(self, data):
         pass
 
-    #Entity save data
+    # Entity save data
     def convert_data(self):
         data = {
             "entity_id": self._entity_id,
@@ -117,9 +118,9 @@ class EntityBase:
         }
         return data
 
-    def update_texture_and_sizes(self): # Call when texture or size changes
+    def update_texture_and_sizes(self):  # Call when texture or size changes
         self._texture = pygame.transform.scale(self._texture, self._size)
         self._hitbox.update(self._world.camera.get_screen_position(self._position), self._size)
 
-    def kill(self): # Can be overriden
+    def kill(self):  # Can be overriden
         self._is_killed = True

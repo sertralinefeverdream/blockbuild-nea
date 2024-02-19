@@ -1,5 +1,6 @@
 from items.ItemContainer import ItemContainer
 
+
 class HotbarContainer(ItemContainer):
     def __init__(self, game, world, columns):
         super().__init__(game, world, 1, columns)
@@ -40,7 +41,3 @@ class HotbarContainer(ItemContainer):
             self._current_item = self._data[0][self._current_item_pointer]
         else:
             self._current_item = self._no_hands_item
-
-
-
-

@@ -2,6 +2,7 @@ import pygame
 
 from states.StateBase import StateBase
 
+
 class PauseGameState(StateBase):
     def __init__(self, game):
         super().__init__(game)
@@ -39,7 +40,7 @@ class PauseGameState(StateBase):
                 component.update()
 
     def on_state_leave(self, params=None):
-            pass
+        pass
 
     def update(self):
         for layer in self._gui[::-1]:
@@ -63,7 +64,5 @@ class PauseGameState(StateBase):
         self._game.push_state("options_menu")
 
     def exit_button_click(self, button):
-        self._game.pop_state() #Down to main game state
-        self._game.pop_state([], ["save"]) #Down to load game state
-
-
+        self._game.pop_state()  # Down to main game state
+        self._game.pop_state([], ["save"])  # Down to load game state

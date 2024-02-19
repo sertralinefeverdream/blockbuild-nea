@@ -1,5 +1,6 @@
 import math
 
+
 class Camera:
     def __init__(self):
         self._position = [0, 0]
@@ -41,8 +42,3 @@ class Camera:
     def get_world_position(self, position):
         if (type(position) is list or type(position) is tuple) and len(position) == 2:
             return position[0] + self._position[0], position[1] + self._position[1]
-
-
-
-
-
