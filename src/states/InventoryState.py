@@ -300,8 +300,9 @@ class InventoryState(StateBase):
             else:
                 self._gui[1]["craft_button"].is_visible = True
                 self._gui[1]["item_description_box"].is_visible = True
-                self._gui[1]["item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]\
-                    ["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
+                item_name = self._game.config["items"][self._recipe_selected]["name"]
+                item_desc = self._crafting_recipes[self._recipe_selected]["description"]
+                self._gui[1]["item_description_box"].text = f"{item_name}: {item_desc}"
 
         elif self._mode == "move":
             self._gui[1]["move_button"].text = "Cancel Move"
