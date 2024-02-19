@@ -2,6 +2,7 @@ import json
 import random
 import pygame
 
+#uploaded
 
 class World:
     def __init__(self, game, camera, region_generator, npc_spawn_cooldown=60000, entity_spawn_limit_per_region=1,
@@ -82,10 +83,10 @@ class World:
         self.reassign_entities_to_regions()  # Must be done in this order to prevent player stuttering
         self.update_draw_list()
 
-        if pygame.time.get_ticks() - self._npc_spawn_timer >= self._npc_spawn_cooldown:  # Script for randomly spawning stuff in
+        if pygame.time.get_ticks() - self._npc_spawn_timer >= self._npc_spawn_cooldown:
             valid_regions = []
             check_offset = 5 if self._player.velocity[0] > 0 else -5 if self._player.velocity[
-                                                                            0] < 0 else -2  # Will spawn entities in front of the player's direction
+                                                                            0] < 0 else -2
             for x in range(5):
                 for y in range(5):
                     region_check_x = self._player.position[0] + (x + check_offset) * 800
@@ -222,7 +223,6 @@ class World:
                 if not region_exists:
                     if region_index_x not in self._data.keys():
                         self._data[region_index_x] = {}
-                    # self._data[region_index_x][region_index_y] = self._region_generator.create_region_from_data(self._game, self, (int(region_index_x), int(region_index_y)), self._default)
                     self._data[region_index_x][region_index_y] = self._region_generator.create_generated_region(
                         self._game, self, (int(region_index_x), int(region_index_y)))
 
@@ -270,7 +270,7 @@ class World:
                 if str(x_index) not in self._data.keys():
                     self._data[str(x_index)] = {}
                 self._data[str(x_index)][str(y_index)] = self._region_generator.create_region_from_data(self._game,
-                                                                                                        self, (
-                                                                                                            int(x_index),
-                                                                                                            int(y_index)),
+                                                                                                        self,
+                                                                                                        (int(x_index),
+                                                                                                         int(y_index)),
                                                                                                         region)

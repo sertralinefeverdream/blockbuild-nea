@@ -1,9 +1,9 @@
 import pygame
-from abc import ABC, abstractmethod
 from gui.GUIBase import GUIBase
 
 
-# Important! TextLabel is position from top-right position of the rendered font's surface rect. not the rect we draw around it
+# Important! TextLabel is position from top-right position of the rendered font's surface rect. not the bounding rect
+#uploaded
 
 class TextLabel(GUIBase):
     def __init__(self, game, surface, position=(0, 0), box_overhang=(25, 25), box_colour=(255, 0, 0),

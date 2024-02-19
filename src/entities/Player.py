@@ -2,6 +2,7 @@ from entities.CharacterBase import CharacterBase
 import pygame
 import math
 
+#UPLOADED
 
 class Player(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, hurt_sfx_id, death_sfx_id,
@@ -62,13 +63,13 @@ class Player(CharacterBase):
 
         if self._is_in_air:
             if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
             elif self._velocity[1] >= 0 and self._animation_handler.current_animation_id != "fall":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
 
@@ -80,7 +81,7 @@ class Player(CharacterBase):
                 self._game.sfx_handler.play_sfx(block_below.footstep_sfx_id, self._game.get_option("game_volume").value)
 
         item_return_action = self._hotbar.update(
-            self.centre_position)  # Item returns a value which indicates what kind of left-mouse action aka distinguishing between mining and attacking so as to play the correct animation
+            self.centre_position)
         if item_return_action == "attack" and self._animation_handler.current_animation_id != "attack":
             self._animation_handler.play_animation_from_id("attack")
             self._animation_handler.loop = False
@@ -141,8 +142,8 @@ class Player(CharacterBase):
             self._velocity[0] += math.trunc(800 * deltatime)
             self._animation_handler.reversed = False
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
         elif keys_pressed[pygame.K_a]:
@@ -151,8 +152,8 @@ class Player(CharacterBase):
             self._velocity[0] -= math.trunc(800 * deltatime)
             self._animation_handler.reversed = True
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
         else:
@@ -160,8 +161,8 @@ class Player(CharacterBase):
                 self._velocity[0] *= 0.4
 
             if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or self._animation_handler.current_animation_id != "attack":
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or\
+                        self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("idle")
                     self._animation_handler.loop = True
 

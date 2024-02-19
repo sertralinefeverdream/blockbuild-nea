@@ -27,6 +27,7 @@ from world.World import World
 from audio.MusicHandler import MusicHandler
 from audio.SfxHandler import SfxHandler
 
+#ADDED TO UPLOAD
 
 def main():
     pygame.init()

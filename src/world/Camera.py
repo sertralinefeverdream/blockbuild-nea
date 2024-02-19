@@ -1,5 +1,4 @@
-import math
-
+#uploaded
 
 class Camera:
     def __init__(self):

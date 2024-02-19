@@ -1,3 +1,5 @@
+#uploaded
+
 class ItemContainer:
     def __init__(self, game, world, rows, columns):
         self._data = [[None for x in range(columns)] for row_index in range(rows)]  # Static size

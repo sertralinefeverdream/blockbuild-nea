@@ -2,9 +2,7 @@ from gui.ButtonBase import ButtonBase
 import pygame
 import pygame.freetype
 
-
-# Refactored
-
+#uploaded
 
 class TextButton(ButtonBase):
     def __init__(self, game, surface, click_func, click_sfx_id="btn_click_1",

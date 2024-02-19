@@ -3,8 +3,7 @@ import math
 import random
 from entities.CharacterBase import CharacterBase
 
-
-# Cleaned up
+#uploaded
 
 class GenericPassive(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id,

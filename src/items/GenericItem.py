@@ -1,6 +1,7 @@
 import pygame
 import math
 
+#uploaded
 
 class GenericItem:  # Can be used for normal items, default_items, etc lol
     def __init__(self, game, world, item_id, name, texture, quantity=1, max_quantity=100, attack_cooldown=100,
@@ -173,7 +174,7 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
-        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False:  # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
+        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False:
             self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
 
         self._is_mining = True
@@ -212,8 +213,7 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
     def right_use(self, player_centre_pos):
         pass
 
-    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos,
-                                    range):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line            distance_x = abs(mouse_pos[0] - player_centre_pos[0])
+    def get_entity_in_range_of_tool(self, player_centre_pos, mouse_pos, range):
         world_mouse_pos = self._world.camera.get_world_position(mouse_pos)
         distance_x = abs(world_mouse_pos[0] - player_centre_pos[0])
         distance_y = abs(world_mouse_pos[1] - player_centre_pos[1])
@@ -258,7 +258,8 @@ class GenericItem:  # Can be used for normal items, default_items, etc lol
                 entity_in_range_of_tool.health -= self._attack_strength
                 entity_in_range_of_tool.aggro()
                 entity_in_range_of_tool.knockback(direction, 200)
-                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
+                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and\
+                        not entity_in_range_of_tool.is_killed:
                     remainder = self._world.player.hotbar.pickup_item(
                         self._game.item_factory.create_item(self._game, self._world,
                                                             entity_in_range_of_tool.loot))

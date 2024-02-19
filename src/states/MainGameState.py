@@ -1,7 +1,7 @@
 import pygame.mouse
-
 from states.StateBase import StateBase
 
+#uploaded
 
 class MainGameState(StateBase):
     def __init__(self, game, world):
@@ -120,13 +120,13 @@ class MainGameState(StateBase):
         if current_player_tool is not None:
             if current_player_tool.is_mining:
                 self._gui[1]["block_health_bar"].is_visible = True
-                self._gui[1]["block_health_bar"].size[0] = (
-                                                                       current_player_tool.block_currently_mining_hardness_remaining / current_player_tool.block_currently_mining.hardness) * 30
-                self._gui[1]["block_health_bar"].centre_position = self._world.camera.get_screen_position((
-                                                                                                          current_player_tool.block_currently_mining.position[
-                                                                                                              0] + 20,
-                                                                                                          current_player_tool.block_currently_mining.position[
-                                                                                                              1] + 20))
+                self._gui[1]["block_health_bar"].size[0] = \
+                    (current_player_tool.block_currently_mining_hardness_remaining /
+                     current_player_tool.block_currently_mining.hardness) * 30
+                self._gui[1]["block_health_bar"].centre_position = \
+                    self._world.camera.get_screen_position((current_player_tool.block_currently_mining.position[0] + 20,
+                                                            current_player_tool.block_currently_mining.position[1] + 20)
+                                                           )
             else:
                 self._gui[1]["block_health_bar"].is_visible = False
         else:
@@ -150,7 +150,7 @@ class MainGameState(StateBase):
             if block_at_mouse is not None:
                 if hasattr(block_at_mouse, "interact"):
                     if callable(
-                            block_at_mouse.interact):  # These two conditions only run if the block class is subclass of InteractableBlock
+                            block_at_mouse.interact): #Not great but works to check if block has interact() method.
                         block_at_mouse.interact()
             self._interact_key_held = False
 

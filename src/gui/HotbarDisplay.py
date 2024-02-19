@@ -1,5 +1,6 @@
 from gui.GUIBase import GUIBase
 
+#uploaded
 
 class HotbarDisplay(GUIBase):
     def __init__(self, game, surface, number_of_slots, position=(0.0, 0.0), is_visible=True,

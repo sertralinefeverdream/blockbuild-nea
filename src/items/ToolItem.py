@@ -2,6 +2,8 @@ from items.GenericItem import GenericItem
 import pygame
 import math
 
+#uploaded
+
 
 class ToolItem(GenericItem):
     def __init__(self, game, world, item_id, name, texture, tool_break_sfx_id, quantity=1, max_quantity=1,
@@ -29,68 +31,15 @@ class ToolItem(GenericItem):
                 entity_in_range_of_tool.health -= self._attack_strength
                 entity_in_range_of_tool.aggro()
                 entity_in_range_of_tool.knockback(direction, 200)
-                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and not entity_in_range_of_tool.is_killed:
+                if entity_in_range_of_tool.health <= 0 and entity_in_range_of_tool.loot is not None and\
+                        not entity_in_range_of_tool.is_killed:
                     remainder = self._world.player.hotbar.pickup_item(
-                        self._game.item_factory.create_item(self._game, self._world, \
-                                                            entity_in_range_of_tool.loot))
+                        self._game.item_factory.create_item(self._game, self._world, entity_in_range_of_tool.loot))
                     if remainder is not None:
                         remainder = self._world.player.inventory.pickup_item(remainder)
                     if remainder is not None:
                         print("INVENTORY FULL!")
             return "attack"
-
-    '''
-    def left_use(self, player_pos):
-        mouse_pos = pygame.mouse.get_pos()
-        mouse_world_pos = self._world.camera.get_world_position(mouse_pos)
-        delta_time = self._game.clock.get_time() / 1000
-
-        self._block_last_mining = self._block_currently_mining
-        self._block_currently_mining = self._world.get_block_at_position(mouse_world_pos)
-
-        if self._block_currently_mining is None:
-            self._is_mining = False
-            return
-        elif self._block_currently_mining is not None and math.sqrt(
-                (self._block_currently_mining.position[0] - player_pos[0]) ** 2 + (
-                        self._block_currently_mining.position[1] - player_pos[1]) ** 2) > self._use_range:
-            self._is_mining = False
-            return
-        else:
-            self._is_mining = True
-
-        if self._block_currently_mining is not self._block_last_mining:
-            self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
-
-        if self._block_currently_mining.block_id in self._preferred_mine_strength_whitelist:
-            self._block_currently_mining_hardness_remaining -= (self._preferred_mine_strength) * delta_time
-        else:
-            self._block_currently_mining_hardness_remaining -= (self._default_mine_strength) * delta_time
-
-        if pygame.time.get_ticks() - self._mine_sound_timer >= 250:
-            self._game.sfx_handler.play_sfx(self._block_currently_mining.mine_sfx_id,
-                                            self._game.get_option("game_volume").value)
-            self._mine_sound_timer = pygame.time.get_ticks()
-
-            if self._block_currently_mining_hardness_remaining <= 0:
-                self._durability -= 1
-                if self._block_currently_mining.loot_drop_id is not None:
-                    if self._block_currently_mining.loot_drop_tool_whitelist is not None:
-                        if self._item_id not in self._block_currently_mining.loot_drop_tool_whitelist:
-                            return None
-                    remainder = self._world.player.hotbar.pickup_item(
-                        self._game.item_factory.create_item(self._game, self._world,
-                                                            self._block_currently_mining.loot_drop_id))
-                    if remainder is not None:
-                        print("FILL UP INVENTORY")
-                        remainder = self._world.player.inventory.pickup_item(remainder)
-                    if remainder is not None:
-                        print("INVENTORY FULL!")
-                else:
-                    print("LOOT DROP ID IS NONE")
-
-                self._block_currently_mining.kill()
-        '''
 
     def left_use(self, player_centre_pos):
         mouse_pos = pygame.mouse.get_pos()
@@ -115,7 +64,7 @@ class ToolItem(GenericItem):
             self._is_mining = False
             return self.attack(entity_in_range_of_tool, player_centre_pos)
 
-        if self._block_currently_mining is not self._block_last_mining or self._is_mining == False:  # Resets hardness if block broken or if is_mining is false i.e. if the valid mining action was preceded by an attack action for example
+        if self._block_currently_mining is not self._block_last_mining or not self._is_mining:
             self._block_currently_mining_hardness_remaining = self._block_currently_mining.hardness
 
         self._is_mining = True

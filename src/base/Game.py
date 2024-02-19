@@ -2,9 +2,7 @@ import sys
 import pygame
 from audio.Volume import Volume
 
-
-# Cleaned up
-
+#uploaded
 
 class Game:
     def __init__(self, state_stack, window, clock, music_handler, sfx_handler, framerate, config, gui_factory,

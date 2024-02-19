@@ -3,6 +3,7 @@ import pygame
 import math
 import random
 
+#uploaded
 
 class GenericHostile(CharacterBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler, hurt_sfx_id,
@@ -19,8 +20,8 @@ class GenericHostile(CharacterBase):
         self._random_idle_sound_cooldown = random_idle_sound_cooldown
         self._attack_damage = attack_damage
         self._attack_range = attack_range
-        self._aggro_range = aggro_range  # Range within which the entity will be aggroed if playing within range
-        self._chase_range = chase_range  # Range within which the entity will followed after being agroed if within range
+        self._aggro_range = aggro_range
+        self._chase_range = chase_range
         self._auto_jump_cooldown = auto_jump_cooldown
         self._idle_cooldown = idle_cooldown
         self._out_of_los_cooldown = out_of_los_cooldown
@@ -157,7 +158,7 @@ class GenericHostile(CharacterBase):
             self._velocity[0] += math.trunc(800 * deltatime)  # Screenshot Marker
             self._animation_handler.reversed = False
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished)or\
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                 self._animation_handler.play_animation_from_id("run")
@@ -168,7 +169,7 @@ class GenericHostile(CharacterBase):
             self._velocity[0] -= math.trunc(800 * deltatime)
             self._animation_handler.reversed = True
             if self._animation_handler.current_animation_id != "run" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished)or\
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("run")
                     self._animation_handler.loop = True
@@ -177,7 +178,7 @@ class GenericHostile(CharacterBase):
                 self._velocity[0] *= 0.4
 
             if self._animation_handler.current_animation_id != "idle" and not self._is_in_air:
-                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished)or\
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("idle")
                     self._animation_handler.loop = True
@@ -218,14 +219,12 @@ class GenericHostile(CharacterBase):
 
         if self._is_in_air:
             if self._velocity[1] < 0 and self._animation_handler.current_animation_id != "jump":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished)or\
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("jump")
                     self._animation_handler.loop = False
             elif self._velocity[1] > 0 and self._animation_handler.current_animation_id != "fall":
-                if (
-                        self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished) or \
+                if (self._animation_handler.current_animation_id == "attack" and self._animation_handler.is_finished)or\
                         self._animation_handler.current_animation_id != "attack":
                     self._animation_handler.play_animation_from_id("fall")
                     self._animation_handler.loop = False
@@ -278,8 +277,7 @@ class GenericHostile(CharacterBase):
         else:
             print("TEXTURE IS NONE!")
 
-    def is_player_in_line_of_sight(
-            self):  # Draws a line between eyelevels of the entity and the player. Checks if there's a block every 10th pixel on the line
+    def is_player_in_line_of_sight(self):
         distance_x = abs(self._world.player.centre_position[0] - self.centre_position[0])
         distance_y = abs(self._world.player.position[1] - self._position[1])
         distance_away = math.sqrt(distance_x ** 2 + distance_y ** 2)

@@ -1,6 +1,8 @@
 import pygame.mixer
 import random
 
+#ADDED TO UPLOAD
+
 class MusicHandler:
     def __init__(self, music_fade_time, is_shuffling):
         pygame.mixer.init()

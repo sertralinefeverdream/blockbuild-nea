@@ -1,7 +1,7 @@
-import json
 import pygame
 import random
 
+#uploaded
 
 class Region:
     def __init__(self, game, world, position=(0, 0)):
@@ -90,7 +90,7 @@ class Region:
                 x_index = abs(position[0] - self._position[0]) // 40
                 y_index = abs(position[1] - self._position[1]) // 40
 
-                if x_index < 0:  # These checks are to ensure that block_index does not roll over to -1 or 20 which can happen when position values are extremely small. This works because the is position in region check verifies whether the point should be inside the region
+                if x_index < 0:
                     x_index = 0
                 elif x_index > 19:
                     x_index = 19
@@ -210,15 +210,12 @@ class Region:
         for row_index, row in data["terrain"].items():
             for block_index, block in enumerate(row):
                 if block is not None:
-                    self._data[int(row_index)][block_index] = self._game.block_factory.create_block(self._game,
-                                                                                                    self._world,
-                                                                                                    (self._position[
-                                                                                                         0] + block_index * 40,
-                                                                                                     self._position[
-                                                                                                         1] + int(
-                                                                                                         row_index) * 40),
-                                                                                                    block["block_id"],
-                                                                                                    block["state_data"])
+                    self._data[int(row_index)][block_index] =\
+                        self._game.block_factory.create_block(self._game, self._world,
+                                                              (self._position[0] + block_index * 40,
+                                                               self._position[1] + int(row_index) * 40),
+                                                              block["block_id"],
+                                                              block["state_data"])
                 else:
                     self._data[int(row_index)][block_index] = None
 

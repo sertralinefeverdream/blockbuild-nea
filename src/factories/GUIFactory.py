@@ -7,11 +7,7 @@ from gui.ContainerDisplayInteractive import ContainerDisplayInteractive
 from gui.ItemButton import ItemButton
 from gui.ImageButton import ImageButton
 
-'''
-This GUIFactory class has allowed me to remove any dependence of StateBase and its child classes on any of the
-GUI classes. GUIFactory instance is passed as an argument during StateBase initialisation.
-'''
-
+#uploaded
 
 class GUIFactory:
     def __init__(self):

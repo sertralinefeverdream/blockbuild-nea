@@ -1,6 +1,6 @@
-import pygame
 from blocks.BlockBase import BlockBase
 
+#uploaded
 
 class GenericBlock(BlockBase):
     def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,

@@ -1,6 +1,7 @@
 from entities.EntityBase import EntityBase
 from abc import abstractmethod
 
+#uploaded
 
 class CharacterBase(EntityBase):
     def __init__(self, game, world, entity_id, position, size, max_speed, max_health, animation_handler,

@@ -1,6 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 
+#uploaded
 
 class EntityBase:
     def __init__(self, game, world, entity_id, position, size, max_speed):

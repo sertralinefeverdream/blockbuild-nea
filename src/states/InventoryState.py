@@ -1,6 +1,7 @@
 from states.StateBase import StateBase
 import pygame
 
+#uploaded
 
 class InventoryState(StateBase):
     def __init__(self, game):
@@ -8,7 +9,7 @@ class InventoryState(StateBase):
         self._inventory = None
         self._hotbar = None
         self._inventory_key_held = False
-        self._item_selected = None  # In the form (row_index, column_index, id) where id identifies whether the item originates from the inventory or the hotbar
+        self._item_selected = None
         self._recipe_selected = None
         self._item_display_hovering = None
         self._mode = "default"
@@ -102,7 +103,6 @@ class InventoryState(StateBase):
             },
             {
                 "crafting_background": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window),
-                # "crafting_info_background": self._game.gui_factory.create_gui("RectBox", self._game, self._game.window)
             }
         ]
 
@@ -300,8 +300,8 @@ class InventoryState(StateBase):
             else:
                 self._gui[1]["craft_button"].is_visible = True
                 self._gui[1]["item_description_box"].is_visible = True
-                self._gui[1][
-                    "item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
+                self._gui[1]["item_description_box"].text = f'''{self._game.config["items"][self._recipe_selected]\
+                    ["name"]}: {self._crafting_recipes[self._recipe_selected]["description"]}'''
 
         elif self._mode == "move":
             self._gui[1]["move_button"].text = "Cancel Move"
@@ -335,10 +335,10 @@ class InventoryState(StateBase):
                 component.draw()
 
     def update_item_display_currently_hovering(self):  # Weirdest auto reformat ever??
-        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
-                                                                                           "hotbar_display"].get_hovering() is not None else \
-            self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
-                                                                    "inventory_display"].get_hovering() is not None else None
+        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if \
+            self._gui[1]["hotbar_display"].get_hovering() is not None else \
+            self._gui[1]["inventory_display"].get_hovering() if \
+                self._gui[1]["inventory_display"].get_hovering() is not None else None
 
     def on_craft_button_press(self, button):
         if self.check_can_craft(self._recipe_selected) and self._recipe_selected is not None:

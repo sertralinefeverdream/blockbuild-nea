@@ -2,6 +2,7 @@ import pygame
 from abc import ABC, abstractmethod
 
 # Cleaned up
+#uploaded
 class BlockBase(ABC):
     def __init__(self, game, world, position, hardness, block_id, texture, mine_sfx_id, place_and_break_sfx_id,
                  footstep_sfx_id, loot_drop_id=None, loot_drop_tool_whitelist=None, can_collide=True):
@@ -48,7 +49,7 @@ class BlockBase(ABC):
     @texture.setter
     def texture(self, value):
         if type(value) is pygame.Surface:
-            self._texture = pygame.transform.scale(value.convert(), (40, 40))
+            self._texture = pygame.transform.scale(value.convert_alpha(), (40, 40))
             self.enable_flag_for_region_redraw()
 
     @property

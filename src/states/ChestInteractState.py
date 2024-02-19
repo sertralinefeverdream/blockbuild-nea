@@ -1,7 +1,7 @@
 import pygame
-
 from states.StateBase import StateBase
 
+#uploaded
 
 class ChestInteractState(StateBase):
     def __init__(self, game):
@@ -263,10 +263,10 @@ class ChestInteractState(StateBase):
             self._mode = "default"
 
     def swap(self, item_tuple_1, item_tuple_2):
-        item_container_1 = self._inventory if item_tuple_1[2] == "inventory" else self._hotbar if item_tuple_1[
-                                                                                                      2] == "hotbar" else self._chest
-        item_container_2 = self._inventory if item_tuple_2[2] == "inventory" else self._hotbar if item_tuple_2[
-                                                                                                      2] == "hotbar" else self._chest
+        item_container_1 = self._inventory if item_tuple_1[2] == "inventory" else self._hotbar if \
+            item_tuple_1[2] == "hotbar" else self._chest
+        item_container_2 = self._inventory if item_tuple_2[2] == "inventory" else self._hotbar if \
+            item_tuple_2[2] == "hotbar" else self._chest
         temp = item_container_1.get_item_at_index(item_tuple_1[0], item_tuple_1[1])
 
         item_container_1.set_item_at_index(item_tuple_1[0], item_tuple_1[1],
@@ -274,10 +274,10 @@ class ChestInteractState(StateBase):
         item_container_2.set_item_at_index(item_tuple_2[0], item_tuple_2[1], temp)
 
     def merge(self, item_tuple_1, item_tuple_2):
-        item_container_1 = self._inventory if item_tuple_1[2] == "inventory" else self._hotbar if item_tuple_1[
-                                                                                                      2] == "hotbar" else self._chest
-        item_container_2 = self._inventory if item_tuple_2[2] == "inventory" else self._hotbar if item_tuple_2[
-                                                                                                      2] == "hotbar" else self._chest
+        item_container_1 = self._inventory if item_tuple_1[2] == "inventory" else self._hotbar if \
+            item_tuple_1[2] == "hotbar" else self._chest
+        item_container_2 = self._inventory if item_tuple_2[2] == "inventory" else self._hotbar if \
+            item_tuple_2[2] == "hotbar" else self._chest
 
         item_1 = item_container_1.get_item_at_index(item_tuple_1[0], item_tuple_1[1])
         item_2 = item_container_2.get_item_at_index(item_tuple_2[0], item_tuple_2[1])
@@ -295,9 +295,9 @@ class ChestInteractState(StateBase):
                     item_2.quantity = item_2.max_quantity
 
     def update_item_display_currently_hovering(self):  # Weirdest auto reformat ever??
-        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if self._gui[1][
-                                                                                           "hotbar_display"].get_hovering() is not None else \
-            self._gui[1]["inventory_display"].get_hovering() if self._gui[1][
-                                                                    "inventory_display"].get_hovering() is not None else \
-                self._gui[1]["chest_display"].get_hovering() if self._gui[1][
-                                                                    "chest_display"].get_hovering() is not None else None
+        self._item_display_hovering = self._gui[1]["hotbar_display"].get_hovering() if \
+            self._gui[1]["hotbar_display"].get_hovering() is not None else \
+            self._gui[1]["inventory_display"].get_hovering() if \
+                self._gui[1]["inventory_display"].get_hovering() is not None else \
+                self._gui[1]["chest_display"].get_hovering() if \
+                    self._gui[1]["chest_display"].get_hovering() is not None else None

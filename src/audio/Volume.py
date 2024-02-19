@@ -1,5 +1,7 @@
 from enum import Enum
 
+#Added to upload
+
 class Volume(Enum):
     OFF = 0.0
     LOW = 0.3
